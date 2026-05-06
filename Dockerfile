@@ -15,6 +15,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# WHY: Ensure public/ exists — Next.js may not create it if empty
+RUN mkdir -p /app/public
+
 # WHY: Next.js needs these at build time for client-side code
 ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 ARG NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
