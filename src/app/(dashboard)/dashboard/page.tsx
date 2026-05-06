@@ -11,15 +11,20 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { DashboardClient } from "@/components/dashboard/dashboard-client";
 
-export default async function DashboardPage() {
-  const user = await currentUser();
+// WHY: Prevents static generation — Clerk may not be configured at build time
+export const dynamic = "force-dynamic";
 
-  if (!user) {
+export default async function DashboardPage() {
+  const hasClerk = !!process.env.CLERK_SECRET_KEY;
+  const user = hasClerk ? await currentUser() : null;
+
+  if (hasClerk && !user) {
     redirect("/sign-in");
   }
 
-  const name =
-    [user.firstName, user.lastName].filter(Boolean).join(" ") || null;
+  const name = user
+    ? [user.firstName, user.lastName].filter(Boolean).join(" ") || null
+    : "User";
 
   return <DashboardClient userName={name} />;
 }

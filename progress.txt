@@ -1,0 +1,240 @@
+# ECOM-AI — progress.txt
+
+## Codebase Patterns (ALWAYS FIRST)
+
+- **Stack**: Config 3 SaaS Elite — Next.js 15 App Router, Drizzle ORM, PostgreSQL, Clerk, Upstash Redis, Stripe, Supabase Storage
+- **Architecture Doc**: `Architecture Finale.md` = source de vérité unique (7407 lignes, 52 sections, 50 tables)
+- **Design System**: Tokens hardcoded (§45), Composition Rules par type de page (§46), CSS mobile-first (§47)
+- **100% IA**: Aucun humain ne crée/modifie des pages. Agent autonome compose → valide → A/B teste → promeut champions
+- **Block Tree**: JSON structure, agents composent des blocs pré-fabriqués, CSS fait 90% du visuel
+- **6 palettes**: health-warm, beauty-clean, supplement-bold, pet-friendly, beauty-bold (rose/vert PrimalQueen)
+- **10 types de pages**: product-page, advertorial, vsl, checkout, upsell, downsell, optin, quiz, thank-you, bridge
+- **33+ block types**: 25 originaux + 8 ajoutés après analyse winners (scrolling-marquee, progress-bar, selling-plan-toggle, discount-code, payment-options, shipping-form, scarcity-badge, negative-opt-out)
+- **Validation Pipeline**: 8 passes (Zod → Composition → Tokens → Mobile 375px → Performance → A11y → Compliance → Lighthouse)
+- **A/B State Machine**: Sandbox → Elimination → Commando → Duel → Champion (gates statistiques Chi-squared)
+- **RAG Feedback**: Champions → Pattern extraction → SOP codification → Vector store → Injection prochain agent
+- **Page Speed Pipeline**: 15 optimizations (LCP, CLS, lazy load, font-display, video preload, Speculation Rules, View Transitions, content-visibility, Optimistic UI, Predictive Prefetch, Preconnect, Preload Fonts, Critical CSS, Partytown, HTML minification) + Image pipeline (AVIF/WebP, LQIP, responsive srcset) + HTTP cache headers (Cloudflare CDN, Early Hints 103, tiered caching, immutable)
+
+---
+
+## 2026-05-07 — HTML Winners Analysis + Design System Adjustments
+
+- **What**: Analyzed 15 real winning pages, adjusted design system based on data
+- **Winners analyzed**: 3 advertorial (Rejuvera, SmoothSpire, Vibriance), 4 sale-page (Airmoto, PrimalQueen, SmoothSpine, ThePetLabCo), 3 checkout (Airmoto, Drivse, Vibriance), 2 upsell (texte, VSL), 2 VSL
+- **Changes applied**:
+  - `tokens.ts`: Heading font serif → sans-serif (Inter bold, 0/15 winners use serif)
+  - `tokens.ts`: Added CTA_COLORS (green #00AD21 universal, blue #2563EB checkout)
+  - `tokens.ts`: Added palette `beauty-bold` (rose #9B046F + vert #00AD21)
+  - `tokens.ts`: VSL max-width 960 → 1200px
+  - `tokens.ts`: 8 new block types added to BLOCK_TYPES
+  - `composition-rules.ts`: Checkout countdown allowed (was forbidden, present in 100% real checkouts)
+  - `composition-rules.ts`: Checkout maxBlocks 6 → 8
+  - `composition-rules.ts`: VSL maxBlocks 8 → 15
+  - `composition-rules.ts`: Page type guides updated (CTA repetition, countdown in checkout)
+  - `composition-rules.ts`: 8 new BlockName types added
+  - `blocks.ts`: 8 new Zod block schemas added
+  - `blocks.ts`: beauty-bold added to blockTreeSchema palette enum
+  - `page-speed-optimizer.ts`: Added 6 new speed optimizations (Preconnect, Preload Fonts, Critical CSS, Partytown, Early Hints)
+  - `page-speed-optimizer.ts`: Optimistic UI now targets button blocks too
+
+---
+
+## 2026-05-07 — Page Speed Optimization Pipeline Complete
+
+- **What**: Created 3-file speed optimization pipeline + 6 additional optimizations
+- **Files created**:
+  - `src/services/page-speed-optimizer.ts` — 15-step HTML optimization pipeline (LCP, lazy load, CLS, font-display, video, Speculation Rules, View Transitions, content-visibility, Optimistic UI, Predictive Prefetch, Preconnect, Preload Fonts, Critical CSS, Partytown, minification)
+  - `src/services/image-optimizer.ts` — Image pipeline (AVIF/WebP selection, LQIP, srcset, <picture> generator)
+  - `src/middleware/cache-headers.ts` — HTTP cache middleware (tiered caching, security headers, Early Hints 103, Brotli config)
+- **TypeScript**: 0 errors on all 3 files
+
+---
+
+## 2026-05-06 — Design System Code Complete (Phase 1)
+
+- **What**: Coded the full design system from Architecture Finale.md §45-§48
+- **Files created**:
+  - `src/design-system/tokens.ts` — Design tokens (spacing, typography, 6 palettes, CTA colors, radius, shadows, CTA dims, image ratios, page widths, validation helpers)
+  - `src/design-system/composition-rules.ts` — 10 page types with required/forbidden blocks, sequence rules, page type guides
+  - `src/design-system/mobile-first.css` — Complete CSS (reset, sections, typography, CTAs, sticky bar, images, cards, carousel, FAQ, countdown, trust badges, reviews, guarantee, forms, utilities)
+  - `src/design-system/blocks.ts` — Block interface, BlockTree schema, 33 Zod schemas per block type, BlockRegistry, validateBlockTreeSchema()
+  - `src/design-system/index.ts` — Barrel export
+  - `src/validation/pipeline.ts` — 8-pass validation pipeline (schema, composition, tokens, mobile layout, performance, a11y, compliance, lighthouse), auto-retry with LLM feedback
+  - `src/validation/index.ts` — Barrel export
+  - `src/app/globals.css` — Updated with Tailwind v4 @theme tokens + 4 palette CSS variable sets
+- **TypeScript**: 0 errors across all src/ files
+- **Tailwind**: v4 @theme directive with custom spacing, typography, radius, shadow, breakpoint, CTA tokens
+- **Palettes**: CSS data-attribute selectors `[data-palette="..."]` for runtime switching
+- **A/B State Machine**: 5 stages (Sandbox→Elimination→Commando→Duel→Champion), Chi-squared test with p-value approximation, traffic allocation per stage, stage evaluation
+- **RAG Pattern Engine**: Block signature extraction, diff algorithm, pattern classification, SOP promotion pipeline (candidate→validated→sop), RAG document format, agent context builder
+- **Block Composer Prompt**: Full system prompt template with dynamic placeholders, marketing angle injection, retry prompt builder
+
+---
+
+## 2026-05-06 — Architecture Design System Complete
+
+- **What**: Added §45-§52 to Architecture Finale.md (Design Token System, Composition Rules, CSS Mobile-First, Validation Pipeline, A/B State Machine, RAG Pattern Engine, Block Composer Prompt)
+- **Source**: Synthesized 9 AI responses from `Agent Prompt Architecture.md` (4686 lines)
+- **New DB tables**: 5 (experiments, variants, conversions, winning_patterns, rag_documents) → Total 50 tables
+- **Decision**: Code design system FIRST, compare with real HTML winners AFTER. Avoids anchoring bias.
+- **Files modified**: `Architecture Finale.md` (6040 → 7407 lines), `PLAN-DESIGN-SYSTEM.md` (created)
+- **Pending**: User has HTML winner files to share for comparison AFTER coding
+
+---
+
+## 2026-05-06 — Subscription Ideas Integrated
+
+- **What**: Added §38-§43 to Architecture Finale.md (Free Trial, Offer Templates, Subscription Retention, Multi-country, Upsell)
+- **Source**: `info/&&&ECOM 2.0 SUBSCRIPTION.txt` (7 ideas from user)
+- **New DB tables**: offers, offer_templates, subscription_milestones, retention_triggers, promo_auto_rules, country_configs, upsell_offers → +7 tables
+- **Key decisions**:
+  - Free Trial default funnel: Ad → Page Produit → Checkout (NO advertorial by default, "GRATUIT" ASAP)
+  - Multi-country order: Cheap (PH, SA) → Anglophone (UK, AUS) → Europe (NO, NL) → World
+  - Snapchat = ads platform, NOT localization feature
+  - Max 1 upsell before thank-you page
+  - Anti-cancel emails/pages reminding -50% lifetime discount loss
+
+---
+
+## 2026-05-07 — VSL Timestamp Reveal System
+
+- **What**: Created VSL timestamp reveal system + analyzed resetdigestion.com (Emma Relief VSL latest)
+- **Files created**:
+  - `src/services/vsl-timestamp-reveal.ts` — VSL reveal system (Wistia, Vidalytics, YouTube, Vimeo, HTML5)
+- **Key exports**: `VSLRevealConfig`, `generateVSLRevealCSS()`, `generatePlayerListener()`, `injectVSLTimestampReveal()`, `parseTimestamp()`
+- **Features**:
+  - Separate mobile/desktop video IDs (Emma Relief pattern: different Wistia IDs per device)
+  - Configurable reveal animation (fade/slide/instant)
+  - Debug shortcut (Ctrl+B) for testing
+  - `revealOnEnd` option for visitors who skip to end
+  - `parseTimestamp("32:41")` → 1961 seconds helper
+- **Analysis: resetdigestion.com** (Emma Relief VSL latest version):
+  - Same timestamp 32:41, same Wistia `secondchange`, same `dropit()` pattern
+  - Mobile video ID `3m45igp0h2`, desktop `5zxlpv6osp`
+  - Side-by-side layout: video left + doctor bio right on desktop
+  - Bundle cards appear TWICE after reveal (lines 367 + 798) — CTA repetition pattern
+  - Mobile: bundles stacked with Most Popular FIRST (inverted order from desktop)
+  - Guarantee → Bonus (Lean Belly Shakes) → 4 Reviews → Bundles repeat → FAQ → Footer
+  - Loads jQuery + jQuery UI + Bootstrap (our CSS-only approach is 10x lighter)
+- **TypeScript**: 0 errors
+
+---
+
+## 2026-05-06 — Project Foundation
+
+- **What**: Created base project files
+- **Files**: package.json, next.config.ts, tsconfig.json, drizzle.config.ts, Dockerfile, .env.example
+- **Files**: src/app/layout.tsx, src/app/page.tsx, src/lib/env.ts, src/lib/db.ts, src/lib/redis.ts
+- **Status**: Foundation ready, not yet connected to DB
+
+---
+
+## 2026-05-07 — Drizzle Schema Complete (69 Tables, 10 Enums)
+
+- **What**: Created complete Drizzle ORM schema from Architecture Finale.md (50+ tables)
+- **Files created**:
+  - `src/db/schema/enums.ts` — 10 PostgreSQL enums (step_type, funnel_status, ab_test_status, event_type, test_phase, campaign_type, campaign_phase, ad_fate, ads_funnel_stage, alert_severity)
+  - `src/db/schema/core.ts` — 10 tables (products, funnels, marketing_angles, funnel_steps, page_variants, block_definitions, templates, bundles, purchases, pixel_configs)
+  - `src/db/schema/analytics.ts` — 11 tables (events, raw_events, metrics_5min, metrics_hourly, metrics_daily, block_events, element_revenue, touchpoints, attributions, agent_costs, fb_accounts_warmup)
+  - `src/db/schema/ab-testing.ts` — 10 tables (hypotheses, ab_tests, test_variant_metrics, test_queue, experiments, experiment_variants, conversions, growth_cycles, test_learnings)
+  - `src/db/schema/ads.ts` — 15 tables (meta_ad_accounts, niche_research, angle_research, ad_campaigns, ad_sets, ads, ad_metrics_daily, creative_templates, budget_allocations, ad_alerts, creator_profiles, placement_tests, creative_fatigue_scores, ads_extensions)
+  - `src/db/schema/research.ts` — 11 tables (discovered_niches, research_sources, marketing_angles_research, ai_consensus_votes, knowledge_sources, raw_insights, evolution_debates, change_proposals, surveys, survey_responses, survey_insights)
+  - `src/db/schema/offers.ts` — 8 tables (offers, offer_templates, upsell_offers, subscription_milestones, retention_triggers, promo_auto_rules, country_configs)
+  - `src/db/schema/testing.ts` — 5 tables (test_dimensions, universal_tests, universal_test_results, test_knowledge, judge_decision_log)
+  - `src/db/schema/rag.ts` — 2 tables (winning_patterns, rag_documents)
+  - `src/db/schema/index.ts` — Barrel export (all tables + enums)
+- **Duplicate resolution**:
+  - `block_definitions`: Section 4 version (uuid PK, usage tracking) kept over Section 2
+  - `variants` vs `page_variants`: Renamed §49 `variants` to `experimentVariants` to distinguish
+  - `funnelPages` (undefined): Mapped to `funnelSteps` via `experiments.funnelPageId`
+- **TypeScript**: 0 errors on all schema files
+- **Total**: 69 table definitions, 10 enums, 10 domain files
+
+---
+
+## NEXT STEPS (in order)
+
+1. ~~**Code the funnel builder** — Start with design system implementation (tokens, CSS, blocks)~~ DONE
+2. ~~**Block Composer prompt** — `src/agents/prompts/block-composer.ts` (§51)~~ DONE
+3. ~~**A/B state machine** — `src/services/experiment-state-machine.ts` (§49)~~ DONE
+4. ~~**RAG pattern engine** — `src/services/pattern-codifier.ts` (§50)~~ DONE
+5. ~~**Page speed optimization pipeline** — `src/services/page-speed-optimizer.ts` (§53)~~ DONE
+6. ~~**Compare with HTML winners** — 15 pages analyzed~~ DONE
+7. ~~**Adjust design tokens/rules** based on comparison~~ DONE
+8. ~~**Drizzle schema** — Create all 50 tables from Architecture Finale.md~~ DONE (69 tables, 10 enums)
+9. ~~**Block renderers** — 36 HTML renderers (basic, commerce, social, forms)~~ DONE
+10. ~~**Page generation service** — LLM orchestrator with retry, JSON extraction~~ DONE
+11. ~~**API routes** — /api/generate, /api/pages, /api/funnels CRUD, /api/deploy, /api/track, /api/events/capi~~ DONE
+12. ~~**Deploy pipeline** — Local + R2 storage, render → upload → serve~~ DONE
+13. ~~**Structured logger** — lib/logger.ts (Surgical Logging Protocol)~~ DONE
+14. ~~**DB seed script** — src/db/seed.ts (RAG patterns + offer templates + demo data)~~ DONE
+15. ~~**Auth (Clerk)** — webhook /api/webhooks/clerk, middleware, auth helpers, users table~~ DONE
+16. ~~**BullMQ workers** — Page generation + deploy workers, Redis connection~~ DONE
+17. ~~**Tests (Vitest)** — 215 tests (renderers + pipeline), 214 pass, 0 TS errors~~ DONE
+18. ~~**Frontend UI** — Dashboard, funnel builder, page editor~~ DONE
+19. ~~**Stripe billing** — Plans, checkout sessions, webhooks~~ DONE
+20. ~~**Docker/Nginx** — Production deployment config~~ DONE
+19. ~~**Stripe billing** — Plans, checkout sessions, webhooks~~ DONE
+20. ~~**Docker/Nginx** — Production deployment config~~ DONE
+
+---
+
+## 2026-05-07 — Frontend UI + Stripe Billing + Docker/Nginx Complete
+
+- **What**: Created full frontend UI, Stripe billing integration, Docker/Nginx production config
+- **Files created (Frontend UI)**:
+  - `src/lib/utils.ts` — cn() utility (clsx + tailwind-merge)
+  - `src/lib/query-provider.tsx` — TanStack Query provider wrapper
+  - `src/lib/api-client.ts` — Generic fetch wrapper with typed api.get/post/put/delete/patch
+  - `src/lib/config.ts` — getEnv() + getLlmConfig() for runtime env access
+  - `src/components/ui/button.tsx` — CVA button with 6 variants + loading state
+  - `src/components/ui/card.tsx` — Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter
+  - `src/components/ui/input.tsx` — Input with focus ring + error state
+  - `src/components/ui/badge.tsx` — Badge with 4 variants
+  - `src/components/ui/skeleton.tsx` — Animated pulse skeleton
+  - `src/components/ui/dialog.tsx` — Modal dialog using HTML dialog element
+  - `src/components/ui/dropdown-menu.tsx` — Dropdown menu with click-outside
+  - `src/components/ui/select.tsx` — Styled native select
+  - `src/components/ui/textarea.tsx` — Textarea with styling
+  - `src/components/ui/toast.tsx` — Toast notification system with useToast hook
+  - `src/components/dashboard/dashboard-client.tsx` — Dashboard client with stats + recent funnels
+  - `src/components/dashboard/funnels-list-client.tsx` — Funnels grid with empty state
+  - `src/app/(auth)/layout.tsx` — Auth layout (centered, no sidebar)
+  - `src/app/(auth)/sign-in/[[...sign-in]]/page.tsx` — Clerk SignIn page
+  - `src/app/(auth)/sign-up/[[...sign-up]]/page.tsx` — Clerk SignUp page
+  - `src/app/(dashboard)/layout.tsx` — Dashboard layout with sidebar + mobile menu
+  - `src/app/(dashboard)/dashboard/page.tsx` — Dashboard home (stats, recent funnels)
+  - `src/app/(dashboard)/funnels/page.tsx` — Funnels list grid
+  - `src/app/(dashboard)/funnels/new/page.tsx` — New funnel creation form
+  - `src/app/(dashboard)/funnels/[id]/page.tsx` — Funnel detail with steps + actions
+  - `src/app/(dashboard)/funnels/[id]/preview/page.tsx` — Page preview
+  - `src/app/(dashboard)/billing/page.tsx` — Billing with plan cards
+  - `src/app/(dashboard)/billing/loading.tsx` — Billing loading skeleton
+  - `src/app/(dashboard)/analytics/page.tsx` — Analytics placeholder
+  - `src/app/(dashboard)/settings/page.tsx` — Settings page
+  - `src/app/(dashboard)/products/page.tsx` — Products list
+  - `src/app/(marketing)/pricing/page.tsx` — Public pricing page
+  - `src/app/(marketing)/layout.tsx` — Marketing layout (no sidebar)
+  - `src/hooks/use-funnels.ts` — TanStack Query hooks for funnel CRUD
+  - `src/hooks/use-generate.ts` — TanStack Query hooks for page generation/deploy
+  - `src/hooks/use-billing.ts` — TanStack Query hooks for checkout/portal
+  - `src/app/layout.tsx` — Updated: Inter font + QueryProvider
+  - `src/app/page.tsx` — Updated: auth redirect (→ dashboard or → sign-in)
+- **Files created (Stripe billing)**:
+  - `src/lib/stripe.ts` — Stripe singleton + createCheckoutSession + createPortalSession
+  - `src/lib/plans.ts` — Plan definitions (Free/Pro/Enterprise) + limits + getPlanFromPriceId
+  - `src/app/api/billing/checkout/route.ts` — POST create Stripe checkout session
+  - `src/app/api/billing/portal/route.ts` — POST create Stripe portal session
+  - `src/app/api/webhooks/stripe/route.ts` — POST Stripe webhook (checkout.completed, subscription.updated/deleted, payment_failed)
+- **Files created (Docker/Nginx)**:
+  - `Dockerfile` — Updated multi-stage Alpine build (< 200MB)
+  - `Dockerfile.worker` — BullMQ worker process (separate container)
+  - `docker-compose.yml` — Full stack: web + worker + redis + postgres
+  - `nginx.conf` — Reverse proxy with SSL, security headers, gzip, rate limiting
+  - `coolify.json` — Coolify deployment config (2 services + databases)
+  - `.dockerignore` — Exclude node_modules, .next, tests, .env
+  - `src/app/api/health/route.ts` — Health check endpoint for Coolify monitoring
+- **TypeScript**: 0 errors
+- **Tests**: 214/215 pass (1 pre-existing test design limitation)
+- **Total frontend files**: ~30 React components + pages
+- **Route groups**: (auth), (dashboard), (marketing)

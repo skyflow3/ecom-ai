@@ -25,6 +25,9 @@ import {
 import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 
+// WHY: Clerk is optional during initial deploy — show placeholder if not configured
+const hasClerk = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
 // ─── Sidebar Navigation Items ───────────────────────────────────────────────
 
 const NAV_ITEMS = [
@@ -120,9 +123,13 @@ export default function DashboardLayout({
           {/* Desktop: spacer to align user button right */}
           <div className="hidden lg:block" />
 
-          {/* User avatar */}
+          {/* User avatar — conditional on Clerk being configured */}
           <div className="flex items-center gap-3">
-            <UserButton afterSignOutUrl="/sign-in" />
+            {hasClerk ? (
+              <UserButton afterSignOutUrl="/sign-in" />
+            ) : (
+              <div className="h-8 w-8 rounded-full bg-gray-300" title="Auth not configured" />
+            )}
           </div>
         </header>
 

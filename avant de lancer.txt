@@ -1,0 +1,67 @@
+preparer bien tous les prompt a envoyer avant de lancer un projet, que tous soit optimizer pour une ia sans memoire les debug ect voir tous les prompt dans C:\Users\Admin\Desktop\AI & SAAS\PROMPT ET .MD A DONNER A LIA AVANT DE COMMENCER NIMPORTE QUEL PROJET et dans C:\Users\Admin\Desktop\AI & SAAS
+
+donner a lia qui va coder tous les dossier de projet ai-factory, god-awnser v1 et v2, alpha detector .. les bloc note de ai factory, de gode answer...
+
+
+Voir Mon WhatsApp et mettre Tous a jour
+
+ASKIP IL NE FAUT PAS FUSUIONNER REGARDE CE QUIL A DIT EN DESSOUS 
+
+prendre tous les google doc et notepad pour les mettre dans ecom ai
+
+Poser toutes Les questions quil reste a ai agents et ai prompt Lui demander sil ya des choses utiles a faire maintenant avant de lancer et Les questions que je devrais garder pour the reposer une fois en production. FAIRE PAREIL AVEC ai prompts.
+
+pour ai prompts apres lui avoir poser les questions,  lui demander  sil reste des choses a faire avant de fusionner avec C:\Users\Admin\God-anwser-ai-agent
+
+Finir testing prompt puis preparer leur fusion ai agent et ai prompt
+
+donner les videos youtube et TikTok a propos de la creation de video ads pour que lia qui va coder ai des idees de la Meilleur facon de le faire.
+
+remplir le &&&ECOM AI + IDEES DE BUSINESS AI avec mes autres bloc note, lui donner mes google doc ecom subscription ect et lui demander sil ya des choses interessante a rajouter dans notre &&&ECOM AI + IDEES DE BUSINESS AI peut etre quil faut dabord remettre au propre le &&&ECOM AI + IDEES DE BUSINESS AI.
+
+egalement lui donner acces aux videos TikTok, videos youtube, et transcript videos youtube liker/playlist pour voir les methodes quil prefere pour les noter, il peut egalement en noter plusieurs sil voit des a/b testing de technique a utilizer pour voir laquel est la Meilleur, ca peut etre meme plus de 2 technique en testing. 
+
+
+● Non. Ne fusionne rien. Voici pourquoi:
+
+  Les 3 projets ont des rôles différents
+
+  testing-ai-prompt (LAB)          God-anwser-ai-agent (AGENT SYSTEM)
+  ├── Tester des prompts           ├── 7 agents autonomes 24/7
+  ├── Juger la qualité             ├── Scheduler + monitors
+  ├── Trouver les champions        ├── Décisions business en temps réel
+  ├── Video AI (p0/p2/p3)          ├── Déployé sur Hetzner/Coolify
+  └── R&D seulement                └── PROD — ne pas toucher
+
+          ↓ champions copiés ↓
+
+  ECOM-AI (PRODUCTION HUB)
+  ├── Tools (Hyperframes)
+  ├── Architecture docs
+  ├── Prompts de production (copiés du lab)
+  └── Video pipeline (à construire)
+
+  Pourquoi PAS de fusion
+
+  1. God-anwser est déployé — 101MB Docker sur Hetzner, tourne 24/7. Tu touches pas un système en prod pour y mettre des fichiers de R&D.
+  2. testing-ai-prompt est structuré — CLAUDE.md, judges, winners, résultats. Ça marche. Si tu merges, tu casses la structure.
+  3. Ils partagent déjà le savoir — même méthodologie juge, même infrastructure API. Mais les codes Python sont séparés parce que les USE CASES sont
+  différents (lab vs agents autonomes).
+  4. ECOM-AI est le chaînon manquant — c'est lui qui doit recevoir les outputs des deux autres, pas les absorber.
+
+  Ce qu'il FAUT faire (dans l'ordre)
+
+  Étape 1 — Rien à merger. Le lab et l'agent system restent séparés.
+
+  Étape 2 — Nettoyer ECOM-AI:
+  - Supprimer Research_ai_video.txt (doublon)
+  - Ajouter un CLAUDE.md
+  - Créer tools/video-pipeline/ pour le script de production vidéo
+
+  Étape 3 — Copier les champions du lab vers ECOM-AI:
+  - p2 validé → ECOM-AI/Agent-Intelligence/03-System-Prompts/Prompt-Video-AI-Adapter.md
+  - Champions copywriting → déjà dans les system prompts de God-anwser
+
+  Le flux c'est: lab trouve → ECOM-AI reçoit → production utilise.
+
+  Tu veux que je nettoie ECOM-AI maintenant? C'est juste du ménage (supprimer doublons, ajouter CLAUDE.md, organiser les dossiers).
