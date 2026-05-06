@@ -4,6 +4,12 @@
  * Related: coolify.json, Dockerfile
  */
 
+/**
+ * Purpose: Health check endpoint for Coolify/Docker monitoring
+ * Dependencies: none
+ * Related: Dockerfile, Coolify healthcheck config
+ */
+
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -11,8 +17,5 @@ export async function GET() {
     status: "ok",
     timestamp: new Date().toISOString(),
     version: process.env.npm_package_version || "0.1.0",
-    debug: {
-      allKeys: Object.keys(process.env).sort(),
-    },
   });
 }
