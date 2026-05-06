@@ -32,9 +32,13 @@ RUN npm run build
 # ── Stage 3: Production runner ──
 FROM node:22-alpine AS runner
 WORKDIR /app
-ENV NODE_ENV=production
 
-# WHY: curl needed for Coolify healthcheck, ca-certificates for HTTPS
+# WHY: Node 22 prefers IPv6 — force IPv4 first so healthcheck (wget/curl on 127.0.0.1) works
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV NODE_OPTIONS="--dns-result-order=ipv4first"
+
+# WHY: curl for Coolify healthcheck, net-tools for debugging
 RUN apk add --no-cache curl ca-certificates
 
 # WHY: Non-root user for security (Coolify requirement)
@@ -48,8 +52,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 EXPOSE 3000
-ENV PORT=3000
 
-# WHY: Docker overrides HOSTNAME with container ID at runtime.
-#      Next.js standalone uses HOSTNAME to bind — must be 0.0.0.0 for healthcheck.
+# WHY: Docker overrides ENV HOSTNAME with container ID at runtime,
+#      so we force HOSTNAME=0.0.0.0 in CMD to make Next.js bind to all interfaces.
+#      NODE_OPTIONS forces IPv4 to match Coolify's wget/curl healthcheck.
 CMD ["sh", "-c", "HOSTNAME=0.0.0.0 node server.js"]
