@@ -48,7 +48,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 EXPOSE 3000
-ENV PORT=3000 HOSTNAME="0.0.0.0"
+ENV PORT=3000
 
-# WHY: standalone output creates server.js at root
-CMD ["node", "server.js"]
+# WHY: Docker overrides HOSTNAME with container ID at runtime.
+#      Next.js standalone uses HOSTNAME to bind — must be 0.0.0.0 for healthcheck.
+CMD ["sh", "-c", "HOSTNAME=0.0.0.0 node server.js"]
