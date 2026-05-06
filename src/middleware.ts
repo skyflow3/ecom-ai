@@ -15,6 +15,10 @@
 
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
+// WHY: Clerk is optional during initial deploy. If CLERK_SECRET_KEY is empty,
+//      we skip auth middleware entirely so the app can start without Clerk configured.
+const hasClerk = !!process.env.CLERK_SECRET_KEY;
+
 /**
  * Routes that require authentication.
  * Everything else is public by default.
@@ -35,6 +39,11 @@ const isIgnoredRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, request) => {
+  // WHY: If Clerk is not configured, skip all auth checks
+  if (!hasClerk) {
+    return;
+  }
+
   // WHY: Ignored routes bypass Clerk entirely — no session cookie parsing
   if (isIgnoredRoute(request)) {
     return;

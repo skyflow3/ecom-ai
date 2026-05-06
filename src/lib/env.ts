@@ -8,48 +8,48 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  // Database
-  DATABASE_URL: z.string().url(),
+  // Database (REQUIRED — app won't start without it)
+  DATABASE_URL: z.string().min(1),
 
-  // Auth (Clerk)
-  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
-  CLERK_SECRET_KEY: z.string().min(1),
-  CLERK_WEBHOOK_SECRET: z.string().min(1),
+  // Auth (Clerk) — optional during initial deploy, required for auth features
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().default(""),
+  CLERK_SECRET_KEY: z.string().default(""),
+  CLERK_WEBHOOK_SECRET: z.string().default(""),
 
-  // Redis (Upstash)
-  UPSTASH_REDIS_REST_URL: z.string().url(),
-  UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
+  // Redis (Upstash) — optional, required for background jobs
+  UPSTASH_REDIS_REST_URL: z.string().default(""),
+  UPSTASH_REDIS_REST_TOKEN: z.string().default(""),
 
-  // Email (Resend)
-  RESEND_API_KEY: z.string().min(1),
+  // Email (Resend) — optional, required for email features
+  RESEND_API_KEY: z.string().default(""),
 
-  // Stripe
-  STRIPE_SECRET_KEY: z.string().min(1),
-  STRIPE_WEBHOOK_SECRET: z.string().min(1),
-  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
+  // Stripe — optional, required for billing
+  STRIPE_SECRET_KEY: z.string().default(""),
+  STRIPE_WEBHOOK_SECRET: z.string().default(""),
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().default(""),
 
-  // BullMQ (Redis)
-  REDIS_HOST: z.string().min(1),
+  // BullMQ (Redis) — optional, required for background jobs
+  REDIS_HOST: z.string().default("localhost"),
   REDIS_PORT: z.coerce.number().default(6379),
 
-  // Meta API
-  META_ACCESS_TOKEN: z.string().min(1),
-  META_AD_ACCOUNT_ID: z.string().min(1),
-  META_APP_ID: z.string().min(1),
-  META_APP_SECRET: z.string().min(1),
+  // Meta API — optional, required for ads features
+  META_ACCESS_TOKEN: z.string().default(""),
+  META_AD_ACCOUNT_ID: z.string().default(""),
+  META_APP_ID: z.string().default(""),
+  META_APP_SECRET: z.string().default(""),
 
   // AI (Content Production)
-  MIMO_API_KEY: z.string().min(1).optional(),
-  MIMO_API_URL: z.string().url().optional(),
-  DEEPSEEK_API_KEY: z.string().min(1).optional(),
-  DEEPSEEK_API_URL: z.string().url().optional(),
+  MIMO_API_KEY: z.string().default(""),
+  MIMO_API_URL: z.string().default("https://api.mimo.vn/v1/chat/completions"),
+  DEEPSEEK_API_KEY: z.string().default(""),
+  DEEPSEEK_API_URL: z.string().default("https://api.deepseek.com/v1/chat/completions"),
 
   // Storage (Supabase)
-  SUPABASE_URL: z.string().url().optional(),
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
+  SUPABASE_URL: z.string().default(""),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().default(""),
 
   // App
-  NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3000"),
+  NEXT_PUBLIC_APP_URL: z.string().default("http://localhost:3000"),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 });
 
