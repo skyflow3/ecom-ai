@@ -17,6 +17,7 @@ judges/
 docs/
 winners/
 prompts/
+!src/agents/prompts/
 results/
 
 # Large binary files
