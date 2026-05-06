@@ -1,0 +1,14 @@
+/**
+ * Purpose: Root page — redirects based on auth status
+ * Dependencies: @clerk/nextjs/server
+ * Related: src/app/(dashboard)/layout.tsx, src/app/(auth)/sign-in/page.tsx
+ */
+
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+
+export default async function Home() {
+  const user = await currentUser();
+  if (user) redirect("/dashboard");
+  redirect("/sign-in");
+}

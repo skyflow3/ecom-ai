@@ -1,0 +1,40 @@
+node_modules
+.next
+.env
+.env.*
+!.env.example
+*.log
+coverage
+dist
+.turbo
+
+# Large non-code folders
+Agent-Intelligence/
+tools/
+output/
+info/
+judges/
+docs/
+winners/
+prompts/
+results/
+
+# Large binary files
+*.safetensors
+*.pyc
+__pycache__/
+*.txt.bak
+
+# Non-essential docs (too large for GitHub)
+"Agent Prompt Architecture.md"
+"Architecture Finale.md"
+"avant de lancer.txt"
+"Handover_Guide.md"
+"CHAMPION-PROMPTS-DEPLOY.md"
+"PLAN-DESIGN-SYSTEM.md"
+verify_consistency.py
+media_executor.py
+media_env.example
+content_producer.py
+"Klein-consistency.safetensors"
+"f2k_consist_20260225.safetensors"

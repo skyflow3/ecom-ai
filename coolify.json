@@ -1,0 +1,76 @@
+/**
+ * Purpose: Coolify deployment configuration
+ * Dependencies: Coolify platform (self-hosted PaaS on Hetzner)
+ * Related: Dockerfile, docker-compose.yml, nginx.conf
+ *
+ * WHY: Coolify needs to know which services to deploy, how to build them,
+ *      and how to route traffic. This file tells Coolify:
+ *      - 2 services: web (Next.js) + worker (BullMQ)
+ *      - Shared Redis + Postgres (managed by Coolify)
+ *      - Environment variables needed
+ *      - Health check endpoints
+ */
+{
+  "version": "1.0",
+  "services": {
+    "web": {
+      "build": {
+        "dockerfile": "Dockerfile"
+      },
+      "port": 3000,
+      "healthcheck": {
+        "path": "/api/health",
+        "interval": 30,
+        "timeout": 10
+      },
+      "resources": {
+        "memory": "512MB",
+        "cpu": "0.5"
+      }
+    },
+    "worker": {
+      "build": {
+        "dockerfile": "Dockerfile.worker"
+      },
+      "resources": {
+        "memory": "512MB",
+        "cpu": "0.5"
+      }
+    }
+  },
+  "databases": {
+    "postgres": {
+      "version": "16"
+    },
+    "redis": {
+      "version": "7"
+    }
+  },
+  "environment": {
+    "required": [
+      "DATABASE_URL",
+      "CLERK_SECRET_KEY",
+      "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+      "CLERK_WEBHOOK_SECRET",
+      "UPSTASH_REDIS_REST_URL",
+      "UPSTASH_REDIS_REST_TOKEN",
+      "STRIPE_SECRET_KEY",
+      "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+      "STRIPE_WEBHOOK_SECRET",
+      "REDIS_HOST",
+      "REDIS_PORT",
+      "NEXT_PUBLIC_APP_URL"
+    ],
+    "optional": [
+      "RESEND_API_KEY",
+      "META_ACCESS_TOKEN",
+      "META_AD_ACCOUNT_ID",
+      "MIMO_API_KEY",
+      "MIMO_API_URL",
+      "DEEPSEEK_API_KEY",
+      "DEEPSEEK_API_URL",
+      "SUPABASE_URL",
+      "SUPABASE_SERVICE_ROLE_KEY"
+    ]
+  }
+}
