@@ -7,15 +7,17 @@
  *      The app can start and serve healthcheck/basic routes without a DB connection.
  */
 
-import { drizzle } from "drizzle-orm/postgres-js";
+import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "@/db/schema";
 
-let _db: ReturnType<typeof drizzle> | null = null;
+type DbClient = PostgresJsDatabase<typeof schema>;
+
+let _db: DbClient | null = null;
 let _client: ReturnType<typeof postgres> | null = null;
 
 // WHY: Lazy getter — only connects when first accessed, not at import time
-function getDb() {
+function getDb(): DbClient {
   if (!_db) {
     const connectionString = process.env.DATABASE_URL;
     if (!connectionString) {
@@ -29,10 +31,16 @@ function getDb() {
   return _db;
 }
 
-// WHY: Export as getter so `import { db }` still works via Proxy
-//      but connection is only created when db is actually used
-export const db = new Proxy({} as ReturnType<typeof drizzle>, {
+// WHY: Getter-based lazy init — preserves full TypeScript type inference
+//      while deferring connection until first actual query
+export const db: DbClient = new Proxy({} as DbClient, {
   get(_, prop) {
-    return (getDb() as any)[prop];
+    const actual = getDb();
+    const value = (actual as any)[prop];
+    // WHY: Bind methods so `db.query.xxx.findFirst()` works
+    if (typeof value === "function") {
+      return value.bind(actual);
+    }
+    return value;
   },
 });

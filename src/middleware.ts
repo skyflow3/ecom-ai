@@ -18,7 +18,7 @@
  */
 
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import type { NextRequest, NextFetchEvent } from "next/server";
 
 // WHY: Both keys must be present for Clerk to work properly.
 //      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is baked at build time (Docker ARG).
@@ -41,7 +41,10 @@ function matchesPatterns(pathname: string, patterns: string[]): boolean {
   return patterns.some((p) => pathname.startsWith(p));
 }
 
-export default async function middleware(request: NextRequest) {
+export default async function middleware(
+  request: NextRequest,
+  event: NextFetchEvent
+) {
   // WHY: If Clerk is not configured, skip all auth — passthrough
   if (!hasClerk) {
     return NextResponse.next();
@@ -64,7 +67,7 @@ export default async function middleware(request: NextRequest) {
       }
     });
 
-    return middleware(request);
+    return middleware(request, event);
   } catch (error) {
     // WHY: If Clerk fails (invalid key, API unreachable), log and passthrough
     //      rather than returning 500 on every route
