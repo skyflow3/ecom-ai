@@ -59,7 +59,12 @@ function validateEnv(): Env {
   const parsed = envSchema.safeParse(process.env);
   if (!parsed.success) {
     const missing = parsed.error.issues.map((i) => i.path.join(".")).join(", ");
-    throw new Error(`Missing env vars: ${missing}`);
+    // WHY: Log warning instead of crashing — allows healthcheck and basic routes
+    //      to work even if some env vars are missing
+    console.error(`[env] Missing env vars: ${missing}`);
+    // WHY: Return a partial env with defaults so the app can start
+    //      Routes that need the missing vars will fail individually
+    return envSchema.parse({});
   }
   return parsed.data;
 }

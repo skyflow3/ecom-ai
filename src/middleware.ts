@@ -1,11 +1,15 @@
 /**
  * Purpose: Clerk middleware — route protection for ECOM-AI
- * Dependencies: @clerk/nextjs/server
+ * Dependencies: @clerk/nextjs/server, next/server
  * Related: src/lib/auth.ts, src/app/api/webhooks/clerk/route.ts
  *
  * WHY: Public routes (tracking, deployed pages, webhooks) must work without auth.
  *      Protected routes (funnels CRUD, generate, deploy) require a signed-in user.
  *      Clerk middleware handles this declaratively.
+ *
+ * WHY: Clerk is loaded dynamically to prevent crashes when keys are missing/invalid.
+ *      If CLERK_SECRET_KEY or NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is not set,
+ *      all routes are public (passthrough middleware).
  *
  * ROUTE POLICY:
  *   PUBLIC  — /, /api/webhooks/*, /api/track/*, /api/events/*, /api/pages/*
@@ -13,47 +17,61 @@
  *   IGNORED — /api/webhooks/* (Clerk needs raw body, no auth check)
  */
 
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-// WHY: Clerk is optional during initial deploy. If CLERK_SECRET_KEY is empty,
-//      we skip auth middleware entirely so the app can start without Clerk configured.
-const hasClerk = !!process.env.CLERK_SECRET_KEY;
-
-/**
- * Routes that require authentication.
- * Everything else is public by default.
- */
-const isProtectedRoute = createRouteMatcher([
-  "/api/funnels(.*)",
-  "/api/generate(.*)",
-  "/api/deploy(.*)",
-]);
+// WHY: Both keys must be present for Clerk to work properly.
+//      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is baked at build time (Docker ARG).
+//      CLERK_SECRET_KEY is a runtime env var.
+const hasClerk =
+  !!process.env.CLERK_SECRET_KEY &&
+  !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 /**
- * Routes Clerk should ignore entirely (no session injection).
- * WHY: Webhooks need the raw request body for signature verification.
- *      Clerk middleware parses the body, which breaks svix verification.
+ * Protected routes that require authentication.
  */
-const isIgnoredRoute = createRouteMatcher([
-  "/api/webhooks(.*)",
-]);
+const PROTECTED_PATTERNS = ["/api/funnels", "/api/generate", "/api/deploy"];
 
-export default clerkMiddleware(async (auth, request) => {
-  // WHY: If Clerk is not configured, skip all auth checks
+/**
+ * Ignored routes — Clerk should not process these at all.
+ */
+const IGNORED_PATTERNS = ["/api/webhooks"];
+
+function matchesPatterns(pathname: string, patterns: string[]): boolean {
+  return patterns.some((p) => pathname.startsWith(p));
+}
+
+export default async function middleware(request: NextRequest) {
+  // WHY: If Clerk is not configured, skip all auth — passthrough
   if (!hasClerk) {
-    return;
+    return NextResponse.next();
   }
 
   // WHY: Ignored routes bypass Clerk entirely — no session cookie parsing
-  if (isIgnoredRoute(request)) {
-    return;
+  if (matchesPatterns(request.nextUrl.pathname, IGNORED_PATTERNS)) {
+    return NextResponse.next();
   }
 
-  // WHY: Protected routes redirect unauthenticated users to sign-in
-  if (isProtectedRoute(request)) {
-    await auth.protect();
+  // WHY: Dynamic import prevents crash if Clerk library fails to initialize
+  try {
+    const { clerkMiddleware } = await import("@clerk/nextjs/server");
+
+    // WHY: Create a fresh clerkMiddleware instance and wrap our logic
+    const middleware = clerkMiddleware(async (auth) => {
+      // WHY: Protected routes redirect unauthenticated users to sign-in
+      if (matchesPatterns(request.nextUrl.pathname, PROTECTED_PATTERNS)) {
+        await auth.protect();
+      }
+    });
+
+    return middleware(request);
+  } catch (error) {
+    // WHY: If Clerk fails (invalid key, API unreachable), log and passthrough
+    //      rather than returning 500 on every route
+    console.error("[middleware] Clerk initialization failed:", error);
+    return NextResponse.next();
   }
-});
+}
 
 export const config = {
   matcher: [
