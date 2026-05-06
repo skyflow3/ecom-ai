@@ -34,6 +34,9 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
+# WHY: curl needed for Coolify healthcheck, ca-certificates for HTTPS
+RUN apk add --no-cache curl ca-certificates
+
 # WHY: Non-root user for security (Coolify requirement)
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
