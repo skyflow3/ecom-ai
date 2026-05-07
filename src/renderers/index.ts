@@ -1,6 +1,6 @@
 /**
  * Purpose: Block renderer registry — imports all renderers and registers them
- *          with the blockRegistry singleton. Import this file once at startup.
+ *          with the blockRegistry singleton. Also contains the full-page renderer.
  * Dependencies: blocks.ts (blockRegistry, BlockDef), all renderer files
  * Related: Architecture Finale.md §51 (Render pipeline)
  *
@@ -12,6 +12,7 @@
 
 import { blockRegistry, type BlockDef } from '../design-system/blocks';
 import type { Block } from '../design-system/blocks';
+import type { BlockTree } from '../design-system/blocks';
 
 // ─── Import all renderers ─────────────────────────────────────────────────────
 
@@ -36,9 +37,22 @@ import {
   renderTrustBadges, renderProductCarousel, renderForm, renderQuizStep,
 } from './social-forms';
 
+import {
+  renderEditorialHeader, renderBreadcrumb, renderByline,
+  renderStickyCta, renderEditorialSectionHeading, renderAuthorCta,
+} from './editorial-blocks';
+
 // ─── Register all blocks ─────────────────────────────────────────────────────
 
 const ALL_BLOCKS: BlockDef[] = [
+  // Editorial (advertorial/news-style)
+  { type: 'editorial-header', category: 'editorial', label: 'Editorial Header', render: renderEditorialHeader },
+  { type: 'breadcrumb', category: 'editorial', label: 'Breadcrumb', render: renderBreadcrumb },
+  { type: 'byline', category: 'editorial', label: 'Byline', render: renderByline },
+  { type: 'editorial-heading', category: 'editorial', label: 'Section Heading', render: renderEditorialSectionHeading },
+  { type: 'author-cta', category: 'editorial', label: 'Author CTA', render: renderAuthorCta },
+  { type: 'sticky-cta', category: 'editorial', label: 'Sticky CTA', render: renderStickyCta },
+
   // Basic
   { type: 'hero', category: 'basic', label: 'Hero', render: renderHero },
   { type: 'heading', category: 'basic', label: 'Heading', render: renderHeading },
@@ -91,44 +105,195 @@ for (const def of ALL_BLOCKS) {
   blockRegistry.register(def);
 }
 
-// ─── Full Page Render ────────────────────────────────────────────────────────
+// ─── UTF-8 Text Normalization ────────────────────────────────────────────────
 
-import type { BlockTree } from '../design-system/blocks';
+/**
+ * Fix common UTF-8 encoding corruptions that happen when text passes through
+ * PostgreSQL JSON columns or HTTP transfers.
+ *
+ * WHY: Em dashes (—) often render as â€" when UTF-8 bytes are misinterpreted
+ *      as Windows-1252. This function fixes the most common corruptions.
+ */
+function normalizeUtf8(text: string): string {
+  return text
+    // Fix em dash corruptions
+    .replace(/\u00E2\u20AC\u201C/g, '\u2014')  // â€" → —
+    .replace(/\u00E2\u20AC\u201D/g, '\u2014')  // â€" → —
+    // Fix smart quote corruptions
+    .replace(/\u00E2\u20AC\u02DC/g, '\u2018')  // â€˜ → '
+    .replace(/\u00E2\u20AC\u2122/g, '\u2019')  // â€™ → '
+    .replace(/\u00E2\u20AC\u0153/g, '\u201C')  // â€œ → "
+    .replace(/\u00E2\u20AC\u009D/g, '\u201D')  // â€\u009d → "
+    // Fix other common corruptions
+    .replace(/\u00E2\u20AC\u00A2/g, '\u2022')  // â€¢ → •
+    .replace(/\u00E2\u20AC\u00A6/g, '\u2026')  // â€¦ → …
+    .replace(/\u00C2\u00A0/g, '\u00A0')         // Â\u00A0 → non-breaking space
+    // Ensure clean UTF-8 for common special chars
+    .replace(/â€"/g, '\u2014')                   // â€" → — (fallback)
+    .replace(/â€™/g, '\u2019')                    // â€™ → ' (fallback)
+    .replace(/â€œ/g, '\u201C')                   // â€œ → " (fallback)
+    .replace(/â€/g, '\u201D');                    // â€\u009d → " (fallback)
+}
+
+// ─── Page-type-specific max-widths ────────────────────────────────────────────
+
+const PAGE_MAX_WIDTHS: Record<string, string> = {
+  'advertorial': '720px',
+  'product-page': '1024px',
+  'vsl': '960px',
+  'checkout': '520px',
+  'upsell': '520px',
+  'downsell': '520px',
+  'optin': '640px',
+  'quiz': '640px',
+  'thank-you': '640px',
+  'bridge': '720px',
+};
+
+// ─── Pro Design System CSS ───────────────────────────────────────────────────
+
+/**
+ * Production-quality CSS inspired by winning DTC pages (SmoothSpire, Rejuvera).
+ * Designed for mobile-first with editorial advertorial focus.
+ */
+const PRO_CSS = `
+  /* ─── Reset & Base ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #1B1B1B;
+    background: #FFFFFF;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+  img, video { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { cursor: pointer; border: none; background: none; font-family: inherit; }
+  p { margin-bottom: 1em; }
+  p:last-child { margin-bottom: 0; }
+  ul, ol { padding-left: 1.5em; }
+  strong, b { font-weight: 700; }
+  em, i { font-style: italic; }
+
+  /* ─── Section Layout ─── */
+  .ec-section {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 16px;
+  }
+  .ec-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* Alternating section backgrounds for visual rhythm */
+  .ec-section:nth-child(even) {
+    background-color: #fafbfc;
+  }
+
+  /* ─── Typography ─── */
+  h1, h2, h3 { line-height: 1.2; }
+
+  /* ─── Buttons ─── */
+  .ec-btn-primary {
+    background: linear-gradient(135deg, #2D6A4F 0%, #1a5c3a 100%);
+    color: #FFFFFF;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 4px 14px rgba(45, 106, 79, 0.35);
+  }
+  .ec-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(45, 106, 79, 0.45);
+  }
+  .ec-btn-primary:active {
+    transform: scale(0.97);
+  }
+  .ec-btn-urgency {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: #FFFFFF;
+    animation: ec-cta-pulse 2.5s ease-in-out infinite;
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
+  }
+  .ec-btn-secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+  }
+
+  @keyframes ec-cta-pulse {
+    0%, 100% { box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4); }
+    50% { box-shadow: 0 4px 28px rgba(220, 38, 38, 0.6); }
+  }
+
+  /* ─── Visibility ─── */
+  .ec-mobile-only { }
+  .ec-desktop-only { display: none; }
+  @media (min-width: 768px) {
+    .ec-mobile-only { display: none; }
+    .ec-desktop-only { display: block; }
+    .ec-section { padding: 24px; }
+  }
+
+  /* ─── Scrollbar hide for carousels ─── */
+  .ec-carousel-track::-webkit-scrollbar,
+  .ec-reviews-carousel::-webkit-scrollbar { display: none; }
+
+  /* ─── Safe area for sticky CTA spacing ─── */
+  body { padding-bottom: 80px; }
+  @media (min-width: 768px) { body { padding-bottom: 0; } }
+`.trim();
+
+// ─── Full Page Render ────────────────────────────────────────────────────────
 
 /**
  * Render a complete HTML page from a BlockTree.
- * Includes: DOCTYPE, head with CSS variables, body with rendered blocks.
+ * Includes: DOCTYPE, head with pro CSS + charset, body with rendered blocks.
+ * Encoding: Explicitly normalizes UTF-8 and sets charset everywhere.
  */
 export function renderFullPage(tree: BlockTree, palette: string = 'health-warm'): string {
+  const pageType = tree.pageType ?? 'advertorial';
+  const maxWidth = PAGE_MAX_WIDTHS[pageType] ?? '720px';
+
   const blockHtml = tree.blocks.map(block => {
     try {
       return blockRegistry.render(block);
     } catch (err) {
-      // WHY: A single bad block shouldn't crash the entire page
       console.error(`[renderer] Block "${block.type}" (${block.id}) failed:`, err);
       return `<!-- Block "${block.type}" render failed -->`;
     }
   }).join('\n');
+
+  // Normalize the entire HTML output for UTF-8 consistency
+  const normalizedHtml = normalizeUtf8(blockHtml);
+
+  // Override container max-width based on page type
+  const containerOverride = `
+    .ec-container { max-width: ${maxWidth}; }
+    @media (min-width: 768px) { .ec-container { max-width: ${maxWidth}; } }
+    @media (min-width: 1024px) { .ec-container { max-width: ${maxWidth}; } }
+  `;
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeSimple(tree.metadata.title)}</title>
-  <meta name="description" content="${escapeSimple(tree.metadata.description || '')}">
-  <meta property="og:title" content="${escapeSimple(tree.metadata.title)}">
-  <meta property="og:description" content="${escapeSimple(tree.metadata.description || '')}">
+  <title>${escapeSimple(normalizeUtf8(tree.metadata.title))}</title>
+  <meta name="description" content="${escapeSimple(normalizeUtf8(tree.metadata.description || ''))}">
+  <meta property="og:title" content="${escapeSimple(normalizeUtf8(tree.metadata.title))}">
+  <meta property="og:description" content="${escapeSimple(normalizeUtf8(tree.metadata.description || ''))}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; color: var(--color-text); background: var(--color-bg); -webkit-font-smoothing: antialiased; }
-    img, video { max-width: 100%; height: auto; display: block; }
-    a { color: inherit; text-decoration: none; }
-    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    ${PRO_CSS}
 
-    /* Palette: ${palette} — replace with actual palette CSS vars from tokens */
+    /* Container override for page type: ${pageType} */
+    ${containerOverride}
+
+    /* Palette: ${palette} */
     :root {
       --color-primary: #2D6A4F;
       --color-secondary: #40916C;
@@ -142,21 +307,10 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
       --font-heading: 'DM Serif Display', serif;
       --font-body: 'Inter', sans-serif;
     }
-
-    /* Shared section styles */
-    .ec-section { box-sizing: border-box; width: 100%; margin: 0; padding: 16px; }
-    .ec-container { max-width: 480px; margin: 0 auto; }
-    @media (min-width: 768px) { .ec-section { padding: 24px; } .ec-container { max-width: 720px; } }
-    @media (min-width: 1024px) { .ec-container { max-width: 960px; } }
-
-    /* Visibility */
-    .ec-mobile-only { }
-    .ec-desktop-only { display: none; }
-    @media (min-width: 768px) { .ec-mobile-only { display: none; } .ec-desktop-only { display: block; } }
   </style>
 </head>
 <body>
-${blockHtml}
+${normalizedHtml}
 </body>
 </html>`;
 }

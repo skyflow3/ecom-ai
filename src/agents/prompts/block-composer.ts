@@ -240,6 +240,130 @@ When you receive a marketing angle, inject it as follows:
 CRITICAL RULE: DO NOT rename or rephrase the angle's core message.
 Use the EXACT words from the marketing angle. Your job is COMPOSITION, not copywriting.`;
 
+// ─── Advertorial-specific content guide ───────────────────────────────────────
+
+PAGE_CONTENT_GUIDES['advertorial'] = `## ADVERTORIAL CONTENT GUIDE (News-Style Editorial Page)
+
+EMOTIONAL FLOW: Curiosity → Pain Agitation → Discovery → Proof → Urgency → Action
+
+CRITICAL: This page must look like a NEWS ARTICLE, not a sales page.
+It needs editorial blocks that create the "article" feel.
+
+REQUIRED BLOCK SEQUENCE:
+1. editorial-header — Logo + "Trending in [Category]" badge
+2. breadcrumb — "Home > Category > Product" (desktop only)
+3. hero — Headline ONLY (NO CTA button, NO background image). Editorial style.
+4. byline — Author avatar + name + credentials + date + "Verified Author" badge
+5. body-text — Pain section (2-3 short paragraphs)
+6. image — Product/in-use image OR video
+7. body-text — Story/discovery section (multiple paragraphs, use \\n\\n to separate)
+8. editorial-heading — Section heading like "THE MIND BLOWING DISCOVERY"
+9. body-text — More editorial content
+10. author-cta — Mid-article CTA card with product mention + rating + button
+11. benefits-list — Key benefits with icons
+12. testimonial — Customer story
+13. social-proof — Customer count
+14. bundle-offers — Pricing tiers
+15. guarantee — Money-back guarantee
+16. button — Final CTA (full width, primary variant)
+17. body-text — Urgency text (stock running out)
+18. trust-badges — SSL, Made in USA, GMP, etc.
+19. sticky-cta — Fixed bottom CTA bar (mobile only, shows urgency text)
+
+EDITORIAL STYLE RULES:
+- Body text: SHORT paragraphs (2-3 lines max). Use \\n\\n between paragraphs.
+  The renderer splits on double-newline to create proper <p> tags.
+- Use **bold** for emphasis on key phrases (the renderer converts this to <strong>)
+- Section headings should be ALL CAPS or Title Case (e.g., "THE REAL ROOT CAUSE")
+- Headline: max 80 chars, use pattern interrupt ("I Thought...", "Top Doctor...")
+- Subheadline: the "hook" that makes them keep reading
+- NO CTA button in the hero — the hero is the article headline
+- CTAs appear mid-article (author-cta) and at the bottom (button + sticky-cta)
+- Include ratings text like "3,791 Ratings" in the hero area or byline
+
+HERO BLOCK FOR ADVERTORIAL:
+{
+  "type": "hero",
+  "props": {
+    "headline": "The headline (max 80 chars)",
+    "subheadline": "The hook/subtitle",
+    "alignment": "left"
+  }
+}
+NOTE: No ctaText, no ctaUrl, no backgroundImage for advertorial hero.
+
+BODY-TEXT BLOCK FOR ADVERTORIAL:
+{
+  "type": "body-text",
+  "props": {
+    "content": "Paragraph 1\\n\\nParagraph 2\\n\\nParagraph 3 with **bold emphasis**\\n\\nParagraph 4"
+  }
+}
+Use \\n\\n to separate paragraphs. Use **text** for bold. Keep paragraphs short (2-3 sentences).
+
+EDITORIAL-HEADER BLOCK:
+{
+  "type": "editorial-header",
+  "props": {
+    "siteName": "Health Discovery Today",
+    "categoryBadge": "Trending in Health",
+    "logoSrc": ""
+  }
+}
+
+BREADCRUMB BLOCK:
+{
+  "type": "breadcrumb",
+  "props": {
+    "items": ["Home", "Health", "Product Name"]
+  }
+}
+
+BYLINE BLOCK:
+{
+  "type": "byline",
+  "props": {
+    "authorName": "Dr. Sarah Mitchell",
+    "credentials": "MD, Nutritionist",
+    "date": "Jul 15, 2025",
+    "readTime": "8 min read",
+    "avatarSrc": ""
+  }
+}
+
+EDITORIAL-HEADING BLOCK (section dividers):
+{
+  "type": "editorial-heading",
+  "props": {
+    "text": "THE REAL ROOT CAUSE",
+    "style": "highlight"
+  }
+}
+
+AUTHOR-CTA BLOCK (mid-article callout):
+{
+  "type": "author-cta",
+  "props": {
+    "ctaText": "Check Availability Now →",
+    "productText": "Over 47,300 customers have already transformed their health.",
+    "rating": 5,
+    "ratingCount": "3,791 Ratings"
+  }
+}
+
+STICKY-CTA BLOCK (mobile fixed bottom):
+{
+  "type": "sticky-cta",
+  "props": {
+    "text": "CHECK AVAILABILITY NOW →",
+    "urgencyText": "⚡ Limited Stock — Only 127 Left",
+    "variant": "urgency"
+  }
+}
+
+POWER WORDS: BREAKTHROUGH, SECRET, DISCOVERY, SHOCKING, FORBIDDEN, EXPOSED, MIRACLE,
+PROVEN, CLINICAL, DOCTOR, FINALLY, SIMPLE, NATURAL, RISK-FREE, GUARANTEED`;
+
 // ─── Prompt Builder ──────────────────────────────────────────────────────────
 
 export interface ComposerPromptParams {

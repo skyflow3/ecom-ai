@@ -564,7 +564,7 @@ export type RenderFn = (block: Block) => string;
 
 export interface BlockDef {
   type: string;
-  category: 'basic' | 'commerce' | 'social-proof' | 'content' | 'forms';
+  category: 'basic' | 'commerce' | 'social-proof' | 'content' | 'forms' | 'editorial';
   label: string;
   render: RenderFn;
 }

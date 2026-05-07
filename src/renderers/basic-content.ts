@@ -190,32 +190,54 @@ function renderBlock(
 
 // ─── 1. Hero ─────────────────────────────────────────────────────────────────
 
+/**
+ * Render hero block. For advertorial pages, the hero is EDITORIAL style:
+ * large headline + subheadline + optional image. NO CTA button in hero.
+ *
+ * WHY: Real advertorials (SmoothSpire, Rejuvera) look like news articles.
+ *      The hero is the article headline, not a landing page with CTA.
+ *      The CTA belongs in sticky-cta blocks or mid-article callouts.
+ *
+ * For non-advertorial pages (product-page, landing-page), the hero CAN have a CTA.
+ */
 export function renderHero(block: Block): string {
   const props = getProps<HeroProps>(block);
   const alignment = props.alignment ?? 'left';
-  const textAlign = `text-align:${alignment}`;
+
+  // Check if this is an editorial-style page (no CTA in hero)
+  // WHY: The block metadata or presence of editorial blocks determines this.
+  //      We detect it by checking if ctaText exists but there's no explicit CTA URL
+  //      In practice, the block-composer handles this via composition rules.
+  const isEditorial = !props.ctaUrl && !props.backgroundImage;
 
   // Background image with overlay gradient
   const bgStyle = props.backgroundImage
     ? `background-image:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('${escapeHtml(props.backgroundImage)}');background-size:cover;background-position:center;`
     : '';
 
-  // Text color: white on image, default otherwise
   const textColor = props.backgroundImage ? 'color:#fff;' : '';
 
   const subheadlineHtml = props.subheadline
-    ? `<p class="ec-hero-subheadline" style="margin:8px 0 0">${escapeHtml(props.subheadline)}</p>`
+    ? `<p class="ec-hero-subheadline" style="font-family:'Inter',sans-serif;font-size:1.125rem;line-height:1.5;color:${props.backgroundImage ? '#e5e5e5' : '#4B5563'};margin-top:12px;">${escapeHtml(props.subheadline)}</p>`
     : '';
 
-  const ctaTag = props.ctaUrl
-    ? `<a href="${escapeHtml(props.ctaUrl)}" class="ec-btn ec-btn-primary ec-hero-cta" style="display:inline-block;margin-top:20px;min-height:52px;line-height:52px;padding:0 24px;font-size:1.125rem;font-weight:700;border-radius:12px;text-decoration:none;">${escapeHtml(props.ctaText)}</a>`
-    : `<button class="ec-btn ec-btn-primary ec-hero-cta" style="margin-top:20px;min-height:52px;padding:0 24px;font-size:1.125rem;font-weight:700;border-radius:12px;border:none;cursor:pointer;">${escapeHtml(props.ctaText)}</button>`;
+  // For editorial: NO CTA button in hero. For commerce: show CTA.
+  const ctaHtml = (!isEditorial && props.ctaText)
+    ? props.ctaUrl
+      ? `<a href="${escapeHtml(props.ctaUrl)}" class="ec-btn ec-btn-primary ec-hero-cta" style="display:inline-block;margin-top:20px;min-height:52px;line-height:52px;padding:0 24px;font-size:1.125rem;font-weight:700;border-radius:12px;text-decoration:none;">${escapeHtml(props.ctaText)}</a>`
+      : `<button class="ec-btn ec-btn-primary ec-hero-cta" style="margin-top:20px;min-height:52px;padding:0 24px;font-size:1.125rem;font-weight:700;border-radius:12px;border:none;cursor:pointer;">${escapeHtml(props.ctaText)}</button>`
+    : '';
+
+  // Editorial hero: larger headline, serif font, left-aligned
+  const headlineFont = isEditorial
+    ? "font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,5vw,2.5rem);font-weight:700;line-height:1.15;color:#1B1B1B;"
+    : "font-family:'DM Serif Display',serif;font-size:clamp(1.875rem,5vw,2.25rem);font-weight:900;line-height:1.2;";
 
   const content = `
-    <div class="ec-hero-content" style="${textAlign};${textColor}">
-      <h1 class="ec-hero-headline" style="font-family:'DM Serif Display',serif;font-size:clamp(1.875rem,5vw,2.25rem);font-weight:900;line-height:1.2;margin:0">${escapeHtml(props.headline)}</h1>
+    <div class="ec-hero-content" style="text-align:${alignment};${textColor}">
+      <h1 class="ec-hero-headline" style="${headlineFont}">${escapeHtml(props.headline)}</h1>
       ${subheadlineHtml}
-      ${ctaTag}
+      ${ctaHtml}
     </div>`;
 
   const responsiveStyles = buildResponsiveStyles(block.id, block.styles);
@@ -230,7 +252,6 @@ export function renderHero(block: Block): string {
     abTestId: block.metadata?.abTestId,
   });
 
-  // Inline the bg style on the section itself when a background image is present
   const finalHtml = props.backgroundImage
     ? sectionHtml.replace(
         'class="ec-section',
@@ -279,15 +300,41 @@ export function renderSubheadline(block: Block): string {
 
 // ─── 4. Body Text ────────────────────────────────────────────────────────────
 
+/**
+ * Render body text with PROPER paragraph splitting.
+ *
+ * WHY: Real advertorials have many short paragraphs (2-3 lines each).
+ *      The content comes as a single string with \n\n separators.
+ *      We MUST split on \n\n to create individual <p> tags.
+ *      Also supports **bold** and *italic* markdown-like syntax.
+ */
 export function renderBodyText(block: Block): string {
   const props = getProps<BodyTextProps>(block);
   const size = props.size ?? 'base';
-  const fontSize = size === 'sm' ? '14px' : '1rem';
-  const escapedContent = escapeHtml(props.content);
+  const fontSize = size === 'sm' ? '14px' : '1.0625rem';
+  const lineHeight = size === 'sm' ? '1.5' : '1.75';
 
-  const content = `<p class="ec-body" style="font-family:'Inter',sans-serif;font-size:${fontSize};line-height:1.5;color:var(--color-text);margin:0;">${escapedContent}</p>`;
+  // Split into paragraphs on double newline
+  const paragraphs = props.content
+    .split(/\n\n+/)
+    .filter(p => p.trim().length > 0);
 
-  return renderBlock(block, 'ec-body-text', content);
+  const paragraphsHtml = paragraphs.map(para => {
+    // Convert inline formatting: **bold** → <strong>, *italic* → <em>
+    let formatted = escapeHtml(para.trim());
+
+    // Bold: **text** → <strong>text</strong>
+    formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Italic: *text* → <em>text</em> (but not inside <strong>)
+    formatted = formatted.replace(/(?<!<strong>)\*(.+?)\*(?!<\/strong>)/g, '<em>$1</em>');
+
+    // Single newlines within a paragraph become <br>
+    formatted = formatted.replace(/\n/g, '<br>');
+
+    return `<p style="font-family:'Inter',sans-serif;font-size:${fontSize};line-height:${lineHeight};color:#1B1B1B;margin-bottom:1em;">${formatted}</p>`;
+  }).join('\n');
+
+  return renderBlock(block, 'ec-body-text', paragraphsHtml);
 }
 
 // ─── 5. Image ────────────────────────────────────────────────────────────────

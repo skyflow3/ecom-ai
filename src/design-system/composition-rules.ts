@@ -68,7 +68,13 @@ export type BlockName =
   | 'payment-options'
   | 'shipping-form'
   | 'scarcity-badge'
-  | 'negative-opt-out';
+  | 'negative-opt-out'
+  | 'editorial-header'
+  | 'breadcrumb'
+  | 'byline'
+  | 'sticky-cta'
+  | 'editorial-heading'
+  | 'author-cta';
 
 // ─── Page Composition Rules ─────────────────────────────────────────────────
 
@@ -83,12 +89,12 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
   },
 
   advertorial: {
-    requiredSequence: ['hero'],
-    requiredBlocks: ['hero', 'reviews', 'button'],
+    requiredSequence: ['editorial-header', 'hero', 'byline', 'sticky-cta'],
+    requiredBlocks: ['editorial-header', 'hero', 'byline', 'body-text', 'button', 'sticky-cta'],
     forbiddenBlocks: ['payment-form', 'order-summary', 'quiz-step'],
     sectionGap: '8',
     headlineMaxChars: 80,
-    maxBlocks: 20,
+    maxBlocks: 25,
   },
 
   vsl: {
@@ -173,8 +179,8 @@ export const PAGE_TYPE_GUIDES: Record<PageType, { structure: string; keyPoints: 
     keyPoints: 'Reviews ABOVE fold. Bundle "Most Popular" pre-selected. Sticky CTA mobile.',
   },
   advertorial: {
-    structure: 'Editorial Hero → Problem Story → Solution Reveal → Social Proof → Benefits → Authority → CTA woven throughout',
-    keyPoints: 'NEWS ARTICLE look. Long-form. CTAs every 3-4 sections. Bold sans-serif heading.',
+    structure: 'Editorial Header (logo + badge) → Breadcrumb (desktop) → Hero (headline only, NO CTA) → Byline (author + date) → Body Text (pain story, many short paragraphs) → Editorial Section Heading → Body Text (discovery) → Author CTA (mid-article callout) → Benefits List → Testimonial → Social Proof → Bundle Offers → Guarantee → Button CTA → Urgency Text → Trust Badges → Sticky CTA (mobile)',
+    keyPoints: 'MUST look like a NEWS ARTICLE. Editorial header with logo, breadcrumb, byline with author avatar. Hero = headline only (NO CTA button). Body text = many short paragraphs (2-3 lines each, split on \\n\\n). Section headings in ALL CAPS. CTAs appear mid-article (author-cta) and at bottom (button + sticky-cta). Max width 720px. Sticky CTA fixed bottom on mobile.',
   },
   vsl: {
     structure: 'Hero with video → Problem → Solution → Proof → CTA (repeat 3-5x) → Guarantee → Final CTA',
