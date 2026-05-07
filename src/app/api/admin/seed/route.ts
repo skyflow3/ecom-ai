@@ -186,7 +186,7 @@ export async function GET() {
     for (const t of OFFER_TEMPLATES) {
       try {
         await sql`
-          INSERT INTO offer_templates (name, category, source, "estimatedCvr", "bestForNiches", "funnelFlow", config, headlines, "ctaTexts", "guaranteeTexts", "isProven", "isActive")
+          INSERT INTO offer_templates (name, category, source, estimated_cvr, best_for_niches, funnel_flow, config, headlines, cta_texts, guarantee_texts, is_proven, is_active)
           VALUES (${t.name}, ${t.category}, ${t.source}, ${t.estimatedCvr}, ${t.bestForNiches}, ${t.funnelFlow}, ${sql.json(t.config)}, ${t.headlines}, ${t.ctaTexts}, ${t.guaranteeTexts}, ${t.isProven}, true)
           ON CONFLICT DO NOTHING
         `;
@@ -202,7 +202,7 @@ export async function GET() {
     for (const p of RAG_PATTERNS) {
       try {
         await sql`
-          INSERT INTO winning_patterns ("patternType", "pageType", vertical, description, "blockSignature", "liftPercent", confidence, "sampleSize", status)
+          INSERT INTO winning_patterns (pattern_type, page_type, vertical, description, block_signature, lift_percent, confidence, sample_size, status)
           VALUES (${p.patternType}, ${p.pageType}, 'general', ${p.description}, ${sql.json({})}, ${p.liftPercent}, 0.95, ${p.sampleSize}, 'sop')
           ON CONFLICT DO NOTHING
         `;
