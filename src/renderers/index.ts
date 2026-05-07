@@ -100,7 +100,15 @@ import type { BlockTree } from '../design-system/blocks';
  * Includes: DOCTYPE, head with CSS variables, body with rendered blocks.
  */
 export function renderFullPage(tree: BlockTree, palette: string = 'health-warm'): string {
-  const blockHtml = tree.blocks.map(block => blockRegistry.render(block)).join('\n');
+  const blockHtml = tree.blocks.map(block => {
+    try {
+      return blockRegistry.render(block);
+    } catch (err) {
+      // WHY: A single bad block shouldn't crash the entire page
+      console.error(`[renderer] Block "${block.type}" (${block.id}) failed:`, err);
+      return `<!-- Block "${block.type}" render failed -->`;
+    }
+  }).join('\n');
 
   return `<!DOCTYPE html>
 <html lang="en">
