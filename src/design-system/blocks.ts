@@ -536,6 +536,71 @@ const blockSchema: any = z.discriminatedUnion('type', [
       lossAversion: z.string().optional(),
     }),
   }),
+
+  // ─── Editorial blocks (advertorial/news-style) ────────────────────────────
+
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.literal('editorial-header'),
+    props: z.object({
+      logoText: z.string().min(1),
+      logoUrl: z.string().optional(),
+      badgeText: z.string().optional(),
+      category: z.string().optional(),
+    }),
+  }),
+
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.literal('breadcrumb'),
+    props: z.object({
+      items: z.array(z.string()).min(1),
+    }),
+  }),
+
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.literal('byline'),
+    props: z.object({
+      authorName: z.string().min(1),
+      authorAvatar: z.string().optional(),
+      credentials: z.string().optional(),
+      date: z.string().optional(),
+      badgeText: z.string().optional(),
+    }),
+  }),
+
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.literal('sticky-cta'),
+    props: z.object({
+      text: z.string().min(1),
+      url: z.string().optional(),
+      subtext: z.string().optional(),
+    }),
+  }),
+
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.literal('editorial-heading'),
+    props: z.object({
+      text: z.string().min(1),
+      variant: z.enum(['default', 'highlight', 'underline']).optional().default('default'),
+    }),
+  }),
+
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.literal('author-cta'),
+    props: z.object({
+      headline: z.string().min(1),
+      productName: z.string().optional(),
+      rating: z.number().min(1).max(5).optional(),
+      buttonText: z.string().optional(),
+      buttonUrl: z.string().optional(),
+      trustText: z.string().optional(),
+    }),
+  }),
 ]);
 
 // ─── BlockTree Zod Schema ────────────────────────────────────────────────────
