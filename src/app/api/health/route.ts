@@ -17,5 +17,9 @@ export async function GET() {
     status: "ok",
     timestamp: new Date().toISOString(),
     version: process.env.npm_package_version || "0.1.0",
+    mimo: {
+      url: process.env.MIMO_API_URL?.substring(0, 40) || "NOT SET",
+      key: process.env.MIMO_API_KEY ? "SET" : "NOT SET",
+    },
   });
 }
