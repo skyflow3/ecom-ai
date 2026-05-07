@@ -32,6 +32,10 @@ const hasClerk =
  */
 const PROTECTED_PATTERNS = ["/api/funnels", "/api/generate", "/api/deploy"];
 
+// WHY: Admin setup/seed/save endpoints need DB access without auth.
+//      These are internal tools, not user-facing.
+const PUBLIC_ADMIN_PATTERNS = ["/api/admin/setup", "/api/admin/seed", "/api/admin/save-variant"];
+
 /**
  * Ignored routes — Clerk should not process these at all.
  */
@@ -64,6 +68,11 @@ export default async function middleware(
       // WHY: Protected routes redirect unauthenticated users to sign-in
       if (matchesPatterns(request.nextUrl.pathname, PROTECTED_PATTERNS)) {
         await auth.protect();
+      }
+
+      // WHY: Admin endpoints are public (internal tools)
+      if (matchesPatterns(request.nextUrl.pathname, PUBLIC_ADMIN_PATTERNS)) {
+        return NextResponse.next();
       }
     });
 
