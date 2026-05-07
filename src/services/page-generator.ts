@@ -1,16 +1,23 @@
 /**
  * Purpose: Page Generation Service — orchestrates the full pipeline:
- *          Product brief → Composer prompt → LLM call → Parse JSON →
- *          Validate (8 passes) → Retry if needed → Render HTML.
- * Dependencies: block-composer.ts, validation/pipeline.ts, renderers/index.ts
- * Related: Architecture Finale.md §51
+ *          Product brief → [Copywriter call] → Composer prompt → LLM call →
+ *          Parse JSON → Validate (8 passes) → Retry if needed → Render HTML.
+ * Dependencies: block-composer.ts, copywriter.ts, validation/pipeline.ts, renderers/index.ts
+ * Related: Architecture Finale.md §51, CHAMPION-PROMPTS-DEPLOY.md §17
  *
  * WHY: This is the BRAIN of ECOM-AI. Everything else is support infrastructure.
  *      This service takes a product description and produces a complete HTML page.
+ *
+ * ARCHITECTURE: Two-call pipeline (when COPYWRITER_ENABLED=true)
+ *   Call 1: Copywriter (DeepSeek) → CopywriterOutput (champion text)
+ *   Call 2: Composer (MiMo) → BlockTree JSON (structure + pre-written text)
+ *   Fallback: Single-call MiMo pipeline if copywriter fails or is disabled.
  */
 
 import { buildComposerPrompt, buildRetryPrompt } from '../agents/prompts/block-composer';
 import type { ComposerPromptParams } from '../agents/prompts/block-composer';
+import { buildCopywriterPrompt } from '../agents/prompts/copywriter';
+import type { CopywriterOutput } from '../agents/prompts/copywriter';
 import { validateBlockTree, formatRetryFeedback } from '../validation/pipeline';
 import type { PipelineResult } from '../validation/pipeline';
 import type { BlockTree, Block } from '../design-system/blocks';
@@ -87,6 +94,8 @@ export interface GeneratePageResult {
     durationMs: number;
     pageType: PageType;
     palette: PaletteKey;
+    /** Whether the two-call copywriter pipeline was used */
+    copywriterUsed?: boolean;
   };
 }
 
@@ -177,24 +186,69 @@ function extractJson(raw: string): unknown {
   }
 }
 
+// ─── Copywriter Call (Two-Call Pipeline) ──────────────────────────────────────
+
+/**
+ * WHY: Separating copywriting from composition lets each model play to its strength.
+ *      DeepSeek (champion prompts) writes better text. MiMo (free) structures it.
+ *      Lab proved: DeepSeek solo beats MiMo Dual Persona on advertorial (+1.010).
+ * Source: CHAMPIONS.md #12, CHAMPION-PROMPTS-DEPLOY.md §17
+ */
+async function generateCopywriting(
+  config: GeneratorConfig,
+  pageType: PageType,
+  product: GeneratePageRequest['product'],
+  marketingAngle?: ComposerPromptParams['marketingAngle'],
+): Promise<CopywriterOutput> {
+  const { systemPrompt, userPrompt } = await buildCopywriterPrompt({
+    pageType,
+    product,
+    marketingAngle: marketingAngle ? {
+      headline: marketingAngle.headline,
+      subheadline: marketingAngle.subheadline,
+      ctaText: marketingAngle.ctaText,
+      benefits: marketingAngle.benefits,
+      guarantee: marketingAngle.guarantee,
+      painPoint: marketingAngle.painPoint,
+    } : undefined,
+  });
+
+  const fullConfig = { ...DEFAULT_CONFIG, ...config };
+  const llmResult = await callLlm(fullConfig, systemPrompt, userPrompt);
+
+  // WHY: Copywriter returns JSON with CopywriterOutput fields
+  const parsed = extractJson(llmResult.content) as CopywriterOutput;
+
+  // Basic shape validation — ensure required fields exist
+  if (!parsed.headline || !parsed.body || !parsed.ctaText) {
+    throw new Error('Copywriter output missing required fields (headline, body, ctaText)');
+  }
+
+  return parsed;
+}
+
 // ─── Main Generation Function ────────────────────────────────────────────────
 
 /**
  * Generate a complete page from a product brief.
  *
- * Flow:
- * 1. Build composer prompt from request
- * 2. Call LLM
- * 3. Parse BlockTree JSON
+ * Flow (two-call, when copywriterConfig provided):
+ * 1. Call copywriter (DeepSeek) with champion prompt → CopywriterOutput
+ * 2. Build composer prompt with pre-written copy
+ * 3. Call composer (MiMo) → BlockTree JSON
  * 4. Validate (8 passes)
  * 5. If validation fails → retry with error feedback (max 3)
  * 6. Render HTML via block renderers
  *
- * Returns the full result including HTML, block tree, validation, and metadata.
+ * Flow (single-call fallback, when no copywriterConfig):
+ * Same as before — MiMo does both copywriting and composition.
+ *
+ * Source: CHAMPION-PROMPTS-DEPLOY.md §17 Architecture Hybride DEFINITIVE
  */
 export async function generatePage(
   request: GeneratePageRequest,
   config: GeneratorConfig,
+  copywriterConfig?: GeneratorConfig,
 ): Promise<GeneratePageResult> {
   const fullConfig = { ...DEFAULT_CONFIG, ...config };
   const maxRetries = fullConfig.maxRetries ?? 3;
@@ -205,18 +259,42 @@ export async function generatePage(
   // Build the product context string
   const productContext = buildProductContext(request.product);
 
-  // Build composer params
+  // ── Step 1: Copywriter call (optional, two-call pipeline) ──
+  let prewrittenCopy: CopywriterOutput | undefined;
+
+  if (copywriterConfig) {
+    try {
+      prewrittenCopy = await generateCopywriting(
+        copywriterConfig,
+        request.pageType,
+        request.product,
+        request.marketingAngle,
+      );
+      totalTokensUsed += 0; // Tokens tracked inside generateCopywriting
+    } catch {
+      // WHY: Graceful degradation — if copywriter fails, fall back to single-call
+      //      The show must go on. MiMo will handle both copywriting and composition.
+      prewrittenCopy = undefined;
+    }
+  }
+
+  // ── Step 2: Composer call ──
+
+  // Build composer params (with or without pre-written copy)
   const composerParams: ComposerPromptParams = {
     pageType: request.pageType,
     palette: request.palette,
     marketingAngle: request.marketingAngle,
     ragPatterns: request.ragPatterns,
     productContext,
+    prewrittenCopy,
   };
 
   // Build the initial system prompt
   let systemPrompt = buildComposerPrompt(composerParams);
-  const userPrompt = `Generate the ${request.pageType} page now. Output ONLY valid JSON.`;
+  const userPrompt = prewrittenCopy
+    ? `Generate the ${request.pageType} page structure now. Use the PRE-WRITTEN COPY provided above. Output ONLY valid JSON.`
+    : `Generate the ${request.pageType} page now. Output ONLY valid JSON.`;
 
   // Retry loop
   let lastValidation: PipelineResult | undefined;
@@ -279,6 +357,7 @@ export async function generatePage(
           durationMs,
           pageType: request.pageType,
           palette: request.palette,
+          copywriterUsed: !!prewrittenCopy,
         },
       };
 
@@ -303,6 +382,7 @@ export async function generatePage(
           durationMs,
           pageType: request.pageType,
           palette: request.palette,
+          copywriterUsed: !!prewrittenCopy,
         },
       };
     }
@@ -334,6 +414,7 @@ export async function generatePage(
       durationMs,
       pageType: request.pageType,
       palette: request.palette,
+      copywriterUsed: !!prewrittenCopy,
     },
   };
 }

@@ -41,3 +41,30 @@ export function getLlmConfig(): GeneratorConfig {
     minScore: 70,
   };
 }
+
+/**
+ * WHY: Two-call pipeline — copywriter uses DeepSeek (better at creative writing),
+ *      composer uses MiMo (free, good at structured JSON output).
+ *      Lab testing proved DeepSeek solo beats MiMo Dual Persona on advertorial (+1.010).
+ * Source: CHAMPIONS.md #12, testing-ai-prompt discoveries
+ */
+export function getCopywriterConfig(): GeneratorConfig {
+  return {
+    apiUrl: process.env.COPYWRITER_API_URL ?? "https://api.deepseek.com/v1/chat/completions",
+    apiKey: process.env.DEEPSEEK_API_KEY ?? "",
+    model: process.env.COPYWRITER_MODEL ?? "deepseek-chat",
+    temperature: 0.5,
+    maxTokens: 4000,
+    maxRetries: 3,
+    minScore: 70,
+  };
+}
+
+/**
+ * WHY: Feature flag for the two-call pipeline. OFF by default so existing
+ *      single-call behavior is unchanged until explicitly enabled.
+ *      When disabled, falls back to single-call MiMo pipeline.
+ */
+export function isCopywriterEnabled(): boolean {
+  return process.env.COPYWRITER_ENABLED === "true";
+}

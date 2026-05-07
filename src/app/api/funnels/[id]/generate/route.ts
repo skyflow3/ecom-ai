@@ -22,7 +22,7 @@ import {
   products,
 } from '@/db/schema';
 import { generatePage, type GeneratePageRequest } from '@/services/page-generator';
-import { getLlmConfig } from '@/lib/config';
+import { getLlmConfig, getCopywriterConfig, isCopywriterEnabled } from '@/lib/config';
 import type { PageType, PaletteKey } from '@/design-system/tokens';
 import { createLogger } from '@/lib/logger';
 
@@ -262,7 +262,13 @@ export async function POST(
     };
 
     const llmConfig = getLlmConfig();
-    const result = await generatePage(genRequest, llmConfig);
+
+    // WHY: Two-call pipeline — copywriter (DeepSeek) generates champion text,
+    //      then composer (MiMo) places it into BlockTree structure.
+    //      Feature-flagged so existing behavior is unchanged until enabled.
+    const copywriterConfig = isCopywriterEnabled() ? getCopywriterConfig() : undefined;
+
+    const result = await generatePage(genRequest, llmConfig, copywriterConfig);
 
     if (!result.success) {
       return NextResponse.json(

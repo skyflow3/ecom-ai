@@ -17,6 +17,7 @@ import type { PageType, PaletteKey } from '../../design-system/tokens';
 import { PAGE_COMPOSITION_RULES, PAGE_TYPE_GUIDES } from '../../design-system/composition-rules';
 import type { BlockName } from '../../design-system/composition-rules';
 import { formatSeedPatternsAsRag } from '../../services/rag-patterns-seed';
+import type { CopywriterOutput } from './copywriter';
 
 // ─── Page-Type Content Guides ─────────────────────────────────────────────────
 // Injected into the system prompt per page type. These guide the TEXT CONTENT
@@ -252,6 +253,13 @@ export interface ComposerPromptParams {
     guarantee?: string;
     painPoint?: string;
   };
+  /**
+   * WHY: Two-call pipeline — copywriter (DeepSeek) generates text first,
+   *      then composer (MiMo) places it into BlockTree structure.
+   *      When provided, the composer must use these EXACT words, not rewrite.
+   * Source: CHAMPION-PROMPTS-DEPLOY.md §17 Architecture Hybride
+   */
+  prewrittenCopy?: CopywriterOutput;
   /** RAG patterns from winning experiments (injected from §50) */
   ragPatterns?: string[];
   /** Additional context about the product/brand */
@@ -284,6 +292,32 @@ export function buildComposerPrompt(params: ComposerPromptParams): string {
     .replace('{{page_type_guide}}', `${guide.structure}\nKey: ${guide.keyPoints}`)
     .replace('{{content_guide}}', contentGuide)
     .replace('{{rag_patterns}}', buildRagPatterns(allPatterns));
+
+  // WHY: When pre-written copy exists (two-call pipeline), inject it with
+  //      STRONG instruction to use EXACT words. The composer is NOT a copywriter.
+  if (params.prewrittenCopy) {
+    const copy = params.prewrittenCopy;
+    const copyLines = [
+      '## PRE-WRITTEN COPY (USE THESE EXACT WORDS — DO NOT REWRITE)',
+      '',
+      'A professional copywriter has already written the marketing text. Your job is ONLY to place it into the block structure.',
+      'Use the EXACT text below. You may adjust whitespace or add formatting, but DO NOT change words.',
+      '',
+      `HEADLINE: ${copy.headline}`,
+      `SUBHEADLINE: ${copy.subheadline}`,
+    ];
+
+    if (copy.painPoint) copyLines.push(`PAIN POINT (opening section): ${copy.painPoint}`);
+    copyLines.push(`BODY (main copy): ${copy.body.replace(/\n/g, '\n')}`);
+    if (copy.benefits?.length) copyLines.push(`BENEFITS: ${copy.benefits.join(' | ')}`);
+    copyLines.push(`CTA TEXT: ${copy.ctaText}`);
+    if (copy.ctaSecondary) copyLines.push(`CTA SECONDARY (negative opt-out): ${copy.ctaSecondary}`);
+    if (copy.guarantee) copyLines.push(`GUARANTEE: ${copy.guarantee}`);
+    if (copy.testimonial) copyLines.push(`TESTIMONIAL: "${copy.testimonial.quote}" — ${copy.testimonial.name}, ${copy.testimonial.detail}`);
+    if (copy.urgency) copyLines.push(`URGENCY: ${copy.urgency}`);
+
+    prompt += '\n\n' + copyLines.join('\n');
+  }
 
   // Append marketing angle if provided
   if (params.marketingAngle) {
