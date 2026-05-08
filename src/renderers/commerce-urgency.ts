@@ -13,11 +13,15 @@
 import type { Block } from '../design-system/blocks';
 import { escapeHtml, wrapSection, getProps, cn, buildResponsiveStyles, buildVisibilityClass } from './html-helpers';
 
-// ─── Shared CSS constants ────────────────────────────────────────────────────
+// ─── Shared CSS constants (from real winning checkout pages) ────────────────────
+// WHY: These exact values come from CheckoutChamp/Webflow checkout analysis.
+//      Form inputs: 42px height, #E6E7EA border, 4px radius (Webflow pattern).
+//      CTA buttons: #00C249 green, 20px bold, 8px radius.
+//      Cards: 4px radius, 2px border transparent -> #00C249 when selected.
 
-const FORM_INPUT_STYLE = 'height:48px;border-radius:12px;border:1px solid #ddd;font-size:16px;padding:0 12px;width:100%;box-sizing:border-box;font-family:"Inter",sans-serif;';
-const BUTTON_BASE_STYLE = 'min-height:52px;font-weight:700;font-size:18px;border-radius:12px;border:none;cursor:pointer;width:100%;font-family:"Inter",sans-serif;';
-const CARD_BASE_STYLE = 'border-radius:12px;padding:16px;box-sizing:border-box;';
+const FORM_INPUT_STYLE = 'height:42px;border-radius:4px;border:1px solid #E6E7EA;font-size:16px;padding:8px 12px;width:100%;box-sizing:border-box;font-family:"Inter",sans-serif;background:transparent;';
+const BUTTON_BASE_STYLE = 'min-height:52px;font-weight:700;font-size:20px;border-radius:8px;border:none;cursor:pointer;width:100%;font-family:"Inter",sans-serif;transition:background-color 200ms ease-in-out;';
+const CARD_BASE_STYLE = 'border-radius:4px;padding:8px 16px 16px;box-sizing:border-box;';
 
 // ─── Urgency color helpers ───────────────────────────────────────────────────
 
@@ -26,11 +30,14 @@ type UrgencyLevel = 'low' | 'medium' | 'high';
 function urgencyColors(level: UrgencyLevel): { bg: string; text: string } {
   switch (level) {
     case 'low':
-      return { bg: '#dbeafe', text: '#1e40af' };
+      // WHY: Light blue trust/savings banner from Webflow checkout "top savings" pattern
+      return { bg: '#ebf7ff', text: '#25a2ed' };
     case 'medium':
-      return { bg: '#fed7aa', text: '#9a3412' };
+      // WHY: Yellow urgency box from design system --color-warning-bg (#FEFBC3)
+      return { bg: '#FEFBC3', text: '#9a3412' };
     case 'high':
-      return { bg: '#fecaca', text: '#fff' };
+      // WHY: Dark green timer banner from winning checkouts (#0c230e) with lime accent
+      return { bg: '#0c230e', text: '#fff' };
   }
 }
 
@@ -60,33 +67,39 @@ export function renderBundleOffers(block: Block): string {
   const isCards = layout === 'cards';
 
   const offerCards = offers.map(offer => {
+    // WHY: CheckoutChamp/Webflow pattern — unselected = transparent border, selected = green #00c249
     const borderStyle = offer.selected
-      ? 'border:2px solid var(--color-primary);'
+      ? 'border:2px solid #00c249;box-shadow:0 0 8px rgba(0,0,0,0.16);'
       : offer.popular
-        ? 'border:3px solid var(--color-primary);box-shadow:0 4px 16px rgba(0,0,0,0.1);'
-        : 'border:1px solid #e5e7eb;';
+        ? 'border:2px solid #00c249;box-shadow:0 0 8px rgba(0,0,0,0.16);'
+        : 'border:2px solid transparent;box-shadow:0 0 8px rgba(0,0,0,0.16);';
 
+    // WHY: Red #EC0B43 rotated ribbon from Webflow "Most Popular" badge pattern
     const badgeHtml = (offer.badge || offer.popular)
-      ? `<span style="position:absolute;top:8px;right:8px;background:var(--color-primary);color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;">${escapeHtml(offer.badge || 'Most Popular')}</span>`
+      ? `<span style="position:absolute;top:12px;left:-55px;width:200px;max-height:32px;background:#ec0b43;color:#fff;font-size:12px;font-weight:700;padding:5px;text-align:center;transform:rotate(-40deg);z-index:1;display:flex;justify-content:center;align-items:center;">${escapeHtml(offer.badge || 'Most Popular')}</span>`
       : '';
 
+    // WHY: Strikethrough old price in #9AA0AB gray (checkout pattern), sale price larger bold navy
     const priceHtml = `
-      <div style="margin-top:12px;">
-        <span style="font-size:28px;font-weight:800;font-family:'DM Serif Display',serif;color:var(--color-text);">${escapeHtml(offer.price)}</span>
-        ${offer.originalPrice ? `<span style="font-size:16px;text-decoration:line-through;color:var(--color-muted);margin-left:8px;">${escapeHtml(offer.originalPrice)}</span>` : ''}
+      <div style="margin-top:12px;text-align:center;">
+        ${offer.originalPrice ? `<span style="font-size:16px;text-decoration:line-through;color:#9AA0AB;margin-right:4px;">${escapeHtml(offer.originalPrice)}</span>` : ''}
+        <span style="font-size:24px;font-weight:700;font-family:'Inter',sans-serif;color:#1B2A43;">${escapeHtml(offer.price)}</span>
       </div>
     `;
 
+    // WHY: Per-unit price smaller muted text below main price (checkout pattern)
     const perUnitHtml = offer.perUnit
-      ? `<div style="font-size:13px;color:var(--color-muted);margin-top:2px;">${escapeHtml(offer.perUnit)}</div>`
+      ? `<div style="font-size:14px;color:#4e596d;margin-top:2px;text-align:center;font-weight:500;">${escapeHtml(offer.perUnit)}</div>`
       : '';
 
+    // WHY: Green savings text #4ECE7E or red discount #EC0B43 from checkout pages
     const savingsHtml = offer.savings
-      ? `<div style="font-size:14px;font-weight:700;color:#16a34a;margin-top:6px;">${escapeHtml(offer.savings)}</div>`
+      ? `<div style="font-size:16px;font-weight:700;color:#EC0B43;margin-top:6px;text-align:center;">${escapeHtml(offer.savings)}</div>`
       : '';
 
+    // WHY: Free shipping badge — black bg or light blue bg pattern from checkout pages
     const freeShippingHtml = offer.freeShipping
-      ? `<div style="font-size:13px;font-weight:600;color:#16a34a;margin-top:8px;display:flex;align-items:center;gap:4px;"><span>&#10003;</span> FREE Shipping</div>`
+      ? `<div style="font-size:13px;font-weight:600;color:#00c249;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><span>&#10003;</span> FREE Shipping</div>`
       : '';
 
     const bonusHtml = offer.bonusItems && offer.bonusItems.length > 0
@@ -94,9 +107,9 @@ export function renderBundleOffers(block: Block): string {
       : '';
 
     return `
-      <div style="position:relative;${CARD_BASE_STYLE}${borderStyle}flex:1;min-width:${isCards ? '220px' : '100%'};${offer.popular ? 'transform:scale(1.03);' : ''}">
+      <div style="position:relative;${CARD_BASE_STYLE}${borderStyle}flex:1;min-width:${isCards ? '220px' : '100%'};background:#fff;cursor:pointer;text-align:center;">
         ${badgeHtml}
-        <div style="font-size:16px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--color-text);">${escapeHtml(offer.title)}</div>
+        <div style="font-size:14px;font-weight:400;color:#1B2A43;margin-bottom:4px;font-family:'Inter',sans-serif;">${escapeHtml(offer.title)}</div>
         ${priceHtml}
         ${perUnitHtml}
         ${savingsHtml}
@@ -106,9 +119,10 @@ export function renderBundleOffers(block: Block): string {
     `;
   }).join('');
 
+  // WHY: 8px gap from Webflow checkout grid-column-gap pattern
   const containerStyle = isCards
-    ? 'display:flex;gap:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;'
-    : 'display:flex;flex-direction:column;gap:12px;';
+    ? 'display:grid;grid-template-columns:1fr 1fr;gap:8px;'
+    : 'display:flex;flex-direction:column;gap:8px;';
 
   const responsiveHint = isCards
     ? `<style>[data-block-id="${block.id}"] .ec-bundle-offers-grid{${containerStyle}}@media(min-width:768px){[data-block-id="${block.id}"] .ec-bundle-offers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));overflow:visible;}}</style>`
@@ -147,27 +161,29 @@ interface PricingCardProps {
 export function renderPricingCard(block: Block): string {
   const { title, price, originalPrice, features, popular, ctaText } = getProps<PricingCardProps>(block);
 
+  // WHY: "Best Value" badge in amber #F59E0B from product page pricing card pattern
   const badgeHtml = popular
-    ? `<div style="text-align:center;"><span style="display:inline-block;background:var(--color-primary);color:#fff;font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:12px;">Most Popular</span></div>`
+    ? `<div style="text-align:center;"><span style="display:inline-block;background:#F59E0B;color:#fff;font-size:12px;font-weight:700;padding:4px 14px;border-radius:4px;margin-bottom:12px;">Most Popular</span></div>`
     : '';
 
+  // WHY: Card shadow from Webflow checkout -- 0 0 8px rgba(0,0,0,0.16)
   const borderStyle = popular
-    ? 'border:2px solid var(--color-primary);box-shadow:0 8px 24px rgba(0,0,0,0.1);'
-    : 'border:1px solid #e5e7eb;';
+    ? 'border:2px solid #00c249;box-shadow:0 0 8px rgba(0,0,0,0.16);'
+    : 'border:2px solid #E5E7EB;';
 
   const priceBlock = `
     <div style="text-align:center;margin:16px 0;">
-      <span style="font-size:36px;font-weight:800;font-family:'DM Serif Display',serif;color:var(--color-text);">${escapeHtml(price)}</span>
-      ${originalPrice ? `<span style="font-size:18px;text-decoration:line-through;color:var(--color-muted);margin-left:8px;">${escapeHtml(originalPrice)}</span>` : ''}
+      ${originalPrice ? `<span style="font-size:16px;text-decoration:line-through;color:#9AA0AB;margin-right:4px;">${escapeHtml(originalPrice)}</span>` : ''}
+      <span style="font-size:36px;font-weight:800;font-family:'Inter',sans-serif;color:#1B2A43;">${escapeHtml(price)}</span>
     </div>
   `;
 
   const featuresList = features.map(f =>
-    `<li style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:15px;color:var(--color-text);"><span style="color:#16a34a;font-weight:700;flex-shrink:0;">&#10003;</span>${escapeHtml(f)}</li>`
+    `<li style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:15px;color:#1B2A43;"><span style="color:#00c249;font-weight:700;flex-shrink:0;">&#10003;</span>${escapeHtml(f)}</li>`
   ).join('');
 
   const ctaHtml = ctaText
-    ? `<button style="${BUTTON_BASE_STYLE}background:var(--color-primary);color:#fff;margin-top:16px;">${escapeHtml(ctaText)}</button>`
+    ? `<button style="${BUTTON_BASE_STYLE}background:#00c249;color:#fff;margin-top:16px;">${escapeHtml(ctaText)}</button>`
     : '';
 
   const content = `
@@ -206,21 +222,21 @@ export function renderAddToCart(block: Block): string {
   const expressButtons = expressCheckout
     ? `
       <div style="display:flex;gap:8px;margin-bottom:12px;">
-        <button style="flex:1;height:48px;border-radius:12px;border:1px solid #e5e7eb;background:#ffc439;font-weight:700;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">PayPal</button>
-        <button style="flex:1;height:48px;border-radius:12px;border:1px solid #e5e7eb;background:#000;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">Apple Pay</button>
-        <button style="flex:1;height:48px;border-radius:12px;border:1px solid #e5e7eb;background:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">Google Pay</button>
+        <button style="flex:1;height:42px;border-radius:4px;border:1px solid transparent;background:#FFC43A;color:#253B80;font-weight:700;font-size:16px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">PayPal</button>
+        <button style="flex:1;height:42px;border-radius:4px;border:1px solid transparent;background:#000;color:#fff;font-weight:600;font-size:16px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">Apple Pay</button>
       </div>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-        <hr style="flex:1;border:none;border-top:1px solid #e5e7eb;">
-        <span style="font-size:13px;color:var(--color-muted);">Or</span>
-        <hr style="flex:1;border:none;border-top:1px solid #e5e7eb;">
+        <hr style="flex:1;border:none;border-top:1px solid #E5E7EB;">
+        <span style="font-size:13px;color:#9AA0AB;">Or pay with card</span>
+        <hr style="flex:1;border:none;border-top:1px solid #E5E7EB;">
       </div>
     `
     : '';
 
+  // WHY: Green #00c249 full-width CTA from Webflow checkout — "ORDER NOW" button pattern
   const content = `
     ${expressButtons}
-    <button class="ec-add-to-cart" style="${BUTTON_BASE_STYLE}background:var(--color-primary);color:#fff;height:56px;"${variantAttr}>${escapeHtml(buttonText)}</button>
+    <button class="ec-add-to-cart" style="${BUTTON_BASE_STYLE}background:#00c249;color:#fff;height:56px;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);"${variantAttr}>${escapeHtml(buttonText)}</button>
   `;
 
   const visibilityClass = buildVisibilityClass(block.visibility);
@@ -320,33 +336,39 @@ export function renderPaymentForm(block: Block): string {
   const expressHtml = expressCheckout
     ? `
       <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
-        <button style="height:48px;border-radius:12px;border:1px solid #e5e7eb;background:#ffc439;font-weight:700;font-size:15px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">PayPal</button>
+        <button style="height:42px;border-radius:4px;border:1px solid transparent;background:#FFC43A;color:#253B80;font-weight:700;font-size:16px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">PayPal</button>
         <div style="display:flex;gap:8px;">
-          <button style="flex:1;height:48px;border-radius:12px;border:1px solid #e5e7eb;background:#000;color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">Apple Pay</button>
-          <button style="flex:1;height:48px;border-radius:12px;border:1px solid #e5e7eb;background:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">Google Pay</button>
+          <button style="flex:1;height:42px;border-radius:4px;border:1px solid transparent;background:#000;color:#fff;font-weight:600;font-size:16px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">Apple Pay</button>
+          <button style="flex:1;height:42px;border-radius:4px;border:1px solid transparent;background:#000;color:#fff;font-weight:600;font-size:16px;cursor:pointer;font-family:'Inter',sans-serif;" type="button">Google Pay</button>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
-        <hr style="flex:1;border:none;border-top:1px solid #e5e7eb;">
-        <span style="font-size:13px;color:var(--color-muted);">Or pay with card</span>
-        <hr style="flex:1;border:none;border-top:1px solid #e5e7eb;">
+        <hr style="flex:1;border:none;border-top:1px solid #E5E7EB;">
+        <span style="font-size:14px;color:#9AA0AB;font-weight:500;">Or pay with card</span>
+        <hr style="flex:1;border:none;border-top:1px solid #E5E7EB;">
       </div>
     `
     : '';
 
+  // WHY: Payment card block from Webflow checkout — light gray bg #f8f8f8, #E6E7EA border, 4px radius
   const cardFields = `
-    <div style="margin-bottom:12px;">
-      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:4px;color:var(--color-text);font-family:'Inter',sans-serif;">Card number</label>
-      <input type="text" placeholder="1234 5678 9012 3456" style="${FORM_INPUT_STYLE}" autocomplete="cc-number">
-    </div>
-    <div style="display:flex;gap:8px;">
-      <div style="flex:1;margin-bottom:12px;">
-        <label style="display:block;font-size:13px;font-weight:600;margin-bottom:4px;color:var(--color-text);font-family:'Inter',sans-serif;">Expiry</label>
-        <input type="text" placeholder="MM / YY" style="${FORM_INPUT_STYLE}" autocomplete="cc-exp">
+    <div style="background:#f8f8f8;border:1px solid #E6E7EA;border-radius:4px;padding:16px;margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <span style="font-size:16px;font-weight:700;color:#1B2A43;font-family:'Inter',sans-serif;">Credit Card</span>
       </div>
-      <div style="flex:1;margin-bottom:12px;">
-        <label style="display:block;font-size:13px;font-weight:600;margin-bottom:4px;color:var(--color-text);font-family:'Inter',sans-serif;">CVC</label>
-        <input type="text" placeholder="123" style="${FORM_INPUT_STYLE}" autocomplete="cc-csc">
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:14px;font-weight:600;margin-bottom:4px;color:#1B2A43;font-family:'Inter',sans-serif;">Card number</label>
+        <input type="text" placeholder="1234 5678 9012 3456" style="${FORM_INPUT_STYLE}" autocomplete="cc-number">
+      </div>
+      <div style="display:flex;gap:8px;">
+        <div style="flex:1;margin-bottom:12px;">
+          <label style="display:block;font-size:14px;font-weight:600;margin-bottom:4px;color:#1B2A43;font-family:'Inter',sans-serif;">Expiry</label>
+          <input type="text" placeholder="MM / YY" style="${FORM_INPUT_STYLE}" autocomplete="cc-exp">
+        </div>
+        <div style="flex:1;margin-bottom:12px;">
+          <label style="display:block;font-size:14px;font-weight:600;margin-bottom:4px;color:#1B2A43;font-family:'Inter',sans-serif;">CVC</label>
+          <input type="text" placeholder="123" style="${FORM_INPUT_STYLE}" autocomplete="cc-csc">
+        </div>
       </div>
     </div>
   `;
@@ -431,7 +453,7 @@ const SHIPPING_AUTOCOMPLETE: Record<ShippingField, string> = {
 function renderField(field: ShippingField): string {
   return `
     <div>
-      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:4px;color:var(--color-text);font-family:'Inter',sans-serif;">${escapeHtml(SHIPPING_LABELS[field])}</label>
+      <label style="display:block;font-size:14px;font-weight:600;margin-bottom:4px;color:#1B2A43;font-family:'Inter',sans-serif;">${escapeHtml(SHIPPING_LABELS[field])}</label>
       <input type="${SHIPPING_TYPES[field]}" name="${field}" placeholder="${escapeHtml(SHIPPING_PLACEHOLDERS[field])}" autocomplete="${SHIPPING_AUTOCOMPLETE[field]}" style="${FORM_INPUT_STYLE}">
     </div>
   `;
@@ -517,10 +539,12 @@ export function renderCountdown(block: Block): string {
     ? '@keyframes ec-pulse{0%,100%{opacity:1}50%{opacity:0.7}}'
     : '';
 
+  // WHY: Dark green #0c230e banner with lime #baf363 accent from Webflow checkout timer pattern
+  //      "Cart Reserved For" text in white, timer digits bold, lime accent for highlighted text
   const content = `
-    <div class="ec-countdown" style="text-align:center;padding:12px;border-radius:12px;background:${colors.bg};color:${colors.text};">
-      <div style="font-size:13px;font-weight:600;margin-bottom:6px;font-family:'Inter',sans-serif;">${escapeHtml(labelText)}</div>
-      <div style="font-size:32px;font-weight:800;font-family:'DM Serif Display',serif;letter-spacing:2px;${urgency === 'high' ? 'animation:ec-pulse 1.5s infinite;' : ''}"
+    <div class="ec-countdown" style="text-align:center;padding:8px 16px;border-radius:4px;background:#0c230e;color:#fff;">
+      <div style="font-size:14px;font-weight:400;margin-bottom:4px;font-family:'Inter',sans-serif;color:#fff;">${escapeHtml(labelText)}</div>
+      <div style="font-size:24px;font-weight:700;font-family:'Inter',sans-serif;letter-spacing:2px;color:#baf363;${urgency === 'high' ? 'animation:ec-pulse 1.5s infinite;' : ''}"
            data-end-date="${escapeHtml(endDate || '')}"
            data-minutes="${minutes || ''}">
         ${defaultMinutes}:${defaultSeconds}
@@ -551,16 +575,17 @@ interface ScarcityBadgeProps {
 export function renderScarcityBadge(block: Block): string {
   const { text, urgencyLevel = 'medium' } = getProps<ScarcityBadgeProps>(block);
 
+  // WHY: Scarcity badges from real winners — yellow warning bg, red urgency, pill shape sellout badge
   const colorMap: Record<UrgencyLevel, { bg: string; text: string }> = {
-    low: { bg: '#fef9c3', text: '#854d0e' },
-    medium: { bg: '#fed7aa', text: '#9a3412' },
-    high: { bg: '#ef4444', text: '#ffffff' },
+    low: { bg: '#FEFBC3', text: '#854d0e' },
+    medium: { bg: '#FEFBC3', text: '#D0021B' },
+    high: { bg: '#e84545', text: '#ffffff' },
   };
 
   const { bg, text: textColor } = colorMap[urgencyLevel];
 
   const content = `
-    <div class="ec-scarcity-badge" style="width:100%;text-align:center;font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;background:${bg};color:${textColor};font-family:'Inter',sans-serif;">
+    <div class="ec-scarcity-badge" style="width:100%;text-align:center;font-size:14px;font-weight:700;padding:8px 16px;border-radius:16px;background:${bg};color:${textColor};font-family:'Inter',sans-serif;">
       ${escapeHtml(text)}
     </div>
   `;
@@ -588,22 +613,23 @@ interface NegativeOptOutProps {
 export function renderNegativeOptOut(block: Block): string {
   const { text, checkboxLabel, lossAversion } = getProps<NegativeOptOutProps>(block);
 
+  // WHY: Opt-out from real upsell pages — blue link #0000EE, small font 14-17px, long guilt-trip copy
   const checkboxHtml = checkboxLabel
     ? `
-      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--color-muted);cursor:pointer;font-family:'Inter',sans-serif;">
-        <input type="checkbox" style="width:16px;height:16px;accent-color:var(--color-primary);">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#818997;cursor:pointer;font-family:'Inter',sans-serif;">
+        <input type="checkbox" style="width:16px;height:16px;accent-color:#00c249;">
         ${escapeHtml(checkboxLabel)}
       </label>
     `
     : '';
 
   const lossHtml = lossAversion
-    ? `<div style="font-size:12px;font-style:italic;color:var(--color-muted);margin-top:6px;font-family:'Inter',sans-serif;">${escapeHtml(lossAversion)}</div>`
+    ? `<div style="font-size:12px;font-style:italic;color:#818997;margin-top:6px;font-family:'Inter',sans-serif;">${escapeHtml(lossAversion)}</div>`
     : '';
 
   const content = `
     <div class="ec-negative-opt-out" style="text-align:center;padding:16px 0;">
-      <a href="#" style="font-size:14px;color:var(--color-muted);text-decoration:underline;font-family:'Inter',sans-serif;">${escapeHtml(text)}</a>
+      <a href="#" style="font-size:14px;color:#0000EE;text-decoration:underline;font-family:'Inter',sans-serif;">${escapeHtml(text)}</a>
       ${checkboxHtml}
       ${lossHtml}
     </div>
@@ -633,15 +659,15 @@ export function renderSellingPlanToggle(block: Block): string {
   const { oneTimeLabel = 'One-time', subscribeLabel = 'Subscribe', discountPercent } = getProps<SellingPlanToggleProps>(block);
 
   const discountBadge = discountPercent
-    ? `<span style="display:inline-block;background:#dcfce7;color:#16a34a;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;margin-left:6px;">Save ${discountPercent}%</span>`
+    ? `<span style="display:inline-block;background:#dcfce7;color:#00c249;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;margin-left:6px;">Save ${discountPercent}%</span>`
     : '';
 
   const content = `
-    <div class="ec-selling-plan-toggle" style="display:flex;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;">
-      <button style="flex:1;padding:14px 12px;font-size:15px;font-weight:600;border:none;background:transparent;color:var(--color-muted);cursor:pointer;font-family:'Inter',sans-serif;" data-plan="one-time">
+    <div class="ec-selling-plan-toggle" style="display:flex;border-radius:4px;border:1px solid #E6E7EA;overflow:hidden;">
+      <button style="flex:1;padding:14px 12px;font-size:15px;font-weight:600;border:none;background:transparent;color:#9AA0AB;cursor:pointer;font-family:'Inter',sans-serif;" data-plan="one-time">
         ${escapeHtml(oneTimeLabel)}
       </button>
-      <button style="flex:1;padding:14px 12px;font-size:15px;font-weight:700;border:none;background:var(--color-primary);color:#fff;cursor:pointer;font-family:'Inter',sans-serif;" data-plan="subscribe">
+      <button style="flex:1;padding:14px 12px;font-size:15px;font-weight:700;border:none;background:#00c249;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;" data-plan="subscribe">
         ${escapeHtml(subscribeLabel)}${discountBadge}
       </button>
     </div>
@@ -675,7 +701,7 @@ export function renderDiscountCode(block: Block): string {
   const content = `
     <div class="ec-discount-code" style="display:flex;gap:8px;">
       <input type="text" placeholder="${escapeHtml(placeholder)}" style="flex:7;${FORM_INPUT_STYLE}text-transform:uppercase;">
-      <button style="flex:3;${BUTTON_BASE_STYLE}background:var(--color-text);color:var(--color-bg);font-size:14px;min-height:48px;">${escapeHtml(applyButtonText)}</button>
+      <button style="flex:3;${BUTTON_BASE_STYLE}background:#2563EB;color:#fff;font-size:14px;min-height:42px;">${escapeHtml(applyButtonText)}</button>
     </div>
   `;
 
@@ -775,10 +801,10 @@ export function renderGuarantee(block: Block): string {
     : '';
 
   const content = `
-    <div class="ec-guarantee" style="text-align:center;padding:16px;border-radius:12px;background:var(--color-secondary);border:1px solid #e5e7eb;">
+    <div class="ec-guarantee" style="text-align:center;padding:16px;border-radius:8px;background:#FFFBef;border:1px solid #FAB73C;">
       <div style="font-size:32px;margin-bottom:8px;">${iconDisplay}</div>
-      <div style="font-size:18px;font-weight:800;font-family:'DM Serif Display',serif;color:var(--color-text);">${escapeHtml(heading)}</div>
-      <div style="font-size:15px;font-weight:600;margin-top:4px;color:var(--color-text);font-family:'Inter',sans-serif;">${escapeHtml(text)}</div>
+      <div style="font-size:18px;font-weight:800;font-family:'DM Serif Display',serif;color:#1B1B1B;">${escapeHtml(heading)}</div>
+      <div style="font-size:15px;font-weight:600;margin-top:4px;color:#1B1B1B;font-family:'Inter',sans-serif;">${escapeHtml(text)}</div>
       ${descriptionHtml}
     </div>
   `;

@@ -228,10 +228,12 @@ export function renderHero(block: Block): string {
       : `<button class="ec-btn ec-btn-primary ec-hero-cta" style="margin-top:20px;min-height:52px;padding:0 24px;font-size:1.125rem;font-weight:700;border-radius:12px;border:none;cursor:pointer;">${escapeHtml(props.ctaText)}</button>`
     : '';
 
-  // Editorial hero: larger headline, serif font, left-aligned
+  // WHY: Editorial hero = large serif headline matching winning advertorial pattern
+  //      28px mobile / 40px desktop for editorial (clamp), 36px desktop for commerce
+  //      Weight 800, DM Serif Display font -- matches --text-h1 token from design system
   const headlineFont = isEditorial
-    ? "font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,5vw,2.5rem);font-weight:700;line-height:1.15;color:#1B1B1B;"
-    : "font-family:'DM Serif Display',serif;font-size:clamp(1.875rem,5vw,2.25rem);font-weight:900;line-height:1.2;";
+    ? "font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,5vw,2.5rem);font-weight:800;line-height:1.15;color:#1B1B1B;"
+    : "font-family:'DM Serif Display',serif;font-size:clamp(1.875rem,5vw,2.25rem);font-weight:800;line-height:1.2;";
 
   const content = `
     <div class="ec-hero-content" style="text-align:${alignment};${textColor}">
@@ -269,18 +271,21 @@ export function renderHeading(block: Block): string {
   const level = props.level ?? 'section';
   const alignment = props.alignment ?? 'left';
 
+  // WHY: Heading sizes from design system typography tokens:
+  //      hero: 36px desktop / 24px mobile (clamp), weight 800
+  //      section: 24px, card: 20px
   const tagMap: Record<string, string> = { hero: 'h1', section: 'h2', card: 'h3' };
   const sizeMap: Record<string, string> = {
-    hero: 'font-size:clamp(1.875rem,5vw,2.25rem)',
-    section: 'font-size:1.5rem',
-    card: 'font-size:1.25rem',
+    hero: 'font-size:clamp(1.5rem,5vw,2.25rem)',
+    section: 'font-size:24px',
+    card: 'font-size:20px',
   };
 
   const tag = tagMap[level] ?? 'h2';
-  const size = sizeMap[level] ?? 'font-size:1.5rem';
+  const size = sizeMap[level] ?? 'font-size:24px';
   const escapedText = escapeHtml(props.text);
 
-  const content = `<${tag} class="ec-heading ec-heading-${level}" style="font-family:'DM Serif Display',serif;${size};line-height:1.2;margin:0;text-align:${alignment};color:var(--color-text);">${escapedText}</${tag}>`;
+  const content = `<${tag} class="ec-heading ec-heading-${level}" style="font-family:'DM Serif Display',serif;${size};font-weight:700;line-height:1.2;margin:0;text-align:${alignment};color:#1B1B1B;">${escapedText}</${tag}>`;
 
   return renderBlock(block, 'ec-heading-block', content);
 }
@@ -292,8 +297,9 @@ export function renderSubheadline(block: Block): string {
   const rawProps = getProps<SubheadlineProps>(block);
   const text = rawProps.content ?? rawProps.text ?? '';
 
+  // WHY: Subheadline = 18px muted text, matching --text-body secondary style
   const escapedText = escapeHtml(text);
-  const content = `<p class="ec-subheadline" style="font-family:'Inter',sans-serif;font-size:1.125rem;line-height:1.5;color:var(--color-muted);margin:0;">${escapedText}</p>`;
+  const content = `<p class="ec-subheadline" style="font-family:'Inter',sans-serif;font-size:18px;line-height:1.5;color:#6B7280;margin:0;">${escapedText}</p>`;
 
   return renderBlock(block, 'ec-subheadline-block', content);
 }
@@ -310,9 +316,11 @@ export function renderSubheadline(block: Block): string {
  */
 export function renderBodyText(block: Block): string {
   const props = getProps<BodyTextProps>(block);
+  // WHY: Body text from design system — 18px base, 26px line-height (1.7 ratio)
+  //      Matches --text-body token (16-20px, 400 weight, 24-28px line-height)
   const size = props.size ?? 'base';
-  const fontSize = size === 'sm' ? '14px' : '1.0625rem';
-  const lineHeight = size === 'sm' ? '1.5' : '1.75';
+  const fontSize = size === 'sm' ? '14px' : '18px';
+  const lineHeight = size === 'sm' ? '1.5' : '1.7';
 
   // Split into paragraphs on double newline
   const paragraphs = props.content
@@ -331,7 +339,7 @@ export function renderBodyText(block: Block): string {
     // Single newlines within a paragraph become <br>
     formatted = formatted.replace(/\n/g, '<br>');
 
-    return `<p style="font-family:'Inter',sans-serif;font-size:${fontSize};line-height:${lineHeight};color:#1B1B1B;margin-bottom:1em;">${formatted}</p>`;
+    return `<p style="font-family:'Inter',sans-serif;font-size:${fontSize};line-height:${lineHeight};color:#02122E;margin-bottom:1em;">${formatted}</p>`;
   }).join('\n');
 
   return renderBlock(block, 'ec-body-text', paragraphsHtml);
@@ -405,21 +413,35 @@ export function renderButton(block: Block): string {
   const fullWidthStyle = props.fullWidth ? 'width:100%;' : '';
   const escapedText = escapeHtml(props.text);
 
+  // WHY: Button variants from winning DTC pages:
+  //      Primary: green #00C249, 8px radius (matches checkout CTA)
+  //      Urgency: red #dc2626 with pulse animation
+  //      Secondary: outline with green border
+  const variantStyleMap: Record<string, string> = {
+    primary: 'background:#00c249;color:#fff;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);',
+    urgency: 'background:#dc2626;color:#fff;box-shadow:0 4px 14px rgba(220,38,38,0.4);',
+    secondary: 'background:transparent;color:#2D6A4F;border:2px solid #2D6A4F;',
+  };
+
+  const variantStyle = variantStyleMap[variant] ?? variantStyleMap['primary'];
+
   const baseBtnStyle = [
     'display:inline-block',
     'min-height:52px',
     'line-height:52px',
     'padding:0 24px',
-    'font-size:1.125rem',
+    'font-size:18px',
     'font-weight:700',
     'font-family:Inter,-apple-system,sans-serif',
-    'border-radius:12px',
+    'border-radius:8px',
     'text-decoration:none',
     'text-align:center',
     'cursor:pointer',
     'border:none',
     'box-sizing:border-box',
     fullWidthStyle,
+    variantStyle,
+    'transition:transform 0.15s ease,box-shadow 0.15s ease,background-color 200ms ease-in-out;',
   ].filter(Boolean).join(';');
 
   const html = props.url
@@ -445,21 +467,32 @@ export function renderCta(block: Block): string {
 
   const ariaLabel = ` aria-label="${escapedText}"`;
 
+  // WHY: Same variant styles as renderButton for consistency
+  const variantStyleMap: Record<string, string> = {
+    primary: 'background:#00c249;color:#fff;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);',
+    urgency: 'background:#dc2626;color:#fff;box-shadow:0 4px 14px rgba(220,38,38,0.4);',
+    secondary: 'background:transparent;color:#2D6A4F;border:2px solid #2D6A4F;',
+  };
+
+  const variantStyle = variantStyleMap[variant] ?? variantStyleMap['primary'];
+
   const baseBtnStyle = [
     'display:inline-block',
     'min-height:52px',
     'line-height:52px',
     'padding:0 24px',
-    'font-size:1.125rem',
+    'font-size:18px',
     'font-weight:700',
     'font-family:Inter,-apple-system,sans-serif',
-    'border-radius:12px',
+    'border-radius:8px',
     'text-decoration:none',
     'text-align:center',
     'cursor:pointer',
     'border:none',
     'box-sizing:border-box',
     fullWidthStyle,
+    variantStyle,
+    'transition:transform 0.15s ease,box-shadow 0.15s ease,background-color 200ms ease-in-out;',
   ].filter(Boolean).join(';');
 
   const btnHtml = props.url

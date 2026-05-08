@@ -1,0 +1,1506 @@
+{
+  "file": "checkout-drivse-.html",
+  "total_css_chars": 385857,
+  "key_rules": [
+    {
+      "selector": "#\\33 p-gift-card-field",
+      "properties": "height: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#arrowGif-2",
+      "properties": "width: 26px;margin-bottom: 2px;",
+      "important": true
+    },
+    {
+      "selector": "#basic-creditCards-collapsible",
+      "properties": "height: auto;overflow: visible;",
+      "important": true
+    },
+    {
+      "selector": "#billingAddress",
+      "properties": "padding-left: 1px;padding-right: 1px;width: 100%;",
+      "important": true
+    },
+    {
+      "selector": "#bumpHeadingClass-2",
+      "properties": "width: auto;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-05KCr3wjjPJm",
+      "properties": "height: 100%;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-0GExO03jUH4N",
+      "properties": "display: flex;justify-content: flex-end;align-items: center;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-0GExO03jUH4N",
+      "properties": "margin-left: 6px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-0VMLdRxsPQig",
+      "properties": "margin-top: 0px;margin-bottom: 0px;margin-left: 0px;height: 20px;width: 20px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-0aIMzgrmcqSj",
+      "properties": "margin-left: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-0aIMzgrmcqSj",
+      "properties": "width: 120px;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-0uYgN2NpowM2",
+      "properties": "display: flex;justify-content: flex-end;align-items: center;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-13dP1rzy7WYm",
+      "properties": "margin-bottom: 0px;border-color: rgb(222, 222, 222);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-1AUTYn2z7oF8",
+      "properties": "display: flex;justify-content: flex-start;align-items: center;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-2NTceZ660pVi",
+      "properties": "color: black;width: 32px;height: auto;border-radius: 3px;margin-left: 0px;margin-right: 9px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-2j1Jc04Pmjwv",
+      "properties": "font-size: 12px;border-color: rgb(222, 222, 222);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-2z6ugg48L8AI",
+      "properties": "display: flex;justify-content: space-between;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-45jddJua38uN",
+      "properties": "margin-bottom: 0px;text-align: right;font-weight: 700;color: rgb(0, 0, 0);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-45jddJua38uN",
+      "properties": "font-weight: 600;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-4JzW0pTdKX5R",
+      "properties": "width: 40px;margin-top: 1px;align-self: center;color: rgb(66, 133, 255);padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-4Q8XEPMzq5kF",
+      "properties": "color: rgb(0, 0, 0);font-size: 16px;font-family: poppins;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-4dP2oYeLDJ4P",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;background-color: rgb(91, 174, 161);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-4dP2oYeLDJ4P",
+      "properties": "margin-top: 2px;width: 53px;background-color: rgb(91, 174, 161);border-radius: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-4fuwpeydxQzj",
+      "properties": "height: 35px;width: 56px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-57QU3kUABFbW",
+      "properties": "max-width: 100%;width: 200px;height: 45px;background-size: contain;margin-left: auto;margin-right: auto;padding: 6px 12px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-57QU3kUABFbW",
+      "properties": "width: 322px;margin-top: 5px;height: 53px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-5GMwQFaqvBHN",
+      "properties": "display: flex;justify-content: flex-end;align-items: center;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-5GpOKm113kSr",
+      "properties": "width: auto;padding-top: 0px;padding-bottom: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-5OA4REyvEObV",
+      "properties": "text-align: left;color: rgb(53, 48, 48);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-5PGLC9fHhqq4",
+      "properties": "margin-top: 0px;margin-bottom: 0px;margin-left: 0px;height: 20px;width: 20px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-5qTA3Bea6Z5l",
+      "properties": "width: auto;margin-left: auto;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-5qTA3Bea6Z5l",
+      "properties": "text-align: right;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-604pueorOWXe",
+      "properties": "color: black;height: 40px;width: 70px;margin-bottom: 18px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-6QegMjloqpLq",
+      "properties": "width: 70px;height: 70px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-6ZaxRl0t4p1S",
+      "properties": "padding-left: 0px;padding-right: 0px;position: relative;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-72NPr7YAEEQx",
+      "properties": "color: rgba(155, 155, 155, 1);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-72NPr7YAEEQx",
+      "properties": "color: rgb(155, 155, 155) !important;font-size: 11px !important;font-weight: 200 !important;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-72NPr7YAEEQx",
+      "properties": "text-align: center !important;font-size: 17px !important;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-72NPr7YAEEQx",
+      "properties": "text-align: left;font-family: \"Montserrat\";margin-top: 10px;font-size: 10px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-72NPr7YAEEQx",
+      "properties": "text-align: left !important;font-family: \"Montserrat\" !important;font-size: 11.5px !important;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-779U0weoauf9",
+      "properties": "width: 100%;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-7dCjAqbJjPuu",
+      "properties": "margin-bottom: 0px;text-align: right;margin-top: 2px;color: rgb(12, 102, 93);margin-left: 8px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-7w1b2pqS0vej",
+      "properties": "font-size: 14px;padding-top: 0px;padding-bottom: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-7w1b2pqS0vej",
+      "properties": "font-size: 16px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-8NFq5DzpbA38",
+      "properties": "justify-content: center;align-items: center;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-8nbKLtJ2pbR0",
+      "properties": "width: 100%;display: flex;align-items: flex-start;justify-content: flex-start;padding: 6px 10px 6px 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-91lPkOIx04qC",
+      "properties": "background-color: rgb(205, 205, 205);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-9PyaBWOYTQiB",
+      "properties": "display: flex;justify-content: flex-end;align-items: center;text-align: right;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-9PyaBWOYTQiB",
+      "properties": "margin-left: 6px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-9cZ8QaHtI8YV",
+      "properties": "margin-left: 2px;margin-right: 2px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-AH919rQdLNKc",
+      "properties": "padding-bottom: 12px;padding-top: 0;line-height: 16px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-AKUz4MNAhwnJ",
+      "properties": "padding: 12px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-AU35auWasWlw",
+      "properties": "text-align: left;color: rgb(53, 48, 48);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-AwqGkNR3N67J",
+      "properties": "width: 70px;height: 70px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-AwqGkNR3N67J",
+      "properties": "width: 70px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-B3KOsjsUpoDw",
+      "properties": "color: black;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-BO7IL796TwAd",
+      "properties": "margin-top: 16px;padding-left: 0px;padding-right: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-BO7IL796TwAd",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-BO7IL796TwAd",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-BO7IL796TwAd",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-BOIpBl1PEcYV",
+      "properties": "width: 100%;padding: 0px 0px 0px 10px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Bh8NyquCAPxe",
+      "properties": "margin-bottom: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-CQs2GyEfaiwA",
+      "properties": "text-align: left;margin-top: 0px;width: 97.47px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-CUElxgd5ipX9",
+      "properties": "margin-left: auto;margin-right: auto;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-CnzT4Orja2GM",
+      "properties": "margin-top: 0px;margin-bottom: 0px;margin-left: 0px;height: 20px;width: 20px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-DGPEY8n8lUQF",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-DGPEY8n8lUQF",
+      "properties": "margin-top: 2px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-DNsGpNzn8fcT",
+      "properties": "margin-bottom: 0px;text-align: right;font-weight: 700;color: rgb(0, 0, 0);font-size: 12px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-DNsGpNzn8fcT",
+      "properties": "font-weight: 600;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-DR6hwdNP2VhH",
+      "properties": "border-color: rgb(222, 222, 222);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-DSHlQO8GpgLk",
+      "properties": "margin-bottom: 0px;text-align: right;margin-top: 2px;color: rgb(12, 102, 93);margin-left: 8px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-DaELVbNOCNaP",
+      "properties": "color: rgb(0, 0, 238);padding-left: 10px;padding-right: 10px;display: inline-block;font-family: Helvetica, serif;cursor: pointer;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Dd83uCH14bDl",
+      "properties": "background-color: rgb(250, 249, 249);color: rgb(102, 102, 102);border-radius: 0px 6px 6px 0px;font-size: 10px;border-style: solid;border-width: 1px 1px 1px 0px;border-color: rgb(211, 211, 211);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-EAZWr7Bm6KyF",
+      "properties": "font-size: 18px;text-align: left;font-weight: 600;line-height: 1.3em;margin-bottom: 0px;font-family: poppins;color: rgb(51, 51, 51);padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-EC1d2thCVAvF",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-EC1d2thCVAvF",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-EC1d2thCVAvF",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-EC1d2thCVAvF",
+      "properties": "display: flex;justify-content: center;align-items: center;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-EC1d2thCVAvF",
+      "properties": "padding: 15px 5px 10px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-EcGuryfrbklA",
+      "properties": "border-radius: 10px;box-shadow: rgba(168, 168, 168, 0.5) 0px 0px 10px 0px;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-F0X5eCo2baSE",
+      "properties": "padding-left: 6px;padding-right: 6px;align-items: center;justify-content: flex-end;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-F0X5eCo2baSE",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-F0X5eCo2baSE",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-F0X5eCo2baSE",
+      "properties": "order: -1 !important;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-F0X5eCo2baSE",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-F0X5eCo2baSN",
+      "properties": "padding-left: 6px;padding-right: 6px;align-items: center;justify-content: flex-end;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-F2vqUyj9at5E",
+      "properties": "font-size: 18px;text-align: left;font-weight: 600;line-height: 1.3em;margin-bottom: 10px;font-family: poppins;color: rgb(51, 51, 51);padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-F2vqUyj9at5E",
+      "properties": "text-align: left;margin-bottom: 5px;font-weight: 700;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Fetm9ewhc6cp",
+      "properties": "margin-left: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Fetm9ewhc6cp",
+      "properties": "width: 120px;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-GNMiszAvy5r8",
+      "properties": "display: flex;justify-content: flex-end;align-items: center;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-HERay14uYOix",
+      "properties": "border-color: rgb(222, 222, 222);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-HUDFAoT4DiwN",
+      "properties": "border-top-left-radius: 10px;border-top-right-radius: 10px;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-HUDFAoT4DiwN",
+      "properties": "border-style: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-HcQPrvaqgan3",
+      "properties": "height: 15px;width: 15px;color: rgb(230, 198, 50);fill: rgb(230, 198, 50);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-HupjYolTN8US",
+      "properties": "font-size: 18px;text-align: left;font-weight: 600;line-height: 1.3em;margin-bottom: 0px;font-family: poppins;color: rgb(51, 51, 51);padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-HupjYolTN8US",
+      "properties": "font-weight: 700;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-I40gmuap5itk",
+      "properties": "font-size: 32px;font-family: Helvetica, serif;font-weight: 700;margin-top: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-I40gmuap5itk",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-I40gmuap5itk",
+      "properties": "height: 72px;background-color: rgb(232, 245, 230);padding-top: 10px;padding-bottom: 5px;border-radius: 10px;margin-top: 10px;width: 100%;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-I6L0MfAFI19K",
+      "properties": "display: flex;justify-content: space-between;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-I6rQcrNaNAuV",
+      "properties": "font-size: 16px;font-family: montserrat;line-height: 24px;margin-left: 10px;padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-IF4J56R6ARkA",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-IF4J56R6ARkA",
+      "properties": "margin-top: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-IGXd8pxJtxMO",
+      "properties": "margin-left: 2px;margin-right: 2px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-INh33BEHMITv",
+      "properties": "width: auto;display: flex;justify-content: center;align-items: center;margin-left: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-INh33BEHMITv",
+      "properties": "margin-left: 10px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Ived7q58AiKE",
+      "properties": "margin-bottom: 0px;text-align: right;font-weight: 700;color: rgb(0, 0, 0);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Iztc7g7p6ljv",
+      "properties": "text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-J7KXyiPzxb2X",
+      "properties": "height: auto;width: auto;padding-left: 1px;padding-bottom: 1px;padding-top: 1px;margin-bottom: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-JA7HNhgsMuSU",
+      "properties": "justify-content: space-between;display: flex;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-JBy7QDKpCf0Z",
+      "properties": "margin-bottom: 0px;border-color: rgb(222, 222, 222);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-JUN7QdBQAnJR",
+      "properties": "font-size: 20px;font-family: Helvetica, serif;padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-K00iBCpN6QBF",
+      "properties": "color: rgb(0, 0, 0);font-weight: 600;font-size: 17px;line-height: 22px;font-family: poppins;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-K00iBCpN6QBF",
+      "properties": "text-align: center;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-KMuWEYAnYQqI",
+      "properties": "width: auto;margin-left: auto;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-KMuWEYAnYQqI",
+      "properties": "text-align: right;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Kmn5xOABAWZU",
+      "properties": "color: rgb(0, 0, 238);padding-left: 10px;padding-right: 10px;display: inline-block;font-family: Helvetica, serif;cursor: pointer;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-KwzXfH1VpcP7",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-KwzXfH1VpcP7",
+      "properties": "margin-top: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-LYFPeUCN2lLT",
+      "properties": "color: black;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-MLlP4rRbUdai",
+      "properties": "text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-MkIfLTxlDp1A",
+      "properties": "justify-content: center;align-items: center;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-MkIfLTxlDp1A",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-MkIfLTxlDp1A",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-MmEIiChAla4K",
+      "properties": "font-size: 13px;font-family: montserrat;font-weight: 600;line-height: 28px;margin-bottom: 0px;text-align: center;color: rgb(0, 0, 0);font-style: italic;padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Mx4l3QJX1aVl",
+      "properties": "margin-bottom: 0px;text-align: right;font-weight: 700;color: rgb(0, 0, 0);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-NKAePjX4nBFx",
+      "properties": "color: black;width: 32px;height: auto;border-radius: 3px;margin-left: 0px;margin-right: 9px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-NRqZAHbl90Bi",
+      "properties": "font-size: 12px;font-weight: 400;color: rgb(102, 102, 102);margin-right: 7px;padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-NVFNRWWbgYeA",
+      "properties": "text-align: left;font-family: poppins;font-size: 14px;line-height: 21px;color: rgb(51, 65, 85);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-NeuDMEvi5aq8",
+      "properties": "padding-top: 1px;border-color: rgb(222, 222, 222);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-NeuDMEvi5aq8",
+      "properties": "padding-top: 6px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-OrjapQMwHrBU",
+      "properties": "font-size: 16px;border-color: rgb(222, 222, 222);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-OrjapQMwHrBU",
+      "properties": "font-weight: 200;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-P0KtkuFXq2w2",
+      "properties": "margin-left: auto;margin-right: auto;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-P1lpwrN4C6Rj",
+      "properties": "justify-content: flex-end;align-items: center;text-align: right;margin-right: 0px;margin-left: 6px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-PBCLQtdnSjjy",
+      "properties": "display: block;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-PEzdqG7ukZxk",
+      "properties": "color: black;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-PMJKYmniK4td",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-PcQcodjJowmq",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-PcQcodjJowmq",
+      "properties": "margin-top: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-PvCl1M3pvrWB",
+      "properties": "width: 100%;padding: 0px 0px 0px 10px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-PyjYVIlQfzCP",
+      "properties": "color: black;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-QcUFmpc282eS",
+      "properties": "color: black;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-QuNFd4V4pYj1",
+      "properties": "width: 70px;height: 70px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-QuNFd4V4pYj1",
+      "properties": "width: 70px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-RPEdAygJGgOb",
+      "properties": "box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 5px 0px;margin-bottom: 16px;border-radius: 8px;justify-content: flex-start;align-items: center;padding: 10px;border-style: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-RPEdAygJGgOb",
+      "properties": "height: 82px;padding-top: 9px;border-radius: 5px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-RT2szoBhawWt",
+      "properties": "font-size: 19px;font-weight: 700;color: rgb(0, 0, 0);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-TFw70KBZpvjl",
+      "properties": "margin-bottom: 0px;text-align: right;font-weight: 700;color: rgb(0, 0, 0);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-TJpN8tGJefFy",
+      "properties": "margin-left: auto;margin-right: auto;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-TfgDnGxE2pa9",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-TfgDnGxE2pa9",
+      "properties": "font-weight: 500;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Tig5sRipS57H",
+      "properties": "color: rgb(155, 155, 155);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-UVpk3aEZOcDn",
+      "properties": "background-color: rgb(250, 250, 250);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-UfG2PKS3midg",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-UfG2PKS3midg",
+      "properties": "margin-top: 2px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-UmRWlH1XYYou",
+      "properties": "display: block;align-items: center;justify-content: center;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-UpGJh95QnwrL",
+      "properties": "height: 80px;padding: 0px 5px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-V5TaO0ylwQ4n",
+      "properties": "margin-bottom: 2px;color: rgb(102, 102, 102);font-size: 12px;text-align: left;font-family: poppins;margin-top: 2px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-VA1eL5wPMM49",
+      "properties": "font-size: 16px;border-color: rgb(222, 222, 222);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-VA1eL5wPMM49",
+      "properties": "font-weight: 200;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-VDmRepIodpkd",
+      "properties": "color: black;width: 100%;border-top-left-radius: 10px;border-top-right-radius: 10px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-VDmRepIodpkd",
+      "properties": "width: 500px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Va1ZkcX826vd",
+      "properties": "text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Va1ZkcX826vd",
+      "properties": "text-align: center;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-VgqTmwhpJnQb",
+      "properties": "margin-bottom: 0px;text-align: right;margin-top: 2px;color: rgb(12, 102, 93);margin-left: 8px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Vm3EsOLXVpZ5",
+      "properties": "max-width: 100%;width: 200px;height: 45px;background-size: cover;margin-left: auto;margin-right: auto;padding: 6px 12px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WBG5pPcCpOqJ",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WBG5pPcCpOqJ",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WBG5pPcCpOqJ",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WBG5pPcCpOqJ",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WBG5pPcCpOqJ",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WLz6htOosAWz",
+      "properties": "border-top-left-radius: 10px;border-top-right-radius: 10px;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WPZ7J7ensW9C",
+      "properties": "background-color: rgba(41, 175, 92, 1) !important;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WPZ7J7ensW9C",
+      "properties": "margin-top: -8px;margin-bottom: 10px;background-color: rgba(41, 175, 92, 1);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WUWSpK3vJYlI",
+      "properties": "font-size: 16px;font-weight: 700;color: rgb(51, 51, 51);margin-bottom: 0px;text-align: left;line-height: 26px;font-family: poppins;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WUWSpK3vJYlI",
+      "properties": "line-height: 20px;font-weight: 600;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WbqpgymZ0ULV",
+      "properties": "padding-left: 0px;padding-right: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WiEuk6h3U38N",
+      "properties": "font-size: 20px;font-family: Helvetica, serif;padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Woj6MmA6ZoMS",
+      "properties": "margin-bottom: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-WrJlzKB0N7pK",
+      "properties": "font-size: 15px;font-family: Montserrat, sans-serif;line-height: 24px;margin-top: 3px;color: rgb(46, 66, 71);padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-XJhTyWdgCxaq",
+      "properties": "color: black;width: 32px;height: auto;border-radius: 3px;margin-right: 9px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-XPU5JjDnPUg8",
+      "properties": "display: flex;justify-content: center;align-items: flex-end;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-XVDUH44Z7AsR",
+      "properties": "color: black;width: 147px;height: auto;margin-bottom: 8px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-XVDUH44Z7AsR",
+      "properties": "height: 100%;width: 50%;margin-bottom: 20px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-XnweABQfprLR",
+      "properties": "font-size: 20px;font-family: Helvetica, serif;padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-XsznDPylLCzL",
+      "properties": "box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 5px 0px;margin-bottom: 0px;border-radius: 8px;justify-content: flex-start;align-items: center;padding: 10px;border-style: none;border-color: rgb(221, 221, 221);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-XsznDPylLCzL",
+      "properties": "height: 82px;padding-top: 9px;border-radius: 5px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Y6vvxK2wAP3a",
+      "properties": "margin-top: 0px;margin-bottom: 0px;margin-left: 0px;height: 20px;width: 20px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Ya1qAL1hmO30",
+      "properties": "margin-bottom: 0px;text-align: right;margin-top: 2px;color: rgb(230, 0, 0);margin-left: 8px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-YaXctUtpWinw",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ZH42qKntRBBB",
+      "properties": "height: 15px;width: 15px;color: rgb(230, 198, 50);fill: rgb(230, 198, 50);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ZVgXTnNpkhfR",
+      "properties": "color: black;width: 127px;height: auto;margin-bottom: 20px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ZVgXTnNpkhfR",
+      "properties": "margin-bottom: 0px;margin-left: auto;margin-right: auto;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ZVgXTnNpkhfR",
+      "properties": "width: 30%;margin-top: -6px;height: 100%;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ZWLwoafysktS",
+      "properties": "height: 15px;width: 15px;color: rgb(230, 198, 50);fill: rgb(230, 198, 50);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ZrPMzTnxTAPk",
+      "properties": "color: black;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Zs5v8BANuXAl",
+      "properties": "margin-left: 3px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-Zs5v8BANuXAl",
+      "properties": "width: 307.36px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-a536SoCvmMND",
+      "properties": "padding-left: 0px;padding-right: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-a536SoCvmMND",
+      "properties": "height: 70.1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-aAJmWqM8NZdF",
+      "properties": "width: auto;display: flex;justify-content: center;align-items: center;margin-left: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-aAJmWqM8NZdF",
+      "properties": "margin-left: 10px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-aBrB5ybdQQ0O",
+      "properties": "color: black;width: 100%;border-top-left-radius: 10px;border-top-right-radius: 10px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ahh9xmEjdcK1",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ahh9xmEjdcK1",
+      "properties": "margin-top: 2px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-alBe2L4cluD6",
+      "properties": "margin-bottom: 20px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-alYU9VovA0ph",
+      "properties": "font-size: 14px;font-family: poppins;color: rgb(115, 115, 115);padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-b1KRnAqtbjbB",
+      "properties": "display: flex;justify-content: center;align-items: flex-end;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-bGFVE109R3pI",
+      "properties": "font-size: 19px;font-weight: 700;color: rgb(0, 0, 0);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-bQuW118Rp0nY",
+      "properties": "font-size: 18px;text-align: left;font-weight: 600;line-height: 1.3em;margin-bottom: 0px;font-family: poppins;color: rgb(51, 51, 51);padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-bQuW118Rp0nY",
+      "properties": "font-weight: 700;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-bkGANaMdugep",
+      "properties": "margin-top: -8px;margin-bottom: 10px;background-color: rgb(46, 66, 71);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-cG53iTATjmhr",
+      "properties": "color: black;height: auto;width: 160px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-cISPPmCUJdIi",
+      "properties": "font-size: 16px;font-weight: 500;color: rgb(51, 51, 51);margin-bottom: 0px;text-align: left;line-height: 26px;font-family: poppins;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-cISPPmCUJdIi",
+      "properties": "line-height: 20px;font-weight: 500;font-size: 16px;width: 141px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-cqNDTKe9za2K",
+      "properties": "padding-bottom: 0px;padding-top: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-cu1ERxpw0zja",
+      "properties": "margin-left: 0px;width: 100%;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-d4YLFpSuU6hd",
+      "properties": "font-size: 32px;font-family: Helvetica, serif;font-weight: 700;margin-top: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-d4YLFpSuU6hd",
+      "properties": "margin-top: 0px;padding-top: 5px;padding-bottom: 3px;background-color: rgba(0, 0, 0, 1);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-d9NPEeRz1vwi",
+      "properties": "width: auto;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-dkbWFGym7tnp",
+      "properties": "background-color: rgb(205, 205, 205);width: 100%;height: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-dufCp2zERYpy",
+      "properties": "filter: brightness(132%) contrast(140%) saturate(128%) blur(0px)\n    hue-rotate(107deg);height: 48px;width: 48px;margin-right: 12px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-e545Bp7DEJyH",
+      "properties": "width: 34%;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-fD0UYa2NrbxR",
+      "properties": "width: auto;margin-left: auto;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-fD0UYa2NrbxR",
+      "properties": "text-align: right;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-fN2k3hPsusDE",
+      "properties": "max-width: 100%;width: 200px;height: 45px;background-size: contain;margin-left: auto;margin-right: auto;padding: 6px 12px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-faVpFWp2qMO3",
+      "properties": "text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-fepQzQH3dPB5",
+      "properties": "color: black;width: 127px;height: auto;margin-bottom: 20px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-fepQzQH3dPB5",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-fepQzQH3dPB5",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-g2wrTajaoYuO",
+      "properties": "margin-left: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-g2wrTajaoYuO",
+      "properties": "width: 120px;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-hPlaAjtpTubT",
+      "properties": "display: flex;justify-content: space-between;align-items: center;padding-left: 0px;padding-right: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-heQgAyYyWHLG",
+      "properties": "padding-top: 3px;margin-top: 5px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-hjatr61LwsZv",
+      "properties": "margin-left: 0px;width: 100%;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-hp5bvmeiNahS",
+      "properties": "margin-top: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-huNySBPg5xkq",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;background-color: rgb(91, 174, 161);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-huNySBPg5xkq",
+      "properties": "margin-top: 2px;width: 53px;background-color: rgb(91, 174, 161);border-radius: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-i5xH8zpkZaB3",
+      "properties": "max-width: 100%;width: 200px;height: 45px;background-size: contain;margin-left: auto;margin-right: auto;padding: 6px 12px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-iEgvbEABtrYf",
+      "properties": "padding-top: 0px;padding-bottom: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-idpQAlmbtJ9K",
+      "properties": "text-align: left;color: rgb(53, 48, 48);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-idpQAlmbtJ9K",
+      "properties": "margin-bottom: 5px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ifcMA5EdOLmh",
+      "properties": "margin-bottom: 0px;text-align: right;font-weight: 700;color: rgb(0, 0, 0);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-imIPLlVkuIHT",
+      "properties": "text-align: left;color: rgb(53, 48, 48);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-izJ60dp0MyKW",
+      "properties": "height: auto;width: 100%;color: black !important;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-izRiJGEXX2Cp",
+      "properties": "padding-left: 2px;padding-right: 2px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-jG4HfQpX0ILI",
+      "properties": "font-size: 19px;font-weight: 700;color: black;padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-jUS6KY3la5RY",
+      "properties": "color: rgb(62, 62, 231);font-size: 13px;font-family: poppins;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-jUS6KY3la5RY",
+      "properties": "text-align: center;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-jpxEx0YvXFpC",
+      "properties": "font-size: 19px;font-weight: 700;text-align: left;color: black;padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-juT0mASPGulr",
+      "properties": "text-align: right;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-jwPm86UN0WZp",
+      "properties": "justify-content: flex-start;align-items: center;padding-left: 6px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-jwPm86UN0WZp",
+      "properties": "margin-bottom: 10px;margin-top: 3px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-k8tTiPbteS7A",
+      "properties": "display: flex;justify-content: space-between;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-kPgXMdn3YCqD",
+      "properties": "display: none;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-kT5gVArgiZ9L",
+      "properties": "border-color: rgb(222, 222, 222);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-lAWxltedKS7n",
+      "properties": "display: flex;justify-content: space-between;align-items: center;width: 100%;margin: 36px 0px 17px;padding: 0px 6px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-lAWxltedKS7n",
+      "properties": "margin-bottom: 4px;padding-left: 3px;margin-top: 5px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-lD18xWLFPhvX",
+      "properties": "display: flex;justify-content: flex-start;align-items: center;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-linUabTGyeGg",
+      "properties": "margin-right: 6px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-mFKXAU6Fdl1g",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;background-color: rgb(91, 174, 161);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-mFKXAU6Fdl1g",
+      "properties": "margin-top: 2px;width: 53px;background-color: rgb(91, 174, 161);border-radius: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-mtm2hUMMgRcp",
+      "properties": "height: 15px;width: 15px;color: rgb(230, 198, 50);fill: rgb(230, 198, 50);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-n1Pv32BnfBQ6",
+      "properties": "text-align: left;color: rgb(53, 48, 48);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-n62CDs8U5fpr",
+      "properties": "height: 15px;width: 15px;color: rgb(230, 198, 50);fill: rgb(230, 198, 50);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-n7RPmhF5jmoh",
+      "properties": "display: flex;justify-content: flex-end;align-items: center;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-n7RPmhF5jmoh",
+      "properties": "margin-left: 6px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-nFInGrnKCpOq",
+      "properties": "width: 70px;height: 70px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-oEnFcAjHMtyX",
+      "properties": "color: black;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-oGrns84pk2JT",
+      "properties": "flex-direction: row;justify-content: center;align-items: center;display: flex;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-oPfLsxR8kkLj",
+      "properties": "font-family: Roboto, sans-serif;font-size: 20px;line-height: 24px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ob1bHZIBpsP4",
+      "properties": "text-align: left;padding-bottom: 5px;height: 59.5px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ob1bHZIBpsP4",
+      "properties": "text-align: left;margin-top: 0px;height: 46px;margin-bottom: 15px;background-color: rgba(255, 255, 255, 1);padding-top: 6px;padding-bottom: 3px;width: 346.04px;border-style: solid;border-width: 1px;border-color: rgb(250, 250, 250);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-oilUPtXBTpqS",
+      "properties": "font-size: 16px;font-weight: 700;color: rgb(51, 51, 51);margin-bottom: 0px;text-align: left;line-height: 26px;font-family: poppins;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-okEqkPgP6rkq",
+      "properties": "max-width: 100%;width: 200px;height: 45px;background-size: contain;margin-left: auto;margin-right: auto;padding: 6px 12px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-ow94ze3hxoPF",
+      "properties": "margin-left: auto;margin-right: auto;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-p7HMMVC2pjk6",
+      "properties": "margin-bottom: 0px;color: rgb(91, 174, 161);font-size: 10px;font-family: poppins;font-weight: bold;text-align: left;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-p7HMMVC2pjk6",
+      "properties": "font-weight: 500;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-pCaSyZApwX4o",
+      "properties": "border-radius: 10px;box-shadow: rgba(168, 168, 168, 0.5) 0px 0px 10px 0px;padding: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-pG7sjSPQRfbX",
+      "properties": "margin-right: 6px;width: 96px;height: 24px;color: black;margin-left: 6px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-pG7sjSPQRfbX",
+      "properties": "width: 95px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-pLZkskvxhQog",
+      "properties": "color: black;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-pQV17NsAyDz6",
+      "properties": "padding-left: 5px;padding-right: 5px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-pfzR7G1mYIxC",
+      "properties": "padding: 0px 10px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-pqFIbNJ3PWMi",
+      "properties": "text-align: left;color: rgb(53, 48, 48);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-qGaGmJOG3SkC",
+      "properties": "color: rgb(230, 0, 0);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-qGxR95JVX9Hp",
+      "properties": "font-size: 16px;font-weight: 500;color: rgb(51, 51, 51);margin-bottom: 0px;text-align: left;line-height: 26px;font-family: poppins;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-qGxR95JVX9Hp",
+      "properties": "line-height: 20px;font-weight: 500;font-size: 16px;width: 141px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-qcSGvs12pzsK",
+      "properties": "margin-bottom: 0px;border-color: rgb(222, 222, 222);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-qcSGvs12pzsK",
+      "properties": "padding-top: 4px;width: auto;height: 49.1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-qcogcBAXyzVQ",
+      "properties": "font-size: 12px;font-family: Helvetica, serif;font-weight: 600;color: rgb(0, 0, 0);padding: 1px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-qcogcBAXyzVQ",
+      "properties": "font-weight: 400;padding-top: 0px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-qySUGJRAxT4U",
+      "properties": "height: 15px;width: 15px;color: rgb(230, 198, 50);fill: rgb(230, 198, 50);",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-r4E2v4VzWAEf",
+      "properties": "width: auto;display: flex;justify-content: center;align-items: center;margin-left: 15px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-r4E2v4VzWAEf",
+      "properties": "margin-left: 10px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-rKXVPVorySmX",
+      "properties": "padding-left: 0px;padding-right: 0px;position: relative;padding-top: 12px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-rKXVPVorySmX",
+      "properties": "margin-left: 0px;padding-left: 0px;margin-right: 0px;width: 100%;height: 303px;padding-top: 5px;padding-bottom: 10px;margin-bottom: -5px;",
+      "important": true
+    },
+    {
+      "selector": "#cc-id-rKXVPVorySmX label",
+      "properties": "width: 99%;",
+      "important": true
+    }
+  ]
+}

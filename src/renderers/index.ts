@@ -153,8 +153,10 @@ const PAGE_MAX_WIDTHS: Record<string, string> = {
 // ─── Pro Design System CSS ───────────────────────────────────────────────────
 
 /**
- * Production-quality CSS inspired by winning DTC pages (SmoothSpire, Rejuvera).
- * Designed for mobile-first with editorial advertorial focus.
+ * Production-quality CSS with EXACT values from winning DTC pages.
+ * WHY: All values extracted from DESIGN-SYSTEM.md which was compiled from
+ *      79+ real winning pages. No guesswork.
+ * Sources: SmoothSpire, Rejuvera, Vibriance, HaloGrow, EmSense, checkout pages.
  */
 const PRO_CSS = `
   /* ─── Reset & Base ─── */
@@ -162,7 +164,7 @@ const PRO_CSS = `
   html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: #1B1B1B;
+    color: #02122E;
     background: #FFFFFF;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -178,6 +180,7 @@ const PRO_CSS = `
   em, i { font-style: italic; }
 
   /* ─── Section Layout ─── */
+  /* WHY: 16px mobile padding, 32px desktop from --space-section-horizontal */
   .ec-section {
     box-sizing: border-box;
     width: 100%;
@@ -189,24 +192,27 @@ const PRO_CSS = `
     margin: 0 auto;
   }
 
-  /* Alternating section backgrounds for visual rhythm */
+  /* WHY: Alternating section backgrounds from winning pages:
+        White -> Light gray #F5F5F5 -> White -> Cream #F9F2E8 -> White */
   .ec-section:nth-child(even) {
-    background-color: #fafbfc;
+    background-color: #F5F5F5;
   }
 
   /* ─── Typography ─── */
+  /* WHY: H1 36-52px desktop / 22-32px mobile, weight 800, 48-58px line-height */
   h1, h2, h3 { line-height: 1.2; }
 
   /* ─── Buttons ─── */
+  /* WHY: Green #00C249 primary CTA from checkout pages, 8px radius, 20px bold */
   .ec-btn-primary {
-    background: linear-gradient(135deg, #2D6A4F 0%, #1a5c3a 100%);
+    background: #00c249;
     color: #FFFFFF;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    box-shadow: 0 4px 14px rgba(45, 106, 79, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 200ms ease-in-out;
+    box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.05);
   }
   .ec-btn-primary:hover {
+    background: #53A81E;
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(45, 106, 79, 0.45);
   }
   .ec-btn-primary:active {
     transform: scale(0.97);
@@ -219,8 +225,8 @@ const PRO_CSS = `
   }
   .ec-btn-secondary {
     background: transparent;
-    color: var(--color-primary);
-    border: 2px solid var(--color-primary);
+    color: #2D6A4F;
+    border: 2px solid #2D6A4F;
   }
 
   @keyframes ec-cta-pulse {
@@ -234,7 +240,7 @@ const PRO_CSS = `
   @media (min-width: 768px) {
     .ec-mobile-only { display: none; }
     .ec-desktop-only { display: block; }
-    .ec-section { padding: 24px; }
+    .ec-section { padding: 32px; }
   }
 
   /* ─── Scrollbar hide for carousels ─── */
@@ -242,6 +248,7 @@ const PRO_CSS = `
   .ec-reviews-carousel::-webkit-scrollbar { display: none; }
 
   /* ─── Safe area for sticky CTA spacing ─── */
+  /* WHY: 80px padding-bottom on mobile to prevent content hidden behind sticky bar */
   body { padding-bottom: 80px; }
   @media (min-width: 768px) { body { padding-bottom: 0; } }
 `.trim();
@@ -295,15 +302,31 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
 
     /* Palette: ${palette} */
     :root {
-      --color-primary: #2D6A4F;
+      --color-primary: #00c249;
+      --color-primary-hover: #53A81E;
       --color-secondary: #40916C;
       --color-bg: #FFFFFF;
-      --color-text: #1B1B1B;
+      --color-bg-alt: #F5F5F5;
+      --color-bg-warm: #FFFBef;
+      --color-text: #02122E;
+      --color-text-dark: #1B2A43;
+      --color-text-body: #1B1B1B;
       --color-muted: #6B7280;
-      --color-border: #E5E7EB;
-      --color-success: #10B981;
+      --color-border: #E6E7EA;
+      --color-success: #00c249;
       --color-warning: #F59E0B;
-      --color-error: #EF4444;
+      --color-error: #EC0B43;
+      --color-urgency-red: #D0021B;
+      --color-highlight: #FDCC5E;
+      --color-urgency-bg: #FEFBC3;
+      --color-guarantee-bg: #FFFBef;
+      --color-guarantee-border: #FAB73C;
+      --color-timer-bg: #0c230e;
+      --color-timer-accent: #baf363;
+      --color-footer-bg: #141619;
+      --color-footer-dark: #0E0F11;
+      --color-paypal: #FFC43A;
+      --color-paypal-text: #253B80;
       --font-heading: 'DM Serif Display', serif;
       --font-body: 'Inter', sans-serif;
     }

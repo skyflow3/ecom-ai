@@ -1,0 +1,966 @@
+{
+  "tryemsense": [
+    {
+      "index": 1,
+      "section_type": "announcement_countdown",
+      "section_class": "int-section _70-off uk-banner",
+      "section_id": "",
+      "text_preview": "Limited Time Promo: 70% OFF for uk residents",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 400
+    },
+    {
+      "index": 2,
+      "section_type": "announcement_countdown",
+      "section_class": "int-section _70-off de-banner",
+      "section_id": "",
+      "text_preview": "Limited Time Promo: 70% OFF for uk residents",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 400
+    },
+    {
+      "index": 3,
+      "section_type": "testimonial",
+      "section_class": "int-section _70-off",
+      "section_id": "injectable-timer-header",
+      "text_preview": "00 : 15 : 00 Congratulations! You?ve Pre-Qualified For a 60% Discount! Product Results How to Use Reviews FAQ ORDER&nbsp;NOW! ORDER&nbsp;NOW!",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 5878
+    },
+    {
+      "index": 4,
+      "section_type": "testimonial",
+      "section_class": "int-section hero",
+      "section_id": "",
+      "text_preview": "1,257+ REVIEWS Finally! Real Relief for Neuropathy Pain in Your Feet * Your browser does not support the video tag. EMSense uses ?Triple Technology? to help relieve pain, tingling, swelling, and foot ",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [
+        "width: 100%; height: 100%; object-fit: cover;",
+        "width: 100%; height: 100%; object-fit: cover;"
+      ],
+      "html_length": 7285
+    },
+    {
+      "index": 5,
+      "section_type": "video",
+      "section_class": "int-section",
+      "section_id": "",
+      "text_preview": "One Device That Does It All - Here?s How: Your browser does not support the video tag. Promotes better blood flow Targeted red light wavelengths penetrate the surface of the skin, promoting more effic",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [
+        "width: 100%; height: 100%; object-fit: cover;",
+        "width: 100%; height: 100%; object-fit: cover;",
+        "width: 100%; height: 100%; object-fit: cover;",
+        "width: 100%; height: 100%; object-fit: cover;"
+      ],
+      "html_length": 3359
+    },
+    {
+      "index": 6,
+      "section_type": "video",
+      "section_class": "int-section separator-top",
+      "section_id": "",
+      "text_preview": "Your browser does not support the video tag. The Real Cause of Foot Pain &amp; Aches Your browser does not support the video tag. Your nerves need oxygen to function properly , just like the rest of y",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [
+        "width: 100%; height: 100%; object-fit: cover;",
+        "width: 100%; height: 100%; object-fit: cover;"
+      ],
+      "html_length": 9416
+    },
+    {
+      "index": 7,
+      "section_type": "testimonial",
+      "section_class": "int-section sticky sticky-offset",
+      "section_id": "injectable-sticky-banner",
+      "text_preview": "1,257+ REVIEWS ORDER&nbsp;NOW!",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 904
+    },
+    {
+      "index": 8,
+      "section_type": "video",
+      "section_class": "int-section light-gray",
+      "section_id": "product",
+      "text_preview": "You Are One Step Closer to Getting Rid of Foot Pain Once and For All* Your browser does not support the video tag. Meet the EMSense \"Triple Therapy\" Foot Massager We?ve spent years developing this see",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [
+        "width: 100%; height: 100%; object-fit: cover;",
+        "width: 100%; height: 100%; object-fit: cover;",
+        "width: 100%; height: 100%; object-fit: cover;"
+      ],
+      "html_length": 9796
+    },
+    {
+      "index": 9,
+      "section_type": "content",
+      "section_class": "int-section",
+      "section_id": "",
+      "text_preview": "Our Customers Report Significantly Reduced Pain Levels: Jennifer L. I been dealing with nerve pain for a while now and honestly didn?t think anything would help. But EMSense? Wow ?? I use it every nig",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 4079
+    },
+    {
+      "index": 10,
+      "section_type": "content",
+      "section_class": "int-section light-blue",
+      "section_id": "",
+      "text_preview": "Ditch Expensive Treatments and Pills, Choose Safer Alternative* It?s non-addictive, works fast, and actually does GOOD things for your body. EMSense \"Triple Therapy\" Massager 100% drug-free and non-in",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 6438
+    },
+    {
+      "index": 11,
+      "section_type": "video",
+      "section_class": "int-section",
+      "section_id": "results",
+      "text_preview": "These Results Speak for Themselves Your browser does not support the video tag. Here's what EMSense's powerful technology can help you achieve in just 90 days.* 68 % experience reduced foot pain* 52 %",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [
+        "width: 100%; height: 100%; object-fit: cover;",
+        "width: 100%; height: 100%; object-fit: cover;"
+      ],
+      "html_length": 6571
+    },
+    {
+      "index": 12,
+      "section_type": "video",
+      "section_class": "int-section cream",
+      "section_id": "howTo",
+      "text_preview": "3 Simple Steps For Foot Pain Relief Simply select the massage intensity and heating level and enjoy pain relief! Your browser does not support the video tag. STEP 1 Wrap It Around Your Feet Slide your",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [
+        "width: 100%; height: 100%; object-fit: cover;",
+        "width: 100%; height: 100%; object-fit: cover;",
+        "width: 100%; height: 100%; object-fit: cover;"
+      ],
+      "html_length": 5502
+    },
+    {
+      "index": 13,
+      "section_type": "testimonial",
+      "section_class": "int-section",
+      "section_id": "reviews",
+      "text_preview": "See What Others Are Saying About Our Massager Thousands Of Happy Users 4.9 1,257+ Reviews Michael R. Verified Buyer \"Working great for both my elbows and ankles\" Working great for both my elbows and m",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 7478
+    },
+    {
+      "index": 14,
+      "section_type": "guarantee",
+      "section_class": "int-section light-gray",
+      "section_id": "",
+      "text_preview": "30-Day Money-Back Guarantee We put our money where our mouth is. If you?re unhappy with EMSense, you?re eligible for a 100% refund within 30 days. 100% PROTECTED CHECKOUT",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 1637
+    },
+    {
+      "index": 15,
+      "section_type": "faq",
+      "section_class": "int-section",
+      "section_id": "faq",
+      "text_preview": "Read Our Customers' Frequently Asked Questions /* // Defaults to false Accordion toggle text Icon Accordion content */ document.addEventListener('DOMContentLoaded', function () { const accordionWrappe",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 8743
+    },
+    {
+      "index": 16,
+      "section_type": "faq",
+      "section_class": "int-section footer",
+      "section_id": "",
+      "text_preview": "INFO Terms of Service Privacy Policy Shipping Policy Return Policy About Us Disclaimer Legal notice ORDER Track My Order FAQ Contact Us Affiliate CUSTOMER SERVICE Send Us an Email *Disclaimer: Results",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 5441
+    },
+    {
+      "index": 17,
+      "section_type": "copyright",
+      "section_class": "int-section copyright",
+      "section_id": "",
+      "text_preview": "? 2026 EMSense. All rights reserved. document.addEventListener('DOMContentLoaded', function () { // Change all lazy images to eager document.querySelectorAll('img[loading=\"lazy\"]').forEach(img => { im",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.cream { background-color:#f9f2e8 }\n  .int-section._70-off { color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;display:flex }\n  .int-section._70-off.uk-banner { padding-top:8px;padding-bottom:8px;display:none }\n  .int-section._70-off.de-banner:lang(de) { padding-top:8px;padding-bottom:8px;display:flex }\n  .int-section.sticky { z-index:1;color:#fff;background-color:#00264c;padding-top:12px;padding-bottom:12px;position:sticky;top:0 }\n  .int-section.light-gray { background-color:#f5f5f5 }\n  .int-section.light-blue,.int-section.hero { background-color:#eafafa }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;p",
+      "inline_styles": [],
+      "html_length": 8000
+    }
+  ],
+  "tryledisa": [
+    {
+      "index": 1,
+      "section_type": "hero",
+      "section_class": "section beige hero-spray",
+      "section_id": "",
+      "text_preview": "{ \"items\": [ { \"_id\": \"688a23cab0ba2b01ed41eb93\", \"origFileName\": \"sli1.jpg\", \"fileName\": \"sli1.jpg\", \"fileSize\": 393588, \"height\": 732, \"url\": \"https://cdn.prod.website-files.com/67c83e9ed8d3042dd555",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 11444
+    },
+    {
+      "index": 2,
+      "section_type": "testimonial",
+      "section_class": "section narrow-usp-section",
+      "section_id": "",
+      "text_preview": "? Over 100,000 verified users* ? 30-day money-back guarantee ? 4.7-star review rating* ? 83% success rate*",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 748
+    },
+    {
+      "index": 3,
+      "section_type": "as_seen_on",
+      "section_class": "logos gv2-logos-section spray",
+      "section_id": "",
+      "text_preview": "As Seen In?",
+      "section_css": "\n  .logos { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;position:relative;overflow:clip }\n  .logos.gv2-logos-section { padding-top:40px;padding-bottom:40px }\n  .logos { padding-top:64px;padding-bottom:64px }\n  .logos.gv2-logos-section { padding-top:40px;padding-bottom:40px }\n  .logos.gv2-logos-section.spray { padding-top:24px;padding-bottom:24px }\n  .gv2-logos-section { padding-top:40px;padding-bottom:40px }\n  .gv2-logos-section { padding-top:40px;padding-bottom:40px }\n  .gv2-logos-section.spray { padding-top:24px;padding-bottom:24px }\n  .spray.men { background-color:#efefef }\n  .spray.men { grid-template-columns:1fr 1fr 1fr 1fr }\n  .spray { grid-column-gap:24px;grid-row-gap:24px;background-color:#edede4 }\n  .spray-ingredients-grid { grid-column-gap:16px;grid-row-gap:16px;flex-flow:column;width:100%;max-width:960px;display:flex }\n  .spray { grid-template-columns:1fr 1fr 1fr 1fr 1fr }\n  .spray { width:30%;padding-top:4px;padding-bottom:4px }",
+      "inline_styles": [],
+      "html_length": 1124
+    },
+    {
+      "index": 4,
+      "section_type": "content",
+      "section_class": "section green",
+      "section_id": "",
+      "text_preview": "Do You Know WHY You're Losing Hair? Let's talk about what's actually happening when your hair starts thinning. For so many women - even in their late 20s - looking in the mirror becomes a daily disapp",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 5095
+    },
+    {
+      "index": 5,
+      "section_type": "video",
+      "section_class": "section beige solution",
+      "section_id": "",
+      "text_preview": "Your browser does not support the video tag. The Hair Loss Solution You've Been Waiting For Scientists have finally cracked the code on what actually works against hair loss - a powerful ingredient fo",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [
+        "width: 100%; height: 100%; object-fit: cover;"
+      ],
+      "html_length": 8322
+    },
+    {
+      "index": 6,
+      "section_type": "results",
+      "section_class": "section",
+      "section_id": "features",
+      "text_preview": "Here's What Makes HaloGrow Stand Out With the development process stretching across 3 years, this spray was created to continuously deliver the best results for hair growth.* Built to Last Premium ing",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 5290
+    },
+    {
+      "index": 7,
+      "section_type": "results",
+      "section_class": "section beige",
+      "section_id": "",
+      "text_preview": "Perfect for all sorts of hair loss: DHT levels can rise due to numerous reasons, resulting in hair loss. Here's the list of problems that HaloGrow can help you with: Menopausal Genetic Aging Postpartu",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 4736
+    },
+    {
+      "index": 8,
+      "section_type": "ingredients",
+      "section_class": "section green",
+      "section_id": "ingredients",
+      "text_preview": "Five Powerful Ingredients Biotin - Vitamin b7 ingredient 1 Think of biotin as your hair's building block. It helps create keratin, the protein your hair is made of. When you put it directly on your sc",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 4354
+    },
+    {
+      "index": 9,
+      "section_type": "how_to_use",
+      "section_class": "section beige",
+      "section_id": "how",
+      "text_preview": "How to Use STEP 1 Target Your Needs Gently part your hair to expose areas that need the most attention. STEP 2 Apply with Purpose Mist directly onto your scalp, concentrating on thinning spots, then u",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 3526
+    },
+    {
+      "index": 10,
+      "section_type": "results",
+      "section_class": "section",
+      "section_id": "",
+      "text_preview": "These Results Speak for Themselves Here's what HaloGrow's powerful formula can help you achieve in just 150 days .* 68 % experience reduced hair loss* 52 % report reduction of bald spots* 84 % said th",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 2957
+    },
+    {
+      "index": 11,
+      "section_type": "how_to_use",
+      "section_class": "section green",
+      "section_id": "",
+      "text_preview": "How to Use HaloGrow Katelyn C. I can't believe how much this spray did for my hair ? I no longer have bald spots around my temples (I was super conscious about it) and my hair is healthier in general!",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 6192
+    },
+    {
+      "index": 12,
+      "section_type": "results",
+      "section_class": "section",
+      "section_id": "",
+      "text_preview": "3,000+ success stories What do 3-5 month hair growth results look like? Tiffany S., USA \"Around two months of using the halogrow spray and I actually noticed new growth around my temples. The smell is",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 6126
+    },
+    {
+      "index": 13,
+      "section_type": "pricing_bundle",
+      "section_class": "section bg-image",
+      "section_id": "",
+      "text_preview": "Visibly thicker and longer hair is now possible without flying to Turkey 70% DISCOUNT ORDER NOW! Current stock level: LOW",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 1268
+    },
+    {
+      "index": 14,
+      "section_type": "testimonial",
+      "section_class": "section",
+      "section_id": "reviews",
+      "text_preview": "See What Others Are Saying About Our Spray! Thousands Of Happy Users 4.9 1257 Reviews Derek M. Verified Buyer \"The solution my stylist couldn't provide\" \"Being in my 30s, I watched as my once-thick ha",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 7003
+    },
+    {
+      "index": 15,
+      "section_type": "guarantee",
+      "section_class": "section beige",
+      "section_id": "",
+      "text_preview": "30-Day Money-Back Guarantee We put our money where our mouth is. If you?re unhappy with HaloGrow, you?re eligible for a 100% refund within 30 days. 100% PROTECTED CHECKOUT",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 860
+    },
+    {
+      "index": 16,
+      "section_type": "faq",
+      "section_class": "section faq",
+      "section_id": "faq",
+      "text_preview": "Read Our Customers' Frequently Asked Questions /* // Defaults to false Accordion toggle text Icon Accordion content */ document.addEventListener('DOMContentLoaded', function () { const accordionWrappe",
+      "section_css": "\n  .section { flex-flow:column;justify-content:center;align-items:center;padding:80px 32px;display:flex;overflow:hidden }\n  .section.narrow-usp-section { background-color:#baf363;padding-top:16px;padding-bottom:16px }\n  .section.hero { background-color:#edede4;background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c9adb71929356d7018f479_BG%20Hero.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c862ba708abe6a65124d7c_Hero%20Blur.avif);background-position:100% 100%,0 100%;background-repeat:no-repeat,no-repeat;background-size:cover,auto;padding-top:0;padding-bottom:0 }\n  .section.green { background-color:#0c230e;overflow:clip }\n  .section.faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/67c8788422b32de9b769047e_faq%20blur.avif);background-position:50%;background-repeat:no-repeat;background-size:cover }\n  .section.faq.white { background-color:#fff }\n  .section.beige { background-color:#edede4 }\n  .sec",
+      "inline_styles": [],
+      "html_length": 12206
+    },
+    {
+      "index": 17,
+      "section_type": "faq",
+      "section_class": "int-section footer",
+      "section_id": "",
+      "text_preview": "INFO Terms of Service Privacy Policy Shipping Policy Returns Policy About Us Disclaimer Impressum ORDER Track My Order FAQ Contact Us Affiliate CUSTOMER SERVICE Send Us an Email *Disclaimer: Results m",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;padding-bottom:12px }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.int-faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/68be8d98a8714105bb66375a_FAQ%20bg%202.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/68be8d734f2333b5b25d2b5e_FAQ%20bg%201.avif);background-position:0%,100% 0;background-repeat:no-repeat,no-repeat;background-size:494px,413px }\n  .int-section.int-single-logo-header { padding-top:20px;padding-bottom:20px }\n  .int-section.int-thank-you-section { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/690b35e3c101b745be1eb4d0_",
+      "inline_styles": [],
+      "html_length": 5519
+    },
+    {
+      "index": 18,
+      "section_type": "testimonial",
+      "section_class": "int-section copyright",
+      "section_id": "",
+      "text_preview": "? 2025 HaloGrow. All rights reserved. 5,731+ REVIEWS ORDER &nbsp;NOW const scrollFeatures = document.querySelectorAll('#scroll-features'); const scrollHow = document.querySelectorAll('#scroll-how'); c",
+      "section_css": "\n  .int-section { flex-flow:column;justify-content:center;align-items:center;padding:64px 32px;position:relative;overflow:clip }\n  .int-section.copyright { color:#fff;background-color:#0e0f11;padding-top:24px;padding-bottom:24px }\n  .int-section.legal-header { border-bottom:1px solid #f5f5f5;padding-top:12px;padding-bottom:12px }\n  .int-section.footer { background-color:#141619;padding-top:40px;padding-bottom:40px }\n  .int-section.int-faq { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/68be8d98a8714105bb66375a_FAQ%20bg%202.avif),url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/68be8d734f2333b5b25d2b5e_FAQ%20bg%201.avif);background-position:0%,100% 0;background-repeat:no-repeat,no-repeat;background-size:494px,413px }\n  .int-section.int-single-logo-header { padding-top:20px;padding-bottom:20px }\n  .int-section.int-thank-you-section { background-image:url(https://cdn.prod.website-files.com/67c83e9ed8d3042dd5559101/690b35e3c101b745be1eb4d0_",
+      "inline_styles": [
+        "display:none;visibility:hidden"
+      ],
+      "html_length": 8000
+    }
+  ],
+  "smoothspire": [
+    {
+      "index": 1,
+      "section_type": "hero",
+      "section_class": "hero-area",
+      "section_id": "cc-id-ID0tbbNMb3ST",
+      "text_preview": "? ? 1 /15 ? ?",
+      "section_css": "\n  .hero-area { background-color: #ffffff;\n  padding: 30px 0 0 0; }",
+      "inline_styles": [],
+      "html_length": 7044
+    },
+    {
+      "index": 2,
+      "section_type": "hero",
+      "section_class": "hero-right fk-product-section",
+      "section_id": "cc-id-s5tUHZfR9S7j",
+      "text_preview": "End Your Back Pain &amp; Sciatica Without Surgery in 15 Minutes a Day This Breakthrough \"Triple Fusion\" Device Decompresses Your Spine &amp; Rehydrates Your Discs From Home. Decompresses Your Suffocat",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "tiles"
+      ],
+      "html_length": 6031
+    },
+    {
+      "index": 3,
+      "section_type": "hero",
+      "section_class": "hero-btm-area",
+      "section_id": "cc-id-ZOi1RBv7NQYN",
+      "text_preview": "\"3 years of sciatica nearly destroyed our marriage. Dr. Blane, my husband, spent months creating this just to stop my suffering. First time I tried it, I cried happy tears. Pain-free now. Back to yoga",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 2061
+    },
+    {
+      "index": 4,
+      "section_type": "guarantee",
+      "section_class": "option-area",
+      "section_id": "cc-id-AU8Tw8pUEO4u",
+      "text_preview": "90-DAY MONEY BACK GUARANTEE If you?re not absolutely thrilled with the results, we will refund every single penny of your investment. No hassle. FREE SHIPPING We provide fast free shipping and handlin",
+      "section_css": "\n  .option-area { background: #F4F9FF;\n  padding: 20px 0;\n  margin-top: 20px; }",
+      "inline_styles": [],
+      "html_length": 3265
+    },
+    {
+      "index": 5,
+      "section_type": "video",
+      "section_class": "",
+      "section_id": "cc-id-LjpEVs1Kz50Y",
+      "text_preview": "Your Spine Is LITERALLY Suffocating (And Pills Won't Save It) If You Want To Relieve Sciatica And Back Pain... You Must Fix Your Dried-Out Discs If You Want To Relieve Sciatica And Back Pain... You Mu",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 11422
+    },
+    {
+      "index": 6,
+      "section_type": "video",
+      "section_class": "video-area",
+      "section_id": "cc-id-NjfDKRSZ9zWO",
+      "text_preview": "Why It Works When Everything Else Failed Why It Works When Everything Else Failed The problem with other treatments: Chiropractor = Only decompresses (temporary) Pills/Shots = Only masks pain (comes b",
+      "section_css": "\n  .video-area { background: #F4F9FF;\n  padding: 60px 0; }",
+      "inline_styles": [],
+      "html_length": 2890
+    },
+    {
+      "index": 7,
+      "section_type": "video",
+      "section_class": "video-area video-area2",
+      "section_id": "cc-id-e2iCO8OVC36z",
+      "text_preview": "How The SmoothSpine ?Triple Fusion? Massager Works How SmoothSpine ?Triple Fusion? Massager Works So simple, an 85-year-old with arthritis can use it: 1. Plug it in (no batteries to die when you need ",
+      "section_css": "\n  .video-area { background: #F4F9FF;\n  padding: 60px 0; }",
+      "inline_styles": [],
+      "html_length": 2796
+    },
+    {
+      "index": 8,
+      "section_type": "guarantee",
+      "section_class": "video-left",
+      "section_id": "cc-id-JQctuXCK5ChF",
+      "text_preview": "Try It For 90 Days, 100% Risk-Free Try It For 90 Days, 100% Risk-Free Here?s the deal: We believe in this product so much that we don?t want you to spend a dime until you are 100% certain that it work",
+      "section_css": "\n  .video-left p { font-weight: 400;\n  font-size: 17px;\n  color: #000000;\n  margin-top: 20px; }\n  .video-left h3 { font-weight: 700;\n  font-size: 25px;\n  color: #000000;\n  margin-bottom: 38px; }",
+      "inline_styles": [
+        "tiles"
+      ],
+      "html_length": 3846
+    },
+    {
+      "index": 9,
+      "section_type": "content",
+      "section_class": "choice-area",
+      "section_id": "cc-id-bYjkr5dutzo2",
+      "text_preview": "The SmoothSpine Massager Is The Safer, Healthier Choice It's non-addictive and works fast. Stop Choosing Between Addiction and Agony. SmoothSpine back Massager FIXES THE ROOT CAUSE Rehydrates dying di",
+      "section_css": "\n  .choice-area { background-color: rgba(239, 245, 255, 1);\n  padding: 60px 0; }",
+      "inline_styles": [],
+      "html_length": 8607
+    },
+    {
+      "index": 10,
+      "section_type": "results",
+      "section_class": "result-area",
+      "section_id": "cc-id-zsAirdWTVlmY",
+      "text_preview": "Real Users, Real Life-Changing Results \"Finally, Real Relief After Years of Pain!\" \"I've been struggling with sciatica for 8 years, spent $12,000 on treatments. Nothing worked. The first time I used t",
+      "section_css": "\n  .result-area { background: #ffffff;\n  padding: 60px 0; }",
+      "inline_styles": [],
+      "html_length": 5820
+    },
+    {
+      "index": 11,
+      "section_type": "video",
+      "section_class": "steps-area",
+      "section_id": "cc-id-RHigKJwEb6DN",
+      "text_preview": "STEP 1 Plug in the USB cable to the device. The button controls will light up, confirming it?s ready to use. Place the massager on a flat surface like your floor or bed. STEP 2 Hold the power button t",
+      "section_css": "\n  .steps-area { background: #CDDFF7;\n  padding: 30px 0; }",
+      "inline_styles": [],
+      "html_length": 4041
+    },
+    {
+      "index": 12,
+      "section_type": "guarantee",
+      "section_class": "winter-right fk-product-section",
+      "section_id": "cc-id-JtFeMUsyghrA",
+      "text_preview": "Mother?s Day Mega Sale On Now Try Your SmoothSpine Back Massager NOW Risk-Free at an All Time Low Price!&nbsp; Act Now and You'll Get: 60% OFF - SmoothSpine Massager (All-Inclusive treatment kit) 90-D",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "tiles"
+      ],
+      "html_length": 7099
+    },
+    {
+      "index": 13,
+      "section_type": "spacer",
+      "section_class": "reviews-area",
+      "section_id": "cc-id-v1paMOHw0tAG",
+      "text_preview": "What Our Customers Have To Say",
+      "section_css": "\n  .reviews-area { background: #ffffff;\n  padding: 60px 0; }",
+      "inline_styles": [],
+      "html_length": 1916
+    },
+    {
+      "index": 14,
+      "section_type": "testimonial",
+      "section_class": "tp-section",
+      "section_id": "cc-id-wae9Ncy3Jlz0",
+      "text_preview": "Based on these reviews See More GA Garry 6 days ago Third Day, Better. One Week, Much Better. Third Week, I can't believe the results! I had been in constant pain for four months, OTCs were not helpin",
+      "section_css": "\n  .tp-section { padding:20px 20px;background:rgba(255, 255, 255, 1);font-family:Arial, sans-serif;max-width:1040px;margin:0 auto;undefined:undefined; }",
+      "inline_styles": [],
+      "html_length": 95196
+    },
+    {
+      "index": 15,
+      "section_type": "content",
+      "section_class": "modal-body",
+      "section_id": "cc-id-Tt8vl9YK4dji",
+      "text_preview": "Jan 20, 2026 Certainly worth a try for lower back rehabilitation I'm on day four and use it once or twice depending on schedule. Enjoying the process although the heat is a little high; recommend at l",
+      "section_css": "\n  .modal-body { position:relative;-ms-flex:1 1 auto;flex:1 1 auto;padding:1rem }",
+      "inline_styles": [],
+      "html_length": 4173
+    },
+    {
+      "index": 16,
+      "section_type": "guarantee",
+      "section_class": "guarantee-area",
+      "section_id": "cc-id-VpWXVxHul53p",
+      "text_preview": "100% SATISFACTION 90-DAY MONEY BACK GUARANTEE Your order today is protected by our iron-clad 90-day 100% money-back guarantee . If you don't experience the remarkable relief from back pain and Sciatic",
+      "section_css": "\n  .guarantee-area { background: #ffffff;\n  padding: 60px 0; }",
+      "inline_styles": [],
+      "html_length": 1867
+    },
+    {
+      "index": 17,
+      "section_type": "spacer",
+      "section_class": "noticed-area",
+      "section_id": "cc-id-8TQxwQDnnisR",
+      "text_preview": "We're Getting Noticed!",
+      "section_css": "\n  .noticed-area { background: #EFF5FF;\n  padding: 40px 0; }",
+      "inline_styles": [],
+      "html_length": 666
+    },
+    {
+      "index": 18,
+      "section_type": "faq",
+      "section_class": "questions-area",
+      "section_id": "cc-id-urvRPDyt8Af1",
+      "text_preview": "Frequently Asked Questions Will SmoothSpine? Triple Fusion Massager Provide Relief From My Sciatica and Back Pain? Absolutely! SmoothSpine? Triple Fusion Massager is your key to relief from Sciatica, ",
+      "section_css": "\n  .questions-area { background: #ffffff;\n  padding: 60px 0; }",
+      "inline_styles": [],
+      "html_length": 8000
+    }
+  ],
+  "getheyfra": [],
+  "oricle": [
+    {
+      "index": 1,
+      "section_type": "video",
+      "section_class": "p-[10px_0_30px] md:p-[30px_0_50px] bg-[#fff] md:bg-[#f1f6fa]",
+      "section_id": "",
+      "text_preview": "The Smallest Ever Wireless Hearing Aid For Just $99! No Doctor Needed - No Doctor Fees - No Hearing Test Diana H recommends Oricle. \" I was so happy with the first, that I bought a second pair! \" Invi",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "max-width:100%;height:auto",
+        "color:transparent",
+        "color:transparent",
+        "width:14px;height:14px",
+        "width:14px;height:14px",
+        "width:14px;height:14px",
+        "width:14px;height:14px",
+        "width:14px;height:14px",
+        "width:100%",
+        "width:14px;height:14px"
+      ],
+      "html_length": 25214
+    },
+    {
+      "index": 2,
+      "section_type": "content",
+      "section_class": "",
+      "section_id": "",
+      "text_preview": "AS ADVERTISED ON .sales-19-info-slider .slick-track { display: flex !important; } .sales-19-info-slider .slick-slide { height: auto; } .sales-19-info-slider .slick-slide > div { display: flex; height:",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent"
+      ],
+      "html_length": 15873
+    },
+    {
+      "index": 3,
+      "section_type": "content",
+      "section_class": "p-[30px_0_35px] md:p-[50px_0_60px] lg:p-[60px_0_70px] bg-[#fff]",
+      "section_id": "",
+      "text_preview": "Previous I love my oricle hearing aids - Kathy I love my oricle hearing aids. They are so very well made, easy to adjust, no screeching or whistling sound. I also like that they are easy to clean and ",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "display:block",
+        "width:700%;left:-100%",
+        "width:14.285714285714286%",
+        "color:transparent",
+        "width: 14.2857%;",
+        "color:transparent",
+        "width: 14.2857%;",
+        "color:transparent",
+        "width: 14.2857%;",
+        "color:transparent"
+      ],
+      "html_length": 24045
+    },
+    {
+      "index": 4,
+      "section_type": "content",
+      "section_class": "p-[25px_0_35px] md:p-[30px_0_60px] lg:p-[30px_0_70px] bg-[#F1F6FA] overflow-hidden",
+      "section_id": "",
+      "text_preview": "Why Thousands Are Switching From $3,000 Hearing Aids To Oricle 2.0 $2500+ Bulky Expesnsive Complicated Outdated $99 Invisible Affordable Simple Modern Same Technology, 95% Less Why pay $2,000-$3,000 f",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent"
+      ],
+      "html_length": 53740
+    },
+    {
+      "index": 5,
+      "section_type": "how_to_use",
+      "section_class": "p-[30px_0_35px] md:p-[50px_0_60px] lg:p-[60px_0_70px] bg-[#fff]",
+      "section_id": "",
+      "text_preview": "Enjoy Better Hearing In Just 3 Simple Steps With Oricle 2.0, better hearing couldn't be easier. No hassle, no confusion - just three simple steps and you'll be back to enjoying conversations, TV, and ",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent"
+      ],
+      "html_length": 7833
+    },
+    {
+      "index": 6,
+      "section_type": "content",
+      "section_class": "p-[30px_0_35px] md:p-[50px_0_60px] lg:p-[60px_0_70px] bg-[#F1F6FA] overflow-hidden",
+      "section_id": "",
+      "text_preview": "Advanced Tech Traditional Hearing Aids Can't Match 24-Hour Battery Life Fumble-Free Wireless Charging Adjustable Sound For Clearer Speech Virtually Invisible Design FDA-Registered hearing Technology R",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent"
+      ],
+      "html_length": 12199
+    },
+    {
+      "index": 7,
+      "section_type": "comparison",
+      "section_class": "p-[30px_0_35px] md:p-[50px_0_60px] lg:p-[60px_0_70px] bg-[#fff]",
+      "section_id": "",
+      "text_preview": "Comparision Oricle Vs Other Hearing Aid Oricle Hearing Aid Vs Traditional Hearing Aid $99 Price $2500+ No Prescription Needed Yes No Appointment Required Yes Yes Rechargeable Sometimes Yes Nearly Invi",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent"
+      ],
+      "html_length": 9296
+    },
+    {
+      "index": 8,
+      "section_type": "testimonial",
+      "section_class": "p-[30px_0_35px] md:p-[50px_0_60px] lg:p-[60px_0_70px] bg-[#F1F6FA] overflow-hidden",
+      "section_id": "",
+      "text_preview": "We've Got 100,000+ Raving Customers and Still Counting! .sales-19-video-reviews-marquee { display: flex; animation: sales-19-marquee 20s linear infinite; } .sales-19-video-reviews-marquee:hover, .sale",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent"
+      ],
+      "html_length": 69615
+    },
+    {
+      "index": 9,
+      "section_type": "content",
+      "section_class": "p-[30px_0_35px] md:p-[50px_0_60px] lg:p-[60px_0_70px] bg-[#fff]",
+      "section_id": "",
+      "text_preview": "What's In The Box Oricle Hearing Aids come with everything you need to hear better, right out of the box. Oricle Hearing Aid Advanced digital hearing aids designed for comfort and clarity in any envir",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent",
+        "color:transparent"
+      ],
+      "html_length": 10054
+    },
+    {
+      "index": 10,
+      "section_type": "faq",
+      "section_class": "p-[30px_0_35px] md:p-[50px_0_60px] lg:p-[60px_0_70px] bg-[#F1F6FA]",
+      "section_id": "",
+      "text_preview": "Frequently Asked Questions How long is the shipping time? Your Oricle Hearing Aid will be delivered right to your doorstep within 3-6 business days. We offer fast, reliable shipping so you can start e",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [
+        "color:transparent;transform:rotate(180deg)",
+        "color:transparent;transform:rotate(0deg)",
+        "height:0",
+        "color:transparent;transform:rotate(0deg)",
+        "height:0",
+        "color:transparent;transform:rotate(0deg)",
+        "height:0",
+        "color:transparent;transform:rotate(0deg)",
+        "height:0",
+        "color:transparent;transform:rotate(0deg)"
+      ],
+      "html_length": 8000
+    }
+  ],
+  "drivse": [
+    {
+      "index": 1,
+      "section_type": "spacer",
+      "section_class": "",
+      "section_id": "i2ug",
+      "text_preview": "50% OFF + FREE SHIPPING Free shipping + 50% Off",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 494
+    },
+    {
+      "index": 2,
+      "section_type": "comparison",
+      "section_class": "",
+      "section_id": "icv7dl",
+      "text_preview": "Over 2M+ Happy Customers! IONDROPS?&nbsp; #1 Filtered Shower Head Designed by Dr. Robert Ballas , and trusted by Top Hair experts nationwide. Unlock smoother, hydrated skin Stop hair damage and boost ",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 5184
+    },
+    {
+      "index": 3,
+      "section_type": "faq",
+      "section_class": "",
+      "section_id": "im43",
+      "text_preview": "Over 2M Real Satisfied Customers RESULTS OR MONEY BACK GUARANTEE If you?re not absolutely thrilled with the results, we don?t want your money. No hassles, no questions asked. FREE SHIPPING We offer fr",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 2600
+    },
+    {
+      "index": 4,
+      "section_type": "video",
+      "section_class": "",
+      "section_id": "i6nbhs3",
+      "text_preview": "What is IonDrops? by Dr. Robert Ballas? You are one shower away from Glowing Skin + Fuller &amp; Smoother Hair IonDrops? is a revolutionary filtered shower head that eliminates 96% of water impurities",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 82367
+    },
+    {
+      "index": 5,
+      "section_type": "content",
+      "section_class": "",
+      "section_id": "io8ljjv",
+      "text_preview": "What is IonDrops? by Dr. Robert Ballas? Breakthrough Discovery IonDrops? is a revolutionary filtered shower head that eliminates 96% of water impurities making your skin &amp; hair glow, and boosts wa",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 8340
+    },
+    {
+      "index": 6,
+      "section_type": "content",
+      "section_class": "",
+      "section_id": "ia5k3cy",
+      "text_preview": "What is IonDrops? by Dr. Robert Ballas? No More Dark spots, Dry or Itchy Skin IonDrops? is a revolutionary filtered shower head that eliminates 96% of water impurities making your skin &amp; hair glow",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 8851
+    },
+    {
+      "index": 7,
+      "section_type": "content",
+      "section_class": "",
+      "section_id": "i7rgpas",
+      "text_preview": "What is IonDrops? by Dr. Robert Ballas? Effective Against ALL Types of Hair Problems IonDrops? is a revolutionary filtered shower head that eliminates 96% of water impurities making your skin &amp; ha",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 9374
+    },
+    {
+      "index": 8,
+      "section_type": "video",
+      "section_class": "",
+      "section_id": "ihk6krh",
+      "text_preview": "What is IonDrops? by Dr. Robert Ballas? Ditch that Outdated Low-Pressure Shower IonDrops? is a revolutionary filtered shower head that eliminates 96% of water impurities making your skin &amp; hair gl",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 9286
+    },
+    {
+      "index": 9,
+      "section_type": "content",
+      "section_class": "",
+      "section_id": "itgvijl",
+      "text_preview": "What is IonDrops? by Dr. Robert Ballas? Why are you showering in Dirty Water? IonDrops? is a revolutionary filtered shower head that eliminates 96% of water impurities making your skin &amp; hair glow",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 10839
+    },
+    {
+      "index": 10,
+      "section_type": "content",
+      "section_class": "",
+      "section_id": "ix67xyi",
+      "text_preview": "What is IonDrops? by Dr. Robert Ballas? Medically Designed &amp; Made to Fit All Showers! IonDrops? is a revolutionary filtered shower head that eliminates 96% of water impurities making your skin &am",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 6945
+    },
+    {
+      "index": 11,
+      "section_type": "comparison",
+      "section_class": "",
+      "section_id": "i27nrmj",
+      "text_preview": "How IonDrops? Is Different From Your Current Setup IonDrops? Other showers Cosmetics Long Lasting Skin Repair Drug-free Promotes Hair Growth 200% Increase in water pressure No more dryness, rashes or ",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 11796
+    },
+    {
+      "index": 12,
+      "section_type": "testimonial",
+      "section_class": "",
+      "section_id": "iruayl2",
+      "text_preview": "Based on 3,591 reviews",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 2096
+    },
+    {
+      "index": 13,
+      "section_type": "content",
+      "section_class": "",
+      "section_id": "i7qqf4e",
+      "text_preview": "Everyone Loves The ?IonDrops? Massager! ????? Monika T. ????? \"I bought 4 of these showers online while scrolling social media. It was an impulse buy. I admit it. I didn?t believe in it much at first.",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 3438
+    },
+    {
+      "index": 14,
+      "section_type": "guarantee",
+      "section_class": "",
+      "section_id": "ik1ul1y",
+      "text_preview": "Don't Let Contaminated Water Hold You Back Any Longer &nbsp;SAVE 50% Special Offer On Now! Try Your IonDrops? NOW Risk-Free at an all-time low Price! Act Now and You'll Get: 50% OFF - IonDrops? 90-Day",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 3483
+    },
+    {
+      "index": 15,
+      "section_type": "guarantee",
+      "section_class": "",
+      "section_id": "ibe9wli",
+      "text_preview": "90-Day Results or Full Refund Guarantee Try it RISK-FREE for 90 days. If you don't get the desired results in as fast as 30 days or less - we don't want your money! Our 90-day Money Back Guarantee pol",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 2143
+    },
+    {
+      "index": 16,
+      "section_type": "content",
+      "section_class": "",
+      "section_id": "i84jdqk",
+      "text_preview": "Over 134,000 Customers Use IonDrops? Daily ????? GET 50% OFF TODAY ONLY!?",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 3306
+    },
+    {
+      "index": 17,
+      "section_type": "faq",
+      "section_class": "",
+      "section_id": "ib5ve9l",
+      "text_preview": "Have a Question? We Can Help! How long does it take to arrive? Once you get a confirmation for your order, you will be put on the processing line. Your order will be processed and shipped in 1-3 days.",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 10369
+    },
+    {
+      "index": 18,
+      "section_type": "comparison",
+      "section_class": "",
+      "section_id": "iqsrsos",
+      "text_preview": "Refund policy Privacy policy Terms of service Drivse? - Copyright 2024 - All Rights Reserved. support@drivse.com",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 2715
+    },
+    {
+      "index": 19,
+      "section_type": "content",
+      "section_class": "",
+      "section_id": "idl1h8i",
+      "text_preview": "GET YOURS NOW &gt; window.addEventListener('load', (function(){ $(\"#loading\").hide(); $(\"body\").removeClass(\"dom-pending\"); var lazyLoadThrottleTimeout; function recursiveOffsetParentTop(img) { if (im",
+      "section_css": "(no specific CSS found)",
+      "inline_styles": [],
+      "html_length": 8000
+    }
+  ]
+}

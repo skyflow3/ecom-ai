@@ -18,6 +18,7 @@ import { PAGE_COMPOSITION_RULES, PAGE_TYPE_GUIDES } from '../../design-system/co
 import type { BlockName } from '../../design-system/composition-rules';
 import { formatSeedPatternsAsRag } from '../../services/rag-patterns-seed';
 import type { CopywriterOutput } from './copywriter';
+import { getRecipesByPageType, type PageRecipe } from '../../design-system/recipes';
 
 // ─── Page-Type Content Guides ─────────────────────────────────────────────────
 // Injected into the system prompt per page type. These guide the TEXT CONTENT
@@ -388,6 +389,13 @@ export interface ComposerPromptParams {
   ragPatterns?: string[];
   /** Additional context about the product/brand */
   productContext?: string;
+  /**
+   * WHY: Recipes give the AI a winning page structure to start from.
+   *      Instead of building from scratch, the composer follows a proven template.
+   *      The AI can still modify the recipe (add/remove/swap blocks) as needed.
+   * Source: design-data/DESIGN-SYSTEM.md, design-system/recipes/
+   */
+  recipeId?: string;
 }
 
 /**
@@ -471,6 +479,40 @@ export function buildComposerPrompt(params: ComposerPromptParams): string {
     prompt += `\n\n## PRODUCT CONTEXT\n${params.productContext}`;
   }
 
+  // WHY: Inject a winning page recipe as the starting structure.
+  //      The AI follows the proven block order but can customize content.
+  //      If no recipe specified, auto-pick the best one for this page type.
+  const recipe = params.recipeId
+    ? getRecipesByPageType(params.pageType).find(r => r.id === params.recipeId)
+    : getRecipesByPageType(params.pageType)[0]; // auto-pick first recipe
+
+  if (recipe) {
+    prompt += '\n\n## RECOMMENDED PAGE STRUCTURE (Recipe: ' + recipe.name + ')\n';
+    prompt += `Source: ${recipe.source}\n`;
+    prompt += `Description: ${recipe.description}\n\n`;
+    prompt += 'Follow this block order. You may add or remove OPTIONAL blocks, but keep all REQUIRED blocks:\n\n';
+
+    recipe.blocks.forEach((block, i) => {
+      const tag = block.required ? 'REQUIRED' : 'OPTIONAL';
+      const vis = block.visibility && block.visibility !== 'all' ? ` [${block.visibility} only]` : '';
+      prompt += `${i + 1}. [${tag}] ${block.type}${vis} — ${block.description}\n`;
+    });
+
+    prompt += `\nDesign tokens for this recipe:\n`;
+    prompt += `- Max width: ${recipe.designTokens.maxWidth}\n`;
+    prompt += `- Primary color: ${recipe.designTokens.primaryColor}\n`;
+    prompt += `- CTA color: ${recipe.designTokens.ctaColor}\n`;
+    if (recipe.designTokens.ctaGradient) {
+      prompt += `- CTA gradient: ${recipe.designTokens.ctaGradient}\n`;
+    }
+    prompt += `- Background: ${recipe.designTokens.backgroundColor}\n`;
+    if (recipe.designTokens.fontFamily) {
+      prompt += `- Font: ${recipe.designTokens.fontFamily}\n`;
+    }
+
+    prompt += `\nNotes: ${recipe.notes}\n`;
+  }
+
   return prompt;
 }
 
@@ -492,7 +534,8 @@ comparison-chart, faq, guarantee, trust-badges, countdown,
 product-carousel, form, quiz-step, order-summary, payment-form,
 social-proof, benefits-list, features-grid, before-after, icon-list,
 scrolling-marquee, progress-bar, selling-plan-toggle, discount-code,
-payment-options, shipping-form, scarcity-badge, negative-opt-out`;
+payment-options, shipping-form, scarcity-badge, negative-opt-out,
+editorial-header, breadcrumb, byline, sticky-cta, editorial-heading, author-cta`;
 }
 
 function buildRagPatterns(patterns?: string[]): string {
