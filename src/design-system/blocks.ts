@@ -94,21 +94,25 @@ const baseBlockSchema: any = z.object({
   }).optional(),
 });
 
-/** Discriminated union — each block type has its own props schema */
+/** Discriminated union — each block type has its own props schema.
+ *  WHY: Props use .passthrough() so the LLM can include extra fields without
+ *  breaking validation. Renderers handle missing fields with defaults.
+ *  Previously too strict — rejected valid LLM output (score 0/70).
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const blockSchema: any = z.discriminatedUnion('type', [
-  // Hero block
+  // Hero block — ctaText is optional (advertorials have NO CTA in hero)
   z.object({
     ...baseBlockSchema.shape,
     type: z.literal('hero'),
     props: z.object({
-      headline: z.string().max(80),
+      headline: z.string().max(120),
       subheadline: z.string().optional(),
-      backgroundImage: z.string().url().optional(),
-      ctaText: z.string().min(1),
+      backgroundImage: z.string().optional(),
+      ctaText: z.string().optional(),
       ctaUrl: z.string().optional(),
       alignment: z.enum(['left', 'center']).optional().default('left'),
-    }),
+    }).passthrough(),
   }),
 
   // Heading / Headline
@@ -601,25 +605,35 @@ const blockSchema: any = z.discriminatedUnion('type', [
       trustText: z.string().optional(),
     }),
   }),
+
+  // WHY: Fallback for block types the LLM generates that aren't in the registry yet.
+  // Instead of rejecting the ENTIRE BlockTree for one unknown block type,
+  // we accept it with permissive props. The renderer will use a default render.
+  // Source: MiMo generated valid blocks that got score 0 because of strict schema.
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.string(),
+    props: z.record(z.unknown()),
+  }),
 ]);
 
 // ─── BlockTree Zod Schema ────────────────────────────────────────────────────
 
 export const blockTreeSchema = z.object({
-  version: z.literal('1.0'),
+  version: z.string().optional().default('1.0'),
   pageType: z.enum([
     'product-page', 'advertorial', 'vsl', 'checkout',
     'upsell', 'downsell', 'optin', 'quiz', 'thank-you', 'bridge',
   ] satisfies [PageType, ...PageType[]]),
   palette: z.enum([
     'health-warm', 'beauty-clean', 'supplement-bold', 'pet-friendly', 'beauty-bold',
-  ] satisfies [PaletteKey, ...PaletteKey[]]),
+  ] satisfies [PaletteKey, ...PaletteKey[]]).optional().default('health-warm'),
   blocks: z.array(blockSchema).min(1),
   metadata: z.object({
-    title: z.string().min(1).max(200),
+    title: z.string().min(1).max(200).default('Untitled'),
     description: z.string().max(500).optional(),
     trackingId: z.string().optional(),
-  }),
+  }).optional().default({ title: 'Untitled' }),
 });
 
 // ─── Block Registry ──────────────────────────────────────────────────────────
