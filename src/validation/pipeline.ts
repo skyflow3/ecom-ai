@@ -534,9 +534,15 @@ export interface PipelineResult {
   };
 }
 
-/** Calculate quality score: 100 - (errors × 10) - (warnings × 3) */
+/**
+ * Calculate quality score: 100 - (errors × 10) - min(warnings × 3, 20)
+ * WHY: AI-generated content will always have non-token CSS values (colors, spacing, radius).
+ *      With 30 blocks × 3 warnings each = 90 warnings → score 0 without cap.
+ *      Capping warning penalty at 20 means: 0 errors = score ≥ 80 always.
+ *      Errors (schema, composition, accessibility) are the real quality gates.
+ */
 function calculateScore(errors: ValidationError[], warnings: ValidationError[]): number {
-  return Math.max(0, 100 - errors.length * 10 - warnings.length * 3);
+  return Math.max(0, 100 - errors.length * 10 - Math.min(warnings.length * 3, 20));
 }
 
 /** Run the full validation pipeline on a block tree */
