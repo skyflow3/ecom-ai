@@ -100,7 +100,13 @@ const baseBlockSchema: any = z.object({
  *  Previously too strict — rejected valid LLM output (score 0/70).
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const blockSchema: any = z.discriminatedUnion('type', [
+// WHY: z.union() instead of z.discriminatedUnion() because our fallback schema
+// uses z.string() for type (catches unknown block types). discriminatedUnion
+// requires ALL members to use z.literal() for the discriminator key, which
+// prevents the fallback. union() tries each option in order — the fallback
+// at the end catches everything the LLM generates that isn't in the registry.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const blockSchema: any = z.union([
   // Hero block — ctaText is optional (advertorials have NO CTA in hero)
   z.object({
     ...baseBlockSchema.shape,

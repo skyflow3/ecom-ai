@@ -51,6 +51,7 @@ export function getEnv() {
 /**
  * WHY: Page generation needs an LLM API config. Default to MiMo (free)
  *      but can be overridden for DeepSeek or other providers.
+ *      allKeys enables round-robin on EACH retry attempt (not just across requests).
  */
 export function getLlmConfig(): GeneratorConfig {
   return {
@@ -61,6 +62,7 @@ export function getLlmConfig(): GeneratorConfig {
     maxTokens: 8000,
     maxRetries: 3,
     minScore: 70,
+    allKeys: MIMO_KEYS.length > 1 ? MIMO_KEYS : undefined,
   };
 }
 

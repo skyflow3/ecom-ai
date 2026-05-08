@@ -42,6 +42,14 @@ export interface GeneratorConfig {
   maxRetries?: number;
   /** Minimum validation score to accept (default: 70) */
   minScore?: number;
+  /**
+   * All API keys for round-robin rotation on each retry attempt.
+   * WHY: MiMo free keys have rate limits and balance caps. Rotating
+   *      across keys on EACH retry (not just across requests) means
+   *      if one key is exhausted, the next attempt uses a different key.
+   * Source: testing-ai-prompt project, pipeline_v2.py _get_next_key()
+   */
+  allKeys?: string[];
 }
 
 const DEFAULT_CONFIG: Partial<GeneratorConfig> = {
@@ -108,8 +116,30 @@ interface LlmResponse {
 }
 
 /**
+ * WHY: Round-robin key rotation counter, shared across all calls.
+ *      Each callLlm invocation gets the next key in the pool.
+ *      Mirrors testing-ai-prompt's _key_rotation_counter pattern.
+ */
+let _keyRotationCounter = 0;
+
+/**
+ * Get the next API key using round-robin rotation.
+ * Falls back to the primary apiKey if no allKeys pool.
+ */
+function getNextKey(config: GeneratorConfig): string {
+  const pool = config.allKeys;
+  if (pool && pool.length > 1) {
+    const key = pool[_keyRotationCounter % pool.length];
+    _keyRotationCounter++;
+    return key;
+  }
+  return config.apiKey;
+}
+
+/**
  * Call an OpenAI-compatible LLM API.
  * Works with: OpenAI, DeepSeek, MiMo, any OpenAI-compatible endpoint.
+ * Rotates API keys on each call when allKeys is provided.
  */
 async function callLlm(
   config: GeneratorConfig,
@@ -118,11 +148,15 @@ async function callLlm(
 ): Promise<LlmResponse> {
   const start = Date.now();
 
+  // WHY: Rotate key on every call, not just across requests.
+  //      If key 1 is out of balance, the retry attempt uses key 2.
+  const apiKey = getNextKey(config);
+
   const response = await fetch(config.apiUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${config.apiKey}`,
+      'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       model: config.model,
