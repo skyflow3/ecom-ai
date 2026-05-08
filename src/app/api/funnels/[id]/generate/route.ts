@@ -300,10 +300,23 @@ export async function POST(
         const result = await generatePage(genRequest, llmConfig, copywriterConfig);
 
         if (!result.success || !result.blockTree) {
+          // WHY: Even on failure, capture validation errors for diagnosis.
+          //      Score 0 means schema validation fails — we need to see WHY.
           updateJob(jobId, {
             status: 'failed',
             error: result.error ?? 'Page generation failed',
             progress: 90,
+            result: {
+              html: result.html ?? '',
+              blockTree: result.blockTree ?? {},
+              validation: result.validation ? {
+                score: result.validation.score,
+                valid: result.validation.valid,
+                errors: result.validation.errors.slice(0, 10),
+              } : { score: 0, valid: false, errors: [] },
+              attempts: result.attempts,
+              meta: result.meta as Record<string, unknown>,
+            },
           });
           return;
         }

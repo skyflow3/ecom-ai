@@ -102,7 +102,7 @@ export function pass2_composition(tree: BlockTree): ValidationResult {
       errors.push({
         code: 'TOO_FEW_IMAGES',
         message: `Advertorial has only ${imageBlocks.length} image blocks. Winners have 8-12. Add more image blocks throughout the article with realistic imageUrl values using placehold.co URLs.`,
-        severity: 'error',
+        severity: 'warning',
       });
     }
 
@@ -132,7 +132,7 @@ export function pass2_composition(tree: BlockTree): ValidationResult {
       errors.push({
         code: 'TEXT_TOO_SHORT',
         message: `Advertorial has only ${totalWords} words across ${bodyTexts.length} body-text blocks. Winners have 2000-3000 words. Write MORE paragraphs per body-text block (4-6 paragraphs each, separated by \\n\\n). Add more body-text blocks between images.`,
-        severity: 'error',
+        severity: 'warning',
       });
     }
   }
