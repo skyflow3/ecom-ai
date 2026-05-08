@@ -49,11 +49,28 @@ export function getEnv() {
 }
 
 /**
- * WHY: Page generation needs an LLM API config. Default to MiMo (free)
- *      but can be overridden for DeepSeek or other providers.
- *      allKeys enables round-robin on EACH retry attempt (not just across requests).
+ * WHY: Composer (structurer) uses DeepSeek — better at following complex layout
+ *      instructions, produces longer text, respects 2-column advertorial structure.
+ *      MiMo was too weak: short text, ignored layout, missing images.
+ *      3 of 4 MiMo keys were out of balance anyway.
+ *      Fallback to MiMo if DEEPSEEK_COMPOSER_ENABLED is not set.
  */
 export function getLlmConfig(): GeneratorConfig {
+  const useDeepSeek = process.env.DEEPSEEK_COMPOSER_ENABLED === "true"
+    || MIMO_KEYS.length === 0;
+
+  if (useDeepSeek) {
+    return {
+      apiUrl: process.env.DEEPSEEK_API_URL ?? "https://api.deepseek.com/v1/chat/completions",
+      apiKey: process.env.DEEPSEEK_API_KEY ?? "",
+      model: process.env.DEEPSEEK_MODEL ?? "deepseek-chat",
+      temperature: 0.3,
+      maxTokens: 8000,
+      maxRetries: 3,
+      minScore: 70,
+    };
+  }
+
   return {
     apiUrl: process.env.MIMO_API_URL ?? "https://api.xiaomimimo.com/v1/chat/completions",
     apiKey: getNextMimoKey(),
