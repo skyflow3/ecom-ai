@@ -85,7 +85,8 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
   advertorial: {
     requiredSequence: ['editorial-header', 'hero', 'byline', 'sticky-cta'],
     requiredBlocks: ['editorial-header', 'hero', 'byline', 'body-text', 'image', 'button', 'sticky-cta'],
-    forbiddenBlocks: ['payment-form', 'order-summary', 'quiz-step'],
+    // WHY: FAQ forbidden — judge C7 penalizes FAQ sections, objections must be woven into story
+    forbiddenBlocks: ['payment-form', 'order-summary', 'quiz-step', 'faq'],
     sectionGap: '8',
   },
 

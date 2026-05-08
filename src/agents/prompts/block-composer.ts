@@ -441,9 +441,8 @@ STICKY-CTA BLOCK (mobile fixed bottom):
 {
   "type": "sticky-cta",
   "props": {
-    "text": "CHECK AVAILABILITY NOW →",
-    "urgencyText": "⚡ Limited Stock — Only 127 Left",
-    "variant": "urgency"
+    "text": "Check Availability Now →",
+    "variant": "primary"
   }
 }
 

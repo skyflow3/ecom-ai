@@ -221,7 +221,7 @@ const RULES_ONLY_PROMPT = `Write the content following these rules:
 - 5th-8th grade reading level, short sentences
 - NEVER corporate speak, NEVER generic, NEVER hedging
 
-BANNED WORDS: moreover, furthermore, additionally, it's important to note, in today's world, unlock, discover (as verb), harness, embark, revolutionize, cutting-edge, game-changing, state-of-the-art`;
+BANNED WORDS: moreover, furthermore, additionally, it's important to note, in today's world, harness, embark, cutting-edge, game-changing, state-of-the-art`;
 
 // ─── Judge Data Loading ──────────────────────────────────────────────────────────
 
@@ -322,7 +322,7 @@ function buildOutputFormatInstruction(pageType: PageType): string {
     '  "subheadline": "<supporting subheadline, 1-2 sentences>"',
     bodyInstruction,
     '  "benefits": ["<benefit 1>", "<benefit 2>", "<benefit 3>"]',
-    '  "ctaText": "<primary CTA button text, ALL CAPS>"',
+    '  "ctaText": "<CTA that continues the story, e.g. Check Availability Now → or See If It Still Works For Me →>"',
   ];
 
   if (pageType === 'upsell' || pageType === 'downsell') {
