@@ -10,6 +10,28 @@
 
 import type { GeneratorConfig } from "@/services/page-generator";
 
+// ─── MiMo Round-Robin ───────────────────────────────────────────────────────
+// WHY: MiMo free keys have rate limits. Round-robin distributes calls across
+//      multiple keys to avoid hitting limits on any single key.
+
+const MIMO_KEYS = [
+  process.env.MIMO_API_KEY ?? "",
+  process.env.MIMO_API_KEY_2 ?? "",
+  process.env.MIMO_API_KEY_3 ?? "",
+  process.env.MIMO_API_KEY_4 ?? "",
+  process.env.MIMO_API_KEY_5 ?? "",
+  process.env.MIMO_API_KEY_6 ?? "",
+].filter(Boolean); // Remove empty strings
+
+let mimoKeyIndex = 0;
+
+function getNextMimoKey(): string {
+  if (MIMO_KEYS.length === 0) return process.env.MIMO_API_KEY ?? "";
+  const key = MIMO_KEYS[mimoKeyIndex % MIMO_KEYS.length];
+  mimoKeyIndex++;
+  return key;
+}
+
 export function getEnv() {
   return {
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY ?? "",
@@ -32,8 +54,8 @@ export function getEnv() {
  */
 export function getLlmConfig(): GeneratorConfig {
   return {
-    apiUrl: process.env.MIMO_API_URL ?? "https://api.mimo.vn/v1/chat/completions",
-    apiKey: process.env.MIMO_API_KEY ?? "",
+    apiUrl: process.env.MIMO_API_URL ?? "https://api.xiaomimimo.com/v1/chat/completions",
+    apiKey: getNextMimoKey(),
     model: process.env.LLM_MODEL ?? "mimo-v2-flash",
     temperature: 0.3,
     maxTokens: 8000,
