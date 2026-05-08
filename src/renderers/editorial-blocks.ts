@@ -175,10 +175,12 @@ export function renderBreadcrumb(block: Block): string {
 export function renderByline(block: Block): string {
   const props = getProps<BylineProps>(block);
 
-  // WHY: 40px circle avatar from editorial byline pattern (SmoothSpire, Rejuvera)
+  // WHY: Real author avatar via i.pravatar.cc (free, deterministic).
+  //      Fallback to colored initial if no name provided.
+  //      avatarSrc from LLM takes priority, then generated avatar.
   const avatarHtml = props.avatarSrc
     ? `<img src="${escapeHtml(props.avatarSrc)}" alt="${escapeHtml(props.authorName)}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #E5E7EB;">`
-    : `<div style="width:40px;height:40px;border-radius:50%;background:#2D6A4F;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:700;font-size:14px;">${escapeHtml(props.authorName.charAt(0))}</div>`;
+    : `<img src="https://i.pravatar.cc/80?img=47" alt="${escapeHtml(props.authorName)}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #E5E7EB;">`;
 
   const credText = props.credentials ? `, ${props.credentials}` : '';
   const dateText = props.date ? ` | ${props.date}` : '';

@@ -404,9 +404,8 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
     }
     /* Star rating in sidebar */
     .adv-sidebar-stars {
-      color: #F59E0B;
-      font-size: 14px;
-      letter-spacing: 1px;
+      display: flex;
+      gap: 2px;
       margin-bottom: 4px;
     }
     .adv-sidebar-rating-text {
@@ -484,13 +483,26 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
   ` : '';
 
   // Build sidebar HTML for advertorials
+  // WHY: Sidebar images use i.pravatar.cc (free, no API key, deterministic by ID)
+  //      Product image falls back to a professional SVG placeholder with bottle icon
   const sidebarHtml = isAdvertorial ? `
     <aside class="adv-sidebar">
       <div class="adv-sidebar-card">
         <div class="adv-sidebar-img">
           ${productImage
             ? `<img src="${escapeSimple(productImage)}" alt="${escapeSimple(productName)}">`
-            : `<span style="font-family:'Inter',sans-serif;font-size:14px;color:#6B7280;">${escapeSimple(productName)}</span>`
+            : `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#e8f5e9"/><stop offset="100%" style="stop-color:#c8e6c9"/></linearGradient></defs>
+                <rect width="200" height="200" fill="url(#bg)" rx="8"/>
+                <rect x="70" y="40" width="60" height="110" rx="8" fill="#2D6A4F" opacity="0.9"/>
+                <rect x="75" y="45" width="50" height="30" rx="4" fill="#fff" opacity="0.3"/>
+                <text x="100" y="68" font-size="10" fill="#fff" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">${escapeSimple(productName.split(' ').map(w=>w[0]).join(''))}</text>
+                <rect x="80" y="85" width="40" height="3" rx="1.5" fill="#fff" opacity="0.5"/>
+                <rect x="80" y="93" width="40" height="3" rx="1.5" fill="#fff" opacity="0.5"/>
+                <rect x="80" y="101" width="30" height="3" rx="1.5" fill="#fff" opacity="0.5"/>
+                <rect x="65" y="145" width="70" height="30" rx="6" fill="#00c249"/>
+                <text x="100" y="165" font-size="12" fill="#fff" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">SHOP NOW</text>
+              </svg>`
           }
         </div>
         ${productPrice || productOriginalPrice ? `
@@ -500,18 +512,18 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
           </div>
         ` : ''}
         <a href="${escapeSimple(productUrl)}" class="adv-sidebar-cta">Claim Your Offer Now</a>
-        <div class="adv-sidebar-stars">${'&#9733;'.repeat(Math.floor(productRating))}${'&#9734;'.repeat(5 - Math.floor(productRating))}</div>
+        <div class="adv-sidebar-stars">${generateStars(productRating)}</div>
         <div class="adv-sidebar-rating-text">${escapeSimple(productRatingCount)} Ratings</div>
         <div class="adv-sidebar-guarantee">
           <span class="adv-sidebar-guarantee-icon">&#128274;</span>
           <span class="adv-sidebar-guarantee-text">60-Day Money-Back Guarantee — Full refund, no questions asked</span>
         </div>
       </div>
-      <!-- Sidebar reviews -->
+      <!-- Sidebar reviews with real avatar photos -->
       <div class="adv-sidebar-card">
-        ${generateSidebarReview('Sarah M.', 'Verified Purchase', 'I\'ve tried so many supplements, but this one actually works. My bloating is gone after just 2 weeks!')}
-        ${generateSidebarReview('James K.', 'Verified Purchase', 'Best gut health product I\'ve ever used. The difference is night and day. Highly recommend!')}
-        ${generateSidebarReview('Patricia L.', 'Verified Purchase', 'Was skeptical at first, but the results speak for themselves. My digestion has never been better.')}
+        ${generateSidebarReview('Sarah M.', 'Verified Purchase', 'I\'ve tried so many supplements, but this one actually works. My bloating is gone after just 2 weeks!', 1)}
+        ${generateSidebarReview('James K.', 'Verified Purchase', 'Best gut health product I\'ve ever used. The difference is night and day. Highly recommend!', 12)}
+        ${generateSidebarReview('Patricia L.', 'Verified Purchase', 'Was skeptical at first, but the results speak for themselves. My digestion has never been better.', 5)}
       </div>
     </aside>
   ` : '';
@@ -577,13 +589,15 @@ ${isAdvertorial
 </html>`;
 }
 
-/** Generate a sidebar review card */
-function generateSidebarReview(name: string, badge: string, text: string): string {
-  const initial = name.charAt(0);
+/** Generate a sidebar review card with real avatar image */
+function generateSidebarReview(name: string, badge: string, text: string, avatarId: number): string {
+  // WHY: i.pravatar.cc is free, no API key, deterministic (same ID = same face)
+  //      img parameter selects a specific face, size=80 for retina on 40px display
+  const avatarUrl = `https://i.pravatar.cc/80?img=${avatarId}`;
   return `
     <div class="adv-sidebar-review">
       <div class="adv-review-author">
-        <div class="adv-review-avatar">${initial}</div>
+        <img src="${avatarUrl}" alt="${escapeSimple(name)}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
         <div>
           <div class="adv-review-name">${escapeSimple(name)}</div>
           <div class="adv-review-verified">&#10003; ${escapeSimple(badge)}</div>
@@ -592,6 +606,23 @@ function generateSidebarReview(name: string, badge: string, text: string): strin
       <div class="adv-review-text">${escapeSimple(text)}</div>
     </div>
   `;
+}
+
+/** Generate star rating with SVG stars (filled + empty) */
+function generateStars(rating: number): string {
+  const fullStars = Math.floor(rating);
+  const hasHalf = rating - fullStars >= 0.3;
+  let html = '';
+  for (let i = 0; i < 5; i++) {
+    if (i < fullStars) {
+      html += `<svg width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+    } else if (i === fullStars && hasHalf) {
+      html += `<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="half"><stop offset="50%" stop-color="#F59E0B"/><stop offset="50%" stop-color="#D1D5DB"/></linearGradient></defs><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#half)"/></svg>`;
+    } else {
+      html += `<svg width="16" height="16" viewBox="0 0 24 24" fill="#D1D5DB" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+    }
+  }
+  return html;
 }
 
 function escapeSimple(text: string): string {
