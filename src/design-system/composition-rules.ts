@@ -22,10 +22,6 @@ export interface CompositionRule {
   forbiddenBlocks: BlockName[];
   /** Spacing token key between sections */
   sectionGap: SpacingKey;
-  /** Max headline character count (mobile readability) */
-  headlineMaxChars: number;
-  /** Max total blocks to prevent infinite pages */
-  maxBlocks: number;
 }
 
 // ─── Block Names ─────────────────────────────────────────────────────────────
@@ -84,17 +80,13 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
     requiredBlocks: ['hero', 'bundle-offers', 'reviews', 'add-to-cart', 'guarantee', 'faq'],
     forbiddenBlocks: ['form', 'quiz-step'],
     sectionGap: '10',
-    headlineMaxChars: 60,
-    maxBlocks: 15,
   },
 
   advertorial: {
     requiredSequence: ['editorial-header', 'hero', 'byline', 'sticky-cta'],
-    requiredBlocks: ['editorial-header', 'hero', 'byline', 'body-text', 'button', 'sticky-cta'],
+    requiredBlocks: ['editorial-header', 'hero', 'byline', 'body-text', 'image', 'button', 'sticky-cta'],
     forbiddenBlocks: ['payment-form', 'order-summary', 'quiz-step'],
     sectionGap: '8',
-    headlineMaxChars: 80,
-    maxBlocks: 25,
   },
 
   vsl: {
@@ -102,8 +94,6 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
     requiredBlocks: ['hero', 'button'],
     forbiddenBlocks: ['payment-form', 'bundle-offers', 'quiz-step'],
     sectionGap: '10',
-    headlineMaxChars: 50,
-    maxBlocks: 15,
   },
 
   checkout: {
@@ -111,8 +101,6 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
     requiredBlocks: ['bundle-offers', 'order-summary', 'shipping-form', 'payment-form', 'trust-badges', 'guarantee', 'countdown', 'scarcity-badge'],
     forbiddenBlocks: ['hero', 'comparison-chart', 'product-carousel', 'quiz-step', 'reviews'],
     sectionGap: '4',
-    headlineMaxChars: 40,
-    maxBlocks: 10,
   },
 
   upsell: {
@@ -120,8 +108,6 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
     requiredBlocks: ['heading', 'bundle-offers', 'add-to-cart', 'countdown', 'guarantee', 'negative-opt-out'],
     forbiddenBlocks: ['payment-form', 'faq', 'comparison-chart', 'product-carousel', 'quiz-step'],
     sectionGap: '4',
-    headlineMaxChars: 50,
-    maxBlocks: 6,
   },
 
   downsell: {
@@ -129,8 +115,6 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
     requiredBlocks: ['heading', 'bundle-offers', 'add-to-cart', 'negative-opt-out'],
     forbiddenBlocks: ['payment-form', 'faq', 'reviews', 'product-carousel'],
     sectionGap: '4',
-    headlineMaxChars: 50,
-    maxBlocks: 5,
   },
 
   optin: {
@@ -138,8 +122,6 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
     requiredBlocks: ['hero', 'form', 'trust-badges'],
     forbiddenBlocks: ['payment-form', 'order-summary', 'bundle-offers'],
     sectionGap: '8',
-    headlineMaxChars: 60,
-    maxBlocks: 6,
   },
 
   quiz: {
@@ -147,8 +129,6 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
     requiredBlocks: ['quiz-step'],
     forbiddenBlocks: ['payment-form', 'order-summary', 'bundle-offers', 'comparison-chart'],
     sectionGap: '6',
-    headlineMaxChars: 40,
-    maxBlocks: 10,
   },
 
   'thank-you': {
@@ -156,8 +136,6 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
     requiredBlocks: ['heading'],
     forbiddenBlocks: ['payment-form', 'countdown', 'bundle-offers'],
     sectionGap: '6',
-    headlineMaxChars: 40,
-    maxBlocks: 5,
   },
 
   bridge: {
@@ -165,8 +143,6 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
     requiredBlocks: ['heading', 'button'],
     forbiddenBlocks: ['payment-form', 'order-summary'],
     sectionGap: '6',
-    headlineMaxChars: 50,
-    maxBlocks: 4,
   },
 };
 
@@ -179,8 +155,8 @@ export const PAGE_TYPE_GUIDES: Record<PageType, { structure: string; keyPoints: 
     keyPoints: 'Reviews ABOVE fold. Bundle "Most Popular" pre-selected. Sticky CTA mobile.',
   },
   advertorial: {
-    structure: 'Editorial Header (logo + badge) → Breadcrumb (desktop) → Hero (headline only, NO CTA) → Byline (author + date) → Body Text (pain story, many short paragraphs) → Editorial Section Heading → Body Text (discovery) → Author CTA (mid-article callout) → Benefits List → Testimonial → Social Proof → Bundle Offers → Guarantee → Button CTA → Urgency Text → Trust Badges → Sticky CTA (mobile)',
-    keyPoints: 'MUST look like a NEWS ARTICLE. Editorial header with logo, breadcrumb, byline with author avatar. Hero = headline only (NO CTA button). Body text = many short paragraphs (2-3 lines each, split on \\n\\n). Section headings in ALL CAPS. CTAs appear mid-article (author-cta) and at bottom (button + sticky-cta). Max width 720px. Sticky CTA fixed bottom on mobile.',
+    structure: 'Editorial Header (logo + badge) → Breadcrumb (desktop) → Hero (headline only, NO CTA) → Byline (author + date) → Hero Image → Body Text (opening hook, 4-5 paragraphs) → Editorial Heading → Body Text (pain, 3-5 paragraphs) → Image → Body Text → Image → Body Text → Editorial Heading (discovery) → Body Text (4-5 paragraphs) → Image → Body Text (science) → Image → Author CTA #1 → Body Text (endorsement) → Editorial Heading (proof) → Testimonial #1 → Image → Testimonial #2 → Body Text (social proof) → Image → Author CTA #2 → Benefits List → Editorial Heading (offer) → Social Proof → Bundle Offers → Image → Testimonial #3 → Body Text (urgency) → Image → Guarantee → Body Text (reassurance) → Button CTA → Trust Badges → FAQ → Sticky CTA (mobile)',
+    keyPoints: 'MUST look like a NEWS ARTICLE with 2000-3000 words. 30-45 blocks minimum. 8-12 images distributed throughout. 3+ testimonials. 3+ editorial headings. 2 author-cta mid-article callouts. Body text = 3-6 paragraphs per block (2-4 sentences each). Section headings in ALL CAPS. Hero = headline only (NO CTA button). CTAs every 8-10 blocks. Sticky CTA fixed bottom on mobile. 2-column desktop layout with sidebar.',
   },
   vsl: {
     structure: 'Hero with video → Problem → Solution → Proof → CTA (repeat 3-5x) → Guarantee → Final CTA',
@@ -258,7 +234,6 @@ export function validateBlocks(pageType: PageType, blocks: BlockName[]): {
   valid: boolean;
   missingRequired: BlockName[];
   forbiddenFound: BlockName[];
-  exceedsMax: boolean;
 } {
   const rule = PAGE_COMPOSITION_RULES[pageType];
 
@@ -266,9 +241,8 @@ export function validateBlocks(pageType: PageType, blocks: BlockName[]): {
   const forbiddenFound = blocks.filter(b => rule.forbiddenBlocks.includes(b));
 
   return {
-    valid: missingRequired.length === 0 && forbiddenFound.length === 0 && blocks.length <= rule.maxBlocks,
+    valid: missingRequired.length === 0 && forbiddenFound.length === 0,
     missingRequired,
     forbiddenFound,
-    exceedsMax: blocks.length > rule.maxBlocks,
   };
 }

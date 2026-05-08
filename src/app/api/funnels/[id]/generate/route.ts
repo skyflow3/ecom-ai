@@ -64,6 +64,11 @@ const generateRequestSchema = z.object({
 
 // ─── Route Segment Config ─────────────────────────────────────────────────────
 
+// WHY: Two DeepSeek calls (copywriter + composer) can take 90-180s total.
+//      Default Next.js timeout is 60s, Cloudflare proxies timeout at 100s.
+//      300s (5 min) gives enough room for long-form advertorial generation.
+export const maxDuration = 300;
+
 interface RouteContext {
   params: Promise<{ id: string }>;
 }

@@ -1,0 +1,133 @@
+{
+  "content_type": "upsell",
+  "type_name": "Upsell Page (post-checkout upsell — VSL or text-based, one-click offer after purchase)",
+  "winner_count": 4,
+  "built_at": "2026-05-07T03:00:11.976574",
+  "version": "v5_council",
+  "structural_patterns": [
+    "All winners use a 'WAIT' or 'IMPORTANT' interrupt pattern immediately after checkout to stop the user from leaving.",
+    "They open with a bold, attention-grabbing headline (e.g., 'Your Order Is Not Complete Yet') that creates urgency and implies the process is unfinished.",
+    "A countdown timer or scarcity element (e.g., 'Hurry! This offer ends in: 08:51') is placed near the top, often above the main offer.",
+    "The offer is presented as a 'one-click' upgrade or add-on, with a clear price comparison (original vs. discounted) and a single CTA button.",
+    "Social proof (testimonials, star ratings, customer count) is placed either before the offer or alongside the guarantee to build trust.",
+    "A strong, risk-reversing guarantee (e.g., '180-Day Money-Back Guarantee' or '1 year bottom of the bottle') is always visible near the CTA.",
+    "The CTA is positioned immediately after the offer details, with a secondary 'No thanks' link that reinforces the downside of declining (e.g., 'I’ll just pay full price next time').",
+    "Length is short to medium—typically 3-5 scrolls or a single VSL + text block—avoiding long paragraphs."
+  ],
+  "psychological_patterns": [
+    "Urgency and scarcity are triggered early with countdown timers and phrases like 'only available for the next' or 'going out of stock soon'.",
+    "Loss aversion is used in the secondary CTA (e.g., 'I understand I won't see this deal again') to make declining feel like a loss.",
+    "Social proof (testimonials, '3,500+ Happy Customers') is used to reduce anxiety and validate the purchase decision.",
+    "Authority is implied through expert endorsements (e.g., 'Dr. Schilling') or product-specific claims (e.g., 'FIRST & ONLY retinol serum for mature skin').",
+    "Reciprocity is triggered by framing the upgrade as a 'gift' or 'exclusive discount' for being a new customer.",
+    "Commitment and consistency: The user already bought, so the upsell feels like a logical next step to 'complete' their results.",
+    "Objection handling is embedded in the guarantee (e.g., 'Use it all and love it, or your money back') to eliminate risk.",
+    "Emotional progression: Starts with urgency (fear of missing out), moves to desire (benefits, testimonials), then to trust (guarantee), and finally to action (CTA)."
+  ],
+  "language_patterns": [
+    "Power words like 'WAIT', 'IMPORTANT', 'EXCLUSIVE', 'RISK FREE', 'AMAZING', 'DRAMATICALLY', 'ONLY', 'FREE' are used repeatedly across winners.",
+    "Short, punchy sentences dominate: 'Your order is not complete yet.' 'Hurry! This offer ends in:' 'Yes! Confirm this amazing upgrade.'",
+    "Paragraphs are 1-3 sentences max, often single lines for emphasis (e.g., 'All orders are protected by a 1 year guarantee.').",
+    "Tone is urgent, direct, and conversational—like a friend warning you not to miss out (e.g., 'Please Do Not Close This Page').",
+    "Transition phrases are minimal but effective: 'Wait!', 'Here's the deal:', 'And yes, shipping's still on us.', 'Plus, we'll give you...'",
+    "Repetition of the word 'you' and 'your' to personalize the offer (e.g., 'Your order', 'Your next steps', 'Your upgrade').",
+    "Price anchoring is used: 'Retails for $47... you get for $28.20 each' or '60% off the retail price!'."
+  ],
+  "differentiators": [
+    "Winners use a 'double interrupt' pattern: first a pop-up or page redirect, then a VSL or countdown that forces attention before the offer.",
+    "They avoid generic 'Thank you for your order' language—instead, they imply the order is incomplete or at risk.",
+    "They include a visible progress bar or animation (e.g., 'charging... 50%') to create a sense of process and anticipation.",
+    "The secondary CTA is not just 'No thanks'—it includes a negative consequence (e.g., 'I’ll just pay full price next time' or 'I understand I won't see this deal again').",
+    "They layer multiple scarcity triggers: countdown timer + limited stock + one-time offer + 'only for new customers'.",
+    "They use a 'stacked' guarantee: not just money-back, but 'use it all and still get a refund' (bottom-of-the-bottle guarantee).",
+    "They avoid clutter—no navigation menus, no links to other pages, no distractions from the single CTA.",
+    "They test different offer structures: some use a single upsell (Vibriance), others use a multi-step upsell ladder (Clarifion, SmoothSpine)."
+  ],
+  "power_words": [
+    "WAIT",
+    "IMPORTANT",
+    "EXCLUSIVE",
+    "RISK FREE",
+    "AMAZING",
+    "DRAMATICALLY",
+    "ONLY",
+    "FREE",
+    "HURRY",
+    "LIMITED",
+    "GUARANTEED",
+    "PROVEN",
+    "INSTANT",
+    "SECURE",
+    "BONUS",
+    "UPGRADE",
+    "COMPLETE",
+    "NOW",
+    "FINAL",
+    "LAST CHANCE"
+  ],
+  "opening_patterns": [
+    "Bold interrupt: 'WAIT!' or 'IMPORTANT: Do Not Close This Window'—stops the user from leaving.",
+    "Incomplete order framing: 'Your Order Is Not Complete Yet' or 'Almost Complete...' with a progress bar.",
+    "Urgency trigger: Countdown timer or 'Hurry! This offer ends in:' placed immediately after the interrupt.",
+    "Benefit preview: A short, compelling statement about what the upgrade does (e.g., 'Firm your jowls or reduce age spots').",
+    "Social proof or authority: Testimonials or expert name (e.g., 'Dr. Schilling') placed early to build trust."
+  ],
+  "cta_patterns": [
+    "Primary CTA is a single, high-contrast button with action-oriented text: 'YES! Confirm This Amazing Upgrade' or 'SELECT TO SAVE $353'.",
+    "Secondary CTA is a text link that reinforces loss aversion: 'No thanks, I don't want to upgrade... I’ll just pay full price next time.'",
+    "CTA is placed immediately after the offer details and guarantee, with no other links or distractions nearby.",
+    "Some winners use a two-step CTA: first a 'Select' button, then a confirmation page or pop-up.",
+    "The CTA button often includes a price or savings amount (e.g., 'Add 3 bottles for ONLY $84.60')."
+  ],
+  "objection_handling": [
+    "Risk reversal via extended guarantees: '180-Day Money-Back Guarantee', '1 year bottom of the bottle guarantee', 'Use it all and still get a refund'.",
+    "Price objection handled with anchoring: 'Retails for $47... you get for $28.20 each' or '60% off retail'.",
+    "Trust signals: 'Secure McAfee transaction', '256-bit SSL encryption', '3,500+ Happy Customers'.",
+    "Social proof as objection neutralizer: Testimonials from real customers with specific results (e.g., 'After a few weeks, I’m finally moving without pain').",
+    "Scarcity overrides hesitation: 'Hurry! This offer ends in:' and 'We’re expecting to go out of stock very soon'.",
+    "Negative consequence in secondary CTA: 'I understand I won't see this deal again' makes declining feel like a permanent loss."
+  ],
+  "criteria": [
+    {
+      "name": "C1_InterruptAndUrgencyOpening",
+      "weight": 0.15,
+      "desc": "What to evaluate: Does the page use an immediate 'WAIT' or 'IMPORTANT' interrupt pattern (visual or text) within the first 2 seconds, paired with a bold headline implying the order is incomplete or at risk? A 10 = Uses a double interrupt (e.g., pop-up + countdown) with a headline like 'Your Order Is Not Complete Yet' and a visible countdown timer above the fold. A 3 = Opens with a generic 'Thank you for your order' or a slow fade-in with no urgency trigger."
+    },
+    {
+      "name": "C2_ScarcityAndTimerPlacement",
+      "weight": 0.13,
+      "desc": "What to evaluate: Is a countdown timer or explicit scarcity element (e.g., 'only 5 left', 'one-time offer') placed prominently near the top, above the main offer, and is it dynamic (counting down)? A 10 = Timer is above the headline or immediately next to it, with a clear deadline (e.g., 'Hurry! This offer ends in: 08:51') and a secondary scarcity trigger (limited stock). A 3 = No timer visible, or timer is buried below the fold, or uses vague language like 'limited time' without a countdown."
+    },
+    {
+      "name": "C3_OneClickOfferAndPriceAnchoring",
+      "weight": 0.14,
+      "desc": "What to evaluate: Is the upsell presented as a single-click upgrade with a clear original vs. discounted price comparison, and is the CTA button the only primary action? A 10 = Shows 'Retails for $47 — you get for $28.20' with a strikethrough original price, a single 'Yes! Confirm this amazing upgrade' button, and no other links or navigation. A 3 = Multiple CTAs, no price comparison, or the offer is buried in a paragraph without clear discount emphasis."
+    },
+    {
+      "name": "C4_SocialProofAndTrustLayering",
+      "weight": 0.12,
+      "desc": "What to evaluate: Is social proof (testimonials, star ratings, customer count) placed before or alongside the offer, and is it specific (numbers, names, or photos)? A 10 = Shows '3,500+ Happy Customers' with a 4.8-star rating and a testimonial from a named customer (e.g., 'Dr. Schilling') near the offer headline. A 3 = No social proof, or uses generic 'Trusted by thousands' without numbers or names, placed only at the bottom."
+    },
+    {
+      "name": "C5_RiskReversingGuaranteeVisibility",
+      "weight": 0.12,
+      "desc": "What to evaluate: Is a strong, specific guarantee (e.g., '180-Day Money-Back Guarantee' or 'Use it all and still get a refund') visible immediately near the CTA, without requiring scrolling? A 10 = Guarantee is in a colored box or badge directly below or beside the CTA, with explicit terms like 'Bottom-of-the-bottle guarantee: use every drop and still get a full refund'. A 3 = Guarantee is in fine print at the very bottom, or is generic ('Satisfaction guaranteed') with no specific time frame or conditions."
+    },
+    {
+      "name": "C6_SecondaryCTANegativeConsequence",
+      "weight": 0.1,
+      "desc": "What to evaluate: Does the secondary 'No thanks' link include a negative consequence or loss-aversion phrase (e.g., 'I’ll just pay full price next time') rather than a neutral decline? A 10 = Secondary link reads 'No thanks, I understand I won't see this deal again' or 'I’ll just pay full price next time'. A 3 = Secondary link is simply 'No thanks' or 'Skip' with no consequence implied."
+    },
+    {
+      "name": "C7_EmotionalProgressionAndBrevity",
+      "weight": 0.09,
+      "desc": "What to evaluate: Does the page follow a clear emotional arc (urgency → desire → trust → action) within 3-5 scrolls or a single VSL + text block, using short punchy sentences (1-3 lines per paragraph)? A 10 = Starts with countdown (urgency), then 2-3 bullet benefits (desire), then a testimonial (trust), then guarantee + CTA (action), all within 4 scrolls. A 3 = Long paragraphs, no clear emotional flow, or requires more than 6 scrolls to reach CTA."
+    }
+  ],
+  "anti_bias_weights": {
+    "S1_GenericPenalty": 0.06,
+    "S2_HedgingPenalty": 0.0525,
+    "S3_EmotionalAuthenticity": 0.0375
+  },
+  "winner_patterns": "WINNER PATTERN GUIDE: Post-Checkout Upsell Pages (VSL or Text-Based, One-Click Offer)\n\n**1. WHAT WINNING UPSELL PAGES LOOK LIKE**\n\nWinning pages feel like an urgent, unfinished transaction. They open with a bold interrupt—\"WAIT!\" or \"IMPORTANT\"—that stops the user from closing the tab. A countdown timer sits near the top, often above a headline that implies the order is incomplete (\"Your Order Is Not Complete Yet\"). The offer is a single, one-click upgrade with a clear price comparison (original vs. discounted). Social proof (testimonials, star ratings, customer counts) appears before or alongside a strong, risk-reversing guarantee. The CTA is a single button, followed by a secondary \"No thanks\" link that reinforces loss aversion. The page is short (3-5 scrolls or one VSL + text block), clutter-free, and uses short, punchy sentences. The emotional flow is: urgency → desire → trust → action.\n\n**2. MUST-HAVE ELEMENTS (Non-Negotiable)**\n\n- **Interrupt Pattern:** \"WAIT\" or \"IMPORTANT\" in the first line.\n- **Unfinished Order Headline:** \"Your Order Is Not Complete Yet\" or similar.\n- **Countdown Timer:** Visible near the top, creating real-time scarcity.\n- **One-Click CTA:** Single button with clear action (\"Yes! Add to My Order\").\n- **Price Anchoring:** Original price vs. discounted price (e.g., \"Retails for $47, you get for $28\").\n- **Risk-Reversing Guarantee:** \"180-Day Money-Back\" or \"Bottom-of-the-Bottle\" guarantee near the CTA.\n- **Secondary CTA with Loss Aversion:** \"No thanks, I’ll pay full price next time.\"\n- **Social Proof:** Testimonials, star ratings, or customer count (e.g., \"3,500+ Happy Customers\").\n- **No Distractions:** No navigation menus, no external links, no clutter.\n\n**3. MUST-AVOID ELEMENTS (What Losers Do)**\n\n- **Generic Thank-Yous:** Never say \"Thank you for your order\" first—it signals completion.\n- **Long Paragraphs:** No blocks of text over 3 sentences. Winners use single lines.\n- **Weak Secondary CTA:** \"No thanks\" alone is a loser. Always attach a negative consequence.\n- **Hidden Guarantee:** If the guarantee is below the fold or in fine print, it fails.\n- **Multiple Offers on One Page:** Winners show one upsell at a time, not a grid of options.\n- **Passive Language:** No \"You might like\" or \"Consider adding.\" Use direct, urgent commands.\n- **Broken Flow:** No redirects to other pages or pop-ups that interrupt the upsell itself.\n\n**4. SPECIFIC RULES Winning Pages Follow**\n\n1. **The Double Interrupt Rule:** First, a pop-up or page redirect stops the user. Then, a countdown or VSL forces attention before the offer is revealed. Never let the user land on a calm page.\n\n2. **The Negative Consequence Rule:** Every \"No thanks\" link must include a loss-aversion phrase (e.g., \"I understand I won’t see this deal again\" or \"I’ll just pay full price next time\"). This makes declining feel like a mistake.\n\n3. **The Stacked Scarcity Rule:** Use at least two scarcity triggers together—countdown timer + limited stock, or one-time offer + \"only for new customers.\" Never rely on a single trigger.\n\n4. **The Guarantee Above the Fold Rule:** The guarantee must be visible without scrolling, placed directly next to or above the CTA button. Use \"Use it all and still get a refund\" language to eliminate all risk.\n\n5. **The Single CTA Rule:** Only one primary action button on the page. No links to other products, no \"Learn More,\" no secondary offers. The entire page exists to click that one button or decline with loss aversion."
+}

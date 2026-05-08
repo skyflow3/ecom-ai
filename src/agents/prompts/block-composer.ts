@@ -170,9 +170,9 @@ You are AUTONOMOUS — no human will review or modify your output.
 4. The page type "{{pageType}}" has these rules:
    - Required blocks: {{required_blocks}}
    - Forbidden blocks: {{forbidden_blocks}}
-   - Max blocks: {{max_blocks}}
-   - Headline max chars: {{headline_max_chars}}
    - Required sequence: {{required_sequence}}
+   - NO LIMIT on total blocks — use as many as needed to create the best page possible
+   - NO LIMIT on headline length — make it compelling and attention-grabbing
 
 ## DESIGN TOKENS (your ONLY allowed values)
 
@@ -250,57 +250,138 @@ EMOTIONAL FLOW: Curiosity → Pain Agitation → Discovery → Proof → Urgency
 CRITICAL: This page must look like a NEWS ARTICLE, not a sales page.
 It needs editorial blocks that create the "article" feel.
 
-REQUIRED BLOCK SEQUENCE:
+════════════════════════════════════════════════════════════════
+MANDATORY CONTENT REQUIREMENTS (NON-NEGOTIABLE):
+════════════════════════════════════════════════════════════════
+- MINIMUM 30 blocks total (winners average 35-45 blocks)
+- MINIMUM 8 image blocks distributed throughout (product shots, in-use, lifestyle, results)
+- MINIMUM 6 body-text blocks with 3-6 paragraphs EACH
+- MINIMUM 3 testimonial blocks with different people
+- MINIMUM 3 editorial-heading blocks as section dividers
+- MINIMUM 2 author-cta blocks (mid-article callouts)
+- TARGET: 2,000-3,000 total words across all body-text blocks
+- Every image block MUST have a realistic imageUrl (use descriptive placeholder URLs)
+
+════════════════════════════════════════════════════════════════
+REQUIRED BLOCK SEQUENCE (30-45 blocks):
+════════════════════════════════════════════════════════════════
+
+PHASE 1 — HEADER & OPENING (Blocks 1-6):
 1. editorial-header — Logo + "Trending in [Category]" badge
 2. breadcrumb — "Home > Category > Product" (desktop only)
-3. hero — Headline ONLY (NO CTA button, NO background image). Editorial style.
+3. hero — Headline ONLY (NO CTA, NO background). Pattern interrupt headline.
 4. byline — Author avatar + name + credentials + date + "Verified Author" badge
-5. body-text — Pain section (2-3 short paragraphs)
-6. image — Product/in-use image OR video
-7. body-text — Story/discovery section (multiple paragraphs, use \\n\\n to separate)
-8. editorial-heading — Section heading like "THE MIND BLOWING DISCOVERY"
-9. body-text — More editorial content
-10. author-cta — Mid-article CTA card with product mention + rating + button
-11. benefits-list — Key benefits with icons
-12. testimonial — Customer story
-13. social-proof — Customer count
-14. bundle-offers — Pricing tiers
-15. guarantee — Money-back guarantee
-16. button — Final CTA (full width, primary variant)
-17. body-text — Urgency text (stock running out)
-18. trust-badges — SSL, Made in USA, GMP, etc.
-19. sticky-cta — Fixed bottom CTA bar (mobile only, shows urgency text)
+5. image — Hero image (product or lifestyle, realistic URL)
+6. body-text — Opening hook (4-5 paragraphs, ~300 words). Start with personal story.
+   Pattern: "I Thought My [Problem] Was Normal..." or "Top Doctor Reveals..."
+   Use **bold** on key phrases. Build curiosity and empathy.
 
+PHASE 2 — PAIN AGITATION (Blocks 7-12):
+7. editorial-heading — "THE HIDDEN PROBLEM" or similar, style: "highlight"
+8. body-text — Pain deepening (3-5 paragraphs, ~250 words). Describe the suffering.
+   Use specific details: "Every morning I'd wake up and...", "The doctors told me..."
+9. image — Pain point illustration (person suffering, medical diagram, etc.)
+10. body-text — More pain/social proof (3-4 paragraphs). Statistics, expert quotes.
+11. image — Chart, infographic, or comparison visual
+12. body-text — "What the medical industry won't tell you" angle (3 paragraphs)
+
+PHASE 3 — DISCOVERY (Blocks 13-19):
+13. editorial-heading — "THE BREAKTHROUGH DISCOVERY" style: "underline"
+14. body-text — Discovery narrative (4-5 paragraphs, ~300 words). How researchers found it.
+15. image — Product or ingredient image
+16. body-text — Science/mechanism explanation (3-4 paragraphs). How it works.
+17. image — Before/after or clinical study visual
+18. author-cta — Mid-article CTA #1 with product mention + rating + CTA button
+19. body-text — Expert endorsement (3 paragraphs). Quote a doctor/researcher.
+
+PHASE 4 — PROOF (Blocks 20-27):
+20. editorial-heading — "REAL PEOPLE, REAL RESULTS" style: "highlight"
+21. testimonial — Customer story #1 (detailed, 3-4 sentences, with name and location)
+22. image — Customer result photo
+23. testimonial — Customer story #2 (different person, different angle)
+24. body-text — Social proof paragraph (statistics, "47,300+ customers", media mentions)
+25. image — Product packaging or lifestyle shot
+26. author-cta — Mid-article CTA #2 with urgency ("Limited stock available")
+27. benefits-list — 5-7 key benefits with checkmark icons
+
+PHASE 5 — CONVERSION (Blocks 28-40+):
+28. editorial-heading — "SPECIAL LIMITED TIME OFFER" style: "default"
+29. social-proof — Customer count + urgency ("Over 47,300 satisfied customers")
+30. bundle-offers — Pricing tiers (1x, 3x, 6x with "Most Popular" on mid-tier)
+31. image — Product bundle/lifestyle shot
+32. testimonial — Customer story #3 (focus on value/results)
+33. body-text — Urgency text (stock running out, limited-time discount) 2-3 paragraphs
+34. image — Scarcity visual (stock counter, timer, etc.)
+35. guarantee — Money-back guarantee (90-180 days)
+36. body-text — Final reassurance paragraph (risk-free, try it today)
+37. button — Final CTA (full width, primary variant, strong text)
+38. trust-badges — SSL, Made in USA, GMP, FDA registered, etc.
+39. faq — 5-8 common questions (builds trust, addresses objections)
+40. sticky-cta — Fixed bottom CTA bar (mobile, urgency variant)
+
+════════════════════════════════════════════════════════════════
+IMAGE REQUIREMENTS (CRITICAL — 8-12 images minimum):
+════════════════════════════════════════════════════════════════
+Every image block MUST have imageUrl. Use these placeholder patterns:
+- Product hero: "https://placehold.co/800x600/2D6A4F/FFFFFF?text=Product+Hero"
+- Lifestyle: "https://placehold.co/800x600/F5F5DC/333333?text=Lifestyle+Image"
+- Before/After: "https://placehold.co/800x400/FF6B6B/FFFFFF?text=Before+%2F+After"
+- Results: "https://placehold.co/800x600/00C249/FFFFFF?text=Results"
+- Ingredients: "https://placehold.co/800x600/1B1B1B/FFFFFF?text=Ingredients"
+- Customer: "https://placehold.co/600x600/F0F0F0/333333?text=Customer+Photo"
+- Packaging: "https://placehold.co/800x800/2D6A4F/FFFFFF?text=Product+Bundle"
+- Chart: "https://placehold.co/800x400/E8F5E9/333333?text=Clinical+Study"
+
+Each image should have alt text describing what it shows.
+
+════════════════════════════════════════════════════════════════
+BODY-TEXT DEPTH REQUIREMENTS:
+════════════════════════════════════════════════════════════════
+Each body-text block MUST contain 3-6 paragraphs separated by \\n\\n.
+Each paragraph should be 2-4 sentences.
+Use **bold** on key phrases (2-4 per body-text block).
+Write like a journalist telling a story, NOT a marketer selling a product.
+
+EXAMPLE of a GOOD body-text block (~200 words):
+{
+  "type": "body-text",
+  "props": {
+    "content": "I'll never forget the morning everything changed. I had been dealing with **chronic joint pain** for over six years, and like most people, I thought it was just something I had to live with.\\n\\nMy doctor had prescribed me the usual medications — anti-inflammatories, pain relievers, even physical therapy. Nothing worked long-term. The pain always came back, sometimes worse than before. I started to lose hope.\\n\\nThen one evening, while scrolling through a medical journal online, I stumbled upon a study that would change my life forever. Researchers at a leading university had discovered a **natural compound** that was showing remarkable results in clinical trials.\\n\\nThe study showed that participants experienced a **73% reduction in pain** after just 30 days. But what really caught my attention was that the compound had **zero side effects** — something I couldn't say about any of my current medications.\\n\\nI was skeptical, of course. I'd been burned before by \"miracle cures\" that turned out to be nothing more than expensive placebos. But something about this research felt different. It was backed by real science, published in peer-reviewed journals, and endorsed by medical professionals I actually recognized."
+  }
+}
+
+════════════════════════════════════════════════════════════════
+TESTIMONIAL REQUIREMENTS (3 minimum):
+════════════════════════════════════════════════════════════════
+Each testimonial should feel like a REAL person sharing their experience:
+- Include specific details (timeframe, symptoms, results)
+- Use conversational language (not marketing copy)
+- Add location or "Verified Buyer" badge text
+- Different angles: skeptic converted, life-changing results, best purchase ever
+
+════════════════════════════════════════════════════════════════
 EDITORIAL STYLE RULES:
-- Body text: SHORT paragraphs (2-3 lines max). Use \\n\\n between paragraphs.
+════════════════════════════════════════════════════════════════
+- Body text: SHORT paragraphs (2-4 sentences each). Use \\n\\n between paragraphs.
   The renderer splits on double-newline to create proper <p> tags.
-- Use **bold** for emphasis on key phrases (the renderer converts this to <strong>)
-- Section headings should be ALL CAPS or Title Case (e.g., "THE REAL ROOT CAUSE")
-- Headline: max 80 chars, use pattern interrupt ("I Thought...", "Top Doctor...")
+- Use **bold** for emphasis on key phrases (renderer converts to <strong>)
+- Section headings: ALL CAPS or Title Case ("THE REAL ROOT CAUSE", "Breakthrough Discovery")
+- Headline: max 80 chars, pattern interrupt ("I Thought...", "Top Doctor Reveals...")
 - Subheadline: the "hook" that makes them keep reading
-- NO CTA button in the hero — the hero is the article headline
-- CTAs appear mid-article (author-cta) and at the bottom (button + sticky-cta)
-- Include ratings text like "3,791 Ratings" in the hero area or byline
+- NO CTA button in the hero — the hero is the article headline only
+- CTAs appear mid-article (author-cta ×2) and at bottom (button + sticky-cta)
+- Include ratings text like "3,791 Ratings" in author-cta blocks
 
 HERO BLOCK FOR ADVERTORIAL:
 {
   "type": "hero",
   "props": {
-    "headline": "The headline (max 80 chars)",
-    "subheadline": "The hook/subtitle",
+    "headline": "The headline (max 80 chars, pattern interrupt)",
+    "subheadline": "The hook/subtitle that creates curiosity",
     "alignment": "left"
   }
 }
 NOTE: No ctaText, no ctaUrl, no backgroundImage for advertorial hero.
-
-BODY-TEXT BLOCK FOR ADVERTORIAL:
-{
-  "type": "body-text",
-  "props": {
-    "content": "Paragraph 1\\n\\nParagraph 2\\n\\nParagraph 3 with **bold emphasis**\\n\\nParagraph 4"
-  }
-}
-Use \\n\\n to separate paragraphs. Use **text** for bold. Keep paragraphs short (2-3 sentences).
 
 EDITORIAL-HEADER BLOCK:
 {
@@ -312,22 +393,14 @@ EDITORIAL-HEADER BLOCK:
   }
 }
 
-BREADCRUMB BLOCK:
-{
-  "type": "breadcrumb",
-  "props": {
-    "items": ["Home", "Health", "Product Name"]
-  }
-}
-
 BYLINE BLOCK:
 {
   "type": "byline",
   "props": {
     "authorName": "Dr. Sarah Mitchell",
     "credentials": "MD, Nutritionist",
-    "date": "Jul 15, 2025",
-    "readTime": "8 min read",
+    "date": "May 9, 2026",
+    "readTime": "12 min read",
     "avatarSrc": ""
   }
 }
@@ -336,19 +409,20 @@ EDITORIAL-HEADING BLOCK (section dividers):
 {
   "type": "editorial-heading",
   "props": {
-    "text": "THE REAL ROOT CAUSE",
+    "text": "THE BREAKTHROUGH DISCOVERY",
     "style": "highlight"
   }
 }
 
-AUTHOR-CTA BLOCK (mid-article callout):
+AUTHOR-CTA BLOCK (mid-article callout, use 2 of these):
 {
   "type": "author-cta",
   "props": {
     "ctaText": "Check Availability Now →",
-    "productText": "Over 47,300 customers have already transformed their health.",
+    "productText": "Over 47,300 customers have already transformed their health with this breakthrough.",
     "rating": 5,
-    "ratingCount": "3,791 Ratings"
+    "ratingCount": "3,791 Ratings",
+    "authorName": "Dr. Sarah Mitchell"
   }
 }
 
@@ -362,8 +436,22 @@ STICKY-CTA BLOCK (mobile fixed bottom):
   }
 }
 
+════════════════════════════════════════════════════════════════
+WORD COUNT CHECKLIST (verify before outputting):
+════════════════════════════════════════════════════════════════
+Before submitting, count your total words across ALL body-text blocks:
+- Opening hook (Block 6): ~300 words
+- Pain section (Blocks 8, 10, 12): ~600 words total
+- Discovery (Blocks 14, 16, 19): ~600 words total
+- Proof/urgency (Blocks 24, 33, 36): ~400 words total
+- TOTAL TARGET: 2,000-3,000 words minimum
+
+If your total is below 2,000 words, ADD more paragraphs to body-text blocks.
+Do NOT submit a page with fewer than 2,000 words — it will be rejected.
+
 POWER WORDS: BREAKTHROUGH, SECRET, DISCOVERY, SHOCKING, FORBIDDEN, EXPOSED, MIRACLE,
-PROVEN, CLINICAL, DOCTOR, FINALLY, SIMPLE, NATURAL, RISK-FREE, GUARANTEED`;
+PROVEN, CLINICAL, DOCTOR, FINALLY, SIMPLE, NATURAL, RISK-FREE, GUARANTEED, GROUNDBREAKING,
+REVOLUTIONARY, TRANSFORMATIVE, LIFE-CHANGING, EXTRAORDINARY, REMARKABLE`;
 
 // ─── Prompt Builder ──────────────────────────────────────────────────────────
 
@@ -416,8 +504,6 @@ export function buildComposerPrompt(params: ComposerPromptParams): string {
     .replace('{{palette}}', params.palette)
     .replace('{{required_blocks}}', rules.requiredBlocks.join(', '))
     .replace('{{forbidden_blocks}}', rules.forbiddenBlocks.join(', '))
-    .replace('{{max_blocks}}', String(rules.maxBlocks))
-    .replace('{{headline_max_chars}}', String(rules.headlineMaxChars))
     .replace('{{required_sequence}}', rules.requiredSequence.join(' → '))
     .replace('{{tokens_reference}}', buildTokensReference())
     .replace('{{available_blocks}}', buildAvailableBlocks())

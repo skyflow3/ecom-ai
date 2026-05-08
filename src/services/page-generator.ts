@@ -36,7 +36,7 @@ export interface GeneratorConfig {
   model: string;
   /** Temperature for generation (default: 0.3) */
   temperature?: number;
-  /** Max tokens for generation (default: 8000) */
+  /** Max tokens for generation (default: 16384, no artificial limit) */
   maxTokens?: number;
   /** Max retries on validation failure (default: 3) */
   maxRetries?: number;
@@ -54,7 +54,7 @@ export interface GeneratorConfig {
 
 const DEFAULT_CONFIG: Partial<GeneratorConfig> = {
   temperature: 0.3,
-  maxTokens: 8000,
+  maxTokens: 16384,
   maxRetries: 3,
   minScore: 70,
 };
@@ -165,7 +165,7 @@ async function callLlm(
         { role: 'user', content: userPrompt },
       ],
       temperature: config.temperature ?? 0.3,
-      max_tokens: config.maxTokens ?? 8000,
+      max_tokens: config.maxTokens ?? 16384,
     }),
   });
 

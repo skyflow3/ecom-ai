@@ -49,7 +49,7 @@ export function pass2_composition(tree: BlockTree): ValidationResult {
   const pageType = tree.pageType as PageType;
   const blockTypes = tree.blocks.map(b => b.type) as BlockName[];
 
-  const { missingRequired, forbiddenFound, exceedsMax } = validateBlocks(pageType, blockTypes);
+  const { missingRequired, forbiddenFound } = validateBlocks(pageType, blockTypes);
   const { missing: missingSequence } = validateSequence(pageType, blockTypes);
 
   const errors: ValidationError[] = [];
@@ -75,14 +75,6 @@ export function pass2_composition(tree: BlockTree): ValidationResult {
       code: 'SEQUENCE_VIOLATION',
       message: `"${block}" missing from required sequence`,
       severity: 'error',
-    });
-  }
-
-  if (exceedsMax) {
-    errors.push({
-      code: 'MAX_BLOCKS_EXCEEDED',
-      message: `${blockTypes.length} blocks exceed maximum for "${pageType}"`,
-      severity: 'warning',
     });
   }
 

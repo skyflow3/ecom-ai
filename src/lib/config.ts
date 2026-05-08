@@ -65,7 +65,9 @@ export function getLlmConfig(): GeneratorConfig {
       apiKey: process.env.DEEPSEEK_API_KEY ?? "",
       model: process.env.DEEPSEEK_MODEL ?? "deepseek-chat",
       temperature: 0.3,
-      maxTokens: 8000,
+      // WHY: No limit — let the AI generate as much content as it needs.
+      // DeepSeek max output is 8192 by default, can go up to 16384 with parameter.
+      maxTokens: 16384,
       maxRetries: 3,
       minScore: 70,
     };
@@ -76,7 +78,7 @@ export function getLlmConfig(): GeneratorConfig {
     apiKey: getNextMimoKey(),
     model: process.env.LLM_MODEL ?? "mimo-v2-flash",
     temperature: 0.3,
-    maxTokens: 8000,
+    maxTokens: 16384,
     maxRetries: 3,
     minScore: 70,
     allKeys: MIMO_KEYS.length > 1 ? MIMO_KEYS : undefined,
@@ -95,7 +97,7 @@ export function getCopywriterConfig(): GeneratorConfig {
     apiKey: process.env.DEEPSEEK_API_KEY ?? "",
     model: process.env.COPYWRITER_MODEL ?? "deepseek-chat",
     temperature: 0.5,
-    maxTokens: 4000,
+    maxTokens: 16384,
     maxRetries: 3,
     minScore: 70,
   };

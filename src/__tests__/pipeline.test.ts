@@ -889,16 +889,10 @@ describe('Block Composer', () => {
       expect(prompt).toContain('Wait! Before You Go');
     });
 
-    it('fills max_blocks placeholder correctly', () => {
+    it('includes no-limit instruction for blocks', () => {
       const prompt = buildComposerPrompt(baseParams);
-      // Upsell maxBlocks = 6
-      expect(prompt).toContain('6');
-    });
-
-    it('fills headline_max_chars placeholder correctly', () => {
-      const prompt = buildComposerPrompt(baseParams);
-      // Upsell headlineMaxChars = 50
-      expect(prompt).toContain('50');
+      expect(prompt).toContain('NO LIMIT on total blocks');
+      expect(prompt).toContain('NO LIMIT on headline length');
     });
   });
 
@@ -957,8 +951,6 @@ describe('Block Composer', () => {
       expect(BLOCK_COMPOSER_SYSTEM_PROMPT).toContain('{{palette}}');
       expect(BLOCK_COMPOSER_SYSTEM_PROMPT).toContain('{{required_blocks}}');
       expect(BLOCK_COMPOSER_SYSTEM_PROMPT).toContain('{{forbidden_blocks}}');
-      expect(BLOCK_COMPOSER_SYSTEM_PROMPT).toContain('{{max_blocks}}');
-      expect(BLOCK_COMPOSER_SYSTEM_PROMPT).toContain('{{headline_max_chars}}');
       expect(BLOCK_COMPOSER_SYSTEM_PROMPT).toContain('{{required_sequence}}');
       expect(BLOCK_COMPOSER_SYSTEM_PROMPT).toContain('{{tokens_reference}}');
       expect(BLOCK_COMPOSER_SYSTEM_PROMPT).toContain('{{available_blocks}}');
@@ -1406,13 +1398,7 @@ describe('Composition Rules', () => {
         expect(rule.requiredBlocks).toBeDefined();
         expect(rule.forbiddenBlocks).toBeDefined();
         expect(rule.requiredSequence).toBeDefined();
-        expect(rule.maxBlocks).toBeGreaterThan(0);
-        expect(rule.headlineMaxChars).toBeGreaterThan(0);
       }
-    });
-
-    it('upsell allows max 6 blocks', () => {
-      expect(PAGE_COMPOSITION_RULES['upsell'].maxBlocks).toBe(6);
     });
 
     it('checkout requires payment-form in sequence', () => {
@@ -1463,18 +1449,16 @@ describe('Composition Rules', () => {
       expect(result.forbiddenFound).toContain('payment-form');
     });
 
-    it('reports when max blocks is exceeded', () => {
-      // Upsell maxBlocks = 6
-      const manyBlocks = Array(7).fill('heading') as unknown as import('../design-system/composition-rules').BlockName[];
-      const result = validateBlocks('upsell', manyBlocks);
-      expect(result.exceedsMax).toBe(true);
+    it('reports forbidden blocks correctly', () => {
+      const result = validateBlocks('upsell', ['heading', 'bundle-offers', 'add-to-cart', 'countdown', 'guarantee', 'negative-opt-out', 'payment-form'] as import('../design-system/composition-rules').BlockName[]);
+      expect(result.forbiddenFound).toContain('payment-form');
     });
 
     it('passes for a valid block list', () => {
-      const result = validateBlocks('upsell', ['heading', 'bundle-offers', 'add-to-cart', 'countdown', 'guarantee', 'negative-opt-out']);
+      const result = validateBlocks('upsell', ['heading', 'bundle-offers', 'add-to-cart', 'countdown', 'guarantee', 'negative-opt-out'] as import('../design-system/composition-rules').BlockName[]);
       expect(result.missingRequired).toHaveLength(0);
       expect(result.forbiddenFound).toHaveLength(0);
-      expect(result.exceedsMax).toBe(false);
+      expect(result.valid).toBe(true);
     });
   });
 
