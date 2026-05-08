@@ -331,17 +331,24 @@ export async function generatePage(
     : `Generate the ${request.pageType} page now. Output ONLY valid JSON.`;
 
   // Retry loop
+  // WHY: Separate counters for API errors vs validation errors.
+  //      API errors (402 Insufficient Balance, 429 Rate Limit) should retry
+  //      with a DIFFERENT key without consuming a validation retry slot.
+  //      Only validation failures count toward maxRetries.
   let lastValidation: PipelineResult | undefined;
   let lastBlockTree: BlockTree | undefined;
   let attempts = 0;
+  const MAX_API_RETRIES = 6; // Try up to 6 different keys before giving up
+  let apiRetries = 0;
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     attempts = attempt + 1;
 
     try {
-      // Call LLM
+      // Call LLM (rotates key via getNextKey on each call)
       const llmResult = await callLlm(fullConfig, systemPrompt, userPrompt);
       totalTokensUsed += llmResult.tokensUsed;
+      apiRetries = 0; // Reset on successful API call
 
       // Parse JSON
       const rawJson = extractJson(llmResult.content);
@@ -369,9 +376,7 @@ export async function generatePage(
       }
 
       // Validation passed — extract the block tree
-      const p1Result = await validateBlockTree(rawJson, { skipMobileLayout: true });
-      // Re-extract from the successful parse
-      const tree = extractJson(llmResult.content) as BlockTree;
+      const tree = rawJson as BlockTree;
       lastBlockTree = tree;
 
       // Render HTML
@@ -397,6 +402,17 @@ export async function generatePage(
 
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
+
+      // WHY: API errors (402, 429) should retry with next key WITHOUT
+      //      consuming a validation retry. Just decrement attempt counter
+      //      and try the next key in the pool.
+      const isApiError = errorMsg.includes('LLM API error 402') || errorMsg.includes('LLM API error 429');
+
+      if (isApiError && apiRetries < MAX_API_RETRIES) {
+        apiRetries++;
+        attempt--; // Don't count API errors toward validation retries
+        continue;  // getNextKey() will give us the next key
+      }
 
       if (attempt < maxRetries) {
         // JSON parse error — retry with feedback
