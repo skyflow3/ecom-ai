@@ -449,6 +449,8 @@ export function renderButton(block: Block): string {
     'cursor:pointer',
     'border:none',
     'box-sizing:border-box',
+    'max-width:100%',
+    'word-wrap:break-word',
     fullWidthStyle,
     variantStyle,
     'transition:transform 0.15s ease,box-shadow 0.15s ease,background-color 200ms ease-in-out;',
@@ -458,7 +460,7 @@ export function renderButton(block: Block): string {
     ? `<a href="${escapeHtml(props.url)}" class="ec-btn ${variantClass}" style="${baseBtnStyle}">${escapedText}</a>`
     : `<button class="ec-btn ${variantClass}" style="${baseBtnStyle}">${escapedText}</button>`;
 
-  const content = `<div style="text-align:center;">${html}</div>`;
+  const content = `<div style="text-align:center;overflow:hidden;">${html}</div>`;
   return renderBlock(block, 'ec-button-block', content);
 }
 
@@ -500,6 +502,8 @@ export function renderCta(block: Block): string {
     'cursor:pointer',
     'border:none',
     'box-sizing:border-box',
+    'max-width:100%',
+    'word-wrap:break-word',
     fullWidthStyle,
     variantStyle,
     'transition:transform 0.15s ease,box-shadow 0.15s ease,background-color 200ms ease-in-out;',
@@ -509,7 +513,7 @@ export function renderCta(block: Block): string {
     ? `<a href="${escapeHtml(props.url)}" class="ec-btn ${variantClass}" style="${baseBtnStyle}"${ariaLabel}>${escapedText}</a>`
     : `<button class="ec-btn ${variantClass}" style="${baseBtnStyle}"${ariaLabel}>${escapedText}</button>`;
 
-  const content = `<div class="ec-cta-container"${conversionAttr}>${btnHtml}</div>`;
+  const content = `<div class="ec-cta-container" style="text-align:center;overflow:hidden;">${btnHtml}</div>`;
   return renderBlock(block, 'ec-cta-block', content);
 }
 

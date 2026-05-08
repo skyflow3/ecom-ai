@@ -169,6 +169,7 @@ const PRO_CSS = `
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
+    overflow-x: hidden;
   }
   img, video { max-width: 100%; height: auto; display: block; }
   a { color: inherit; text-decoration: none; }
@@ -186,6 +187,7 @@ const PRO_CSS = `
     width: 100%;
     margin: 0;
     padding: 16px;
+    overflow-x: hidden;
   }
   .ec-container {
     max-width: 720px;
