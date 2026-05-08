@@ -188,6 +188,10 @@ function StepTimelineItem({
   const Icon = config.icon;
   const generateMutation = useGeneratePage(funnelId);
 
+  const isGenerating = generateMutation.isPending;
+  const genData = generateMutation.data;
+  const genError = generateMutation.error;
+
   return (
     <div className="flex gap-4">
       {/* Timeline line + circle */}
@@ -225,9 +229,9 @@ function StepTimelineItem({
                 onClick={() =>
                   generateMutation.mutate({ stepId: step.id })
                 }
-                disabled={generateMutation.isPending}
+                disabled={isGenerating}
               >
-                {generateMutation.isPending ? (
+                {isGenerating ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   <Sparkles className="h-4 w-4" />
@@ -239,6 +243,36 @@ function StepTimelineItem({
                 Preview
               </Button>
             </div>
+
+            {/* Progress indicator during generation */}
+            {isGenerating && (
+              <div className="mt-3 space-y-1">
+                <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                  <span>Generating page...</span>
+                </div>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
+                  <div
+                    className="h-full rounded-full bg-blue-500 transition-all duration-500"
+                    style={{ width: `${genData?.progress ?? 10}%` }}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Success message */}
+            {genData && !isGenerating && (
+              <p className="mt-2 text-xs text-green-600">
+                Generated successfully (score: {genData.result?.validation?.score ?? 'N/A'})
+              </p>
+            )}
+
+            {/* Error message */}
+            {genError && (
+              <p className="mt-2 text-xs text-red-600">
+                {genError.message}
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>

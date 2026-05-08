@@ -1,13 +1,13 @@
 /**
- * Purpose: POST /api/funnels/[id]/generate — Generate a page for a funnel step.
- *          Loads funnel + product from DB, calls the LLM page generator,
- *          saves the BlockTree JSON into the page variant, returns HTML + tree.
- * Dependencies: db, schema, page-generator, config
+ * Purpose: POST /api/funnels/[id]/generate — Async page generation.
+ *          Returns jobId immediately. Frontend polls for result.
+ *          GET  /api/funnels/[id]/generate?jobId=xxx — Poll job status.
+ * Dependencies: db, schema, page-generator, config, generate-jobs
  * Related: src/app/api/funnels/[id]/route.ts, src/services/page-generator.ts
  *
- * WHY: This is the bridge between the funnel manager and the AI page generator.
- *      It resolves the funnel's product info + marketing angle, calls generatePage(),
- *      and persists the result so it can be deployed and served later.
+ * WHY: Generation takes 90-180s (copywriter + composer LLM calls).
+ *      Cloudflare proxies timeout at 100s → error 524.
+ *      Async pattern: POST returns jobId in <1s, frontend polls GET for result.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -25,6 +25,7 @@ import { generatePage, type GeneratePageRequest } from '@/services/page-generato
 import { getLlmConfig, getCopywriterConfig, isCopywriterEnabled } from '@/lib/config';
 import type { PageType, PaletteKey } from '@/design-system/tokens';
 import { createLogger } from '@/lib/logger';
+import { createJob, getJob, updateJob, cleanupOldJobs } from '@/lib/generate-jobs';
 
 const log = createLogger('api:generate-step');
 
@@ -64,22 +65,53 @@ const generateRequestSchema = z.object({
 
 // ─── Route Segment Config ─────────────────────────────────────────────────────
 
-// WHY: Two DeepSeek calls (copywriter + composer) can take 90-180s total.
-//      Default Next.js timeout is 60s, Cloudflare proxies timeout at 100s.
-//      300s (5 min) gives enough room for long-form advertorial generation.
 export const maxDuration = 300;
 
 interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-// ─── POST /api/funnels/[id]/generate ──────────────────────────────────────────
+// ─── GET: Poll job status ────────────────────────────────────────────────────
+
+export async function GET(request: NextRequest) {
+  const jobId = request.nextUrl.searchParams.get('jobId');
+
+  if (!jobId) {
+    return NextResponse.json(
+      { success: false, error: 'Missing jobId parameter' },
+      { status: 400 },
+    );
+  }
+
+  const job = getJob(jobId);
+  if (!job) {
+    return NextResponse.json(
+      { success: false, error: 'Job not found' },
+      { status: 404 },
+    );
+  }
+
+  return NextResponse.json({
+    success: true,
+    data: {
+      jobId: job.id,
+      status: job.status,
+      progress: job.progress,
+      message: job.message,
+      result: job.result,
+      error: job.error,
+    },
+  });
+}
+
+// ─── POST: Start async generation ────────────────────────────────────────────
 
 export async function POST(
   request: NextRequest,
   context: RouteContext,
 ) {
-  const startTime = Date.now();
+  // Cleanup old jobs on each new request
+  cleanupOldJobs();
 
   try {
     const { id: funnelId } = await context.params;
@@ -112,278 +144,271 @@ export async function POST(
 
     const { stepId, pageType, palette, marketingAngleId, product: productOverride, variantName } = parsed.data;
 
-    // ── 1. Load funnel ────────────────────────────────────────────────────────
+    // ── Create job ──────────────────────────────────────────────────────────────
 
-    const [funnel] = await db
-      .select()
-      .from(funnels)
-      .where(eq(funnels.id, funnelId))
-      .limit(1);
+    const jobId = createJob();
 
-    if (!funnel) {
-      return NextResponse.json(
-        { success: false, error: 'Funnel not found' },
-        { status: 404 },
-      );
-    }
+    // ── Fire-and-forget: run generation in background ───────────────────────────
 
-    if (funnel.status === 'archived') {
-      return NextResponse.json(
-        { success: false, error: 'Cannot generate pages for an archived funnel' },
-        { status: 410 },
-      );
-    }
+    // WHY: We do NOT await this. The POST returns jobId immediately.
+    //      The background promise updates the job store as it progresses.
+    //      Frontend polls GET endpoint for status updates.
+    (async () => {
+      try {
+        updateJob(jobId, { status: 'running', progress: 10, message: 'Loading funnel data...' });
 
-    // ── 2. Verify step belongs to this funnel ─────────────────────────────────
+        // ── 1. Load funnel ────────────────────────────────────────────────────
+        const [funnel] = await db
+          .select()
+          .from(funnels)
+          .where(eq(funnels.id, funnelId))
+          .limit(1);
 
-    const [step] = await db
-      .select()
-      .from(funnelSteps)
-      .where(eq(funnelSteps.id, stepId))
-      .limit(1);
+        if (!funnel) {
+          updateJob(jobId, { status: 'failed', error: 'Funnel not found', progress: 0 });
+          return;
+        }
 
-    if (!step) {
-      return NextResponse.json(
-        { success: false, error: 'Step not found' },
-        { status: 404 },
-      );
-    }
+        if (funnel.status === 'archived') {
+          updateJob(jobId, { status: 'failed', error: 'Cannot generate pages for an archived funnel', progress: 0 });
+          return;
+        }
 
-    if (step.funnelId !== funnelId) {
-      return NextResponse.json(
-        { success: false, error: 'Step does not belong to this funnel' },
-        { status: 403 },
-      );
-    }
+        // ── 2. Verify step belongs to this funnel ──────────────────────────────
+        const [step] = await db
+          .select()
+          .from(funnelSteps)
+          .where(eq(funnelSteps.id, stepId))
+          .limit(1);
 
-    // ── 3. Load product info (from funnel's product or override) ──────────────
+        if (!step) {
+          updateJob(jobId, { status: 'failed', error: 'Step not found', progress: 0 });
+          return;
+        }
 
-    let productInfo: {
-      name: string;
-      description: string;
-      price?: string;
-      originalPrice?: string;
-      niche?: string;
-      targetAudience?: string;
-      benefits?: string[];
-      guarantee?: string;
-      imageUrl?: string;
-    };
+        if (step.funnelId !== funnelId) {
+          updateJob(jobId, { status: 'failed', error: 'Step does not belong to this funnel', progress: 0 });
+          return;
+        }
 
-    if (productOverride?.name && productOverride?.description) {
-      // Full override provided — use it directly
-      productInfo = {
-        name: productOverride.name,
-        description: productOverride.description,
-        price: productOverride.price,
-        originalPrice: productOverride.originalPrice,
-        niche: productOverride.niche,
-        targetAudience: productOverride.targetAudience,
-        benefits: productOverride.benefits,
-        guarantee: productOverride.guarantee,
-        imageUrl: productOverride.imageUrl,
-      };
-    } else {
-      // Load from DB via funnel's productId
-      if (!funnel.productId) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: 'Funnel has no product linked. Provide a product override or link a product first.',
+        updateJob(jobId, { progress: 20, message: 'Loading product data...' });
+
+        // ── 3. Load product info ──────────────────────────────────────────────
+        let productInfo: {
+          name: string;
+          description: string;
+          price?: string;
+          originalPrice?: string;
+          niche?: string;
+          targetAudience?: string;
+          benefits?: string[];
+          guarantee?: string;
+          imageUrl?: string;
+        };
+
+        if (productOverride?.name && productOverride?.description) {
+          productInfo = {
+            name: productOverride.name,
+            description: productOverride.description,
+            price: productOverride.price,
+            originalPrice: productOverride.originalPrice,
+            niche: productOverride.niche,
+            targetAudience: productOverride.targetAudience,
+            benefits: productOverride.benefits,
+            guarantee: productOverride.guarantee,
+            imageUrl: productOverride.imageUrl,
+          };
+        } else {
+          if (!funnel.productId) {
+            updateJob(jobId, {
+              status: 'failed',
+              error: 'Funnel has no product linked. Provide a product override or link a product first.',
+              progress: 0,
+            });
+            return;
+          }
+
+          const [product] = await db
+            .select()
+            .from(products)
+            .where(eq(products.id, funnel.productId))
+            .limit(1);
+
+          if (!product) {
+            updateJob(jobId, { status: 'failed', error: 'Linked product not found in database', progress: 0 });
+            return;
+          }
+
+          productInfo = {
+            name: productOverride?.name ?? product.name,
+            description: productOverride?.description ?? product.description ?? '',
+            price: productOverride?.price ?? product.price ?? undefined,
+            originalPrice: productOverride?.originalPrice ?? product.compareAtPrice ?? undefined,
+            niche: productOverride?.niche ?? undefined,
+            targetAudience: productOverride?.targetAudience ?? undefined,
+            benefits: productOverride?.benefits ?? undefined,
+            guarantee: productOverride?.guarantee ?? undefined,
+            imageUrl: productOverride?.imageUrl ?? product.images?.[0] ?? undefined,
+          };
+        }
+
+        updateJob(jobId, { progress: 30, message: 'Loading marketing angle...' });
+
+        // ── 4. Load marketing angle ────────────────────────────────────────────
+        let marketingAngle: GeneratePageRequest['marketingAngle'] | undefined;
+
+        if (marketingAngleId) {
+          const [angle] = await db
+            .select()
+            .from(marketingAngles)
+            .where(eq(marketingAngles.id, marketingAngleId))
+            .limit(1);
+
+          if (!angle) {
+            updateJob(jobId, { status: 'failed', error: 'Marketing angle not found', progress: 0 });
+            return;
+          }
+
+          if (angle.funnelId !== funnelId) {
+            updateJob(jobId, { status: 'failed', error: 'Marketing angle does not belong to this funnel', progress: 0 });
+            return;
+          }
+
+          marketingAngle = {
+            headline: angle.headline,
+            subheadline: angle.subheadline ?? undefined,
+            ctaText: angle.ctaText ?? undefined,
+            benefits: angle.benefits ?? undefined,
+            guarantee: angle.guarantee ?? undefined,
+            painPoint: angle.painPoint ?? undefined,
+          };
+        }
+
+        // ── 5. Generate page ──────────────────────────────────────────────────
+        updateJob(jobId, { progress: 40, message: 'Calling AI copywriter...' });
+
+        const genRequest: GeneratePageRequest = {
+          pageType: pageType as PageType,
+          palette: palette as PaletteKey,
+          product: productInfo,
+          marketingAngle,
+        };
+
+        const llmConfig = getLlmConfig();
+        const copywriterConfig = isCopywriterEnabled() ? getCopywriterConfig() : undefined;
+
+        const result = await generatePage(genRequest, llmConfig, copywriterConfig);
+
+        if (!result.success || !result.blockTree) {
+          updateJob(jobId, {
+            status: 'failed',
+            error: result.error ?? 'Page generation failed',
+            progress: 90,
+          });
+          return;
+        }
+
+        updateJob(jobId, { progress: 80, message: 'Saving to database...' });
+
+        // ── 6. Save BlockTree ──────────────────────────────────────────────────
+        const blockTree = result.blockTree;
+
+        if (variantName) {
+          const [newVariant] = await db
+            .insert(pageVariants)
+            .values({
+              stepId,
+              name: variantName,
+              status: 'draft',
+              trafficWeight: 50,
+              isControl: false,
+              page: blockTree as unknown as Record<string, unknown>,
+            })
+            .returning();
+
+          await db
+            .update(funnelSteps)
+            .set({ activeVariantId: newVariant.id })
+            .where(eq(funnelSteps.id, stepId));
+        } else {
+          const [controlVariant] = await db
+            .select()
+            .from(pageVariants)
+            .where(eq(pageVariants.stepId, stepId))
+            .limit(1);
+
+          if (controlVariant) {
+            await db
+              .update(pageVariants)
+              .set({
+                page: blockTree as unknown as Record<string, unknown>,
+                updatedAt: new Date(),
+              })
+              .where(eq(pageVariants.id, controlVariant.id));
+          } else {
+            const [newVariant] = await db
+              .insert(pageVariants)
+              .values({
+                stepId,
+                name: 'Default',
+                status: 'draft',
+                trafficWeight: 100,
+                isControl: true,
+                page: blockTree as unknown as Record<string, unknown>,
+              })
+              .returning();
+
+            await db
+              .update(funnelSteps)
+              .set({ activeVariantId: newVariant.id })
+              .where(eq(funnelSteps.id, stepId));
+          }
+        }
+
+        // ── 7. Done ──────────────────────────────────────────────────────────
+        updateJob(jobId, {
+          status: 'completed',
+          progress: 100,
+          message: 'Page generated successfully',
+          result: {
+            html: result.html ?? '',
+            blockTree: result.blockTree,
+            validation: result.validation ? {
+              score: result.validation.score,
+              valid: result.validation.valid,
+              errors: result.validation.errors.slice(0, 10),
+            } : { score: 0, valid: false, errors: [] },
+            attempts: result.attempts,
+            meta: result.meta as Record<string, unknown>,
           },
-          { status: 422 },
-        );
+        });
+
+        log.info('Generation completed', { jobId, attempts: result.attempts, score: result.validation?.score });
+
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Internal server error';
+        log.error('Background generation failed', { jobId, error: message });
+        updateJob(jobId, {
+          status: 'failed',
+          error: message,
+          progress: 0,
+        });
       }
+    })();
 
-      const [product] = await db
-        .select()
-        .from(products)
-        .where(eq(products.id, funnel.productId))
-        .limit(1);
-
-      if (!product) {
-        return NextResponse.json(
-          { success: false, error: 'Linked product not found in database' },
-          { status: 404 },
-        );
-      }
-
-      // Merge DB product with partial override
-      productInfo = {
-        name: productOverride?.name ?? product.name,
-        description: productOverride?.description ?? product.description ?? '',
-        price: productOverride?.price ?? product.price ?? undefined,
-        originalPrice: productOverride?.originalPrice ?? product.compareAtPrice ?? undefined,
-        niche: productOverride?.niche ?? undefined,
-        targetAudience: productOverride?.targetAudience ?? undefined,
-        benefits: productOverride?.benefits ?? undefined,
-        guarantee: productOverride?.guarantee ?? undefined,
-        imageUrl: productOverride?.imageUrl ?? product.images?.[0] ?? undefined,
-      };
-    }
-
-    // ── 4. Load marketing angle (if specified) ───────────────────────────────
-
-    let marketingAngle: GeneratePageRequest['marketingAngle'] | undefined;
-
-    if (marketingAngleId) {
-      const [angle] = await db
-        .select()
-        .from(marketingAngles)
-        .where(eq(marketingAngles.id, marketingAngleId))
-        .limit(1);
-
-      if (!angle) {
-        return NextResponse.json(
-          { success: false, error: 'Marketing angle not found' },
-          { status: 404 },
-        );
-      }
-
-      if (angle.funnelId !== funnelId) {
-        return NextResponse.json(
-          { success: false, error: 'Marketing angle does not belong to this funnel' },
-          { status: 403 },
-        );
-      }
-
-      marketingAngle = {
-        headline: angle.headline,
-        subheadline: angle.subheadline ?? undefined,
-        ctaText: angle.ctaText ?? undefined,
-        benefits: angle.benefits ?? undefined,
-        guarantee: angle.guarantee ?? undefined,
-        painPoint: angle.painPoint ?? undefined,
-      };
-    }
-
-    // ── 5. Call page generator ────────────────────────────────────────────────
-
-    const genRequest: GeneratePageRequest = {
-      pageType: pageType as PageType,
-      palette: palette as PaletteKey,
-      product: productInfo,
-      marketingAngle,
-    };
-
-    const llmConfig = getLlmConfig();
-
-    // WHY: Two-call pipeline — copywriter (DeepSeek) generates champion text,
-    //      then composer (MiMo) places it into BlockTree structure.
-    //      Feature-flagged so existing behavior is unchanged until enabled.
-    const copywriterConfig = isCopywriterEnabled() ? getCopywriterConfig() : undefined;
-
-    const result = await generatePage(genRequest, llmConfig, copywriterConfig);
-
-    if (!result.success) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: result.error ?? 'Page generation failed',
-          attempts: result.attempts,
-          meta: result.meta,
-          validation: result.validation ? {
-            score: result.validation.score,
-            valid: result.validation.valid,
-            errors: result.validation.errors.slice(0, 10),
-          } : undefined,
-        },
-        { status: 422 },
-      );
-    }
-
-    // ── 6. Save BlockTree into page variant ───────────────────────────────────
-
-    const blockTree = result.blockTree;
-    if (!blockTree) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'Page generator returned success but no block tree',
-          attempts: result.attempts,
-          meta: result.meta,
-        },
-        { status: 500 },
-      );
-    }
-
-    if (variantName) {
-      // Create a new variant
-      const [newVariant] = await db
-        .insert(pageVariants)
-        .values({
-          stepId,
-          name: variantName,
-          status: 'draft',
-          trafficWeight: 50,
-          isControl: false,
-          page: blockTree as unknown as Record<string, unknown>,
-        })
-        .returning();
-
-      // Update step's active variant to the new one
-      await db
-        .update(funnelSteps)
-        .set({ activeVariantId: newVariant.id })
-        .where(eq(funnelSteps.id, stepId));
-    } else {
-      // Upsert into the default (control) variant for this step
-      const [controlVariant] = await db
-        .select()
-        .from(pageVariants)
-        .where(eq(pageVariants.stepId, stepId))
-        .limit(1);
-
-      if (controlVariant) {
-        // Update existing variant
-        await db
-          .update(pageVariants)
-          .set({
-            page: blockTree as unknown as Record<string, unknown>,
-            updatedAt: new Date(),
-          })
-          .where(eq(pageVariants.id, controlVariant.id));
-      } else {
-        // Create a default variant (shouldn't normally happen — create does this)
-        const [newVariant] = await db
-          .insert(pageVariants)
-          .values({
-            stepId,
-            name: 'Default',
-            status: 'draft',
-            trafficWeight: 100,
-            isControl: true,
-            page: blockTree as unknown as Record<string, unknown>,
-          })
-          .returning();
-
-        await db
-          .update(funnelSteps)
-          .set({ activeVariantId: newVariant.id })
-          .where(eq(funnelSteps.id, stepId));
-      }
-    }
-
-    // ── 7. Return result ──────────────────────────────────────────────────────
-
-    const durationMs = Date.now() - startTime;
-
+    // ── Return jobId immediately ──────────────────────────────────────────────
     return NextResponse.json({
       success: true,
       data: {
-        html: result.html,
-        blockTree: result.blockTree,
-        validation: result.validation,
-        attempts: result.attempts,
-        meta: {
-          ...result.meta,
-          totalDurationMs: durationMs,
-        },
+        jobId,
+        status: 'pending',
+        message: 'Generation started. Poll GET ?jobId= for status.',
       },
     });
+
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Internal server error';
-    log.error('Generation failed', { error: message });
+    log.error('Generation request failed', { error: message });
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 },
