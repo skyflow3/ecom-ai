@@ -94,6 +94,49 @@ export function pass2_composition(tree: BlockTree): ValidationResult {
       }
     });
 
+  // WHY: Advertorials MUST have 5+ image blocks and 1500+ words to match winners.
+  //      The AI consistently under-generates — this validation forces retry.
+  if (pageType === 'advertorial') {
+    const imageBlocks = tree.blocks.filter(b => b.type === 'image');
+    if (imageBlocks.length < 5) {
+      errors.push({
+        code: 'TOO_FEW_IMAGES',
+        message: `Advertorial has only ${imageBlocks.length} image blocks. Winners have 8-12. Add more image blocks throughout the article with realistic imageUrl values using placehold.co URLs.`,
+        severity: 'error',
+      });
+    }
+
+    // Check images have src
+    const emptyImages = imageBlocks.filter(b => {
+      const src = (b.props as Record<string, unknown>).src;
+      return !src || (typeof src === 'string' && src.trim().length === 0);
+    });
+    if (emptyImages.length > 0) {
+      errors.push({
+        code: 'IMAGE_MISSING_SRC',
+        message: `${emptyImages.length} image block(s) have empty src. Every image MUST have a URL. Use https://placehold.co/800x600/COLOR/FFFFFF?text=Label format.`,
+        severity: 'error',
+      });
+    }
+
+    // Count words across all body-text blocks
+    const bodyTexts = tree.blocks.filter(b => b.type === 'body-text');
+    let totalWords = 0;
+    for (const b of bodyTexts) {
+      const content = (b.props as Record<string, unknown>).content;
+      if (typeof content === 'string') {
+        totalWords += content.split(/\s+/).filter(Boolean).length;
+      }
+    }
+    if (totalWords < 1200) {
+      errors.push({
+        code: 'TEXT_TOO_SHORT',
+        message: `Advertorial has only ${totalWords} words across ${bodyTexts.length} body-text blocks. Winners have 2000-3000 words. Write MORE paragraphs per body-text block (4-6 paragraphs each, separated by \\n\\n). Add more body-text blocks between images.`,
+        severity: 'error',
+      });
+    }
+  }
+
   return {
     valid: errors.filter(e => e.severity === 'error').length === 0,
     errors,

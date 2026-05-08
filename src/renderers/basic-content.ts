@@ -350,6 +350,11 @@ export function renderBodyText(block: Block): string {
 export function renderImage(block: Block): string {
   const props = getProps<ImageProps>(block);
 
+  // WHY: AI often generates image blocks with empty src. Show a professional
+  //      placeholder instead of a broken image icon.
+  const hasSrc = props.src && props.src.trim().length > 0;
+  const altText = props.alt || 'Article image';
+
   const useRatio = props.aspectRatio && ASPECT_RATIO_PADDING[props.aspectRatio];
   const paddingTop = useRatio ? ASPECT_RATIO_PADDING[props.aspectRatio!] : undefined;
 
@@ -362,7 +367,12 @@ export function renderImage(block: Block): string {
     ? 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;'
     : 'display:block;width:100%;height:auto;';
 
-  const imgTag = `<img src="${escapeHtml(props.src)}" alt="${escapeHtml(props.alt)}" loading="lazy" decoding="async" style="${imgStyle}">`;
+  // WHY: When src is empty, use placehold.co with the alt text as label
+  const imgSrc = hasSrc
+    ? escapeHtml(props.src)
+    : `https://placehold.co/800x600/E8F5E9/333333?text=${encodeURIComponent(altText.substring(0, 30))}`;
+
+  const imgTag = `<img src="${imgSrc}" alt="${escapeHtml(altText)}" loading="lazy" decoding="async" style="${imgStyle}">`;
 
   const innerContent = paddingTop
     ? `<div style="${wrapperStyle}">${imgTag}</div>`

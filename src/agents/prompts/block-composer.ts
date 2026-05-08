@@ -322,7 +322,20 @@ PHASE 5 — CONVERSION (Blocks 28-40+):
 ════════════════════════════════════════════════════════════════
 IMAGE REQUIREMENTS (CRITICAL — 8-12 images minimum):
 ════════════════════════════════════════════════════════════════
-Every image block MUST have imageUrl. Use these placeholder patterns:
+Every image block MUST have a "src" field with a URL. WITHOUT src THE IMAGE WILL NOT DISPLAY.
+NEVER leave src empty. NEVER omit src. EVERY image block must have src set to a URL.
+
+Image block format:
+{
+  "type": "image",
+  "props": {
+    "src": "https://placehold.co/800x600/COLOR/FFFFFF?text=Label",
+    "alt": "Description of what the image shows",
+    "aspectRatio": "4:5"
+  }
+}
+
+Use these URLs for the src field:
 - Product hero: "https://placehold.co/800x600/2D6A4F/FFFFFF?text=Product+Hero"
 - Lifestyle: "https://placehold.co/800x600/F5F5DC/333333?text=Lifestyle+Image"
 - Before/After: "https://placehold.co/800x400/FF6B6B/FFFFFF?text=Before+%2F+After"
@@ -331,8 +344,6 @@ Every image block MUST have imageUrl. Use these placeholder patterns:
 - Customer: "https://placehold.co/600x600/F0F0F0/333333?text=Customer+Photo"
 - Packaging: "https://placehold.co/800x800/2D6A4F/FFFFFF?text=Product+Bundle"
 - Chart: "https://placehold.co/800x400/E8F5E9/333333?text=Clinical+Study"
-
-Each image should have alt text describing what it shows.
 
 ════════════════════════════════════════════════════════════════
 BODY-TEXT DEPTH REQUIREMENTS:
