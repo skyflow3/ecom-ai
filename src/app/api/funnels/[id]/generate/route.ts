@@ -277,6 +277,11 @@ export async function POST(
           error: result.error ?? 'Page generation failed',
           attempts: result.attempts,
           meta: result.meta,
+          validation: result.validation ? {
+            score: result.validation.score,
+            valid: result.validation.valid,
+            errors: result.validation.errors.slice(0, 10),
+          } : undefined,
         },
         { status: 422 },
       );
