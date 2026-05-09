@@ -238,3 +238,78 @@
 - **Tests**: 214/215 pass (1 pre-existing test design limitation)
 - **Total frontend files**: ~30 React components + pages
 - **Route groups**: (auth), (dashboard), (marketing)
+
+---
+
+## 2026-05-09 — Pipeline Fixes: Limits Removed + Champion Prompts Aligned
+
+- **What**: Fixed short advertorial output + aligned all prompts with lab champions
+- **Root cause**: maxTokens=8000, maxBlocks=25, body "2-5 paragraphs", prompts simplified vs champions
+- **Changes applied**:
+  - `composition-rules.ts`: Removed maxBlocks + headlineMaxChars from interface and all 10 page types. No artificial limits.
+  - `composition-rules.ts`: Removed exceedsMax validation check. Blocks never rejected for count.
+  - `validation/pipeline.ts`: Removed MAX_BLOCKS_EXCEEDED error generation.
+  - `config.ts`: maxTokens 8000→16384 for DeepSeek composer, MiMo fallback, and copywriter.
+  - `page-generator.ts`: Default maxTokens 8000→16384, fallback 8000→16384.
+  - `block-composer.ts`: Advertorial content guide rewritten: 30+ blocks, 8-12 images, 2000-3000 words, 5-phase structure with word count checklist. System prompt: "NO LIMIT on blocks/headline" instead of max values.
+  - `copywriter.ts`: TYPE_SYSTEM_PROMPTS aligned with lab champions:
+    - Advertorial: Added 2000-3000 word requirement + 8-step structure
+    - Product Page: Champion #3 scoring focus (pricing architecture, comparison, CTA frequency)
+    - VSL: Champion #9 scoring focus (hook, mechanism, price anchoring)
+    - Upsell: Champion #21 with 7-criteria scoring (was rules_only, now D5_Lite)
+  - `copywriter.ts`: Advertorial output format changed from "2-5 paragraphs" to "2000-3000 words, 15-25 paragraphs"
+  - `copywriter.ts`: Upsell moved from RULES_ONLY_TYPES to JUDGE_FILE_MAP (uses upsell_judge.json)
+  - `judges/upsell_judge.json`: Copied from testing-ai-prompt lab
+  - `generate/route.ts`: Added maxDuration=300 (5 min timeout for dual DeepSeek calls)
+  - `pipeline.test.ts`: Updated tests for removed limits
+- **Previous session also done**:
+  - `renderers/index.ts`: 2-column advertorial layout (CSS Grid 1fr 300px + sticky sidebar)
+  - `renderers/index.ts`: Auto-generated sidebar with product image (SVG placeholder), pricing, CTA, reviews, guarantee
+  - `renderers/editorial-blocks.ts`: Real avatars via i.pravatar.cc, SVG stars, product image fallback
+  - `preview/page.tsx`: Working mobile iframe preview (375x812 iPhone)
+  - `api/pages/[variantId]/route.ts`: Public HTML endpoint (no auth, 60s cache)
+- **TypeScript**: 0 errors
+- **Commits**: fd5a347 (this session), 5dc1800+1aab87a+e172d1a+bddf968+f66c32c (previous session)
+
+---
+
+## NEXT STEPS
+
+1. **Test full advertorial generation** with updated pipeline (awaiting Coolify deploy)
+2. **Verify output quality** matches winner standards (2000+ words, 8+ images, proper layout)
+3. **Fix any remaining issues** based on test results
+
+---
+
+## Session 2026-05-10 — Hike Reasons Why Listicle Template
+
+### Done
+- Integrated `hike-10-reasons-why-2.html` as second template in ECOM-AI pipeline
+- Created `templates/hike-reasons-why.marked.html` with 72 `{{SLOT}}` markers
+- Created `templates/hike-reasons-why.html.json` slot config (72 slots)
+- Created `src/agents/prompts/reasons-why-filler.ts` — Champion #4 D5_Lite listicle prompt
+- Created `scripts/test-reasons-why-template.ts` — test script (Nutrovia + HF Stride briefs)
+- Modified `src/services/template-engine.ts`:
+  - Added `sanitizeHtmlContent()` — balances unclosed `<strong>/<em>`, removes stray `</div>`
+  - Added per-template image replacement (`TEMPLATE_IMAGE_MAP` for Webflow CDN)
+  - Added `replaceImages` call in `fillSimpleMarkers()` (was missing)
+- Modified `src/services/template-generator.ts`:
+  - Added `buildPromptForTemplate()` router (hike-reasons-why → listicle prompt)
+- Modified `src/design-system/tokens.ts`:
+  - Added `'listicle'` page type + 720px max width
+- Added 4 hardcoded text slots: `page_title`, `cta_button_text`, `order_message_text`, `bundle_heading`
+- All 10 reason images converted to portrait format (766x883)
+
+### Test Results
+- **Nutrovia (Gut Health)**: 9.23/10 (elite), 72/72 slots filled, 0 leftover shoe text
+- **HF Stride (Barefoot Shoes)**: 10.41/10 (elite), 72/72 slots filled
+- All HTML tags perfectly balanced (DOM intact → sticky bar + progress bar work)
+
+### Key Architecture
+- `generateFromTemplate()` → `buildPromptForTemplate()` routes by template ID prefix
+- hike-reasons-why uses `fillSimpleMarkers()` (marker mode, no zone replacement)
+- HTML sanitization runs on all `ai_generated` slots before injection
+- Image replacement per-template: different CDN needles (Shopify vs Webflow)
+
+### Commit
+- `749d093` feat: hike-reasons-why listicle template with HTML sanitization

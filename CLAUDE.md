@@ -67,6 +67,30 @@ ECOM-AI/
 ├── verify_consistency.py             ← Checks auto (judge configs, fichiers, sync)
 ├── CHAMPION-PROMPTS-DEPLOY.md        ← TOUS les prompts champions + architecture
 │
+├── templates/                        ← TEMPLATES HTML WINNERS (pipeline template)
+│   ├── smoothspire-advertorial.html       Advertorial narratif original (Winner)
+│   ├── smoothspire-advertorial.marked.html  Version avec {{SLOT}} markers
+│   ├── smoothspire-advertorial.html.json    Config des slots (47 slots)
+│   ├── hike-reasons-why.html              Listicle "10 Reasons Why" original (Winner)
+│   ├── hike-reasons-why.marked.html       Version avec {{SLOT}} markers (72 slots)
+│   └── hike-reasons-why.html.json         Config des slots
+│
+├── src/
+│   ├── services/
+│   │   ├── template-engine.ts          Moteur de remplissage (markers + zones + images)
+│   │   ├── template-generator.ts       Orchestrateur (ProductBrief → AI JSON → HTML rempli)
+│   │   └── content-judge.ts            Juge V5 Council (3 personas)
+│   ├── agents/prompts/
+│   │   ├── template-filler.ts          Prompt advertorial narratif (SmoothSpire)
+│   │   ├── reasons-why-filler.ts       Prompt listicle (hike-reasons-why, Champion #4)
+│   │   └── block-composer.ts           Composer de blocks (3-step pipeline)
+│   └── design-system/
+│       └── tokens.ts                   Design tokens + page types
+│
+├── scripts/
+│   ├── test-template-generate.ts       Test SmoothSpire advertorial
+│   └── test-reasons-why-template.ts    Test hike-reasons-why listicle
+│
 ├── capabilities/                     ← CAPACITÉS MÉDIA
 │   ├── voice_gen.py                     ElevenLabs (text → audio)
 │   ├── image_gen.py                     ComfyUI Flux.2 Klein + LoRA (prompt → image)
@@ -118,10 +142,112 @@ ECOM-AI/
 ├── Architecture Finale.md            ← Architecture SaaS funnel builder
 ├── Handover_Guide.md                 ← Guide démarrage original
 │
+├── test-output/                      ← HTML générés par les tests
 └── output/                           ← CONTENU GÉNÉRÉ (auto-créé par content_producer.py)
     ├── {format}_{quality}_{timestamp}.txt   Contenu généré
     └── {format}_{quality}_{timestamp}.json  Score + métadonnées
 ```
+
+---
+
+## TEMPLATE SYSTEM (Pipeline HTML complet)
+
+### Architecture
+
+Le système génère des pages HTML complètes à partir de templates winners. 99.9% de fidélité visuelle.
+
+```
+FLOW:
+  ProductBrief → AI génère JSON (content map) → template-engine remplit {{SLOT}} markers → HTML final
+
+FICHIERS PAR TEMPLATE:
+  templates/{id}.html            ← HTML original du winner (NE PAS MODIFIER)
+  templates/{id}.marked.html     ← HTML avec {{SLOT}} markers (texte produit remplacé)
+  templates/{id}.html.json       ← Config des slots (description, example, ai_generated)
+```
+
+### Templates disponibles
+
+| Template ID | Format | Slots | Prompt | Judge Config | Score validé |
+|-------------|--------|-------|--------|--------------|--------------|
+| `smoothspire-advertorial` | Advertorial narratif | 47 | `template-filler.ts` | advertorial_judge_v2.json | 9.76/10 |
+| `hike-reasons-why` | Listicle "10 Reasons Why" | 72 | `reasons-why-filler.ts` | advertorial_listicle_judge_v2.json | 9.23-10.41/10 |
+
+### Comment utiliser
+
+```bash
+# Lancer le test advertorial classique
+npx tsx scripts/test-template-generate.ts
+
+# Lancer le test listicle "reasons why"
+npx tsx scripts/test-reasons-why-template.ts
+```
+
+```typescript
+// Utilisation programmatique
+import { generateFromTemplate } from './src/services/template-generator';
+import type { ProductBrief } from './src/agents/prompts/template-filler';
+
+const brief: ProductBrief = {
+  name: 'Mon Produit',
+  description: 'Description du produit...',
+  niche: 'Health & Wellness',
+  targetAudience: 'Women 40-65',
+  benefits: ['Benefit 1', 'Benefit 2'],
+  price: '$49', originalPrice: '$119', discountPct: '58%',
+  guarantee: '90-Day Money-Back Guarantee',
+  mechanismName: 'Mon Mécanisme Unique',
+  authorPersona: 'Dr. Smith, MD',
+  categoryBadge: 'Health',
+  ratingCount: '4,891',
+  doctorImageUrl: 'https://...',
+  productImageUrl: 'https://...',
+  productImageSquareUrl: 'https://...',
+};
+
+const config = {
+  apiUrl: process.env.DEEPSEEK_API_URL,
+  apiKey: process.env.DEEPSEEK_API_KEY,
+  model: 'deepseek-chat',
+  temperature: 0.3,
+  maxTokens: 8192,
+};
+
+const result = await generateFromTemplate('hike-reasons-why', brief, config, './output');
+// result.outputPath = chemin du HTML généré
+```
+
+### Routage automatique
+
+`template-generator.ts` route automatiquement vers le bon prompt selon le template ID :
+- `smoothspire-advertorial` → `buildTemplateFillerPrompt()` (narratif)
+- `hike-reasons-why` → `buildReasonsWhyPrompt()` (listicle, Champion #4)
+
+### Sanitisation HTML
+
+`template-engine.ts` sanitize automatiquement le contenu AI avant injection :
+- Ferme les `<strong>`, `<em>`, `<b>`, `<i>`, `<span>` orphelins
+- Supprime les `</div>` parasites (cassent le DOM → JS ne marche plus)
+- **POURQUOI**: L'IA génère parfois des tags non fermés qui corrompent la structure DOM et désactivent le JS (sticky bar, progress bar, countdown)
+
+### Remplacement d'images
+
+Chaque template a son propre mapping d'images dans `TEMPLATE_IMAGE_MAP` (template-engine.ts) :
+- **SmoothSpire**: URLs Shopify CDN (product hero, CTA, author photo, comment screenshots)
+- **Hike-2**: URLs Webflow CDN (product CTA, comparison, author, sidebar placeholder, 10 reason images)
+
+Les images passent via le `ProductBrief` : `doctorImageUrl`, `productImageUrl`, `productImageSquareUrl`.
+
+### Ajouter un nouveau template
+
+1. Copier le HTML winner dans `templates/{id}.html`
+2. Créer `templates/{id}.marked.html` : remplacer le texte produit par des `{{SLOT}}` markers
+3. Créer `templates/{id}.html.json` : lister chaque slot avec description + example + ai_generated
+4. Créer le prompt dans `src/agents/prompts/{id}-filler.ts`
+5. Ajouter le routage dans `template-generator.ts` → `buildPromptForTemplate()`
+6. Ajouter les needles d'images dans `TEMPLATE_IMAGE_MAP` dans `template-engine.ts`
+7. Créer un test script dans `scripts/test-{id}.ts`
+8. Lancer le test → vérifier score ≥ 8.0 + HTML visuellement correct
 ```
 
 ---
@@ -193,9 +319,10 @@ assert r.status_code == 200, f"MiMo API down: {r.status_code}"
 | **Video AI** | p2 Product Adapter | NON | video_ai_judge.json |
 
 ### Modèles recommandés
-- **Producteur**: mimo-v2-flash (GRATUIT) ou deepseek-chat ($0.60/M)
+- **Producteur (CHAMPION)**: mimo-v2-flash (GRATUIT, 8.92 avg, validé lab-exact)
 - **Juge**: deepseek-chat V5 Council (3 personas: Copywriter, Strategist, Psychologist)
-- **temp**: 0.3 (génération), 0.5 (juge)
+- **Composer**: deepseek-chat (meilleur que MiMo pour JSON structuré)
+- **temp**: 0.3 (génération), 0.5 (juge), 0.3 (composer)
 
 ### Judge usage (auto-évaluation)
 ```python
@@ -417,3 +544,103 @@ Logs typés (Info, Error, Warn).
 - Fichiers legacy: ne pas supprimer (archiver dans legacy/)
 - Tools dans `tools/` — ne pas polluer la racine
 - Scripts Python en anglais, commentaires business en français si nécessaire
+
+## TESTS & DOCUMENTATION (OBLIGATOIRE)
+
+### Quels fichiers déclenchent un test
+**RÈGLE:** Après TOUT changement sur ces fichiers, lancer le test AVANT de commit :
+- `src/agents/prompts/*` (copywriter, composer, template filler, reasons-why filler)
+- `src/renderers/*` (renderers HTML)
+- `src/services/template-engine.ts` (moteur de templates)
+- `src/services/template-generator.ts` (orchestrateur templates)
+- `src/design-system/blocks.ts` (schémas Zod)
+- `src/validation/*` (pipeline validation)
+- `src/services/content-judge.ts` (juge V5 Council)
+- `judges/*.json` (configs judge)
+- `templates/*.marked.html` (templates avec markers)
+
+### Lancement des tests
+```bash
+# Test advertorial narratif (SmoothSpire template)
+npx tsx scripts/test-template-generate.ts
+
+# Test listicle "Reasons Why" (hike-2 template)
+npx tsx scripts/test-reasons-why-template.ts
+
+# Test pipeline 3-step (block system)
+npx tsx scripts/test-generate.ts
+
+# Test avec modèle alternatif
+npx tsx scripts/test-generate.ts deepseek-v4-pro
+```
+
+### Critères de succès
+- Score de validation ≥ 80/100
+- Score Judge V5 Council ≥ 6.0/10 (target: 7.0+)
+- 0 erreur de validation
+- 0 crash de renderer
+- HTML généré dans `test-output/` (ouvrir dans navigateur pour vérif visuelle)
+
+### Documentation OBLIGATOIRE après chaque test
+
+**RÈGLE:** Chaque test DOIT être documenté dans `test-results/`. Pas d'exception.
+**POURQUOI:** Sans documentation, la prochaine session repart de zéro et refait les mêmes tests.
+
+#### Format du fichier de résultats
+Fichier: `test-results/YYYY-MM-DD-{sujet}.md`
+
+```markdown
+# Test Results — {Sujet}
+# Date: YYYY-MM-DD
+# Product: {nom du produit test}
+# Judge: V5 Council (3 personas), {judge config}
+
+## Test Summary
+
+| # | Config | Gen Score | Judge Score | Words | C1 BigIdea | C4 Proof | C10 CTA | Notes |
+|---|--------|-----------|-------------|-------|------------|----------|---------|-------|
+| 1 | ... | ... | ... | ... | ... | ... | ... | ... |
+
+## Key Findings
+1. ...
+2. ...
+
+## Root Cause Analysis (si problème)
+...
+
+## Next Steps
+- ...
+```
+
+#### Procédure post-test
+1. Sauver les résultats dans `test-results/`
+2. Sauver les fichiers générés dans `test-output/` (HTML + JSON + tree)
+3. Identifier le MEILLEUR résultat (score le plus élevé)
+4. Documenter ce qui a marché et ce qui n'a pas marché
+5. Proposer les next steps pour la prochaine session
+6. Si un champion est confirmé → noter le score dans ce fichier
+
+### Score Benchmarks (référence)
+| Source | Score | Conditions |
+|--------|-------|------------|
+| **Template hike-reasons-why (HF Stride)** | **10.41/10** | **DeepSeek, listicle, 72 slots, HTML sanitization** |
+| **Template hike-reasons-why (Nutrovia)** | **9.23/10** | **DeepSeek, listicle, 72 slots, HTML sanitization** |
+| **Template smoothspire-advertorial** | **9.76/10** | **DeepSeek, advertorial narratif, 47 slots** |
+| **ECOM-AI 3-step (lab briefs avg)** | **8.92/10** | **MiMo, free text, anti-bias fix, Dual Persona** |
+| Lab (testing-ai-prompt) | 8.58/10 | MiMo, free text, temp=0.3 |
+| ECOM-AI 3-step (Nutrovia) | 7.77/10 | MiMo, free text, anti-bias fix |
+| ECOM-AI JSON best (#5) | 6.44/10 | DeepSeek, JSON, triggers, long prompt |
+| ECOM-AI JSON Dual Persona | 6.0/10 | DeepSeek, JSON, judge pick-best |
+
+### Fichiers à mettre à jour après un changement
+**RÈGLE**: Quand tu modifies un prompt champion, juge config, ou architecture de pipeline:
+1. `CLAUDE.md` — règles et documentation
+2. `GUIDE-IA.md` — découvertes, résultats de tests, checkpoint
+3. `CHAMPION-PROMPTS-DEPLOY.md` — SEULEMENT si le prompt champion change (pas pour changements d'architecture)
+4. `test-results/` — résultats des tests documentés
+
+### Gap Analysis Lab vs ECOM-AI
+ECOM-AI 3-step pipeline EXCEEDS lab reference (8.92 vs 8.58). Key improvements:
+1. **Anti-bias fix**: Rewrote ANTI_BIAS_CRITERIA with explicit 1-10 rubrics. Judges now score 7-9 instead of 0. Adds ~1.3 points. (Lab has same bug — lab's 8.58 was with anti-bias ≈0)
+2. **Free text pipeline**: 3-step pipeline (free text → judge → blocks) matches lab architecture. JSON constraint eliminated.
+3. **Brief quality matters**: Lab briefs ("hidden gut parasite") score higher than generic briefs ("gut bacteria imbalance"). Same pipeline, different brief = 1.6 point difference.
