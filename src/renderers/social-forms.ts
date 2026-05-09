@@ -53,10 +53,12 @@ const SOCIAL_FORM_CSS = `
 .ec-social-proof-source{font-size:12px;color:#6B7280;margin-left:6px}
 
 /* ── Trust Badges ── */
-.ec-trust-badges{display:flex;justify-content:center;flex-wrap:wrap;gap:24px;padding:12px 0}
-.ec-trust-badge{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
-.ec-trust-badge-icon{font-size:24px;line-height:1}
-.ec-trust-badge-text{font-family:"Inter",sans-serif;font-size:12px;color:#6B7280;max-width:80px}
+/* WHY: Winners (SmoothSpire) use yellow bg (#FEF8B7), badge images (100px wide) + label below.
+       Not inline SVG icons — real PNG badge images. */
+.ec-trust-badges{display:flex;justify-content:center;flex-wrap:wrap;gap:24px;padding:25px 20px;background:#FEF8B7;border-radius:8px}
+.ec-trust-badge{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;max-width:120px}
+.ec-trust-badge-icon img{width:80px;height:auto}
+.ec-trust-badge-text{font-family:"Inter","Open Sans",sans-serif;font-size:14px;color:#1B1B1B;line-height:1.3;max-width:100px;font-weight:500}
 
 /* ── Product Carousel ── */
 .ec-product-carousel{position:relative;width:100%}
@@ -317,18 +319,30 @@ export function renderTrustBadges(block: Block): string {
   const responsiveStyles = buildResponsiveStyles(block.id, block.styles);
   const cssPrefix = getSocialFormCss();
 
-  // WHY: AI can generate badges as undefined or with missing fields — defensive
+  // WHY: Map icon names to real winner badge images from /assets/images/winners/badges/
+  //      Winners use PNG images (shield, lock, truck, etc.), not SVG icons
+  const BADGE_IMAGE_MAP: Record<string, string> = {
+    'shield': '/assets/images/winners/badges/guarantee-badge.svg',
+    'lock': '/assets/images/winners/badges/secure-checkout.png',
+    'truck': '/assets/images/winners/badges/shipping-fast.png',
+    'credit-card': '/assets/images/winners/badges/payment-credit-cards.png',
+    'refresh': '/assets/images/winners/badges/easy-returns.png',
+    'rotate-ccw': '/assets/images/winners/badges/easy-returns.png',
+    'check-circle': '/assets/images/winners/badges/verified-purchaser.svg',
+  };
+
   const safeBadges = Array.isArray(badges) ? badges : [];
   const badgeItems = safeBadges.map(badge => {
-    // Handle string items (AI sometimes sends plain strings)
-    // WHY: AI generates "name" OR "text" field — handle both gracefully
     const b = typeof badge === 'string'
       ? { text: badge, icon: '' }
       : badge;
     const badgeText = b.text || b.name || '';
-    const iconHtml = b.icon
-      ? `<span class="ec-trust-badge-icon">${renderIcon(b.icon, 24, '#6B7280')}</span>`
-      : '';
+    const badgeImage = b.icon ? (BADGE_IMAGE_MAP[b.icon] || null) : null;
+    const iconHtml = badgeImage
+      ? `<span class="ec-trust-badge-icon"><img src="${badgeImage}" alt="${escapeHtml(badgeText)}" loading="lazy"></span>`
+      : b.icon
+        ? `<span class="ec-trust-badge-icon"><img src="/assets/images/winners/badges/secure-checkout.png" alt="${escapeHtml(badgeText)}" loading="lazy"></span>`
+        : '';
     return `<div class="ec-trust-badge">
   ${iconHtml}
   <span class="ec-trust-badge-text">${escapeHtml(badgeText)}</span>

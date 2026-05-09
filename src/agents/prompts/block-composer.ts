@@ -258,9 +258,7 @@ MANDATORY CONTENT REQUIREMENTS (NON-NEGOTIABLE):
 - MINIMUM 6 body-text blocks with 3-6 paragraphs EACH
 - MINIMUM 3 testimonial blocks with different people
 - MINIMUM 2 facebook-post blocks (organic social proof)
-- MINIMUM 1 doctor-endorsement block (expert credibility)
 - MINIMUM 1 media-badges block ("As Seen On" after header)
-- MINIMUM 1 numbered-benefits block (7-10 reasons, key conversion block)
 - MINIMUM 3 editorial-heading blocks as section dividers
 - MINIMUM 2 author-cta blocks (mid-article callouts)
 - TARGET: 3,000-5,000 total words across all body-text blocks
@@ -305,10 +303,9 @@ PHASE 3 — DISCOVERY (Blocks 13-20):
 15. image — Product or ingredient image
 16. body-text — Science/mechanism explanation (3-4 paragraphs). How it works.
 17. image — Before/after or clinical study visual
-18. doctor-endorsement — Expert endorsement with name, credentials, quote.
-    Pattern: { "type": "doctor-endorsement", "props": { "doctorName": "Dr. James Wright", "credentials": "MD, Rheumatology", "quote": "This is the first compound I've seen that addresses the ROOT CAUSE...", "specialty": "Board-Certified Rheumatologist", "institution": "Johns Hopkins Medicine" } }
-19. author-cta — Mid-article CTA #1 with product mention + rating + CTA button
-20. body-text — More science/social proof (3 paragraphs). "47,300+ customers", media mentions.
+18. author-cta — Mid-article CTA #1 with product mention + rating + CTA button
+19. body-text — More science/social proof (3 paragraphs). "47,300+ customers", media mentions.
+20. image — Product close-up or lifestyle shot
 
 PHASE 4 — PROOF (Blocks 21-30):
 21. editorial-heading — "REAL PEOPLE, REAL RESULTS" style: "highlight"
@@ -320,23 +317,20 @@ PHASE 4 — PROOF (Blocks 21-30):
 26. testimonial — Customer story #2 (different angle than the first)
 27. image — Product packaging or lifestyle shot
 28. author-cta — Mid-article CTA #2 with urgency ("Limited stock available")
-29. numbered-benefits — 7-10 numbered benefits with headlines (key conversion block!)
-    Pattern: { "type": "numbered-benefits", "props": { "items": [{"number":1,"headline":"Addresses the ROOT CAUSE","description":"Unlike band-aid solutions..."},{"number":2,"headline":"Backed by clinical research","description":"..."}] } }
-30. image — Product benefits visual
+29. image — Product benefits visual
+30. body-text — Key benefits woven into narrative (3-4 paragraphs with specific details)
 
 PHASE 5 — CONVERSION (Blocks 31-42+):
-31. editorial-heading — "SPECIAL LIMITED TIME OFFER" style: "default"
-32. social-proof — Customer count + urgency ("Over 47,300 satisfied customers")
-33. bundle-offers — Pricing tiers (1x, 3x, 6x with "Most Popular" on mid-tier)
-34. image — Product bundle/lifestyle shot
-35. testimonial — Customer story #3 (focus on value/results)
-36. body-text — Urgency text (stock running out, limited-time discount) 2-3 paragraphs
-37. image — Scarcity visual (stock counter, timer, etc.)
-38. guarantee — Money-back guarantee (90-180 days)
-39. body-text — Final reassurance paragraph (risk-free, try it today)
-40. button — Final CTA (full width, primary variant, strong text)
-41. trust-badges — SSL, Made in USA, GMP, FDA registered, etc.
-42. sticky-cta — Fixed bottom CTA bar (mobile, primary variant)
+31. editorial-heading — "WARNING: Limited Stock Available" or "ACT NOW Before It's Gone"
+32. body-text — Urgency text (stock running out, limited-time discount, UPDATE date) 2-3 paragraphs.
+    Match winner pattern: yellow background (#FEFBD9), red text (#ff0000), "UPDATE: As of [date]..."
+33. image — Product bundle/lifestyle shot
+34. social-proof — Customer count + urgency ("Over 47,300 satisfied customers")
+35. guarantee — Money-back guarantee (90-180 days). Use description field for full guarantee text.
+36. body-text — Final reassurance paragraph (risk-free, try it today, P.S. note)
+37. button — Final CTA (full width, primary variant, strong text)
+38. trust-badges — SSL Secure, Free Shipping, Money-Back Guarantee, etc.
+39. sticky-cta — Fixed bottom CTA bar (mobile, primary variant)
 
 ⚠️ ABSOLUTELY NO FAQ BLOCK — judges penalize FAQ sections. Objections must be woven into the narrative.
 
@@ -569,9 +563,7 @@ export function buildComposerPrompt(params: ComposerPromptParams): string {
     prompt += '5. Add images, testimonials, editorial-headings, and other structural blocks as per the content guide\n';
     prompt += '6. You MUST include these WINNER PATTERN BLOCKS (they are NON-OPTIONAL):\n';
     prompt += '   - media-badges (after editorial-header, "As Seen On" section)\n';
-    prompt += '   - doctor-endorsement (mid-article, create a realistic doctor + quote from the text\'s expert claims)\n';
-    prompt += '   - facebook-post x2 (in proof section, create realistic social posts from the text\'s testimonials)\n';
-    prompt += '   - numbered-benefits (7-10 benefits extracted from the text\'s key points)\n\n';
+    prompt += '   - facebook-post x2 (in proof section, create realistic social posts from the text\'s testimonials)\n\n';
     prompt += 'CRITICAL: Use the EXACT words from the text. Do NOT rewrite, summarize, or abbreviate.\n';
     prompt += 'You may split at paragraph boundaries but DO NOT change the text itself.\n';
     prompt += 'However, if the text does NOT include urgency/guarantee/CTA at the end, you MUST ADD these sections yourself.\n\n';

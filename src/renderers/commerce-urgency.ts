@@ -790,9 +790,16 @@ const GUARANTEE_LABELS: Record<string, string> = {
 export function renderGuarantee(block: Block): string {
   const { text, days, icon, guaranteeType = 'money-back', description } = getProps<GuaranteeProps>(block);
 
-  // WHY: Render SVG icon instead of emoji/text — matches winner guarantee badges
-  const iconName = icon || (guaranteeType === 'bottom-of-the-bottle' ? 'shield' : 'shield-check');
-  const iconDisplay = renderIcon(iconName, guaranteeType === 'bottom-of-the-bottle' ? 48 : 48, '#2D6A4F');
+  // WHY: Winners use actual badge images, not SVG shields.
+  //      Use real guarantee badge from /assets/images/winners/badges/
+  const GUARANTEE_BADGES: Record<string, string> = {
+    'money-back': '/assets/images/winners/badges/money-back-guarantee.png',
+    'satisfaction': '/assets/images/winners/badges/guarantee-seal.png',
+    'results': '/assets/images/winners/badges/guarantee-badge.svg',
+    'bottom-of-the-bottle': '/assets/images/winners/badges/90-day.png',
+  };
+
+  const badgeImage = GUARANTEE_BADGES[guaranteeType] || GUARANTEE_BADGES['money-back'];
 
   const headingParts: string[] = [];
   if (days) {
@@ -806,8 +813,8 @@ export function renderGuarantee(block: Block): string {
     : '';
 
   const content = `
-    <div class="ec-guarantee" style="text-align:center;padding:16px;border-radius:8px;background:#FFFBef;border:1px solid #FAB73C;">
-      <div style="font-size:32px;margin-bottom:8px;">${iconDisplay}</div>
+    <div class="ec-guarantee" style="text-align:center;padding:24px 16px;border-radius:8px;background:#FFFBef;border:1px solid #FAB73C;">
+      <div style="margin-bottom:12px;"><img src="${badgeImage}" alt="${escapeHtml(heading)}" style="width:120px;height:auto;" loading="lazy"></div>
       <div style="font-size:18px;font-weight:800;font-family:'DM Serif Display',serif;color:#1B1B1B;">${escapeHtml(heading)}</div>
       <div style="font-size:15px;font-weight:600;margin-top:4px;color:#1B1B1B;font-family:'Inter',sans-serif;">${escapeHtml(text)}</div>
       ${descriptionHtml}
