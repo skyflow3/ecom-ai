@@ -248,6 +248,7 @@ export type ImageRatioKey = keyof typeof IMAGE_RATIOS;
 
 export const PAGE_MAX_WIDTHS: Record<PageType, string> = {
   advertorial: '720px',
+  listicle: '720px',
   'product-page': '1024px',
   vsl: '1200px',
   checkout: '520px',
@@ -264,6 +265,7 @@ export const PAGE_MAX_WIDTHS: Record<PageType, string> = {
 export const PAGE_TYPES = [
   'product-page',
   'advertorial',
+  'listicle',
   'vsl',
   'checkout',
   'upsell',

@@ -15,6 +15,7 @@
 
 import { fillTemplate, saveFilledTemplate, type ContentMap, type TemplateResult } from './template-engine';
 import { buildTemplateFillerPrompt, type ProductBrief } from '../agents/prompts/template-filler';
+import { buildReasonsWhyPrompt } from '../agents/prompts/reasons-why-filler';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -80,8 +81,8 @@ export async function generateFromTemplate(
         console.log(`[template-gen] Retry attempt ${attempt}/${maxRetries}`);
       }
 
-      // Step 1: Build prompt
-      const prompt = buildTemplateFillerPrompt(brief);
+      // Step 1: Build prompt (route by template type)
+      const prompt = buildPromptForTemplate(templateId, brief);
 
       // Step 2: Call AI
       console.log(`[template-gen] Calling ${config.model} for content generation...`);
@@ -185,6 +186,20 @@ export async function generateFromTemplate(
     warnings: [],
     error: `All ${maxRetries + 1} attempts failed. Last error: ${lastError}`,
   };
+}
+
+// ─── Prompt Router ──────────────────────────────────────────────────────────────
+
+/**
+ * Route to the correct prompt builder based on template ID.
+ * WHY: Different templates (narrative advertorial vs listicle) need different prompts.
+ */
+function buildPromptForTemplate(templateId: string, brief: ProductBrief): string {
+  if (templateId.startsWith('hike-reasons-why')) {
+    return buildReasonsWhyPrompt(brief);
+  }
+  // Default: SmoothSpire narrative advertorial
+  return buildTemplateFillerPrompt(brief);
 }
 
 // ─── LLM Call ─────────────────────────────────────────────────────────────────

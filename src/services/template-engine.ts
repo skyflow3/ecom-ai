@@ -349,11 +349,58 @@ export function fillTemplate(
   html = cleanFakeComments(html, productName);
 
   // ─── Replace images (AFTER all content replacement) ───────────────────────
-  // WHY: The template has hardcoded images from the original SmoothSpine product.
-  //      We replace all of them with images matching the new product.
-  html = replaceImages(html, content);
+  // WHY: Each template has hardcoded images from the original product.
+  //      We replace product-specific images with images for the new product.
+  //      Per-template routing because different templates use different CDN hosts/URLs.
+  html = replaceImages(html, content, templateId);
 
   return { html, templateId, slotsFilled, slotsEmpty, warnings };
+}
+
+/**
+ * Sanitize AI-generated HTML content to prevent DOM corruption.
+ * WHY: AI outputs content with unclosed <strong>, <em>, <b>, <i> tags and extra </div>s.
+ *      These mismatched tags corrupt the DOM tree, breaking JS selectors (sticky bar, progress bar).
+ *      We track opening/closing tags and append any missing closers, remove orphan closers.
+ */
+function sanitizeHtmlContent(html: string): string {
+  // Tags that need balancing (self-closing tags excluded)
+  const voidTags = new Set(['br', 'hr', 'img', 'input', 'meta', 'link', 'area', 'base', 'col', 'embed', 'source', 'track', 'wbr']);
+  const tagsToBalance = ['strong', 'em', 'b', 'i', 'u', 'span', 'a', 'mark'];
+
+  // Remove orphan </div> tags in AI content — these corrupt the parent DOM structure
+  // WHY: AI sometimes wraps text in </div> by accident, which closes parent containers prematurely.
+  let result = html;
+  result = result.replace(/<\/div>/gi, '');
+
+  // Balance unclosed tags
+  for (const tag of tagsToBalance) {
+    const openRegex = new RegExp(`<${tag}[\\s>]`, 'gi');
+    const closeRegex = new RegExp(`</${tag}>`, 'gi');
+
+    const openCount = (result.match(openRegex) || []).length;
+    const closeCount = (result.match(closeRegex) || []).length;
+
+    if (openCount > closeCount) {
+      // Append missing closing tags
+      const missing = openCount - closeCount;
+      result += `</${tag}>`.repeat(missing);
+    } else if (closeCount > openCount) {
+      // Remove orphan closing tags (replace from the end)
+      let toRemove = closeCount - openCount;
+      let lastIdx = result.length;
+      while (toRemove > 0) {
+        const searchStr = `</${tag}>`;
+        const idx = result.lastIndexOf(searchStr, lastIdx);
+        if (idx === -1) break;
+        result = result.substring(0, idx) + result.substring(idx + searchStr.length);
+        lastIdx = idx;
+        toRemove--;
+      }
+    }
+  }
+
+  return result;
 }
 
 /**
@@ -371,16 +418,25 @@ function fillSimpleMarkers(
 
   for (const [slotName, slotConfig] of Object.entries(config.slots)) {
     const marker = `{{${slotName}}}`;
-    const value = content[slotName];
+    let value = content[slotName];
     if (html.includes(marker)) {
       if (value !== undefined) {
-        html = html.split(marker).join(typeof value === 'string' ? value : String(value));
+        // Sanitize AI-generated HTML to prevent DOM corruption
+        // WHY: AI content for body slots often has unclosed <strong> and stray </div> tags
+        //       that break the DOM structure and disable JS (sticky bar, progress bar).
+        const strValue = typeof value === 'string' ? value : String(value);
+        const sanitized = slotConfig.ai_generated ? sanitizeHtmlContent(strValue) : strValue;
+        html = html.split(marker).join(sanitized);
         slotsFilled++;
       } else {
         slotsEmpty++;
       }
     }
   }
+
+  // ─── Replace images (same as main fillTemplate path) ────────────────────────
+  // WHY: Marker mode needs image replacement too — product images, author photos, etc.
+  html = replaceImages(html, content, templateId);
 
   return { html, templateId, slotsFilled, slotsEmpty, warnings };
 }
@@ -422,50 +478,64 @@ function convertMarkdownFormatting(text: string): string {
  * WHY: We match FULL exact URLs only — never fragments — to avoid replacing
  *      structural images (star ratings, trust badges, font icons, etc.).
  */
-const EXACT_IMAGE_REPLACEMENTS = [
-  {
-    id: 'sidebarHero',
-    /** Unique substring that appears ONLY in the sidebar hero product image */
-    needle: '1768413682017_Hero_Image_4_.png',
-  },
-  {
-    id: 'updateBox',
-    /** Unique substring for the update box product image */
-    needle: '1752684886365_Design_sans_titre__18__removebg_preview.png',
-  },
-  {
-    id: 'commentScreenshot1',
-    /** Unique substring for FB comment screenshot 1 */
-    needle: '1753108886217_Screenshot_6.png',
-  },
-  {
-    id: 'commentScreenshot2',
-    /** Unique substring for FB comment screenshot 2 */
-    needle: '1753108854342_Screenshot_2.png',
-  },
-  {
-    id: 'doctor',
-    /** Unique substring for the doctor/author profile image */
-    needle: 'dr_blane_1__2_.webp',
-  },
-  {
-    id: 'logo',
-    /** Unique substring for the site logo ONLY (not other gempages images like trust badges/stars) */
-    needle: '649b88e8_c252_4c8f_b01d_4e911bcda14b',
-  },
-] as const;
-
 /**
- * Video URL to replace with an image.
+ * Image replacement config per template.
+ * WHY: Each template uses a different CDN (Shopify, Webflow) with different image URLs.
+ *      We need per-template needle mappings so the right images get replaced.
  */
+interface ImageReplacementMapping {
+  /** Sidebar/hero product image */
+  productHero?: string;
+  /** Product image in CTA sections */
+  productCta?: string;
+  /** Comparison table product image */
+  productCompare?: string;
+  /** Author/doctor profile photo */
+  authorPhoto?: string;
+  /** Sidebar placeholder image (1x1 etc) */
+  sidebarPlaceholder?: string;
+  /** Comment/review screenshot images */
+  commentScreenshots: string[];
+  /** Reason block images (10 images for 10 reasons) */
+  reasonImages: string[];
+}
+
+const TEMPLATE_IMAGE_MAP: Record<string, ImageReplacementMapping> = {
+  'smoothspire-advertorial': {
+    productHero: '1768413682017_Hero_Image_4_.png',
+    productCta: '1752684886365_Design_sans_titre__18__removebg_preview.png',
+    commentScreenshots: [
+      '1753108886217_Screenshot_6.png',
+      '1753108854342_Screenshot_2.png',
+    ],
+    authorPhoto: 'dr_blane_1__2_.webp',
+    reasonImages: [],
+  },
+  'hike-reasons-why': {
+    productCta: 'HF%20Stride%20Transparant',
+    productCompare: 'HIKE_FOOTWEAR_BLACK',
+    authorPhoto: 'Lorax%20Pro%20Barefoot',
+    sidebarPlaceholder: '683f59f83bf92662dad61988_1x1',
+    commentScreenshots: [
+      'Customer_review_image_5',
+    ],
+    reasonImages: [
+      // All 10 reason images now use portrait placeholder format (766x883)
+      // Single needle matches all placehold.co URLs
+      'placehold.co/766x883',
+    ],
+  },
+};
+
 const VIDEO_URL_NEEDLE = 'cdn.shopify.com/videos/c/o/v/4ee79c098d64428db2bcd603d759dc4f.mp4';
 
 /**
- * Replace ONLY the 6 specific images + video from the original template.
- * Uses exact needle matching — only replaces URLs containing the specific needle string.
- * Does NOT touch star ratings, trust badges, fonts, or any other structural images.
+ * Replace product-specific images based on template ID.
+ * WHY: Each template has hardcoded images from the original product.
+ *      We match unique needle substrings so only the right images get replaced.
+ *      Does NOT touch star ratings, trust badges, UI icons, fonts, or structural images.
  */
-function replaceImages(html: string, content: ContentMap): string {
+function replaceImages(html: string, content: ContentMap, templateId: string): string {
   const productImageUrl = extractString(content['_productImageUrl']);
   const productImageSquareUrl = extractString(content['_productImageSquareUrl']);
   const doctorImageUrl = extractString(content['_doctorImageUrl']);
@@ -473,37 +543,52 @@ function replaceImages(html: string, content: ContentMap): string {
   const commentUrls = (content['_commentScreenshotUrls'] as string[]) ?? [];
   const videoReplacementUrl = extractString(content['_productVideoUrl']);
 
-  // Square image for sidebar + update box (1080x1080, matches original)
+  const mapping = TEMPLATE_IMAGE_MAP[templateId];
+  if (!mapping) {
+    // Unknown template — no image replacement
+    return html;
+  }
+
   const squareUrl = productImageSquareUrl || productImageUrl;
 
-  // 1. Sidebar hero + Update box → square product image
-  if (squareUrl) {
-    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[0].needle, squareUrl);
-    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[1].needle, squareUrl);
+  // ─── Product images (CTA sections, hero, sidebar) ─────────────────────────
+  // WHY: Product images appear in multiple locations — CTA sections, sidebar, comparison table.
+  if (mapping.productCta && squareUrl) {
+    html = replaceExactUrl(html, mapping.productCta, squareUrl);
+  }
+  if (mapping.productHero && squareUrl) {
+    html = replaceExactUrl(html, mapping.productHero, squareUrl);
+  }
+  if (mapping.productCompare && productImageUrl) {
+    html = replaceExactUrl(html, mapping.productCompare, productImageUrl);
   }
 
-  // 2. Comment screenshots → new screenshots
-  if (commentUrls.length >= 1) {
-    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[2].needle, commentUrls[0]);
-  }
-  if (commentUrls.length >= 2) {
-    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[3].needle, commentUrls[1]);
+  // ─── Sidebar placeholder (1x1.svg etc) → product image ──────────────────
+  if (mapping.sidebarPlaceholder && squareUrl) {
+    html = replaceExactUrl(html, mapping.sidebarPlaceholder, squareUrl);
   }
 
-  // 3. Doctor image
-  if (doctorImageUrl) {
-    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[4].needle, doctorImageUrl);
+  // ─── Author photo ────────────────────────────────────────────────────────
+  if (mapping.authorPhoto && doctorImageUrl) {
+    html = replaceExactUrl(html, mapping.authorPhoto, doctorImageUrl);
   }
 
-  // 4. Logo
-  if (logoUrl) {
-    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[5].needle, logoUrl);
+  // ─── Comment/review screenshots ──────────────────────────────────────────
+  for (let i = 0; i < mapping.commentScreenshots.length && i < commentUrls.length; i++) {
+    html = replaceExactUrl(html, mapping.commentScreenshots[i], commentUrls[i]);
   }
 
-  // 5. Video → replace with product image (remove <video> element, insert <img>)
-  // WHY: The original template has a product video under the headline/subheadline.
-  //      We replace it with a product image since we don't have a video for the new product.
-  if (productImageUrl) {
+  // ─── Reason block images (10 images for 10 reasons) ──────────────────────
+  // WHY: Each reason has an image. All should show the new product.
+  //      Use productImageUrl for all reason images (landscape 16:9).
+  if (mapping.reasonImages.length > 0 && productImageUrl) {
+    for (const needle of mapping.reasonImages) {
+      html = replaceExactUrl(html, needle, productImageUrl);
+    }
+  }
+
+  // ─── SmoothSpire-specific: Video → image replacement ─────────────────────
+  if (templateId === 'smoothspire-advertorial' && productImageUrl) {
     html = replaceVideoWithImage(html, VIDEO_URL_NEEDLE, productImageUrl);
   }
 

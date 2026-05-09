@@ -1,0 +1,400 @@
+{
+  "templateId": "hike-reasons-why",
+  "source": "HF Stride Barefoot Shoes — hike-10-reasons-why-2.html (40,583 lines, Webflow)",
+  "description": "Listicle advertorial ('10 Reasons Why') with comparison table, 10 reason blocks, sidebar CTA, countdown timer, progress bar. Winner template for reasons-why format.",
+
+  "slots": {
+    "nav_brand_bold": {
+      "description": "Bold part of nav brand name (first word)",
+      "example": "FOOT",
+      "ai_generated": true
+    },
+    "nav_brand_span": {
+      "description": "Normal weight part of nav brand name (second word)",
+      "example": "INSIDER",
+      "ai_generated": true
+    },
+    "hero_headline_bold": {
+      "description": "Hero headline bold part (first sentence)",
+      "example": "I Tried 7 Different &quot;Comfort&quot; Shoes. ",
+      "ai_generated": true
+    },
+    "hero_headline_span": {
+      "description": "Hero headline span/highlight part (second sentence)",
+      "example": "Only One Actually Worked.",
+      "ai_generated": true
+    },
+    "hero_intro": {
+      "description": "Hero intro paragraph — personal story hook with line breaks. Must establish credibility and curiosity.",
+      "example": "Let me save you the time and money I wasted. <br><br>Over the past 3 years...",
+      "ai_generated": true,
+      "format": "HTML with <br><br> for paragraph breaks, <strong> for emphasis"
+    },
+    "callout_text": {
+      "description": "Callout box text — urgent warning that creates curiosity",
+      "example": "Read this BEFORE you spend another dollar on &quot;comfort shoes&quot;",
+      "ai_generated": true
+    },
+    "author_name": {
+      "description": "Author name in byline",
+      "example": "Athena Hudson",
+      "ai_generated": true
+    },
+    "author_title": {
+      "description": "Author title/credentials in byline",
+      "example": "Barefoot Shoe Enthusiast",
+      "ai_generated": true
+    },
+
+    "compare_row_1_label": {
+      "description": "Comparison table row 1 category label",
+      "example": "Time to Put On",
+      "ai_generated": true
+    },
+    "compare_row_1_product": {
+      "description": "Comparison table row 1 — product column value",
+      "example": "10 seconds",
+      "ai_generated": true
+    },
+    "compare_row_1_product_sub": {
+      "description": "Comparison table row 1 — product column sub-text (italic/emphasis)",
+      "example": "hands-free",
+      "ai_generated": true
+    },
+    "compare_row_1_comp1": {
+      "description": "Comparison table row 1 — competitor 1 value",
+      "example": "30-60 seconds",
+      "ai_generated": true
+    },
+    "compare_row_1_comp2": {
+      "description": "Comparison table row 1 — competitor 2 value",
+      "example": "1-2 minutes",
+      "ai_generated": true
+    },
+    "compare_row_2_label": {
+      "description": "Comparison table row 2 category label",
+      "example": "Shift Comfort",
+      "ai_generated": true
+    },
+    "compare_row_2_product": {
+      "description": "Comparison table row 2 — product column value",
+      "example": "Natural alignment",
+      "ai_generated": true
+    },
+    "compare_row_2_comp1": {
+      "description": "Comparison table row 2 — competitor 1 value",
+      "example": "Rigid foot bed",
+      "ai_generated": true
+    },
+    "compare_row_2_comp2": {
+      "description": "Comparison table row 2 — competitor 2 value",
+      "example": "Cushioned heel",
+      "ai_generated": true
+    },
+    "compare_row_3_label": {
+      "description": "Comparison table row 3 category label",
+      "example": "Weight",
+      "ai_generated": true
+    },
+    "compare_row_3_product": {
+      "description": "Comparison table row 3 — product column value",
+      "example": "Under 6 oz",
+      "ai_generated": true
+    },
+    "compare_row_3_product_sub": {
+      "description": "Comparison table row 3 — product column sub-text",
+      "example": "ultra-light",
+      "ai_generated": true
+    },
+    "compare_row_3_comp1": {
+      "description": "Comparison table row 3 — competitor 1 value",
+      "example": "14-16 oz",
+      "ai_generated": true
+    },
+    "compare_row_3_comp2": {
+      "description": "Comparison table row 3 — competitor 2 value",
+      "example": "10-12 oz",
+      "ai_generated": true
+    },
+    "compare_row_4_label": {
+      "description": "Comparison table row 4 category label (bold)",
+      "example": "Price",
+      "ai_generated": true
+    },
+    "compare_row_4_product": {
+      "description": "Comparison table row 4 — product column value",
+      "example": "$59.95",
+      "ai_generated": true
+    },
+    "compare_row_4_product_sub": {
+      "description": "Comparison table row 4 — product column sub-text",
+      "example": "/pair",
+      "ai_generated": true
+    },
+    "compare_row_4_product_note": {
+      "description": "Comparison table row 4 — product column note (small text)",
+      "example": "(3-pack deal)",
+      "ai_generated": true
+    },
+    "compare_row_4_comp1": {
+      "description": "Comparison table row 4 — competitor 1 value",
+      "example": "$120-$160",
+      "ai_generated": true
+    },
+    "compare_comp1_name": {
+      "description": "Competitor 1 column name (bold in th)",
+      "example": "Nursing Clogs",
+      "ai_generated": true
+    },
+    "compare_comp2_name": {
+      "description": "Competitor 2 column name (bold in th)",
+      "example": "Athletic Sneakers",
+      "ai_generated": true
+    },
+    "compare_tldr": {
+      "description": "TLDR summary line below comparison table with emoji",
+      "example": "TLDR: HF Stride barefoot shoes have 10+ benefits that make 12-hour shifts feel like 6 👇",
+      "ai_generated": true
+    },
+
+    "reason_1_heading": {
+      "description": "Reason 1 heading — benefit-driven headline",
+      "example": "I Could Actually Put Them On",
+      "ai_generated": true
+    },
+    "reason_1_body": {
+      "description": "Reason 1 body — personal story, 2-4 sentences with HTML bold tags",
+      "example": "This sounds small, but bending down to tie shoes was agony for my back. These? Just step in. <strong class=\"\">No bending, no laces, no struggle.</strong>",
+      "ai_generated": true,
+      "format": "HTML with <strong> and <br><br>"
+    },
+    "reason_1_cta": {
+      "description": "Reason 1 CTA link text",
+      "example": "See the slip-on shoe I swear by",
+      "ai_generated": true
+    },
+
+    "reason_2_heading": {
+      "description": "Reason 2 heading — benefit-driven headline",
+      "example": "Comfortable All Day Without Foot Pain",
+      "ai_generated": true
+    },
+    "reason_2_body": {
+      "description": "Reason 2 body — explains benefit with mechanism",
+      "example": "Usually by noon my feet were screaming. With these, I'd look at the clock and realize I'd been on my feet for hours.",
+      "ai_generated": true,
+      "format": "HTML with <strong> and <br><br>"
+    },
+    "reason_2_cta": {
+      "description": "Reason 2 CTA link text",
+      "example": "See the exact shoe that ended my foot pain",
+      "ai_generated": true
+    },
+
+    "reason_3_heading": {
+      "description": "Reason 3 heading — benefit-driven headline",
+      "example": "My Feet Felt Steadier, Not Just More Comfortable",
+      "ai_generated": true
+    },
+    "reason_3_body": {
+      "description": "Reason 3 body — stability/grip benefit",
+      "example": "I used to feel wobbly on wet floors. These have a flexible, grippy sole that lets your feet feel the ground.",
+      "ai_generated": true,
+      "format": "HTML with <strong> and <br><br>"
+    },
+    "reason_3_cta": {
+      "description": "Reason 3 CTA link text",
+      "example": "See the grip pattern",
+      "ai_generated": true
+    },
+
+    "reason_4_heading": {
+      "description": "Reason 4 heading — benefit-driven headline",
+      "example": "My Bunions Finally Had Room",
+      "ai_generated": true
+    },
+    "reason_4_body": {
+      "description": "Reason 4 body — wide toe box / fit benefit",
+      "example": "The wide toe box lets your toes spread naturally. No more pinching.",
+      "ai_generated": true,
+      "format": "HTML with <strong> and <br><br>"
+    },
+
+    "reason_5_heading": {
+      "description": "Reason 5 heading — benefit-driven headline",
+      "example": "I Stopped Counting Hours Until I Could Sit Down",
+      "ai_generated": true
+    },
+    "reason_5_body": {
+      "description": "Reason 5 body — all-day comfort story",
+      "example": "For years my whole day was about feet. Then one Tuesday I looked at the clock. 4pm. I'd been on my feet since breakfast.",
+      "ai_generated": true,
+      "format": "HTML with <strong>, <em>, and <br><br>"
+    },
+
+    "reason_6_heading": {
+      "description": "Reason 6 heading — benefit-driven headline (used for both mobile and desktop variants)",
+      "example": "Arthritis Stiffness Finally Had A Shoe That Didn't Fight Back",
+      "ai_generated": true
+    },
+    "reason_6_body": {
+      "description": "Reason 6 body — flexibility/joint benefit",
+      "example": "The flexible, zero-drop sole lets your feet move through their natural range. Morning stiffness still exists. But I'm not adding to it with my shoes.",
+      "ai_generated": true,
+      "format": "HTML with <strong> and <br><br>"
+    },
+
+    "reason_7_heading": {
+      "description": "Reason 7 heading — benefit-driven headline",
+      "example": "Lighter Than Any Other Shoe",
+      "ai_generated": true
+    },
+    "reason_7_body": {
+      "description": "Reason 7 body — weight benefit",
+      "example": "These are under 6 oz. My legs actually had energy left by dinner.",
+      "ai_generated": true,
+      "format": "HTML with <strong> and <br><br>"
+    },
+
+    "reason_8_heading_mobile": {
+      "description": "Reason 8 heading — mobile variant (show-tablet)",
+      "example": "My Feet Stayed Cool Without Me Noticing",
+      "ai_generated": true
+    },
+    "reason_8_heading_desktop": {
+      "description": "Reason 8 heading — desktop variant (hide-tablet). Includes number prefix.",
+      "example": "Breathable For All-Day Freshness",
+      "ai_generated": true
+    },
+    "reason_8_body": {
+      "description": "Reason 8 body — breathability benefit",
+      "example": "The breathable mesh with ventilation holes keeps your feet cool and dry.",
+      "ai_generated": true,
+      "format": "HTML with <strong> and <br><br>"
+    },
+
+    "reason_9_heading": {
+      "description": "Reason 9 heading — benefit-driven headline",
+      "example": "A Podiatrist Actually Recommends Them",
+      "ai_generated": true
+    },
+    "reason_9_body": {
+      "description": "Reason 9 body — expert endorsement",
+      "example": "A board-certified foot doctor who sees patients every day for arthritis, neuropathy, plantar fasciitis.",
+      "ai_generated": true,
+      "format": "HTML with <strong> and <br><br>"
+    },
+
+    "reason_10_heading": {
+      "description": "Reason 10 heading — benefit-driven headline",
+      "example": "The Best Shoe I've Owned Cost Less Than The Worst",
+      "ai_generated": true
+    },
+    "reason_10_body": {
+      "description": "Reason 10 body — price/value benefit",
+      "example": "I spent over $900 on shoes that didn't help. These cost $59.95. The only ones that actually worked.",
+      "ai_generated": true,
+      "format": "HTML with <strong> and <br><br>"
+    },
+
+    "product_discount_pct": {
+      "description": "Discount percentage for mid CTA heading",
+      "example": "49%",
+      "ai_generated": false
+    },
+    "mid_cta_heading": {
+      "description": "Mid-article CTA heading (after product_discount_pct)",
+      "example": "FOR A LIMITED TIME ONLY!",
+      "ai_generated": true
+    },
+    "mid_cta_subtitle": {
+      "description": "Mid-article CTA subtitle — trust-building text",
+      "example": "I was skeptical too. But true to size, free shipping, and a 30-day money-back guarantee means there's nothing to lose.",
+      "ai_generated": true
+    },
+    "mid_cta_button": {
+      "description": "Mid-article CTA button text",
+      "example": "TRY THEM RISK-FREE",
+      "ai_generated": true
+    },
+    "mid_cta_guarantee": {
+      "description": "Mid-article CTA guarantee text",
+      "example": "30 days to try them. If they're not right, send them back. No restocking fee, no hassle.",
+      "ai_generated": true
+    },
+    "sale_badge_text": {
+      "description": "Sale badge text (lowercase, next to CTA)",
+      "example": "mother's day sale",
+      "ai_generated": true
+    },
+
+    "sidebar_deal_text": {
+      "description": "Sidebar CTA heading",
+      "example": "DEAL OF dAY - Limited Time",
+      "ai_generated": true
+    },
+    "sidebar_benefit_1": {
+      "description": "Sidebar checkmark benefit 1",
+      "example": "Click The Button Below to claim your 50% discount",
+      "ai_generated": true
+    },
+    "sidebar_benefit_2": {
+      "description": "Sidebar checkmark benefit 2",
+      "example": "Enjoy 30-Day Money Back Guarantee",
+      "ai_generated": true
+    },
+    "sidebar_benefit_3": {
+      "description": "Sidebar checkmark benefit 3",
+      "example": "Experience the barefoot feel. It's that simple",
+      "ai_generated": true
+    },
+    "sidebar_button": {
+      "description": "Sidebar CTA button text",
+      "example": "Order now",
+      "ai_generated": true
+    },
+    "sidebar_sellout_risk": {
+      "description": "Sell-out risk level text (inside span)",
+      "example": "High",
+      "ai_generated": true
+    },
+    "sidebar_shipping_text": {
+      "description": "Shipping text (after 'FREE')",
+      "example": "shipping",
+      "ai_generated": true
+    },
+
+    "lowest_price_text": {
+      "description": "Bottom bar text — lowest price guarantee",
+      "example": "Verified Lowest Price of the Year. Shop Now!",
+      "ai_generated": true
+    },
+
+    "page_title": {
+      "description": "Page title for <title>, og:title, twitter:title. Benefit-driven curiosity headline.",
+      "example": "I Tried 7 Different 'Comfort' Shoes. Only One Actually Worked.",
+      "ai_generated": true
+    },
+    "cta_button_text": {
+      "description": "Main CTA button text — ALL CAPS, urgent, action-oriented",
+      "example": "YES! PAIN-FREE FEET",
+      "ai_generated": true
+    },
+    "order_message_text": {
+      "description": "Order message badge text — urgency/new product announcement",
+      "example": "New Flavors Just Released!",
+      "ai_generated": true
+    },
+    "bundle_heading": {
+      "description": "Bundle/save more section heading — ALL CAPS",
+      "example": "BUY MORE, SAVE MORE",
+      "ai_generated": true
+    }
+  },
+
+  "images": {
+    "description": "Reason block images (portrait 766x883), product images, author photo, logo. Replace via image URL fields in ProductBrief.",
+    "count": "~12",
+    "notes": "Reason images use portrait aspect-ratio (766/883). Product images in CTA sections use srcset."
+  }
+}
