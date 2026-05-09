@@ -1,0 +1,426 @@
+{
+  "templateId": "smoothspire-advertorial",
+  "source": "SmoothSpire Triple Fusion Massager (winner, 632KB)",
+  "description": "Long-form advertorial with editorial header, story-driven copy, 14 H2 sections, inline videos, Amazon-style testimonials, price anchoring, guarantee, trust badges. Desktop sidebar with product + reviews.",
+
+  "slots": {
+    "meta_title": {
+      "selector": "title",
+      "description": "Page title for SEO",
+      "example": "SmoothSpine Triple Fusion Massager - The #1 At-Home Sciatica Solution",
+      "ai_generated": true
+    },
+    "meta_description": {
+      "selector": "meta[name=description]",
+      "attribute": "content",
+      "description": "Meta description for SEO",
+      "example": "Discover the 15-minute trick that ended 18 years of sciatica agony. 21,500+ users. 90-day guarantee.",
+      "ai_generated": true
+    },
+
+    "header_logo_src": {
+      "description": "Logo image URL in header",
+      "example": "https://assets.checkoutchamp.com/.../logo.webp",
+      "ai_generated": false,
+      "notes": "Replace with your brand logo"
+    },
+    "header_category_badge": {
+      "description": "Category badge text (e.g. 'Trending in Health')",
+      "example": "Trending in 'Health'",
+      "ai_generated": true
+    },
+
+    "breadcrumb_text": {
+      "description": "Breadcrumb path",
+      "example": "Home > Pain Relief > Sciatica",
+      "ai_generated": true
+    },
+
+    "headline": {
+      "description": "Main headline (H2, bold, editorial style)",
+      "example": "Top Physiotherapist: \"This Is the Fastest Way to Fix Sciatica for Good\"",
+      "ai_generated": true
+    },
+    "subheadline": {
+      "description": "Subheadline (H2, italic, extends the hook)",
+      "example": "Former chronic pain sufferer exposes the $47 billion back pain conspiracy - and the 15-minute trick that ended 18 years of agony (without pills, shots, or surgery)",
+      "ai_generated": true
+    },
+
+    "hero_image_src": {
+      "description": "Main product image (with ratings overlay)",
+      "example": "product-hero-image.png",
+      "ai_generated": false,
+      "notes": "Product image URL"
+    },
+    "hero_rating_text": {
+      "description": "Rating count text below product image",
+      "example": "3,791 Ratings",
+      "ai_generated": false
+    },
+
+    "byline_text": {
+      "description": "Author line: name, credentials, date",
+      "example": "Written by Dr. Blane Schilling, PT, MD| Jul 15, 2025",
+      "ai_generated": true
+    },
+    "byline_image_src": {
+      "description": "Author/doctor photo URL",
+      "example": "doctor-photo.webp",
+      "ai_generated": false
+    },
+
+    "opening_paragraphs": {
+      "description": "Opening hook paragraphs (4-8 short paras, 1-2 lines each). These set the tone and draw the reader in.",
+      "example": "I'm about to piss off every chiropractor, pain clinic, and spine surgeon in America.|Because what I'm about to share could cost them millions in lost revenue.|But I don't care.|After watching my wife cry herself to sleep for 3 years straight...|After blowing $23,000 on treatments that did nothing...|I discovered something that changed everything.",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "section_1_heading": {
+      "description": "H2 heading for pain story section",
+      "example": "THE NIGHT EVERYTHING CHANGED\u2026",
+      "ai_generated": true
+    },
+    "section_1_video_src": {
+      "description": "Video URL for section 1 (optional, can be image)",
+      "ai_generated": false
+    },
+    "section_1_paragraphs": {
+      "description": "Pain story paragraphs - visceral, emotional, specific",
+      "example": "It was 2:47 AM on a Tuesday.|I woke up to my wife Sarah sobbing in the bathroom.|Not crying. Sobbing.|The kind of raw, primal sound that makes your stomach drop.|She was on the floor, curled in the fetal position, her whole body shaking.",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "section_2_heading": {
+      "description": "H2 heading for discovery section",
+      "example": "THE MIND BLOWING DISCOVERY",
+      "ai_generated": true
+    },
+    "section_2_video_src": {
+      "description": "Video URL for section 2",
+      "ai_generated": false
+    },
+    "section_2_paragraphs": {
+      "description": "Discovery/mechanism paragraphs - the big reveal",
+      "example": "For the next 3 months, I lived like a man possessed.|I devoured every study. Called researchers in Switzerland.|And what I found made me want to punch a hole through my computer screen.|The entire back pain industry is built on a lie.",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "section_3_heading": {
+      "description": "H2 heading for root cause section",
+      "example": "THE REAL ROOT CAUSE OF SCIATICA",
+      "ai_generated": true
+    },
+    "section_3_video_src": {
+      "description": "Video URL for section 3",
+      "ai_generated": false
+    },
+    "section_3_paragraphs": {
+      "description": "Root cause explanation - metaphor-driven, accessible",
+      "example": "Picture your spine like a stack of jelly donuts.|The vertebrae are the donuts. The discs are the jelly filling.|When you're young, those discs are plump, juicy, full of fluid.|But here's what happens after age 30...",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "section_4_heading": {
+      "description": "H2 heading for solution reveal",
+      "example": "THE 15-MINUTE MIRACLE HIDING IN PLAIN SIGHT",
+      "ai_generated": true
+    },
+    "section_4_video_src": {
+      "description": "Video URL for section 4",
+      "ai_generated": false
+    },
+    "section_4_paragraphs": {
+      "description": "Solution story - how the discovery worked",
+      "example": "Remember my wife on that bathroom floor?|Three weeks after my discovery, she was dancing at her sister's wedding.|No pills. No shots. No surgery.|Just 15 minutes a day of something so stupidly simple...",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "feature_boxes": {
+      "description": "3 product feature boxes with icon + title + description",
+      "example": [
+        {"title": "Dynamic Traction Therapy", "description": "gently stretches and separates your vertebrae, reducing pressure on pinched nerves."},
+        {"title": "TargetPoint Massage Therapy", "description": "has micro-vibration nodes that mimic the hands of a massage therapist."},
+        {"title": "Thermal Circulation Therapy", "description": "uses heat to boost rehydration and bring healing nutrients to damaged discs."}
+      ],
+      "ai_generated": true,
+      "format": "array of 3 objects"
+    },
+
+    "section_5_heading": {
+      "description": "H2 heading for industry pushback section",
+      "example": "THIS BREAKTHROUGH IS PISSING OFF AN ENTIRE INDUSTRY",
+      "ai_generated": true
+    },
+    "section_5_video_src": {
+      "description": "Video URL for section 5",
+      "ai_generated": false
+    },
+    "section_5_paragraphs": {
+      "description": "Industry pushback story - adds conspiracy/credibility",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "section_6_heading": {
+      "description": "H2 heading for threats section",
+      "example": "WHEN YOU MESS WITH $47 BILLION, THEY COME FOR YOU",
+      "ai_generated": true
+    },
+    "section_6_image_src": {
+      "description": "Image URL for section 6",
+      "ai_generated": false
+    },
+    "section_6_paragraphs": {
+      "description": "Threats/obstacles story - raises stakes",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "product_name": {
+      "description": "Product full name",
+      "example": "SmoothSpine Triple Fusion Massager",
+      "ai_generated": true
+    },
+
+    "section_7_heading": {
+      "description": "H2 heading for product intro",
+      "example": "INTRODUCING THE DEVICE THAT ACTUALLY FIXES SCIATICA",
+      "ai_generated": true
+    },
+    "section_7_video_src": {
+      "description": "Product demo video URL",
+      "ai_generated": false
+    },
+    "section_7_paragraphs": {
+      "description": "Product introduction - name, what it does, why it's different",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "section_8_heading": {
+      "description": "H2 heading for how it works",
+      "example": "HERE'S EXACTLY HOW IT DESTROYS SCIATICA IN 15 MINUTES",
+      "ai_generated": true
+    },
+    "section_8_video_src": {
+      "description": "How-it-works video URL",
+      "ai_generated": false
+    },
+    "section_8_paragraphs": {
+      "description": "Step-by-step mechanism (3 phases with timing)",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "section_9_heading": {
+      "description": "H2 heading for results/proof",
+      "example": "THE RESULTS THAT HAVE DOCTORS SCRAMBLING",
+      "ai_generated": true
+    },
+    "section_9_image_src": {
+      "description": "Results image URL",
+      "ai_generated": false
+    },
+    "section_9_paragraphs": {
+      "description": "Results statistics + mini testimonials",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "testimonials": {
+      "description": "3 Amazon-style testimonials with avatar, name, stars, review text",
+      "example": [
+        {"name": "Karen Mitchell", "avatar_src": "", "headline": "Finally! True relief from sciatica!", "date": "Reviewed in the United States on April 17, 2025", "text": "I've been struggling with sciatica for years..."},
+        {"name": "William Burke", "avatar_src": "", "headline": "My sciatica pain doesn't rule my day anymore", "date": "Reviewed in the United States on April 24, 2025", "text": "I work long hours on my feet..."},
+        {"name": "Linda Chapman", "avatar_src": "", "headline": "No more nerve pain or morning stiffness!", "date": "Reviewed in the United States on May 12, 2025", "text": "I honestly thought I'd have to live with my sciatica pain forever..."}
+      ],
+      "ai_generated": true,
+      "format": "array of 3 testimonial objects"
+    },
+
+    "section_10_heading": {
+      "description": "H2 heading for price anchoring",
+      "example": "THE PRICE THAT'S CAUSING MEDICAL INDUSTRY PANIC",
+      "ai_generated": true
+    },
+    "section_10_image_src": {
+      "description": "Price comparison image URL",
+      "ai_generated": false
+    },
+    "section_10_paragraphs": {
+      "description": "Price comparison paragraphs (competitor costs vs product)",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "pain_points": {
+      "description": "5 before-pain points (shown with X marks)",
+      "example": [
+        "I couldn't sit through a meal without shooting pain down my leg",
+        "Standing for more than a few minutes left my lower back throbbing",
+        "I stopped gardening and walking with friends because I was too stiff",
+        "I was afraid to travel because long car rides left me in agony",
+        "I lost sleep almost every night due to pressure and nerve pain"
+      ],
+      "ai_generated": true,
+      "format": "array of 5 strings"
+    },
+
+    "improvement_points": {
+      "description": "5 after-improvement points (shown with check marks)",
+      "example": [
+        "I can sit comfortably for hours, no more nerve flare-ups",
+        "I stand, bend, and stretch without fear or hesitation",
+        "I've returned to my hobbies and even joined a walking group",
+        "I feel confident planning trips again and getting out of the house",
+        "I sleep soundly through the night with zero back pain"
+      ],
+      "ai_generated": true,
+      "format": "array of 5 strings"
+    },
+
+    "section_11_heading": {
+      "description": "H2 heading for urgency section",
+      "example": "BUT HERE'S THE CATCH (AND IT'S A BIG ONE)",
+      "ai_generated": true
+    },
+    "section_11_video_src": {
+      "description": "Urgency video URL",
+      "ai_generated": false
+    },
+    "section_11_paragraphs": {
+      "description": "Urgency + scarcity paragraphs",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "cta_text": {
+      "description": "CTA button text (repeated 3x in page)",
+      "example": "Check Availability Now \u2192",
+      "ai_generated": true
+    },
+    "cta_url": {
+      "description": "CTA button destination URL",
+      "example": "#checkout",
+      "ai_generated": false
+    },
+
+    "section_12_heading": {
+      "description": "H2 heading for guarantee",
+      "example": "MY PERSONAL 90-DAY \"PAIN FREE\" GUARANTEE",
+      "ai_generated": true
+    },
+    "section_12_video_src": {
+      "description": "Guarantee video URL",
+      "ai_generated": false
+    },
+    "section_12_paragraphs": {
+      "description": "Guarantee copy - reassurance, no-risk promise",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "section_13_heading": {
+      "description": "H2 heading for choice/crossroads",
+      "example": "THE CHOICE THAT WILL DEFINE YOUR NEXT DECADE",
+      "ai_generated": true
+    },
+    "section_13_image_src": {
+      "description": "Crossroads image URL",
+      "ai_generated": false
+    },
+    "section_13_paragraphs": {
+      "description": "Path 1 (bad) vs Path 2 (good) - the fork in the road",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "section_14_heading": {
+      "description": "H2 heading for instructions",
+      "example": "HERE'S EXACTLY WHAT TO DO NEXT",
+      "ai_generated": true
+    },
+    "section_14_video_src": {
+      "description": "Final video URL",
+      "ai_generated": false
+    },
+    "section_14_paragraphs": {
+      "description": "Step-by-step instructions + closing urgency",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "closing_signature": {
+      "description": "Author sign-off + P.S. + P.P.S. + P.P.P.S.",
+      "example": "With love,|Dr. Blane Schilling|Creator, SmoothSpine Triple Fusion Massager|P.S. - I just got a text from my wife. She's at yoga class.|P.P.S. - The SmoothSpine is FDA-registered.|P.P.P.S. - Seriously, we're down to 3,847 units.",
+      "ai_generated": true,
+      "format": "paragraphs separated by |"
+    },
+
+    "update_box_title": {
+      "description": "UPDATE box heading",
+      "example": "Mother's Day Sale - 60% OFF!",
+      "ai_generated": true
+    },
+    "update_box_date": {
+      "description": "UPDATE box date line",
+      "example": "As of Jul 15, 2025",
+      "ai_generated": true
+    },
+    "update_box_text": {
+      "description": "UPDATE box urgency text",
+      "example": "The demand for [Product] has increased dramatically and inventory has been flying off the shelves. Order your own for 60% OFF + FAST SHIPPING before it's too late.",
+      "ai_generated": true
+    },
+
+    "trust_badge_images": {
+      "description": "4 trust badge image URLs (guarantee, secure, returns, shipping)",
+      "ai_generated": false,
+      "notes": "Keep existing badge images or replace with your own"
+    },
+
+    "sidebar_product_title": {
+      "description": "Product title in desktop sidebar",
+      "example": "Finally! Get Instant Relief From Sciatica!",
+      "ai_generated": true
+    },
+    "sidebar_product_image_src": {
+      "description": "Product image in desktop sidebar",
+      "ai_generated": false
+    },
+
+    "product_price": {
+      "description": "Discounted price",
+      "example": "$119.95",
+      "ai_generated": false
+    },
+    "product_original_price": {
+      "description": "Original price (shown as strikethrough)",
+      "example": "$299.95",
+      "ai_generated": false
+    },
+    "product_discount_pct": {
+      "description": "Discount percentage",
+      "example": "60%",
+      "ai_generated": false
+    }
+  },
+
+  "videos": {
+    "description": "The template has 8 video slots. Replace URLs with your product videos.",
+    "count": 8,
+    "notes": "Videos autoplay muted loop. Replace src attributes. Can use images instead."
+  },
+
+  "images": {
+    "description": "Product images, doctor photo, testimonial avatars, trust badges. Replace with your assets.",
+    "count": "~30",
+    "notes": "Many images use CheckoutChamp CDN URLs. Replace with your own image hosting."
+  }
+}
