@@ -10,7 +10,7 @@
  */
 
 import type { Block } from '../design-system/blocks';
-import { escapeHtml, wrapSection, getProps, cn, buildResponsiveStyles, buildVisibilityClass } from './html-helpers';
+import { escapeHtml, wrapSection, getProps, cn, buildResponsiveStyles, buildVisibilityClass, renderIcon } from './html-helpers';
 
 // ─── Shared Styles ─────────────────────────────────────────────────────────
 
@@ -301,6 +301,8 @@ export function renderSocialProof(block: Block): string {
 interface TrustBadgeItem {
   icon?: string;
   text: string;
+  /** WHY: AI sometimes generates "name" instead of "text" — accept both */
+  name?: string;
 }
 
 interface TrustBadgesProps {
@@ -315,13 +317,21 @@ export function renderTrustBadges(block: Block): string {
   const responsiveStyles = buildResponsiveStyles(block.id, block.styles);
   const cssPrefix = getSocialFormCss();
 
-  const badgeItems = badges.map(badge => {
-    const iconHtml = badge.icon
-      ? `<span class="ec-trust-badge-icon">${escapeHtml(badge.icon)}</span>`
+  // WHY: AI can generate badges as undefined or with missing fields — defensive
+  const safeBadges = Array.isArray(badges) ? badges : [];
+  const badgeItems = safeBadges.map(badge => {
+    // Handle string items (AI sometimes sends plain strings)
+    // WHY: AI generates "name" OR "text" field — handle both gracefully
+    const b = typeof badge === 'string'
+      ? { text: badge, icon: '' }
+      : badge;
+    const badgeText = b.text || b.name || '';
+    const iconHtml = b.icon
+      ? `<span class="ec-trust-badge-icon">${renderIcon(b.icon, 24, '#6B7280')}</span>`
       : '';
     return `<div class="ec-trust-badge">
   ${iconHtml}
-  <span class="ec-trust-badge-text">${escapeHtml(badge.text)}</span>
+  <span class="ec-trust-badge-text">${escapeHtml(badgeText)}</span>
 </div>`;
   }).join('\n');
 

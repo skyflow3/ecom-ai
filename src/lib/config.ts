@@ -104,6 +104,25 @@ export function getCopywriterConfig(): GeneratorConfig {
 }
 
 /**
+ * WHY: 3-step pipeline producer uses MiMo (FREE) — validated as champion producer.
+ *      Lab scores: MiMo free text 8.92 avg vs DeepSeek JSON 6.44. MiMo is free AND better.
+ *      Judge still uses DeepSeek (more accurate scoring).
+ * Source: GUIDE-IA.md #10, test-results/2026-05-09-lab-exact-v2-validated.md
+ */
+export function getProducerConfig(): GeneratorConfig {
+  return {
+    apiUrl: process.env.MIMO_API_URL ?? "https://api.xiaomimimo.com/v1/chat/completions",
+    apiKey: getNextMimoKey(),
+    model: process.env.MIMO_MODEL ?? "mimo-v2-flash",
+    temperature: 0.3,
+    maxTokens: 4000,
+    maxRetries: 3,
+    minScore: 70,
+    allKeys: MIMO_KEYS.length > 1 ? MIMO_KEYS : undefined,
+  };
+}
+
+/**
  * WHY: Feature flag for the two-call pipeline. OFF by default so existing
  *      single-call behavior is unchanged until explicitly enabled.
  *      When disabled, falls back to single-call MiMo pipeline.

@@ -253,26 +253,40 @@ It needs editorial blocks that create the "article" feel.
 ════════════════════════════════════════════════════════════════
 MANDATORY CONTENT REQUIREMENTS (NON-NEGOTIABLE):
 ════════════════════════════════════════════════════════════════
-- MINIMUM 30 blocks total (winners average 35-45 blocks)
+- MINIMUM 35 blocks total (winners average 35-45 blocks)
 - MINIMUM 8 image blocks distributed throughout (product shots, in-use, lifestyle, results)
 - MINIMUM 6 body-text blocks with 3-6 paragraphs EACH
 - MINIMUM 3 testimonial blocks with different people
+- MINIMUM 2 facebook-post blocks (organic social proof)
+- MINIMUM 1 doctor-endorsement block (expert credibility)
+- MINIMUM 1 media-badges block ("As Seen On" after header)
+- MINIMUM 1 numbered-benefits block (7-10 reasons, key conversion block)
 - MINIMUM 3 editorial-heading blocks as section dividers
 - MINIMUM 2 author-cta blocks (mid-article callouts)
-- TARGET: 2,000-3,000 total words across all body-text blocks
+- TARGET: 3,000-5,000 total words across all body-text blocks
 - Every image block MUST have a realistic imageUrl (use descriptive placeholder URLs)
+
+CTA BUTTON TEXT RULES (CRITICAL FOR MOBILE):
+════════════════════════════════════════════════════════════════
+- CTA text MUST be MAX 8 WORDS. Short = more clicks on mobile.
+- GOOD: "Try Nutrovia Risk-Free →", "Claim Your Discount Now", "Get Started Today"
+- BAD: "Click here to order Nutrovia and start your 90-day risk-free trial today"
+- If you need more context, put it in a subtitle ABOVE or BELOW the button, NOT inside it.
+- Example: subtitle "90-day money-back guarantee" ABOVE the button "Try It Risk-Free →"
 
 ════════════════════════════════════════════════════════════════
 REQUIRED BLOCK SEQUENCE (30-45 blocks):
 ════════════════════════════════════════════════════════════════
 
-PHASE 1 — HEADER & OPENING (Blocks 1-6):
+PHASE 1 — HEADER & OPENING (Blocks 1-7):
 1. editorial-header — Logo + "Trending in [Category]" badge
 2. breadcrumb — "Home > Category > Product" (desktop only)
 3. hero — Headline ONLY (NO CTA, NO background). Pattern interrupt headline.
 4. byline — Author avatar + name + credentials + date + "Verified Author" badge
-5. image — Hero image (product or lifestyle, realistic URL)
-6. body-text — Opening hook (4-5 paragraphs, ~300 words). Start with personal story.
+5. media-badges — "As Seen On" logos AFTER byline (not before hero)
+   Pattern: { "type": "media-badges", "props": { "headline": "As Seen On", "badges": [{"name":"Forbes"},{"name":"GQ"},{"name":"Men's Journal"},{"name":"SHAPE"}] } }
+6. image — Hero image (product or lifestyle, realistic URL)
+7. body-text — Opening hook (4-5 paragraphs, ~300 words). Start with personal story.
    Pattern: "I Thought My [Problem] Was Normal..." or "Top Doctor Reveals..."
    Use **bold** on key phrases. Build curiosity and empathy.
 
@@ -285,39 +299,46 @@ PHASE 2 — PAIN AGITATION (Blocks 7-12):
 11. image — Chart, infographic, or comparison visual
 12. body-text — "What the medical industry won't tell you" angle (3 paragraphs)
 
-PHASE 3 — DISCOVERY (Blocks 13-19):
+PHASE 3 — DISCOVERY (Blocks 13-20):
 13. editorial-heading — "THE BREAKTHROUGH DISCOVERY" style: "underline"
 14. body-text — Discovery narrative (4-5 paragraphs, ~300 words). How researchers found it.
 15. image — Product or ingredient image
 16. body-text — Science/mechanism explanation (3-4 paragraphs). How it works.
 17. image — Before/after or clinical study visual
-18. author-cta — Mid-article CTA #1 with product mention + rating + CTA button
-19. body-text — Expert endorsement (3 paragraphs). Quote a doctor/researcher.
+18. doctor-endorsement — Expert endorsement with name, credentials, quote.
+    Pattern: { "type": "doctor-endorsement", "props": { "doctorName": "Dr. James Wright", "credentials": "MD, Rheumatology", "quote": "This is the first compound I've seen that addresses the ROOT CAUSE...", "specialty": "Board-Certified Rheumatologist", "institution": "Johns Hopkins Medicine" } }
+19. author-cta — Mid-article CTA #1 with product mention + rating + CTA button
+20. body-text — More science/social proof (3 paragraphs). "47,300+ customers", media mentions.
 
-PHASE 4 — PROOF (Blocks 20-27):
-20. editorial-heading — "REAL PEOPLE, REAL RESULTS" style: "highlight"
-21. testimonial — Customer story #1 (detailed, 3-4 sentences, with name and location)
-22. image — Customer result photo
-23. testimonial — Customer story #2 (different person, different angle)
-24. body-text — Social proof paragraph (statistics, "47,300+ customers", media mentions)
-25. image — Product packaging or lifestyle shot
-26. author-cta — Mid-article CTA #2 with urgency ("Limited stock available")
-27. benefits-list — 5-7 key benefits with checkmark icons
+PHASE 4 — PROOF (Blocks 21-30):
+21. editorial-heading — "REAL PEOPLE, REAL RESULTS" style: "highlight"
+22. facebook-post — Facebook-style social proof #1 (organic feel, NOT staged).
+    Pattern: { "type": "facebook-post", "props": { "authorName": "Sarah M.", "timeAgo": "3h", "text": "OMG I've been using this for 2 weeks and the results are INSANE...", "likes": 142, "comments": 23, "topComment": "Where did you order yours?", "topCommentAuthor": "Lisa K." } }
+23. testimonial — Customer story #1 (detailed, 3-4 sentences, with name and location)
+24. image — Customer result photo
+25. facebook-post — Facebook-style social proof #2 (different person, different angle)
+26. testimonial — Customer story #2 (different angle than the first)
+27. image — Product packaging or lifestyle shot
+28. author-cta — Mid-article CTA #2 with urgency ("Limited stock available")
+29. numbered-benefits — 7-10 numbered benefits with headlines (key conversion block!)
+    Pattern: { "type": "numbered-benefits", "props": { "items": [{"number":1,"headline":"Addresses the ROOT CAUSE","description":"Unlike band-aid solutions..."},{"number":2,"headline":"Backed by clinical research","description":"..."}] } }
+30. image — Product benefits visual
 
-PHASE 5 — CONVERSION (Blocks 28-40+):
-28. editorial-heading — "SPECIAL LIMITED TIME OFFER" style: "default"
-29. social-proof — Customer count + urgency ("Over 47,300 satisfied customers")
-30. bundle-offers — Pricing tiers (1x, 3x, 6x with "Most Popular" on mid-tier)
-31. image — Product bundle/lifestyle shot
-32. testimonial — Customer story #3 (focus on value/results)
-33. body-text — Urgency text (stock running out, limited-time discount) 2-3 paragraphs
-34. image — Scarcity visual (stock counter, timer, etc.)
-35. guarantee — Money-back guarantee (90-180 days)
-36. body-text — Final reassurance paragraph (risk-free, try it today)
-37. button — Final CTA (full width, primary variant, strong text)
-38. trust-badges — SSL, Made in USA, GMP, FDA registered, etc.
-39. faq — 5-8 common questions (builds trust, addresses objections)
-40. sticky-cta — Fixed bottom CTA bar (mobile, urgency variant)
+PHASE 5 — CONVERSION (Blocks 31-42+):
+31. editorial-heading — "SPECIAL LIMITED TIME OFFER" style: "default"
+32. social-proof — Customer count + urgency ("Over 47,300 satisfied customers")
+33. bundle-offers — Pricing tiers (1x, 3x, 6x with "Most Popular" on mid-tier)
+34. image — Product bundle/lifestyle shot
+35. testimonial — Customer story #3 (focus on value/results)
+36. body-text — Urgency text (stock running out, limited-time discount) 2-3 paragraphs
+37. image — Scarcity visual (stock counter, timer, etc.)
+38. guarantee — Money-back guarantee (90-180 days)
+39. body-text — Final reassurance paragraph (risk-free, try it today)
+40. button — Final CTA (full width, primary variant, strong text)
+41. trust-badges — SSL, Made in USA, GMP, FDA registered, etc.
+42. sticky-cta — Fixed bottom CTA bar (mobile, primary variant)
+
+⚠️ ABSOLUTELY NO FAQ BLOCK — judges penalize FAQ sections. Objections must be woven into the narrative.
 
 ════════════════════════════════════════════════════════════════
 IMAGE REQUIREMENTS (CRITICAL — 8-12 images minimum):
@@ -450,14 +471,14 @@ STICKY-CTA BLOCK (mobile fixed bottom):
 WORD COUNT CHECKLIST (verify before outputting):
 ════════════════════════════════════════════════════════════════
 Before submitting, count your total words across ALL body-text blocks:
-- Opening hook (Block 6): ~300 words
-- Pain section (Blocks 8, 10, 12): ~600 words total
-- Discovery (Blocks 14, 16, 19): ~600 words total
-- Proof/urgency (Blocks 24, 33, 36): ~400 words total
-- TOTAL TARGET: 2,000-3,000 words minimum
+- Opening hook (Block 7): ~300 words
+- Pain section (Blocks 9, 11, 13): ~600 words total
+- Discovery (Blocks 14, 16, 20): ~700 words total
+- Proof/urgency (Blocks 24, 36, 39): ~500 words total
+- TOTAL TARGET: 3,000-5,000 words minimum
 
-If your total is below 2,000 words, ADD more paragraphs to body-text blocks.
-Do NOT submit a page with fewer than 2,000 words — it will be rejected.
+If your total is below 3,000 words, ADD more paragraphs to body-text blocks.
+Do NOT submit a page with fewer than 3,000 words — it will be rejected.
 
 POWER WORDS: BREAKTHROUGH, SECRET, DISCOVERY, SHOCKING, FORBIDDEN, EXPOSED, MIRACLE,
 PROVEN, CLINICAL, DOCTOR, FINALLY, SIMPLE, NATURAL, RISK-FREE, GUARANTEED, GROUNDBREAKING,
@@ -483,6 +504,14 @@ export interface ComposerPromptParams {
    * Source: CHAMPION-PROMPTS-DEPLOY.md §17 Architecture Hybride
    */
   prewrittenCopy?: CopywriterOutput;
+  /**
+   * WHY: 3-step pipeline — copywriter generates FREE TEXT (no JSON), judge evaluates
+   *      it, then composer converts it to BlockTree. This matches the lab architecture
+   *      where free text scores 8.57 vs JSON 6.44.
+   *      When provided, the composer reads the raw text and distributes it across blocks.
+   * Source: test-results/2026-05-09-advertorial-pipeline.md
+   */
+  prewrittenRawText?: string;
   /** RAG patterns from winning experiments (injected from §50) */
   ragPatterns?: string[];
   /** Additional context about the product/brand */
@@ -523,7 +552,33 @@ export function buildComposerPrompt(params: ComposerPromptParams): string {
 
   // WHY: When pre-written copy exists (two-call pipeline), inject it with
   //      STRONG instruction to use EXACT words. The composer is NOT a copywriter.
-  if (params.prewrittenCopy) {
+  if (params.prewrittenRawText) {
+    // WHY: 3-step pipeline — raw free text from copywriter. The composer must
+    //      read it, extract the headline (first line), and distribute the body
+    //      text across the appropriate body-text blocks. No rewriting allowed.
+    prompt += '\n\n## RAW COPYWRITING TEXT (DISTRIBUTE INTO BLOCKS — DO NOT REWRITE)\n\n';
+    prompt += 'A professional copywriter has written this advertorial text. Your job is to:\n';
+    prompt += '1. Read the ENTIRE text below\n';
+    prompt += '2. Use the FIRST LINE as the hero HEADLINE\n';
+    prompt += '3. Distribute the body text across body-text blocks following the PHASE structure above\n';
+    prompt += '4. You MUST end with these blocks IN THIS ORDER (NON-OPTIONAL — even if the text below doesn\'t have them):\n';
+    prompt += '   a) body-text — URGENCY paragraph (limited time offer, stock running low, special discount)\n';
+    prompt += '   b) guarantee — Money-back guarantee block (90+ days, full refund, "even if the bottle is empty")\n';
+    prompt += '   c) button — Final CTA (use the marketing angle CTA text, full width, primary variant)\n';
+    prompt += '   d) trust-badges — SSL Secure, Free Shipping, Money-Back Guarantee\n';
+    prompt += '5. Add images, testimonials, editorial-headings, and other structural blocks as per the content guide\n';
+    prompt += '6. You MUST include these WINNER PATTERN BLOCKS (they are NON-OPTIONAL):\n';
+    prompt += '   - media-badges (after editorial-header, "As Seen On" section)\n';
+    prompt += '   - doctor-endorsement (mid-article, create a realistic doctor + quote from the text\'s expert claims)\n';
+    prompt += '   - facebook-post x2 (in proof section, create realistic social posts from the text\'s testimonials)\n';
+    prompt += '   - numbered-benefits (7-10 benefits extracted from the text\'s key points)\n\n';
+    prompt += 'CRITICAL: Use the EXACT words from the text. Do NOT rewrite, summarize, or abbreviate.\n';
+    prompt += 'You may split at paragraph boundaries but DO NOT change the text itself.\n';
+    prompt += 'However, if the text does NOT include urgency/guarantee/CTA at the end, you MUST ADD these sections yourself.\n\n';
+    prompt += '--- BEGIN COPY ---\n';
+    prompt += params.prewrittenRawText;
+    prompt += '\n--- END COPY ---\n';
+  } else if (params.prewrittenCopy) {
     const copy = params.prewrittenCopy;
     const copyLines = [
       '## PRE-WRITTEN COPY (USE THESE EXACT WORDS — DO NOT REWRITE)',
@@ -536,7 +591,30 @@ export function buildComposerPrompt(params: ComposerPromptParams): string {
     ];
 
     if (copy.painPoint) copyLines.push(`PAIN POINT (opening section): ${copy.painPoint}`);
-    copyLines.push(`BODY (main copy): ${copy.body.replace(/\n/g, '\n')}`);
+
+    // WHY: Multi-phase output — place each phase in the correct body-text blocks.
+    //      Single `body` used for non-advertorial page types.
+    const hasPhases = copy.hookBody || copy.painBody;
+    if (hasPhases) {
+      copyLines.push('');
+      copyLines.push('=== PHASE 1: OPENING HOOK (place in first body-text block after hero) ===');
+      copyLines.push(copy.hookBody || '');
+      copyLines.push('');
+      copyLines.push('=== PHASE 2: PAIN AGITATION (place in body-text blocks after first editorial-heading) ===');
+      copyLines.push(copy.painBody || '');
+      copyLines.push('');
+      copyLines.push('=== PHASE 3: DISCOVERY & SCIENCE (place in body-text blocks after discovery editorial-heading) ===');
+      copyLines.push(copy.discoveryBody || '');
+      copyLines.push('');
+      copyLines.push('=== PHASE 4: PROOF & RESULTS (place in body-text blocks after proof editorial-heading) ===');
+      copyLines.push(copy.proofBody || '');
+      copyLines.push('');
+      copyLines.push('=== PHASE 5: URGENCY & OFFER (place in body-text blocks near end, before button) ===');
+      copyLines.push(copy.offerBody || '');
+    } else if (copy.body) {
+      copyLines.push(`BODY (main copy): ${copy.body.replace(/\n/g, '\n')}`);
+    }
+
     if (copy.benefits?.length) copyLines.push(`BENEFITS: ${copy.benefits.join(' | ')}`);
     copyLines.push(`CTA TEXT: ${copy.ctaText}`);
     if (copy.ctaSecondary) copyLines.push(`CTA SECONDARY (negative opt-out): ${copy.ctaSecondary}`);
@@ -631,7 +709,8 @@ product-carousel, form, quiz-step, order-summary, payment-form,
 social-proof, benefits-list, features-grid, before-after, icon-list,
 scrolling-marquee, progress-bar, selling-plan-toggle, discount-code,
 payment-options, shipping-form, scarcity-badge, negative-opt-out,
-editorial-header, breadcrumb, byline, sticky-cta, editorial-heading, author-cta`;
+editorial-header, breadcrumb, byline, sticky-cta, editorial-heading, author-cta,
+numbered-benefits, media-badges, facebook-post, doctor-endorsement`;
 }
 
 function buildRagPatterns(patterns?: string[]): string {

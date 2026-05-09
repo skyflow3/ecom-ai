@@ -42,6 +42,11 @@ import {
   renderStickyCta, renderEditorialSectionHeading, renderAuthorCta,
 } from './editorial-blocks';
 
+import {
+  renderNumberedBenefits, renderMediaBadges,
+  renderFacebookPost, renderDoctorEndorsement,
+} from './winner-blocks';
+
 // ─── Register all blocks ─────────────────────────────────────────────────────
 
 const ALL_BLOCKS: BlockDef[] = [
@@ -83,6 +88,8 @@ const ALL_BLOCKS: BlockDef[] = [
   { type: 'testimonial', category: 'social-proof', label: 'Testimonial', render: renderTestimonial },
   { type: 'social-proof', category: 'social-proof', label: 'Social Proof', render: renderSocialProof },
   { type: 'trust-badges', category: 'social-proof', label: 'Trust Badges', render: renderTrustBadges },
+  { type: 'facebook-post', category: 'social-proof', label: 'Facebook Post', render: renderFacebookPost },
+  { type: 'doctor-endorsement', category: 'social-proof', label: 'Doctor Endorsement', render: renderDoctorEndorsement },
 
   // Content
   { type: 'benefits-list', category: 'content', label: 'Benefits List', render: renderBenefitsList },
@@ -91,6 +98,8 @@ const ALL_BLOCKS: BlockDef[] = [
   { type: 'faq', category: 'content', label: 'FAQ', render: renderFaq },
   { type: 'before-after', category: 'content', label: 'Before/After', render: renderBeforeAfter },
   { type: 'icon-list', category: 'content', label: 'Icon List', render: renderIconList },
+  { type: 'numbered-benefits', category: 'content', label: 'Numbered Benefits', render: renderNumberedBenefits },
+  { type: 'media-badges', category: 'content', label: 'Media Badges', render: renderMediaBadges },
   { type: 'scrolling-marquee', category: 'content', label: 'Scrolling Marquee', render: renderScrollingMarquee },
   { type: 'progress-bar', category: 'content', label: 'Progress Bar', render: renderProgressBar },
   { type: 'product-carousel', category: 'content', label: 'Product Carousel', render: renderProductCarousel },
@@ -194,18 +203,19 @@ const PRO_CSS = `
     margin: 0 auto;
   }
 
-  /* WHY: Alternating section backgrounds from winning pages:
-        White -> Light gray #F5F5F5 -> White -> Cream #F9F2E8 -> White */
+  /* WHY: Winners (SmoothSpire, Rejuvera, Vibriance) use flat white backgrounds.
+     No alternating colors. Clean, editorial, single-background. */
   .ec-section:nth-child(even) {
-    background-color: #F5F5F5;
+    background-color: transparent;
   }
 
   /* ─── Typography ─── */
-  /* WHY: H1 36-52px desktop / 22-32px mobile, weight 800, 48-58px line-height */
+  /* WHY: Winners use sans-serif bold ALL CAPS headings (Montserrat/Open Sans).
+     DM Serif Display looks too "newspaper" — winners use hype-style sans-serif. */
   h1, h2, h3 { line-height: 1.2; }
 
   /* ─── Buttons ─── */
-  /* WHY: Green #00C249 primary CTA from checkout pages, 8px radius, 20px bold */
+  /* WHY: Winners use 60px height, 20-22px font, full-width for main CTAs */
   .ec-btn-primary {
     background: #00c249;
     color: #FFFFFF;
@@ -229,6 +239,17 @@ const PRO_CSS = `
     background: transparent;
     color: #2D6A4F;
     border: 2px solid #2D6A4F;
+  }
+  /* WHY: SmoothSpire uses orange #e1662d for the main inline CTA — stands out more */
+  .ec-btn-highlight {
+    background: #e1662d;
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(225, 102, 45, 0.4);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .ec-btn-highlight:hover {
+    background: #c9551f;
+    transform: translateY(-1px);
   }
 
   @keyframes ec-cta-pulse {

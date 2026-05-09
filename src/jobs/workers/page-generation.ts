@@ -13,7 +13,7 @@ import { createLogger } from '../../lib/logger';
 import { connection } from '../connection';
 import type { PageGenerationJobData } from '../queues';
 import { generatePage, type GeneratePageRequest } from '../../services/page-generator';
-import { getLlmConfig } from '../../lib/config';
+import { getLlmConfig, getCopywriterConfig, getProducerConfig } from '../../lib/config';
 import { db } from '../../lib/db';
 import { pageVariants } from '../../db/schema';
 import { eq } from 'drizzle-orm';
@@ -44,13 +44,23 @@ export const pageGenerationWorker = new Worker<PageGenerationJobData>(
       ragPatterns,
     };
 
-    // Get LLM config
+    // Get LLM configs
+    // WHY: 3-step pipeline uses MiMo (free) for generation, DeepSeek for judge.
+    //      2-call pipeline uses DeepSeek for copywriter + composer.
+    //      Source: GUIDE-IA.md "Architecture Actuelle"
     const llmConfig = getLlmConfig();
+    const judgeConfig = getCopywriterConfig(); // DeepSeek for judging
+
+    // WHY: For advertorial, pass producer config (MiMo, free) to enable 3-step pipeline.
+    //      For other formats, pass DeepSeek for 2-call JSON pipeline.
+    const producerConfig = genRequest.pageType === 'advertorial'
+      ? getProducerConfig()  // MiMo (free, validated 8.92 avg)
+      : judgeConfig;         // DeepSeek for JSON copywriter
 
     await job.updateProgress(20);
 
-    // Call the page generator
-    const result = await generatePage(genRequest, llmConfig);
+    // Call the page generator with producer + judge configs separated
+    const result = await generatePage(genRequest, llmConfig, producerConfig, judgeConfig);
 
     await job.updateProgress(80);
 

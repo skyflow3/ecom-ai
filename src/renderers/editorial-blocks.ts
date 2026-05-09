@@ -144,13 +144,16 @@ export function renderBreadcrumb(block: Block): string {
   const separator = props.separator ?? '&rsaquo;';
 
   // WHY: Desktop-only breadcrumb — hidden on mobile per design system rules
-  const crumbs = props.items.map((item, i) => {
-    const isLast = i === props.items.length - 1;
+  // AI can generate items as strings or objects — handle both gracefully
+  const items = Array.isArray(props.items) ? props.items : [];
+  const crumbs = items.map((item, i) => {
+    const label = typeof item === 'string' ? item : (item?.label ?? item?.text ?? '');
+    const isLast = i === items.length - 1;
     const style = isLast
       ? 'font-weight:600;color:#1B1B1B;'
       : 'color:#6B7280;';
     const sep = isLast ? '' : `<span style="margin:0 8px;color:#CCC;">${separator}</span>`;
-    return `<span style="font-family:'Inter',sans-serif;font-size:13px;${style}">${escapeHtml(item)}</span>${sep}`;
+    return `<span style="font-family:'Inter',sans-serif;font-size:13px;${style}">${escapeHtml(label)}</span>${sep}`;
   }).join('');
 
   const content = `<nav aria-label="Breadcrumb" style="padding:8px 0;">${crumbs}</nav>`;
@@ -227,7 +230,7 @@ export function renderStickyCta(block: Block): string {
     : 'background:linear-gradient(135deg,#00c249 0%,#53A81E 100%);';
 
   const btnHtml = props.url
-    ? `<a href="${escapeHtml(props.url)}" style="display:block;width:100%;min-height:52px;line-height:52px;text-align:center;font-family:'Inter',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:none;border-radius:8px;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</a>`
+    ? `<a href="${escapeHtml(props.url)}" style="display:block;width:100%;min-height:48px;padding:10px 16px;line-height:1.3;text-align:center;font-family:'Inter',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:none;border-radius:8px;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</a>`
     : `<button style="display:block;width:100%;min-height:52px;font-family:'Inter',sans-serif;font-size:17px;font-weight:700;color:#fff;border:none;border-radius:8px;cursor:pointer;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</button>`;
 
   const content = `
@@ -288,8 +291,8 @@ export function renderEditorialSectionHeading(block: Block): string {
       headingStyle = "font-family:'DM Serif Display',serif;font-size:22px;font-weight:700;color:#1B1B1B;border-bottom:3px solid #2D6A4F;padding-bottom:8px;display:inline-block;";
       break;
     case 'highlight':
-      // WHY: Left border accent with light green bg — matches SmoothSpire editorial section pattern
-      headingStyle = "font-family:'DM Serif Display',serif;font-size:22px;font-weight:700;color:#1B1B1B;background:linear-gradient(to right,rgba(45,106,79,0.08),transparent);padding:8px 16px;border-left:4px solid #2D6A4F;";
+      // WHY: Left border accent — clean editorial divider without colored background
+      headingStyle = "font-family:'DM Serif Display',serif;font-size:22px;font-weight:700;color:#1B1B1B;padding:8px 16px;border-left:4px solid #2D6A4F;";
       break;
     default:
       headingStyle = "font-family:'DM Serif Display',serif;font-size:22px;font-weight:700;color:#1B1B1B;";

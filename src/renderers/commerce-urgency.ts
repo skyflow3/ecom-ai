@@ -11,7 +11,7 @@
  */
 
 import type { Block } from '../design-system/blocks';
-import { escapeHtml, wrapSection, getProps, cn, buildResponsiveStyles, buildVisibilityClass } from './html-helpers';
+import { escapeHtml, wrapSection, getProps, cn, buildResponsiveStyles, buildVisibilityClass, renderIcon } from './html-helpers';
 
 // ─── Shared CSS constants (from real winning checkout pages) ────────────────────
 // WHY: These exact values come from CheckoutChamp/Webflow checkout analysis.
@@ -63,7 +63,10 @@ interface BundleOffersProps {
 }
 
 export function renderBundleOffers(block: Block): string {
-  const { offers, layout = 'cards' } = getProps<BundleOffersProps>(block);
+  const props = getProps<BundleOffersProps>(block);
+  // WHY: AI can generate offers as undefined — defensive default
+  const offers = Array.isArray(props.offers) ? props.offers : [];
+  const layout = props.layout ?? 'cards';
   const isCards = layout === 'cards';
 
   const offerCards = offers.map(offer => {
@@ -787,7 +790,9 @@ const GUARANTEE_LABELS: Record<string, string> = {
 export function renderGuarantee(block: Block): string {
   const { text, days, icon, guaranteeType = 'money-back', description } = getProps<GuaranteeProps>(block);
 
-  const iconDisplay = icon || (guaranteeType === 'bottom-of-the-bottle' ? '🛡️' : '✅');
+  // WHY: Render SVG icon instead of emoji/text — matches winner guarantee badges
+  const iconName = icon || (guaranteeType === 'bottom-of-the-bottle' ? 'shield' : 'shield-check');
+  const iconDisplay = renderIcon(iconName, guaranteeType === 'bottom-of-the-bottle' ? 48 : 48, '#2D6A4F');
 
   const headingParts: string[] = [];
   if (days) {

@@ -70,7 +70,11 @@ export type BlockName =
   | 'byline'
   | 'sticky-cta'
   | 'editorial-heading'
-  | 'author-cta';
+  | 'author-cta'
+  | 'numbered-benefits'
+  | 'media-badges'
+  | 'facebook-post'
+  | 'doctor-endorsement';
 
 // ─── Page Composition Rules ─────────────────────────────────────────────────
 
@@ -84,7 +88,7 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
 
   advertorial: {
     requiredSequence: ['editorial-header', 'hero', 'byline', 'sticky-cta'],
-    requiredBlocks: ['editorial-header', 'hero', 'byline', 'body-text', 'image', 'button', 'sticky-cta'],
+    requiredBlocks: ['editorial-header', 'hero', 'byline', 'body-text', 'image', 'button', 'sticky-cta', 'media-badges', 'numbered-benefits', 'facebook-post', 'doctor-endorsement'],
     // WHY: FAQ forbidden — judge C7 penalizes FAQ sections, objections must be woven into story
     forbiddenBlocks: ['payment-form', 'order-summary', 'quiz-step', 'faq'],
     sectionGap: '8',

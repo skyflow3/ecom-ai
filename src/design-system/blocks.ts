@@ -80,7 +80,8 @@ const baseBlockSchema: any = z.object({
     tablet: z.record(z.string()).optional(),
     desktop: z.record(z.string()).optional(),
   }).optional().default({}),
-  visibility: z.enum(['all', 'mobile-only', 'desktop-only']).optional().default('all'),
+  // WHY: AI generates "desktop" and "mobile" as shorthand, schema must accept both
+  visibility: z.enum(['all', 'mobile-only', 'desktop-only', 'mobile', 'desktop']).optional().default('all'),
   children: z.lazy(() => z.array(blockSchema)).optional(),
   locked: z.boolean().optional(),
   analyticsId: z.string().optional(),
@@ -564,7 +565,11 @@ const blockSchema: any = z.union([
     ...baseBlockSchema.shape,
     type: z.literal('breadcrumb'),
     props: z.object({
-      items: z.array(z.string()).min(1),
+      // WHY: AI generates items as objects {label, url} — accept both strings and objects
+      items: z.array(z.union([
+        z.string(),
+        z.object({ label: z.string(), url: z.string().optional() }),
+      ])).min(1),
     }),
   }),
 
@@ -587,6 +592,8 @@ const blockSchema: any = z.union([
       text: z.string().min(1),
       url: z.string().optional(),
       subtext: z.string().optional(),
+      // WHY: Prompt instructs AI to include variant, schema must accept it
+      variant: z.enum(['primary', 'urgency', 'secondary', 'highlight']).optional(),
     }),
   }),
 
@@ -610,6 +617,78 @@ const blockSchema: any = z.union([
       buttonUrl: z.string().optional(),
       trustText: z.string().optional(),
     }),
+  }),
+
+  // ─── Blocks ajoutés après analyse winners advertorial (visuel) ──────────────
+
+  // WHY: Numbered benefit grid — "7 Reasons Why" pattern from Particle, Javvy, Hike winners.
+  //      Each point has a large number, benefit headline, and short paragraph.
+  //      Visual pattern: big colored number + bold headline + short description.
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.literal('numbered-benefits'),
+    props: z.object({
+      items: z.array(z.object({
+        number: z.number().optional(),
+        headline: z.string().min(1),
+        description: z.string().optional(),
+        icon: z.string().optional(),
+      })).min(1),
+      accentColor: z.string().optional(),
+    }).passthrough(),
+  }),
+
+  // WHY: "As Seen On" media badges — Clarifion, Vibriance pattern.
+  //      Shows logos of media outlets (Men's Journal, GQ, Forbes, etc.)
+  //      Builds instant credibility. Appears after hero in winning advertorials.
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.literal('media-badges'),
+    props: z.object({
+      headline: z.string().optional(),
+      badges: z.array(z.object({
+        name: z.string().min(1),
+        logoUrl: z.string().optional(),
+        icon: z.string().optional(),
+      })).min(1),
+    }).passthrough(),
+  }),
+
+  // WHY: Facebook-style social proof post — Clarifion pattern.
+  //      Mimics a real Facebook post with: avatar, name, timestamp, text body,
+  //      image, like/comment/share counts, and reaction emojis.
+  //      Highest-trust social proof format — feels organic, not staged.
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.literal('facebook-post'),
+    props: z.object({
+      authorName: z.string().min(1),
+      authorAvatar: z.string().optional(),
+      timeAgo: z.string().optional(),
+      text: z.string().min(1),
+      imageUrl: z.string().optional(),
+      likes: z.number().optional(),
+      comments: z.number().optional(),
+      shares: z.number().optional(),
+      topComment: z.string().optional(),
+      topCommentAuthor: z.string().optional(),
+    }).passthrough(),
+  }),
+
+  // WHY: Doctor/expert endorsement — Vibriance, Rejuvera, SmoothSpire pattern.
+  //      Shows expert photo, name, credentials (MD, PhD, PT), and endorsement quote.
+  //      Positioned mid-article or before CTA for maximum trust.
+  z.object({
+    ...baseBlockSchema.shape,
+    type: z.literal('doctor-endorsement'),
+    props: z.object({
+      doctorName: z.string().min(1),
+      credentials: z.string().optional(),
+      photoUrl: z.string().optional(),
+      quote: z.string().min(1),
+      specialty: z.string().optional(),
+      institution: z.string().optional(),
+    }).passthrough(),
   }),
 
   // WHY: Fallback for block types the LLM generates that aren't in the registry yet.

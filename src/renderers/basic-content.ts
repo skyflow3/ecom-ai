@@ -17,6 +17,7 @@ import {
   cn,
   buildResponsiveStyles,
   buildVisibilityClass,
+  renderIcon,
 } from './html-helpers';
 
 // ─── Prop Interfaces ─────────────────────────────────────────────────────────
@@ -232,8 +233,8 @@ export function renderHero(block: Block): string {
   //      28px mobile / 40px desktop for editorial (clamp), 36px desktop for commerce
   //      Weight 800, DM Serif Display font -- matches --text-h1 token from design system
   const headlineFont = isEditorial
-    ? "font-family:'DM Serif Display',serif;font-size:clamp(1.75rem,5vw,2.5rem);font-weight:800;line-height:1.15;color:#1B1B1B;"
-    : "font-family:'DM Serif Display',serif;font-size:clamp(1.875rem,5vw,2.25rem);font-weight:800;line-height:1.2;";
+    ? "font-family:Montserrat,'Arial Black',sans-serif;font-size:clamp(1.75rem,5.5vw,2.75rem);font-weight:800;line-height:1.15;color:#1B1B1B;"
+    : "font-family:Montserrat,'Arial Black',sans-serif;font-size:clamp(1.875rem,5vw,2.5rem);font-weight:800;line-height:1.2;";
 
   const content = `
     <div class="ec-hero-content" style="text-align:${alignment};${textColor}">
@@ -276,8 +277,8 @@ export function renderHeading(block: Block): string {
   //      section: 24px, card: 20px
   const tagMap: Record<string, string> = { hero: 'h1', section: 'h2', card: 'h3' };
   const sizeMap: Record<string, string> = {
-    hero: 'font-size:clamp(1.5rem,5vw,2.25rem)',
-    section: 'font-size:24px',
+    hero: 'font-size:clamp(1.75rem,5vw,2.5rem)',
+    section: 'font-size:clamp(1.25rem,4vw,2rem)',
     card: 'font-size:20px',
   };
 
@@ -285,7 +286,7 @@ export function renderHeading(block: Block): string {
   const size = sizeMap[level] ?? 'font-size:24px';
   const escapedText = escapeHtml(props.text);
 
-  const content = `<${tag} class="ec-heading ec-heading-${level}" style="font-family:'DM Serif Display',serif;${size};font-weight:700;line-height:1.2;margin:0;text-align:${alignment};color:#1B1B1B;">${escapedText}</${tag}>`;
+  const content = `<${tag} class="ec-heading ec-heading-${level}" style="font-family:Montserrat,'Arial Black',sans-serif;${size};font-weight:700;line-height:1.2;margin:0;text-align:${alignment};color:#1B1B1B;text-transform:uppercase;">${escapedText}</${tag}>`;
 
   return renderBlock(block, 'ec-heading-block', content);
 }
@@ -423,25 +424,24 @@ export function renderButton(block: Block): string {
   const fullWidthStyle = props.fullWidth ? 'width:100%;' : '';
   const escapedText = escapeHtml(props.text);
 
-  // WHY: Button variants from winning DTC pages:
-  //      Primary: green #00C249, 8px radius (matches checkout CTA)
-  //      Urgency: red #dc2626 with pulse animation
-  //      Secondary: outline with green border
   const variantStyleMap: Record<string, string> = {
     primary: 'background:#00c249;color:#fff;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);',
     urgency: 'background:#dc2626;color:#fff;box-shadow:0 4px 14px rgba(220,38,38,0.4);',
     secondary: 'background:transparent;color:#2D6A4F;border:2px solid #2D6A4F;',
+    highlight: 'background:#e1662d;color:#fff;box-shadow:0 4px 14px rgba(225,102,45,0.4);',
   };
 
   const variantStyle = variantStyleMap[variant] ?? variantStyleMap['primary'];
 
+  // WHY: Fixed line-height breaks multi-line text into huge buttons.
+  //      Use normal line-height + padding so text wraps gracefully.
   const baseBtnStyle = [
     'display:inline-block',
     'min-height:52px',
-    'line-height:52px',
-    'padding:0 24px',
+    'padding:12px 28px',
     'font-size:18px',
     'font-weight:700',
+    'line-height:1.3',
     'font-family:Inter,-apple-system,sans-serif',
     'border-radius:8px',
     'text-decoration:none',
@@ -450,7 +450,6 @@ export function renderButton(block: Block): string {
     'border:none',
     'box-sizing:border-box',
     'max-width:100%',
-    'word-wrap:break-word',
     fullWidthStyle,
     variantStyle,
     'transition:transform 0.15s ease,box-shadow 0.15s ease,background-color 200ms ease-in-out;',
@@ -470,7 +469,6 @@ export function renderCta(block: Block): string {
   const props = getProps<CtaProps>(block);
   const variant = props.variant ?? 'primary';
   const variantClass = BUTTON_VARIANT_CLASS[variant] ?? 'ec-btn-primary';
-  const fullWidthStyle = props.fullWidth ? 'width:100%;' : '';
   const escapedText = escapeHtml(props.text);
 
   const conversionAttr = props.conversionEvent
@@ -479,22 +477,26 @@ export function renderCta(block: Block): string {
 
   const ariaLabel = ` aria-label="${escapedText}"`;
 
-  // WHY: Same variant styles as renderButton for consistency
   const variantStyleMap: Record<string, string> = {
     primary: 'background:#00c249;color:#fff;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);',
     urgency: 'background:#dc2626;color:#fff;box-shadow:0 4px 14px rgba(220,38,38,0.4);',
     secondary: 'background:transparent;color:#2D6A4F;border:2px solid #2D6A4F;',
+    highlight: 'background:#e1662d;color:#fff;box-shadow:0 4px 14px rgba(225,102,45,0.4);',
   };
 
   const variantStyle = variantStyleMap[variant] ?? variantStyleMap['primary'];
 
+  // WHY: Winners use big CTAs — but fixed line-height breaks on multi-line text.
+  //      Use padding + normal line-height so text wraps without bloating the button.
+  //      Max ~8 words for button text. Longer text goes in subtitle below.
   const baseBtnStyle = [
-    'display:inline-block',
-    'min-height:52px',
-    'line-height:52px',
-    'padding:0 24px',
-    'font-size:18px',
+    'display:block',
+    'width:100%',
+    'min-height:56px',
+    'padding:14px 28px',
+    'font-size:20px',
     'font-weight:700',
+    'line-height:1.3',
     'font-family:Inter,-apple-system,sans-serif',
     'border-radius:8px',
     'text-decoration:none',
@@ -503,8 +505,6 @@ export function renderCta(block: Block): string {
     'border:none',
     'box-sizing:border-box',
     'max-width:100%',
-    'word-wrap:break-word',
-    fullWidthStyle,
     variantStyle,
     'transition:transform 0.15s ease,box-shadow 0.15s ease,background-color 200ms ease-in-out;',
   ].filter(Boolean).join(';');
@@ -528,13 +528,19 @@ export function renderBenefitsList(block: Block): string {
     ? 'display:grid;grid-template-columns:1fr;gap:12px;list-style:none;padding:0;margin:0;'
     : 'list-style:none;padding:0;margin:0;';
 
-  const itemsHtml = props.benefits.map((benefit) => {
-    const iconHtml = benefit.icon
-      ? `<span class="ec-benefit-icon" style="font-size:1.25rem;margin-right:8px;flex-shrink:0;">${escapeHtml(benefit.icon)}</span>`
+  // WHY: AI can generate benefits as strings or objects — handle both
+  const benefits = Array.isArray(props.benefits) ? props.benefits : [];
+  const itemsHtml = benefits.map((benefit) => {
+    // Handle string items (AI sometimes sends plain strings instead of objects)
+    const b = typeof benefit === 'string'
+      ? { title: benefit, icon: '', description: '' }
+      : benefit;
+    const iconHtml = b.icon
+      ? `<span class="ec-benefit-icon" style="display:flex;align-items:center;margin-right:8px;flex-shrink:0;">${renderIcon(b.icon, 20, '#2D6A4F')}</span>`
       : '';
-    const titleHtml = `<strong style="color:var(--color-text);">${escapeHtml(benefit.title)}</strong>`;
-    const descHtml = benefit.description
-      ? `<p style="margin:4px 0 0;font-size:0.9375rem;color:var(--color-muted);line-height:1.4;">${escapeHtml(benefit.description)}</p>`
+    const titleHtml = `<strong style="color:var(--color-text);">${escapeHtml(b.title)}</strong>`;
+    const descHtml = b.description
+      ? `<p style="margin:4px 0 0;font-size:0.9375rem;color:var(--color-muted);line-height:1.4;">${escapeHtml(b.description)}</p>`
       : '';
 
     return `<li class="ec-benefit-item" style="display:flex;align-items:flex-start;gap:4px;">
@@ -563,7 +569,7 @@ export function renderFeaturesGrid(block: Block): string {
 
   const itemsHtml = props.features.map((feature) => {
     const iconHtml = feature.icon
-      ? `<div class="ec-feature-icon" style="font-size:1.5rem;margin-bottom:8px;">${escapeHtml(feature.icon)}</div>`
+      ? `<div class="ec-feature-icon" style="margin-bottom:8px;">${renderIcon(feature.icon, 24, '#2D6A4F')}</div>`
       : '';
     const titleHtml = `<h3 style="font-size:1rem;font-weight:600;margin:0 0 4px;color:var(--color-text);font-family:'Inter',sans-serif;">${escapeHtml(feature.title)}</h3>`;
     const descHtml = feature.description
@@ -734,7 +740,7 @@ export function renderIconList(block: Block): string {
   const itemsHtml = props.items.map((item) => {
     // Icon can be an emoji or a short label — render as-is (escaped)
     return `<li class="ec-icon-list-item" style="display:flex;align-items:center;gap:10px;padding:6px 0;">
-      <span class="ec-icon" style="font-size:1.125rem;flex-shrink:0;width:24px;text-align:center;">${escapeHtml(item.icon)}</span>
+      <span class="ec-icon" style="display:flex;align-items:center;justify-content:center;flex-shrink:0;width:24px;">${renderIcon(item.icon, 18, '#2D6A4F')}</span>
       <span style="font-size:1rem;color:var(--color-text);line-height:1.4;">${escapeHtml(item.text)}</span>
     </li>`;
   }).join('');

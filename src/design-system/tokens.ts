@@ -317,6 +317,11 @@ export const BLOCK_TYPES = [
   'shipping-form',           // Formulaire adresse checkout
   'scarcity-badge',          // "High risk of selling out" badge
   'negative-opt-out',        // Checkbox "Don't add" (upsell)
+  // ─── Blocks ajoutés après analyse winners advertorial ─────────────────
+  'numbered-benefits',       // Numbered benefit grid ("7 Reasons Why" — listicle pattern)
+  'media-badges',            // "As Seen On" media logos (Clarifion, Vibriance pattern)
+  'facebook-post',           // Facebook-style social proof card (Clarifion pattern)
+  'doctor-endorsement',      // Expert/doctor endorsement with credentials
 ] as const;
 
 export type BlockType = (typeof BLOCK_TYPES)[number];
