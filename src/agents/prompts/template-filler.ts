@@ -37,6 +37,20 @@ export interface ProductBrief {
   categoryBadge?: string;
   /** Number of ratings to display */
   ratingCount?: string;
+  /** Doctor/author image URL (replaces the byline photo) */
+  doctorImageUrl?: string;
+  /** Product image URL (replaces sidebar hero, update box images) — landscape 16:9 for section content */
+  productImageUrl?: string;
+  /** Square product image URL for sidebar + update box — 1080x1080 or similar */
+  productImageSquareUrl?: string;
+  /** Logo image URL (replaces the site logo) */
+  logoUrl?: string;
+  /** Product video URL (replaces the hero/section video) */
+  productVideoUrl?: string;
+  /** Comment screenshot image URLs (replaces fake FB comment screenshots) */
+  commentScreenshotUrls?: string[];
+  /** Content section image URLs (inserted between sections). Keyed by section number */
+  contentImageUrls?: Record<number, string>;
 }
 
 /**

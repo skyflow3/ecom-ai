@@ -103,6 +103,9 @@ export function fillTemplate(
 
   // ─── Build AI content for each zone ────────────────────────────────────────
 
+  // Extract product image URL for content section images
+  const productImageUrl = extractString(content['_productImageUrl']);
+
   // ZONE 1: Opening paragraphs + Sections 1-11
   const zone1Parts: string[] = [];
 
@@ -118,6 +121,11 @@ export function fillTemplate(
 
     const headingText = typeof heading === 'string' ? heading : `Section ${n}`;
     zone1Parts.push(`<h2 data-text="text" href="" data-secondsdelay="">${headingText}</h2>`);
+
+    // Product image right below the heading (before paragraphs)
+    if (productImageUrl) {
+      zone1Parts.push(buildSectionImage(productImageUrl));
+    }
 
     if (typeof paragraphs === 'string') {
       zone1Parts.push(...buildParagraphs(paragraphs));
@@ -135,6 +143,11 @@ export function fillTemplate(
 
     const headingText = typeof heading === 'string' ? heading : `Section ${n}`;
     zone3Parts.push(`<h2 data-text="text" href="" data-secondsdelay="">${headingText}</h2>`);
+
+    // Product image right below the heading (before paragraphs)
+    if (productImageUrl) {
+      zone3Parts.push(buildSectionImage(productImageUrl));
+    }
 
     if (typeof paragraphs === 'string') {
       zone3Parts.push(...buildParagraphs(paragraphs));
@@ -335,6 +348,11 @@ export function fillTemplate(
   const productName = typeof content['product_name'] === 'string' ? content['product_name'] as string : '';
   html = cleanFakeComments(html, productName);
 
+  // ─── Replace images (AFTER all content replacement) ───────────────────────
+  // WHY: The template has hardcoded images from the original SmoothSpine product.
+  //      We replace all of them with images matching the new product.
+  html = replaceImages(html, content);
+
   return { html, templateId, slotsFilled, slotsEmpty, warnings };
 }
 
@@ -395,6 +413,178 @@ function convertMarkdownFormatting(text: string): string {
   result = result.replace(/\*\*(.+?)\*\*/g, '<b><span>$1</span></b>');
   result = result.replace(/\*(.+?)\*/g, '<i>$1</i>');
   return result;
+}
+
+// ─── Image Replacement ───────────────────────────────────────────────────────────
+
+/**
+ * Exact URLs to replace in the SmoothSpine template.
+ * WHY: We match FULL exact URLs only — never fragments — to avoid replacing
+ *      structural images (star ratings, trust badges, font icons, etc.).
+ */
+const EXACT_IMAGE_REPLACEMENTS = [
+  {
+    id: 'sidebarHero',
+    /** Unique substring that appears ONLY in the sidebar hero product image */
+    needle: '1768413682017_Hero_Image_4_.png',
+  },
+  {
+    id: 'updateBox',
+    /** Unique substring for the update box product image */
+    needle: '1752684886365_Design_sans_titre__18__removebg_preview.png',
+  },
+  {
+    id: 'commentScreenshot1',
+    /** Unique substring for FB comment screenshot 1 */
+    needle: '1753108886217_Screenshot_6.png',
+  },
+  {
+    id: 'commentScreenshot2',
+    /** Unique substring for FB comment screenshot 2 */
+    needle: '1753108854342_Screenshot_2.png',
+  },
+  {
+    id: 'doctor',
+    /** Unique substring for the doctor/author profile image */
+    needle: 'dr_blane_1__2_.webp',
+  },
+  {
+    id: 'logo',
+    /** Unique substring for the site logo ONLY (not other gempages images like trust badges/stars) */
+    needle: '649b88e8_c252_4c8f_b01d_4e911bcda14b',
+  },
+] as const;
+
+/**
+ * Video URL to replace with an image.
+ */
+const VIDEO_URL_NEEDLE = 'cdn.shopify.com/videos/c/o/v/4ee79c098d64428db2bcd603d759dc4f.mp4';
+
+/**
+ * Replace ONLY the 6 specific images + video from the original template.
+ * Uses exact needle matching — only replaces URLs containing the specific needle string.
+ * Does NOT touch star ratings, trust badges, fonts, or any other structural images.
+ */
+function replaceImages(html: string, content: ContentMap): string {
+  const productImageUrl = extractString(content['_productImageUrl']);
+  const productImageSquareUrl = extractString(content['_productImageSquareUrl']);
+  const doctorImageUrl = extractString(content['_doctorImageUrl']);
+  const logoUrl = extractString(content['_logoUrl']);
+  const commentUrls = (content['_commentScreenshotUrls'] as string[]) ?? [];
+  const videoReplacementUrl = extractString(content['_productVideoUrl']);
+
+  // Square image for sidebar + update box (1080x1080, matches original)
+  const squareUrl = productImageSquareUrl || productImageUrl;
+
+  // 1. Sidebar hero + Update box → square product image
+  if (squareUrl) {
+    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[0].needle, squareUrl);
+    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[1].needle, squareUrl);
+  }
+
+  // 2. Comment screenshots → new screenshots
+  if (commentUrls.length >= 1) {
+    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[2].needle, commentUrls[0]);
+  }
+  if (commentUrls.length >= 2) {
+    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[3].needle, commentUrls[1]);
+  }
+
+  // 3. Doctor image
+  if (doctorImageUrl) {
+    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[4].needle, doctorImageUrl);
+  }
+
+  // 4. Logo
+  if (logoUrl) {
+    html = replaceExactUrl(html, EXACT_IMAGE_REPLACEMENTS[5].needle, logoUrl);
+  }
+
+  // 5. Video → replace with product image (remove <video> element, insert <img>)
+  // WHY: The original template has a product video under the headline/subheadline.
+  //      We replace it with a product image since we don't have a video for the new product.
+  if (productImageUrl) {
+    html = replaceVideoWithImage(html, VIDEO_URL_NEEDLE, productImageUrl);
+  }
+
+  return html;
+}
+
+/**
+ * Replace URL in src/href/poster attributes — exact needle matching only.
+ * WHY: We match a UNIQUE needle substring that appears only in the target image URL.
+ *      This prevents accidentally replacing star ratings, trust badges, etc.
+ */
+function replaceExactUrl(html: string, needle: string, newUrl: string): string {
+  const escaped = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Only match src="...needle..." or srcset="...needle..." or poster="...needle..."
+  const regex = new RegExp(`((?:src|srcset|poster|href)=["'])[^"']*${escaped}[^"']*(["'])`, 'gi');
+  return html.replace(regex, `$1${newUrl}$2`);
+}
+
+/**
+ * Replace a <video> element with an <img> element.
+ * WHY: The template has a product video under the headline. We don't have a video
+ *      for the new product, so we replace the entire video element with a product image.
+ * NOTE: The video URL is in the src="" attribute of <video>, and closing tags use <\video> <\div>.
+ */
+function replaceVideoWithImage(html: string, videoUrlNeedle: string, imageUrl: string): string {
+  const escaped = videoUrlNeedle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Match the full <div><video src="url"...>...closing...</div> block
+  // The URL is inside the src attribute, not between tags
+  // Handle both </video> and <\video>, </div> and <\div>
+  const closeVideo = '(?:<\\/video>|<\\\\video>)';
+  const closeDiv = '(?:<\\/div>|<\\\\div>)';
+
+  // Pattern: <div...><video ...src="url"...>...closing tags...</div>
+  const videoPattern = new RegExp(
+    `<div[^>]*>\\s*<video[^>]*src=["'][^"']*${escaped}[^"']*["'][^>]*>[\\s\\S]*?${closeVideo}\\s*${closeDiv}`,
+    'gi'
+  );
+
+  const imageReplacement = `<div data-secondsdelay="" class="main_img_1"><img src="${imageUrl}" alt="" href="" title="" target="_self" align="center" width="" height="" onclick="" class="fk-disable-lazy disable-fk-lazy"></div>`;
+
+  if (videoPattern.test(html)) {
+    html = html.replace(videoPattern, imageReplacement);
+  } else {
+    // Fallback: replace just the <video> tag (URL in src attribute)
+    // Find position of video URL, expand to containing <div>
+    const urlIdx = html.indexOf(videoUrlNeedle);
+    if (urlIdx !== -1) {
+      // Go back to find <div> wrapper
+      const divStart = html.lastIndexOf('<div', urlIdx);
+      // Find closing tags after the URL
+      const afterUrl = html.substring(urlIdx);
+      const videoCloseMatch = afterUrl.match(/(?:<\/video>|<\\video>)/i);
+      if (divStart !== -1 && videoCloseMatch) {
+        const endIdx = urlIdx + videoCloseMatch.index! + videoCloseMatch[0].length;
+        // Check if </div> follows immediately
+        const afterVideoClose = html.substring(endIdx, endIdx + 20).trim();
+        const finalEnd = afterVideoClose.startsWith('</div>') || afterVideoClose.startsWith('<\\div>')
+          ? endIdx + (afterVideoClose.startsWith('</div>') ? 6 : 6)
+          : endIdx;
+        html = html.substring(0, divStart) + imageReplacement + html.substring(finalEnd);
+      }
+    }
+  }
+
+  return html;
+}
+
+/**
+ * Build an image div to insert below a section heading.
+ * WHY: Zone replacement strips all original media from between headings.
+ *      We re-insert a product image below each section heading.
+ * FORMAT: Matches original winner template dimensions — 1264x711 (16:9 horizontal).
+ *         Uses main_img_1 class for layout + explicit width/height for correct aspect ratio.
+ */
+function buildSectionImage(imageUrl: string): string {
+  return `<div data-secondsdelay="" class="main_img_1"><img src="${imageUrl}" alt="" href="" title="" target="_self" align="center" width="" height="" onclick="" class="fk-disable-lazy disable-fk-lazy"></div>`;
+}
+
+function extractString(value: string | string[] | Record<string, string>[] | undefined): string {
+  if (typeof value === 'string') return value;
+  return '';
 }
 
 // ─── Comment Cleanup ───────────────────────────────────────────────────────────

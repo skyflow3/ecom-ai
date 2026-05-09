@@ -98,13 +98,23 @@ export async function generateFromTemplate(
       }
 
       // Step 4: Merge brief values (these come from the brief, not AI)
-      // WHY: product_name, prices, rating count are known upfront — no need for AI to generate them.
+      // WHY: product_name, prices, rating count, images are known upfront — no need for AI to generate them.
       const mergedMap: ContentMap = {
         product_name: brief.name,
         product_price: brief.price,
         product_original_price: brief.originalPrice,
         product_discount_pct: brief.discountPct,
         hero_rating_text: `${brief.ratingCount ?? '4,891'} Ratings`,
+        // Trust badge guarantee text (not in slot config but exists in template HTML)
+        trust_badge_guarantee: brief.guarantee,
+        // Image URLs passed through for post-processing replacement
+        _doctorImageUrl: brief.doctorImageUrl ?? '',
+        _productImageUrl: brief.productImageUrl ?? '',
+        _productImageSquareUrl: brief.productImageSquareUrl ?? '',
+        _logoUrl: brief.logoUrl ?? '',
+        _productVideoUrl: brief.productVideoUrl ?? '',
+        _commentScreenshotUrls: brief.commentScreenshotUrls ?? [],
+        _contentImageUrls: brief.contentImageUrls ?? {},
         ...contentMap,
       };
 

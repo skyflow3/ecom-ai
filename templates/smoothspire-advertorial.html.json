@@ -385,6 +385,12 @@
       "notes": "Keep existing badge images or replace with your own"
     },
 
+    "trust_badge_guarantee": {
+      "description": "Guarantee text shown on trust badge (e.g., '90-Day Money-Back Guarantee')",
+      "ai_generated": false,
+      "example": "90-Day Money-Back Guarantee"
+    },
+
     "sidebar_product_title": {
       "description": "Product title in desktop sidebar",
       "example": "Finally! Get Instant Relief From Sciatica!",

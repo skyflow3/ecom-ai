@@ -54,6 +54,18 @@ const TEST_BRIEF: ProductBrief = {
   authorPersona: 'Dr. Sarah Mitchell, MD, Nutritionist',
   categoryBadge: 'Health',
   ratingCount: '4,891',
+  // Image URLs — replace all SmoothSpine product images
+  // Section content images: 1264x711 (16:9 landscape) to match original winner template
+  // Sidebar + update box: 1080x1080 (square) to match original dimensions
+  // Doctor: small square for byline photo
+  doctorImageUrl: 'https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?w=200&h=200&fit=crop&crop=face',
+  productImageUrl: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1264&h=711&fit=crop',
+  productImageSquareUrl: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1080&h=1080&fit=crop',
+  logoUrl: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=200&h=60&fit=crop',
+  commentScreenshotUrls: [
+    'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1264&h=711&fit=crop',
+    'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1264&h=711&fit=crop',
+  ],
 };
 
 // ─── API Config ───────────────────────────────────────────────────────────────
