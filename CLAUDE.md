@@ -133,7 +133,8 @@ ECOM-AI/
 │
 ├── docs/                             ← DOCUMENTATION PRODUCTION
 │   ├── COPYWRITING-SYSTEM.md            Manuel copywriting auto-suffisant
-│   └── SOAP_OPERA_STRATEGY.md           Stratégie Soap Opera 7-Day
+│   ├── SOAP_OPERA_STRATEGY.md           Stratégie Soap Opera 7-Day
+│   └── TEMPLATE-SYSTEM.md               Pipeline templates HTML (architecture, guide ajout)
 │
 ├── tools/                            ← OUTILS DE PRODUCTION
 │   ├── hyperframes/                     Post-production vidéo HTML
@@ -150,104 +151,14 @@ ECOM-AI/
 
 ---
 
-## TEMPLATE SYSTEM (Pipeline HTML complet)
+## TEMPLATE SYSTEM
 
-### Architecture
+Génère des pages HTML complètes à partir de templates winners (99.9% fidélité visuelle).
+**2 templates**: `smoothspire-advertorial` (narratif, 9.76/10) + `hike-reasons-why` (listicle, 9.23-10.41/10).
 
-Le système génère des pages HTML complètes à partir de templates winners. 99.9% de fidélité visuelle.
+**DOC COMPLETE**: `docs/TEMPLATE-SYSTEM.md` — architecture, utilisation, routage, sanitisation, ajout de templates.
 
-```
-FLOW:
-  ProductBrief → AI génère JSON (content map) → template-engine remplit {{SLOT}} markers → HTML final
-
-FICHIERS PAR TEMPLATE:
-  templates/{id}.html            ← HTML original du winner (NE PAS MODIFIER)
-  templates/{id}.marked.html     ← HTML avec {{SLOT}} markers (texte produit remplacé)
-  templates/{id}.html.json       ← Config des slots (description, example, ai_generated)
-```
-
-### Templates disponibles
-
-| Template ID | Format | Slots | Prompt | Judge Config | Score validé |
-|-------------|--------|-------|--------|--------------|--------------|
-| `smoothspire-advertorial` | Advertorial narratif | 47 | `template-filler.ts` | advertorial_judge_v2.json | 9.76/10 |
-| `hike-reasons-why` | Listicle "10 Reasons Why" | 72 | `reasons-why-filler.ts` | advertorial_listicle_judge_v2.json | 9.23-10.41/10 |
-
-### Comment utiliser
-
-```bash
-# Lancer le test advertorial classique
-npx tsx scripts/test-template-generate.ts
-
-# Lancer le test listicle "reasons why"
-npx tsx scripts/test-reasons-why-template.ts
-```
-
-```typescript
-// Utilisation programmatique
-import { generateFromTemplate } from './src/services/template-generator';
-import type { ProductBrief } from './src/agents/prompts/template-filler';
-
-const brief: ProductBrief = {
-  name: 'Mon Produit',
-  description: 'Description du produit...',
-  niche: 'Health & Wellness',
-  targetAudience: 'Women 40-65',
-  benefits: ['Benefit 1', 'Benefit 2'],
-  price: '$49', originalPrice: '$119', discountPct: '58%',
-  guarantee: '90-Day Money-Back Guarantee',
-  mechanismName: 'Mon Mécanisme Unique',
-  authorPersona: 'Dr. Smith, MD',
-  categoryBadge: 'Health',
-  ratingCount: '4,891',
-  doctorImageUrl: 'https://...',
-  productImageUrl: 'https://...',
-  productImageSquareUrl: 'https://...',
-};
-
-const config = {
-  apiUrl: process.env.DEEPSEEK_API_URL,
-  apiKey: process.env.DEEPSEEK_API_KEY,
-  model: 'deepseek-chat',
-  temperature: 0.3,
-  maxTokens: 8192,
-};
-
-const result = await generateFromTemplate('hike-reasons-why', brief, config, './output');
-// result.outputPath = chemin du HTML généré
-```
-
-### Routage automatique
-
-`template-generator.ts` route automatiquement vers le bon prompt selon le template ID :
-- `smoothspire-advertorial` → `buildTemplateFillerPrompt()` (narratif)
-- `hike-reasons-why` → `buildReasonsWhyPrompt()` (listicle, Champion #4)
-
-### Sanitisation HTML
-
-`template-engine.ts` sanitize automatiquement le contenu AI avant injection :
-- Ferme les `<strong>`, `<em>`, `<b>`, `<i>`, `<span>` orphelins
-- Supprime les `</div>` parasites (cassent le DOM → JS ne marche plus)
-- **POURQUOI**: L'IA génère parfois des tags non fermés qui corrompent la structure DOM et désactivent le JS (sticky bar, progress bar, countdown)
-
-### Remplacement d'images
-
-Chaque template a son propre mapping d'images dans `TEMPLATE_IMAGE_MAP` (template-engine.ts) :
-- **SmoothSpire**: URLs Shopify CDN (product hero, CTA, author photo, comment screenshots)
-- **Hike-2**: URLs Webflow CDN (product CTA, comparison, author, sidebar placeholder, 10 reason images)
-
-Les images passent via le `ProductBrief` : `doctorImageUrl`, `productImageUrl`, `productImageSquareUrl`.
-
-### Ajouter un nouveau template
-
-1. Copier le HTML winner dans `templates/{id}.html`
-2. Créer `templates/{id}.marked.html` : remplacer le texte produit par des `{{SLOT}}` markers
-3. Créer `templates/{id}.html.json` : lister chaque slot avec description + example + ai_generated
-4. Créer le prompt dans `src/agents/prompts/{id}-filler.ts`
-5. Ajouter le routage dans `template-generator.ts` → `buildPromptForTemplate()`
-6. Ajouter les needles d'images dans `TEMPLATE_IMAGE_MAP` dans `template-engine.ts`
-7. Créer un test script dans `scripts/test-{id}.ts`
-8. Lancer le test → vérifier score ≥ 8.0 + HTML visuellement correct
+**TESTS**: `npx tsx scripts/test-template-generate.ts` (SmoothSpire) | `npx tsx scripts/test-reasons-why-template.ts` (listicle)
 ```
 
 ---
