@@ -1,0 +1,447 @@
+{
+  "templateId": "product-page-tryemsense",
+  "pageType": "product_page",
+  "judgeConfig": "judges/product_page_judge_v2.json",
+  "description": "DTC product page with hero, features, testimonials, comparison table, doctor endorsement, how-to steps, reviews, guarantee, FAQ",
+  "source": "tryemsense.com foot massager product page",
+  "slots": {
+    "page_title": {
+      "description": "SEO page title with product name and main benefit",
+      "example": "EMSense - Triple Therapy Foot Massager",
+      "ai_generated": true
+    },
+    "meta_description": {
+      "description": "SEO meta description, 150-160 chars, includes product name, main benefit, and call to action",
+      "example": "EMSense is a powerful massager that helps relieve foot pain, tingling, burning sensations, and numbness.",
+      "ai_generated": true
+    },
+    "sale_discount_text": {
+      "description": "Discount percentage displayed in sale banner",
+      "example": "60% OFF",
+      "ai_generated": false
+    },
+    "hero_headline": {
+      "description": "Bold hero headline, emotional pattern interrupt with product category and main benefit",
+      "example": "Finally! Real Relief for Neuropathy Pain in Your Feet",
+      "ai_generated": true
+    },
+    "hero_subtitle": {
+      "description": "Hero subtitle, 1-2 sentences explaining what the product does in simple terms",
+      "example": "Uses Triple Technology to help relieve pain, tingling, swelling, and foot fatigue without costly procedures or addictive medications.",
+      "ai_generated": true
+    },
+    "hero_benefit_1_title": {
+      "description": "First hero benefit title, short punchy benefit (e.g. therapy type)",
+      "example": "Red-light heat therapy",
+      "ai_generated": true
+    },
+    "hero_benefit_1_desc": {
+      "description": "First hero benefit description, what it does for the user",
+      "example": "helps dilate blood vessels to support healthy circulation.*",
+      "ai_generated": true
+    },
+    "hero_benefit_2_title": {
+      "description": "Second hero benefit title",
+      "example": "Massaging pulses",
+      "ai_generated": true
+    },
+    "hero_benefit_2_desc": {
+      "description": "Second hero benefit description",
+      "example": "help stimulate damaged nerves.*",
+      "ai_generated": true
+    },
+    "hero_benefit_3_title": {
+      "description": "Third hero benefit title",
+      "example": "Gentle compression",
+      "ai_generated": true
+    },
+    "hero_benefit_3_desc": {
+      "description": "Third hero benefit description",
+      "example": "steadies the feet and directs blood flow where it's needed most.*",
+      "ai_generated": true
+    },
+    "hero_trust_1_title": {
+      "description": "Trust badge 1 title in hero section, short 2-4 words",
+      "example": "30-day money back",
+      "ai_generated": true
+    },
+    "hero_trust_1_desc": {
+      "description": "Trust badge 1 description, reinforces confidence with product name",
+      "example": "We're so confident [Product] will help you, we're giving you 30 full days to try it out.",
+      "ai_generated": true
+    },
+    "hero_trust_2_title": {
+      "description": "Trust badge 2 title, short 2-4 words",
+      "example": "Free shipping",
+      "ai_generated": true
+    },
+    "hero_trust_2_desc": {
+      "description": "Trust badge 2 description",
+      "example": "Order today and we will handle and send your package completely free of charge!",
+      "ai_generated": true
+    },
+    "hero_trust_3_title": {
+      "description": "Trust badge 3 title, short 2-4 words",
+      "example": "High quality guarantee",
+      "ai_generated": true
+    },
+    "hero_trust_3_desc": {
+      "description": "Trust badge 3 description, about durability/quality",
+      "example": "Made from durable, high quality materials, this product is created to last for years.",
+      "ai_generated": true
+    },
+    "hiw_heading": {
+      "description": "How-it-works section heading, frames the product as single solution",
+      "example": "One Device That Does It All - Here's How:",
+      "ai_generated": true
+    },
+    "hiw_card_1_title": {
+      "description": "HIW card 1 title, short benefit 2-5 words",
+      "example": "Promotes better blood flow",
+      "ai_generated": true
+    },
+    "hiw_card_1_desc": {
+      "description": "HIW card 1 description, science/mechanism explanation",
+      "example": "Targeted red light wavelengths penetrate the surface of the skin, promoting more efficient blood flow.*",
+      "ai_generated": true
+    },
+    "hiw_card_2_title": {
+      "description": "HIW card 2 title, short benefit 2-5 words",
+      "example": "Supports pain relief",
+      "ai_generated": true
+    },
+    "hiw_card_2_desc": {
+      "description": "HIW card 2 description, different mechanism than card 1",
+      "example": "Different massage intensity levels help relieve pain and tingling in the affected area.*",
+      "ai_generated": true
+    },
+    "hiw_card_3_desc": {
+      "description": "HIW card 3 description, about reducing swelling/healing",
+      "example": "Helps reduce swelling and supports the healing of damaged nerves.*",
+      "ai_generated": true
+    },
+    "hiw_card_4_title": {
+      "description": "HIW card 4 title, about ease of use, 2-5 words",
+      "example": "Easy to use at home",
+      "ai_generated": true
+    },
+    "hiw_card_4_desc": {
+      "description": "HIW card 4 description, simplicity and no side effects",
+      "example": "No side effects, no complicated routines. Just use it while you relax and let symptoms fade.",
+      "ai_generated": true
+    },
+    "review_count": {
+      "description": "Total review count displayed in hero and reviews section",
+      "example": "1,257+",
+      "ai_generated": false
+    },
+    "review_score": {
+      "description": "Star rating score (e.g. 4.9)",
+      "example": "4.9",
+      "ai_generated": false
+    },
+    "problem_headline": {
+      "description": "Problem section heading, names the specific pain/problem the user has",
+      "example": "The Real Cause of Foot Pain & Aches",
+      "ai_generated": true
+    },
+    "problem_description": {
+      "description": "3-5 sentences explaining the root cause vividly, uses <strong class=\"\"> for key terms, ends with hopeful transition",
+      "example": "Your nerves <strong>need oxygen to function properly</strong>... But when blood flow slows down, those cells don't get what they need... But don't worry...",
+      "ai_generated": true,
+      "format": "HTML with <strong class=\"\"> tags and <br><br> paragraphs"
+    },
+    "problem_stat_1_desc": {
+      "description": "Problem stat 1 description text, short, ends with asterisk",
+      "example": "people aged 40+ report occasional foot pain*",
+      "ai_generated": true
+    },
+    "problem_stat_2_desc": {
+      "description": "Problem stat 2 description text, short, ends with asterisk",
+      "example": "say their everyday life is affected due to foot pain.*",
+      "ai_generated": true
+    },
+    "problem_stat_3_desc": {
+      "description": "Problem stat 3 description text, short, ends with asterisk",
+      "example": "rely on painkillers to reduce foot pain.*",
+      "ai_generated": true
+    },
+    "problem_stat_4_desc": {
+      "description": "Problem stat 4 description text, short, ends with asterisk",
+      "example": "noticed negative mood changes due to constant pain.*",
+      "ai_generated": true
+    },
+    "product_headline": {
+      "description": "Main product section heading, aspirational outcome",
+      "example": "You Are One Step Closer to Getting Rid of Foot Pain Once and For All*",
+      "ai_generated": true
+    },
+    "feature_1_heading": {
+      "description": "First product feature heading, introduces the product name and main technology",
+      "example": "Meet the EMSense Triple Therapy Foot Massager",
+      "ai_generated": true
+    },
+    "feature_1_description": {
+      "description": "Detailed explanation of how the product works, list numbered therapies with bold benefits. Use <strong class=\"\"> for emphasis.",
+      "example": "We've spent years developing this device to address pain at its source: reduced blood oxygen supply. We call it The Triple Therapy because: 1. Red Light Heating... 2. Massage... 3. Compression...",
+      "ai_generated": true,
+      "format": "HTML with <strong class=\"\"> tags and <br><br> paragraphs"
+    },
+    "feature_2_heading": {
+      "description": "Second feature heading, lists conditions the product helps with",
+      "example": "This Massager Also Helps With",
+      "ai_generated": true
+    },
+    "feature_2_description": {
+      "description": "Intro text before the conditions list",
+      "example": "Here's a full list of conditions the massager can help with:",
+      "ai_generated": true
+    },
+    "condition_1": { "description": "Condition 1 the product helps with", "example": "Plantar Fasciitis", "ai_generated": true },
+    "condition_2": { "description": "Condition 2", "example": "Neuropathy & Numbness", "ai_generated": true },
+    "condition_3": { "description": "Condition 3", "example": "Swelling & Inflammation", "ai_generated": true },
+    "condition_4": { "description": "Condition 4", "example": "Poor Circulation", "ai_generated": true },
+    "condition_5": { "description": "Condition 5", "example": "Achilles Tendinitis", "ai_generated": true },
+    "condition_6": { "description": "Condition 6", "example": "Foot Arthritis", "ai_generated": true },
+    "condition_7": { "description": "Condition 7", "example": "Nerve Pain & Tingling", "ai_generated": true },
+    "condition_8": { "description": "Condition 8", "example": "Post-Injury Recovery", "ai_generated": true },
+    "condition_9": { "description": "Condition 9", "example": "Restless Leg Syndrome", "ai_generated": true },
+    "condition_10": { "description": "Condition 10", "example": "Post-Surgery Recovery", "ai_generated": true },
+    "feature_3_heading": {
+      "description": "Third feature heading, about expert creation/endorsement",
+      "example": "Created by Specialists",
+      "ai_generated": true
+    },
+    "feature_3_description": {
+      "description": "Description of who created the product and cost advantage vs alternatives. Use <strong class=\"\"> for emphasis.",
+      "example": "Getting an appointment with a podiatrist isn't always easy... That's why a team of specialists came up with this at-home device... It costs less than one visit to a podiatrist.",
+      "ai_generated": true,
+      "format": "HTML with <strong class=\"\"> tags"
+    },
+    "feature_4_heading": {
+      "description": "Fourth feature heading, about ease of use",
+      "example": "The Perfect At-Home Therapy",
+      "ai_generated": true
+    },
+    "feature_4_description": {
+      "description": "How easy it is to use the product, step-by-step in one paragraph. Use <strong class=\"\"> for key actions.",
+      "example": "Uses clinically backed methods - red light therapy, massage, and compression... Just slip it on, press a button, choose intensity...",
+      "ai_generated": true,
+      "format": "HTML with <strong class=\"\"> tags"
+    },
+    "testimonials_headline": {
+      "description": "Testimonials section heading, social proof driven",
+      "example": "Our Customers Report Significantly Reduced Pain Levels:",
+      "ai_generated": true
+    },
+    "testimonial_1_name": { "description": "First testimonial author name", "example": "Jennifer L.", "ai_generated": true },
+    "testimonial_1_text": {
+      "description": "First testimonial text, conversational tone, specific outcome mentioned",
+      "example": "I been dealing with nerve pain for a while now and honestly didn't think anything would help. But this product? Wow! I use it every night now and my feet feel so much better.",
+      "ai_generated": true
+    },
+    "testimonial_2_name": { "description": "Second testimonial author name", "example": "Charles P.", "ai_generated": true },
+    "testimonial_2_text": {
+      "description": "Second testimonial text, different persona (e.g. physically active worker)",
+      "example": "I work on my feet all day and by the time I get home, they're dead. This massager really surprised me.",
+      "ai_generated": true
+    },
+    "testimonial_3_name": { "description": "Third testimonial author name", "example": "Lauren T.", "ai_generated": true },
+    "testimonial_3_text": {
+      "description": "Third testimonial text, different angle (e.g. doctor recommended, skeptic converted)",
+      "example": "I got this cuz my doctor said it might help. I been using it couple weeks now and I think it's working.",
+      "ai_generated": true
+    },
+    "success_rate_pct": {
+      "description": "Success rate percentage for the highlighted stat",
+      "example": "84",
+      "ai_generated": true
+    },
+    "success_rate_title": {
+      "description": "What the success rate measures",
+      "example": "Improving Blood Circulation In Your Feet*",
+      "ai_generated": true
+    },
+    "success_rate_description": {
+      "description": "Brief description of the success rate stat",
+      "example": "84% of customers were satisfied and found it effective.*",
+      "ai_generated": true
+    },
+    "comparison_headline": {
+      "description": "Comparison section heading, frames the choice (our product vs conventional)",
+      "example": "Ditch Expensive Treatments and Pills, Choose Safer Alternative*",
+      "ai_generated": true
+    },
+    "comparison_subtitle": {
+      "description": "Comparison section subtitle, one-sentence benefit statement",
+      "example": "It's non-addictive, works fast, and actually does GOOD things for your body.",
+      "ai_generated": true
+    },
+    "our_product_title": {
+      "description": "Our product name in the comparison table",
+      "example": "Product Name Triple Therapy Massager",
+      "ai_generated": true
+    },
+    "our_benefit_1": { "description": "Our product benefit 1 with checkmark", "example": "100% drug-free and non-invasive*", "ai_generated": true },
+    "our_benefit_2": { "description": "Our product benefit 2", "example": "Delivers relief in just minutes*", "ai_generated": true },
+    "our_benefit_3": { "description": "Our product benefit 3", "example": "Recommended by medical experts*", "ai_generated": true },
+    "our_benefit_4": { "description": "Our product benefit 4", "example": "Supports long-term health, not just temporary fixes*", "ai_generated": true },
+    "our_benefit_5": { "description": "Our product benefit 5", "example": "Targets specific symptoms*", "ai_generated": true },
+    "our_benefit_6": { "description": "Our product benefit 6", "example": "Safe for daily use - no side effects*", "ai_generated": true },
+    "our_benefit_7": { "description": "Our product benefit 7", "example": "Easy to use at home, anytime you need it", "ai_generated": true },
+    "their_product_title": {
+      "description": "Competitor/conventional methods title in comparison table",
+      "example": "Conventional Pain Relief Methods",
+      "ai_generated": true
+    },
+    "their_negative_1": { "description": "Competitor negative 1 with X mark", "example": "Depend on medications that may cause side effects*", "ai_generated": true },
+    "their_negative_2": { "description": "Competitor negative 2", "example": "Can take hours (or longer) to kick in*", "ai_generated": true },
+    "their_negative_3": { "description": "Competitor negative 3", "example": "Not always trusted by medical professionals*", "ai_generated": true },
+    "their_negative_4": { "description": "Competitor negative 4", "example": "Offer short-term relief with repeated use*", "ai_generated": true },
+    "their_negative_5": { "description": "Competitor negative 5", "example": "Risk of long-term harm with frequent use*", "ai_generated": true },
+    "their_negative_6": { "description": "Competitor negative 6", "example": "Often inconvenient or require prescriptions*", "ai_generated": true },
+    "results_headline": {
+      "description": "Results section heading",
+      "example": "These Results Speak for Themselves",
+      "ai_generated": true
+    },
+    "results_subtitle": {
+      "description": "Results intro text, frames the timeline for expected results",
+      "example": "Here's what this powerful technology can help you achieve in just 90 days.*",
+      "ai_generated": true
+    },
+    "result_stat_1_desc": { "description": "Result stat 1 description", "example": "experience reduced pain*", "ai_generated": true },
+    "result_stat_2_desc": { "description": "Result stat 2 description", "example": "experience reduced symptoms*", "ai_generated": true },
+    "result_stat_3_desc": { "description": "Result stat 3 description", "example": "can now walk longer distances without discomfort*", "ai_generated": true },
+    "doctor_meet": {
+      "description": "Meet prefix before doctor name",
+      "example": "Meet",
+      "ai_generated": false
+    },
+    "doctor_name": {
+      "description": "Doctor/expert full name and title (Dr. prefix)",
+      "example": "Dr. Jessica Thompson",
+      "ai_generated": true
+    },
+    "doctor_specialty": {
+      "description": "Doctor's specialty, must match the product category",
+      "example": "Podiatric Specialist",
+      "ai_generated": true
+    },
+    "doctor_quote": {
+      "description": "Doctor endorsement quote, 3-4 sentences. First establishes expertise, then names the solution, then recommends. Use <strong class=\"\"> for key claims.",
+      "example": "I've spent the last 8 years helping patients manage chronic foot pain... The truth is - effective, non-invasive solutions do exist... That's why I recommend this product.",
+      "ai_generated": true,
+      "format": "HTML with <strong class=\"\"> tags and <br><br> paragraphs"
+    },
+    "howto_headline": {
+      "description": "How-to section heading, ease of use signal",
+      "example": "3 Simple Steps For Pain Relief",
+      "ai_generated": true
+    },
+    "howto_subtitle": {
+      "description": "How-to subtitle, reinforces simplicity",
+      "example": "Simply select the settings and enjoy relief!",
+      "ai_generated": true
+    },
+    "step_1_title": { "description": "Step 1 title, action verb", "example": "Wrap It Around Your Feet", "ai_generated": true },
+    "step_1_desc": { "description": "Step 1 description, simple instruction", "example": "Slide your feet into the massager and fasten the adjustable straps for a comfortable fit.", "ai_generated": true },
+    "step_2_title": { "description": "Step 2 title, action verb", "example": "Choose Your Settings", "ai_generated": true },
+    "step_2_desc": { "description": "Step 2 description", "example": "Select your preferred massage intensity, heat level, and timer using the simple control panel.", "ai_generated": true },
+    "step_3_title": { "description": "Step 3 title, relaxation signal", "example": "Sit Back and Relax", "ai_generated": true },
+    "step_3_desc": {
+      "description": "Step 3 description, what the user feels during use, sensory and reassuring",
+      "example": "That's it! In just minutes, you'll feel soothing warmth and gentle relief working together to reduce discomfort.*",
+      "ai_generated": true
+    },
+    "reviews_subtitle": {
+      "description": "Reviews section subtitle",
+      "example": "See What Others Are Saying About Our Product",
+      "ai_generated": true
+    },
+    "reviews_headline": {
+      "description": "Reviews section heading, social proof",
+      "example": "Thousands Of Happy Users",
+      "ai_generated": true
+    },
+    "review_1_name": { "description": "Review 1 author name", "example": "Michael R.", "ai_generated": true },
+    "review_1_title": { "description": "Review 1 quote title in quotes", "example": "\"Working great for both my elbows and ankles\"", "ai_generated": true },
+    "review_1_text": { "description": "Review 1 full text, specific details about results", "example": "Working great for both my elbows and my ankles to increase blood flow and relief for arthritis soreness.", "ai_generated": true },
+    "review_2_name": { "description": "Review 2 author name", "example": "Rachel D.", "ai_generated": true },
+    "review_2_title": { "description": "Review 2 quote title", "example": "\"It's helping where nothing else has\"", "ai_generated": true },
+    "review_2_text": { "description": "Review 2 full text, emotional impact story", "example": "They have eased the numbness in my feet and legs... It's helping where nothing else has.", "ai_generated": true },
+    "review_3_name": { "description": "Review 3 author name", "example": "Linda S.", "ai_generated": true },
+    "review_3_title": { "description": "Review 3 quote title", "example": "\"I can wake up not drugged by opiates\"", "ai_generated": true },
+    "review_3_text": { "description": "Review 3 full text, powerful before/after story", "example": "The shooting pains are not so frequent which gives me a better nights sleep.", "ai_generated": true },
+    "guarantee_title": {
+      "description": "Guarantee section title",
+      "example": "30-Day Money-Back Guarantee",
+      "ai_generated": true
+    },
+    "guarantee_subtitle": {
+      "description": "Guarantee subtitle, confidence statement",
+      "example": "We put our money where our mouth is.",
+      "ai_generated": true
+    },
+    "guarantee_description": {
+      "description": "Guarantee terms, clear and simple",
+      "example": "If you're unhappy, you're eligible for a 100% refund within 30 days.",
+      "ai_generated": true
+    },
+    "faq_headline": {
+      "description": "FAQ section heading",
+      "example": "Read Our Customers' Frequently Asked Questions",
+      "ai_generated": true
+    },
+    "faq_q1": { "description": "FAQ question 1, about usage frequency", "example": "How often should I use this product?", "ai_generated": true },
+    "faq_a1": { "description": "FAQ answer 1, reassuring and specific", "example": "For best results, we recommend using it daily for 15-30 minutes.", "ai_generated": true },
+    "faq_q2": { "description": "FAQ question 2, about safety/medical conditions", "example": "Is it safe for people with [specific condition]?", "ai_generated": true },
+    "faq_a2": { "description": "FAQ answer 2", "example": "Yes! It was designed with conditions like [X] in mind. Consult your healthcare provider if unsure.", "ai_generated": true },
+    "faq_q3": { "description": "FAQ question 3, about sizing/fitting", "example": "Does it fit all sizes?", "ai_generated": true },
+    "faq_a3": { "description": "FAQ answer 3", "example": "It is made with an adjustable design that comfortably fits most sizes.", "ai_generated": true },
+    "faq_q4": { "description": "FAQ question 4, about usage constraints", "example": "Can I use it while [specific activity]?", "ai_generated": true },
+    "faq_a4": { "description": "FAQ answer 4", "example": "It is intended for use while sitting or reclining for safety and effectiveness.", "ai_generated": true },
+    "faq_q5": { "description": "FAQ question 5, about timeline for results", "example": "How long does it take to feel relief?", "ai_generated": true },
+    "faq_a5": { "description": "FAQ answer 5", "example": "Many users report noticeable relief after just one session.", "ai_generated": true },
+    "cta_text": {
+      "description": "Main CTA button text, repeated 8 times throughout the page. Imperative, urgent, specific.",
+      "example": "GET 60% OFF TODAY ONLY!",
+      "ai_generated": false
+    },
+    "sticky_cta_text": {
+      "description": "Sticky banner CTA text, shorter version",
+      "example": "ORDER NOW!",
+      "ai_generated": false
+    },
+    "discount_urgency_text": {
+      "description": "Discount urgency text below CTA",
+      "example": "Get 60% OFF Discount",
+      "ai_generated": false
+    },
+    "stock_urgency_text": {
+      "description": "Stock urgency text, creates scarcity",
+      "example": "if you order now. Better hurry -- stock is running out!",
+      "ai_generated": false
+    },
+    "stock_level_text": {
+      "description": "Stock level label text",
+      "example": "Current stock level:",
+      "ai_generated": false
+    },
+    "stock_level": {
+      "description": "Stock level indicator (e.g. LOW, MEDIUM)",
+      "example": "LOW",
+      "ai_generated": false
+    },
+    "copyright_text": {
+      "description": "Copyright text in footer",
+      "example": "Brand Name. All rights reserved.",
+      "ai_generated": false
+    },
+    "disclaimer_text": {
+      "description": "Legal disclaimer in footer, results vary, not medical advice, consult doctor",
+      "example": "Results may vary from person to person. [Product Name] is not intended to diagnose, treat, cure, or prevent any medical condition. Consult your healthcare provider before use.",
+      "ai_generated": true
+    }
+  }
+}

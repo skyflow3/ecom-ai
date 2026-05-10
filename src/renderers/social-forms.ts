@@ -16,7 +16,7 @@ import { escapeHtml, wrapSection, getProps, cn, buildResponsiveStyles, buildVisi
 
 /**
  * Base CSS for social/form blocks — values extracted from winning DTC pages.
- * WHY: Stars use #F59E0B amber (Shopify/Getheyfra pattern), verified green #00c249,
+ * WHY: Stars use #F59E0B amber (Shopify/Getheyfra pattern), verified green #16a34a,
  *      review cards match Facebook-post and bordered card variants from design system.
  */
 const SOCIAL_FORM_CSS = `
@@ -27,10 +27,10 @@ const SOCIAL_FORM_CSS = `
 @media(min-width:768px){.ec-reviews-grid{grid-template-columns:1fr 1fr}}
 .ec-review-card{background:#fff;border:1px solid #CCC;border-radius:10px;padding:16px;box-shadow:0 0 6px rgba(0,0,0,0.2)}
 .ec-review-card .ec-stars{color:#F59E0B;font-size:16px;letter-spacing:2px;margin-bottom:8px}
-.ec-review-card .ec-review-body{font-family:"Inter",sans-serif;font-size:15px;line-height:1.6;color:#02122E;margin-bottom:12px}
+.ec-review-card .ec-review-body{font-family:"Inter",sans-serif;font-size:15px;line-height:1.6;color:#303030;margin-bottom:12px}
 .ec-review-card .ec-review-author{font-family:"Inter",sans-serif;font-weight:600;font-size:14px;color:#1B1B1B}
 .ec-review-card .ec-review-date{font-family:"Inter",sans-serif;font-size:12px;color:#9AA0AB;margin-left:8px}
-.ec-review-card .ec-verified{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#00c249;margin-left:8px;font-family:"Inter",sans-serif;font-weight:600}
+.ec-review-card .ec-verified{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#16a34a;margin-left:8px;font-family:"Inter",sans-serif;font-weight:600}
 .ec-reviews-carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px;scrollbar-width:none}
 .ec-reviews-carousel::-webkit-scrollbar{display:none}
 .ec-reviews-carousel .ec-review-card{min-width:300px;max-width:360px;scroll-snap-align:center;flex-shrink:0}
@@ -39,8 +39,8 @@ const SOCIAL_FORM_CSS = `
 
 /* ── Testimonial ── */
 .ec-testimonial{position:relative;padding:24px;text-align:center}
-.ec-testimonial-quote-mark{font-family:"DM Serif Display",serif;font-size:64px;line-height:1;color:#2D6A4F;opacity:0.25;position:absolute;top:8px;left:16px}
-.ec-testimonial-text{font-family:"Inter",sans-serif;font-style:italic;font-size:16px;line-height:1.5;color:#02122E;margin-bottom:16px;position:relative;z-index:1}
+.ec-testimonial-quote-mark{font-family:"Open Sans",sans-serif;font-size:64px;line-height:1;color:#2D6A4F;opacity:0.25;position:absolute;top:8px;left:16px}
+.ec-testimonial-text{font-family:"Inter",sans-serif;font-style:italic;font-size:16px;line-height:1.5;color:#303030;margin-bottom:16px;position:relative;z-index:1}
 .ec-testimonial-author{display:flex;flex-direction:column;align-items:center;gap:4px}
 .ec-testimonial-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;margin-bottom:8px;border:2px solid #E5E7EB}
 .ec-testimonial-name{font-family:"Inter",sans-serif;font-weight:600;font-size:14px;color:#1B1B1B}
@@ -81,7 +81,7 @@ const SOCIAL_FORM_CSS = `
 .ec-form-input,.ec-form-select{height:42px;padding:0 12px;border:1px solid #E6E7EA;border-radius:4px;font-size:16px;font-family:"Inter",sans-serif;color:#1B1B1B;background:transparent;width:100%;box-sizing:border-box;-webkit-appearance:none;appearance:none}
 .ec-form-input::placeholder{color:#9AA0AB}
 .ec-form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%236b7280'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
-.ec-form-submit{display:inline-flex;align-items:center;justify-content:center;height:42px;padding:0 24px;border:none;border-radius:8px;background:#00c249;color:#fff;font-family:"Inter",sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:background-color 200ms ease-in-out;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05)}
+.ec-form-submit{display:inline-flex;align-items:center;justify-content:center;height:42px;padding:0 24px;border:none;border-radius:8px;background:#16a34a;color:#fff;font-family:"Inter",sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:background-color 200ms ease-in-out;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05)}
 .ec-form-submit:hover{background:#53A81E}
 .ec-form-stacked .ec-form-submit{width:100%}
 .ec-form-inline .ec-form-submit{flex-shrink:0;width:auto}
@@ -91,13 +91,13 @@ const SOCIAL_FORM_CSS = `
 .ec-quiz-progress{margin-bottom:24px}
 .ec-quiz-progress-label{font-family:"Inter",sans-serif;font-size:13px;color:#6B7280;margin-bottom:8px}
 .ec-quiz-progress-bar{width:100%;height:6px;background:#E5E7EB;border-radius:3px;overflow:hidden}
-.ec-quiz-progress-fill{height:100%;background:#00c249;border-radius:3px;transition:width 0.3s ease}
-.ec-quiz-question{font-family:"DM Serif Display",serif;font-size:24px;line-height:1.3;color:#1B1B1B;margin-bottom:24px}
+.ec-quiz-progress-fill{height:100%;background:#16a34a;border-radius:3px;transition:width 0.3s ease}
+.ec-quiz-question{font-family:"Open Sans",sans-serif;font-size:24px;line-height:1.3;color:#1B1B1B;margin-bottom:24px}
 .ec-quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(min-width:768px){.ec-quiz-options{grid-template-columns:1fr 1fr 1fr}}
 @media(min-width:1024px){.ec-quiz-options{grid-template-columns:1fr 1fr 1fr 1fr}}
 .ec-quiz-option{display:flex;flex-direction:column;border:2px solid #E5E7EB;border-radius:8px;padding:12px;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s,border-color 0.15s;background:#fff;text-align:center}
-.ec-quiz-option:hover{transform:scale(1.02);box-shadow:0 4px 12px rgba(0,0,0,0.1);border-color:#00c249}
+.ec-quiz-option:hover{transform:scale(1.02);box-shadow:0 4px 12px rgba(0,0,0,0.1);border-color:#16a34a}
 .ec-quiz-option img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;margin-bottom:8px}
 .ec-quiz-option-label{font-family:"Inter",sans-serif;font-size:14px;font-weight:500;color:#1B1B1B}
 </style>
@@ -224,16 +224,24 @@ export function renderReviews(block: Block): string {
 // ─── 2. Testimonial Renderer ───────────────────────────────────────────────
 
 interface TestimonialProps {
-  author: string;
-  quote: string;
+  author?: string;
+  /** WHY: AI sends "name" instead of "author" */
+  name?: string;
+  quote?: string;
+  /** WHY: AI sends "text" instead of "quote" */
+  text?: string;
   rating?: number;
   avatar?: string;
   title?: string;
+  location?: string;
 }
 
 export function renderTestimonial(block: Block): string {
   const props = getProps<TestimonialProps>(block);
-  const { author, quote, rating, avatar, title } = props;
+  // WHY: AI generates "name"/"text"/"content" but renderer expects "author"/"quote" — accept all
+  const author = props.author || props.name || '';
+  const quote = props.quote || props.text || props.content || '';
+  const { rating, avatar, title, location } = props;
 
   const visibilityClass = buildVisibilityClass(block.visibility);
   const responsiveStyles = buildResponsiveStyles(block.id, block.styles);
@@ -246,6 +254,9 @@ export function renderTestimonial(block: Block): string {
   const titleHtml = title
     ? `<span class="ec-testimonial-title">${escapeHtml(title)}</span>`
     : '';
+  const locationHtml = location
+    ? `<span class="ec-testimonial-title">${escapeHtml(location)}</span>`
+    : '';
 
   const innerHtml = `<blockquote class="ec-testimonial">
   <span class="ec-testimonial-quote-mark">&ldquo;</span>
@@ -255,6 +266,7 @@ export function renderTestimonial(block: Block): string {
     ${avatarHtml}
     <span class="ec-testimonial-name">${escapeHtml(author)}</span>
     ${titleHtml}
+    ${locationHtml}
   </div>
 </blockquote>`;
 
@@ -319,16 +331,16 @@ export function renderTrustBadges(block: Block): string {
   const responsiveStyles = buildResponsiveStyles(block.id, block.styles);
   const cssPrefix = getSocialFormCss();
 
-  // WHY: Map icon names to real winner badge images from /assets/images/winners/badges/
-  //      Winners use PNG images (shield, lock, truck, etc.), not SVG icons
+  // WHY: Matched set of 4 badge images (90-day, shipping, easy-returns, secure-checkout)
+  //      All same style/aesthetic — avoids mixing unrelated badge designs
   const BADGE_IMAGE_MAP: Record<string, string> = {
-    'shield': '/assets/images/winners/badges/guarantee-badge.svg',
+    'shield': '/assets/images/winners/badges/90-day.png',
     'lock': '/assets/images/winners/badges/secure-checkout.png',
-    'truck': '/assets/images/winners/badges/shipping-fast.png',
-    'credit-card': '/assets/images/winners/badges/payment-credit-cards.png',
+    'truck': '/assets/images/winners/badges/shipping.png',
+    'credit-card': '/assets/images/winners/badges/secure-checkout.png',
     'refresh': '/assets/images/winners/badges/easy-returns.png',
     'rotate-ccw': '/assets/images/winners/badges/easy-returns.png',
-    'check-circle': '/assets/images/winners/badges/verified-purchaser.svg',
+    'check-circle': '/assets/images/winners/badges/90-day.png',
   };
 
   const safeBadges = Array.isArray(badges) ? badges : [];

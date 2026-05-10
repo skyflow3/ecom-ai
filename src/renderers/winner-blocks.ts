@@ -124,7 +124,7 @@ export function renderMediaBadges(block: Block): string {
 
     // WHY: Italic serif font + muted gray = looks like a real media publication logo
     return `<div style="display:flex;align-items:center;justify-content:center;padding:4px 12px;">
-      <span style="font-family:'DM Serif Display',Georgia,serif;font-size:16px;font-weight:400;font-style:italic;color:#9AA0AB;letter-spacing:0.02em;">${escapeHtml(b.name)}</span>
+      <span style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:400;font-style:italic;color:#9AA0AB;letter-spacing:0.02em;">${escapeHtml(b.name)}</span>
     </div>`;
   }).join('');
 
@@ -260,7 +260,11 @@ interface DoctorEndorsementProps {
   doctorName: string;
   credentials?: string;
   photoUrl?: string;
-  quote: string;
+  /** WHY: AI sometimes sends "imageSrc" or empty photoUrl */
+  imageSrc?: string;
+  quote?: string;
+  /** WHY: AI sends "text" instead of "quote" — accept both */
+  text?: string;
   specialty?: string;
   institution?: string;
 }
@@ -283,9 +287,12 @@ interface DoctorEndorsementProps {
 export function renderDoctorEndorsement(block: Block): string {
   const props = getProps<DoctorEndorsementProps>(block);
 
+  // WHY: AI sends "text" or "quote" — accept both
+  const quoteText = props.quote || props.text || '';
+
   // WHY: Professional photo with green border accent — trust signal.
   //      Uses random doctor avatar when no photoUrl provided.
-  const photoUrl = props.photoUrl || getRandomDoctorAvatar(props.doctorName);
+  const photoUrl = props.photoUrl || props.imageSrc || getRandomDoctorAvatar(props.doctorName);
   const photoHtml = `<img src="${escapeHtml(photoUrl)}" alt="${escapeHtml(props.doctorName)}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid #2D6A4F;flex-shrink:0;">`;
 
   const credText = props.credentials ? `, ${props.credentials}` : '';
@@ -299,8 +306,8 @@ export function renderDoctorEndorsement(block: Block): string {
   // WHY: Light green card with left border accent — matches editorial callout pattern
   const content = `
     <div style="background:linear-gradient(135deg,rgba(45,106,79,0.04) 0%,rgba(45,106,79,0.01) 100%);border:1px solid rgba(45,106,79,0.15);border-left:4px solid #2D6A4F;border-radius:8px;padding:20px;">
-      <div style="font-family:'DM Serif Display',serif;font-size:17px;line-height:1.6;color:#1B1B1B;margin-bottom:16px;font-style:italic;">
-        "${escapeHtml(props.quote)}"
+      <div style="font-family:'Open Sans',sans-serif;font-size:17px;line-height:1.6;color:#1B1B1B;margin-bottom:16px;font-style:italic;">
+        "${escapeHtml(quoteText)}"
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
         ${photoHtml}

@@ -46,6 +46,7 @@ interface SubheadlineProps {
 interface BodyTextProps {
   content: string;
   size?: 'base' | 'sm';
+  variant?: 'default' | 'update-box';
 }
 
 interface ImageProps {
@@ -229,12 +230,10 @@ export function renderHero(block: Block): string {
       : `<button class="ec-btn ec-btn-primary ec-hero-cta" style="margin-top:20px;min-height:52px;padding:0 24px;font-size:1.125rem;font-weight:700;border-radius:12px;border:none;cursor:pointer;">${escapeHtml(props.ctaText)}</button>`
     : '';
 
-  // WHY: Editorial hero = large serif headline matching winning advertorial pattern
-  //      28px mobile / 40px desktop for editorial (clamp), 36px desktop for commerce
-  //      Weight 800, DM Serif Display font -- matches --text-h1 token from design system
+  // WHY: Winners use fixed 40px desktop / 24px mobile, Open Sans bold. No clamp().
   const headlineFont = isEditorial
-    ? "font-family:Montserrat,'Arial Black',sans-serif;font-size:clamp(1.75rem,5.5vw,2.75rem);font-weight:800;line-height:1.15;color:#1B1B1B;"
-    : "font-family:Montserrat,'Arial Black',sans-serif;font-size:clamp(1.875rem,5vw,2.5rem);font-weight:800;line-height:1.2;";
+    ? "font-family:'Open Sans',sans-serif;font-size:40px;font-weight:800;line-height:1.15;color:#1B1B1B;"
+    : "font-family:'Open Sans',sans-serif;font-size:36px;font-weight:800;line-height:1.2;";
 
   const content = `
     <div class="ec-hero-content" style="text-align:${alignment};${textColor}">
@@ -246,7 +245,13 @@ export function renderHero(block: Block): string {
   const responsiveStyles = buildResponsiveStyles(block.id, block.styles);
   const visClass = buildVisibilityClass(block.visibility);
 
-  const sectionHtml = wrapSection(content, {
+  // WHY: Winners use fixed 40px desktop, 24px mobile — no clamp()
+  const heroResponsive = `<style>
+    [data-block-id="${block.id}"] h1 { font-size: 40px; }
+    @media (max-width: 767px) { [data-block-id="${block.id}"] h1 { font-size: 24px; } }
+  </style>`;
+
+  const sectionHtml = `${heroResponsive}${wrapSection(content, {
     id: block.id,
     blockClass: cn('ec-hero', visClass),
     backgroundColor: undefined,
@@ -320,6 +325,7 @@ export function renderBodyText(block: Block): string {
   // WHY: Body text from design system — 18px base, 26px line-height (1.7 ratio)
   //      Matches --text-body token (16-20px, 400 weight, 24-28px line-height)
   const size = props.size ?? 'base';
+  const variant = props.variant ?? 'default';
   const fontSize = size === 'sm' ? '14px' : '18px';
   const lineHeight = size === 'sm' ? '1.5' : '1.7';
 
@@ -340,8 +346,20 @@ export function renderBodyText(block: Block): string {
     // Single newlines within a paragraph become <br>
     formatted = formatted.replace(/\n/g, '<br>');
 
-    return `<p style="font-family:'Inter',sans-serif;font-size:${fontSize};line-height:${lineHeight};color:#02122E;margin-bottom:1em;">${formatted}</p>`;
+    return `<p style="font-family:'Open Sans',sans-serif;font-size:${fontSize};line-height:${lineHeight};color:#303030;margin-bottom:1em;">${formatted}</p>`;
   }).join('\n');
+
+  // WHY: 6/9 winners use UPDATE box (blue header + yellow body) for urgency.
+  if (variant === 'update-box') {
+    const wrappedContent = `
+      <div style="border-radius:6px;overflow:hidden;margin:20px 0;">
+        <div style="background:#3c94f6;color:#fff;font-family:'Open Sans',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;padding:12px 16px;">UPDATE</div>
+        <div style="background:#fef9c3;padding:16px;">
+          ${paragraphsHtml}
+        </div>
+      </div>`;
+    return renderBlock(block, 'ec-body-text ec-update-box', wrappedContent);
+  }
 
   return renderBlock(block, 'ec-body-text', paragraphsHtml);
 }
@@ -425,7 +443,7 @@ export function renderButton(block: Block): string {
   const escapedText = escapeHtml(props.text);
 
   const variantStyleMap: Record<string, string> = {
-    primary: 'background:#00c249;color:#fff;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);',
+    primary: 'background:#16a34a;color:#fff;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);',
     urgency: 'background:#dc2626;color:#fff;box-shadow:0 4px 14px rgba(220,38,38,0.4);',
     secondary: 'background:transparent;color:#2D6A4F;border:2px solid #2D6A4F;',
     highlight: 'background:#e1662d;color:#fff;box-shadow:0 4px 14px rgba(225,102,45,0.4);',
@@ -478,7 +496,7 @@ export function renderCta(block: Block): string {
   const ariaLabel = ` aria-label="${escapedText}"`;
 
   const variantStyleMap: Record<string, string> = {
-    primary: 'background:#00c249;color:#fff;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);',
+    primary: 'background:#16a34a;color:#fff;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);',
     urgency: 'background:#dc2626;color:#fff;box-shadow:0 4px 14px rgba(220,38,38,0.4);',
     secondary: 'background:transparent;color:#2D6A4F;border:2px solid #2D6A4F;',
     highlight: 'background:#e1662d;color:#fff;box-shadow:0 4px 14px rgba(225,102,45,0.4);',
@@ -595,7 +613,7 @@ export function renderComparisonChart(block: Block): string {
   const props = getProps<ComparisonChartProps>(block);
 
   const titleHtml = props.title
-    ? `<h3 style="font-family:'DM Serif Display',serif;font-size:1.25rem;margin:0 0 16px;color:var(--color-text);text-align:center;">${escapeHtml(props.title)}</h3>`
+    ? `<h3 style="font-family:'Open Sans',sans-serif;font-size:1.25rem;margin:0 0 16px;color:var(--color-text);text-align:center;">${escapeHtml(props.title)}</h3>`
     : '';
 
   const tableStyle = [

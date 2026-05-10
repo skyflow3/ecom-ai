@@ -258,7 +258,7 @@ MANDATORY CONTENT REQUIREMENTS (NON-NEGOTIABLE):
 - MINIMUM 6 body-text blocks with 3-6 paragraphs EACH
 - MINIMUM 3 testimonial blocks with different people
 - MINIMUM 2 facebook-post blocks (organic social proof)
-- MINIMUM 1 media-badges block ("As Seen On" after header)
+- ⚠️ NO media-badges blocks (text-only "As Seen On" looks fake — winners use real images or skip entirely)
 - MINIMUM 3 editorial-heading blocks as section dividers
 - MINIMUM 2 author-cta blocks (mid-article callouts)
 - TARGET: 3,000-5,000 total words across all body-text blocks
@@ -281,9 +281,7 @@ PHASE 1 — HEADER & OPENING (Blocks 1-7):
 2. breadcrumb — "Home > Category > Product" (desktop only)
 3. hero — Headline ONLY (NO CTA, NO background). Pattern interrupt headline.
 4. byline — Author avatar + name + credentials + date + "Verified Author" badge
-5. media-badges — "As Seen On" logos AFTER byline (not before hero)
-   Pattern: { "type": "media-badges", "props": { "headline": "As Seen On", "badges": [{"name":"Forbes"},{"name":"GQ"},{"name":"Men's Journal"},{"name":"SHAPE"}] } }
-6. image — Hero image (product or lifestyle, realistic URL)
+5. image — Hero image (product or lifestyle, realistic URL)
 7. body-text — Opening hook (4-5 paragraphs, ~300 words). Start with personal story.
    Pattern: "I Thought My [Problem] Was Normal..." or "Top Doctor Reveals..."
    Use **bold** on key phrases. Build curiosity and empathy.
@@ -333,6 +331,9 @@ PHASE 5 — CONVERSION (Blocks 31-42+):
 39. sticky-cta — Fixed bottom CTA bar (mobile, primary variant)
 
 ⚠️ ABSOLUTELY NO FAQ BLOCK — judges penalize FAQ sections. Objections must be woven into the narrative.
+
+⚠️ ABSOLUTELY NO "reason-why" / "numbered-benefits" BLOCKS — these are for a DIFFERENT page type (reason-why advertorial). Classic advertorials weave benefits into body-text naturally. Do NOT create numbered lists.
+⚠️ ABSOLUTELY NO "doctor-endorsement" BLOCK — expert credibility comes from inline quotes in body-text, not a standalone doctor card.
 
 ════════════════════════════════════════════════════════════════
 IMAGE REQUIREMENTS (CRITICAL — 8-12 images minimum):
@@ -556,14 +557,16 @@ export function buildComposerPrompt(params: ComposerPromptParams): string {
     prompt += '2. Use the FIRST LINE as the hero HEADLINE\n';
     prompt += '3. Distribute the body text across body-text blocks following the PHASE structure above\n';
     prompt += '4. You MUST end with these blocks IN THIS ORDER (NON-OPTIONAL — even if the text below doesn\'t have them):\n';
-    prompt += '   a) body-text — URGENCY paragraph (limited time offer, stock running low, special discount)\n';
+    prompt += '   a) body-text with variant "update-box" — UPDATE urgency box (blue header + yellow body: "As of [today], [product] is experiencing unprecedented demand...")\n';
     prompt += '   b) guarantee — Money-back guarantee block (90+ days, full refund, "even if the bottle is empty")\n';
-    prompt += '   c) button — Final CTA (use the marketing angle CTA text, full width, primary variant)\n';
-    prompt += '   d) trust-badges — SSL Secure, Free Shipping, Money-Back Guarantee\n';
+    prompt += '   c) body-text — Closing framework: "You have 2 options: Option 1 — keep [suffering/problem]. Option 2 — try [product] risk-free with [X]-day guarantee."\n';
+    prompt += '   d) body-text — Exclusivity: "Not available on Amazon or eBay. Only available through this official page."\n';
+    prompt += '   e) button — Final CTA (use the marketing angle CTA text, full width, primary variant)\n';
+    prompt += '   f) trust-badges — SSL Secure, Free Shipping, Money-Back Guarantee, Easy Returns\n';
     prompt += '5. Add images, testimonials, editorial-headings, and other structural blocks as per the content guide\n';
     prompt += '6. You MUST include these WINNER PATTERN BLOCKS (they are NON-OPTIONAL):\n';
-    prompt += '   - media-badges (after editorial-header, "As Seen On" section)\n';
-    prompt += '   - facebook-post x2 (in proof section, create realistic social posts from the text\'s testimonials)\n\n';
+    prompt += '   - facebook-post x2 (in proof section, create realistic social posts from the text\'s testimonials)\n';
+    prompt += '   - ⚠️ NO media-badges blocks (text-only "As Seen On" looks fake)\n\n';
     prompt += 'CRITICAL: Use the EXACT words from the text. Do NOT rewrite, summarize, or abbreviate.\n';
     prompt += 'You may split at paragraph boundaries but DO NOT change the text itself.\n';
     prompt += 'However, if the text does NOT include urgency/guarantee/CTA at the end, you MUST ADD these sections yourself.\n\n';

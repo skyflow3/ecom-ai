@@ -89,7 +89,9 @@ ECOM-AI/
 │
 ├── scripts/
 │   ├── test-template-generate.ts       Test SmoothSpire advertorial
-│   └── test-reasons-why-template.ts    Test hike-reasons-why listicle
+│   ├── test-reasons-why-template.ts    Test hike-reasons-why listicle
+│   ├── test-product-page-template.ts   Test product page
+│   └── test-checkout-template.ts       Test checkout page
 │
 ├── capabilities/                     ← CAPACITÉS MÉDIA
 │   ├── voice_gen.py                     ElevenLabs (text → audio)
@@ -154,11 +156,11 @@ ECOM-AI/
 ## TEMPLATE SYSTEM
 
 Génère des pages HTML complètes à partir de templates winners (99.9% fidélité visuelle).
-**2 templates**: `smoothspire-advertorial` (narratif, 9.76/10) + `hike-reasons-why` (listicle, 9.23-10.41/10).
+**4 templates**: `smoothspire-advertorial` (narratif, 9.76/10) + `hike-reasons-why` (listicle, 9.23-10.41/10) + `product-page-tryemsense` (product page, 8.77/10) + `checkout-clarifion` (checkout, 127 slots).
 
 **DOC COMPLETE**: `docs/TEMPLATE-SYSTEM.md` — architecture, utilisation, routage, sanitisation, ajout de templates.
 
-**TESTS**: `npx tsx scripts/test-template-generate.ts` (SmoothSpire) | `npx tsx scripts/test-reasons-why-template.ts` (listicle)
+**TESTS**: `npx tsx scripts/test-template-generate.ts` (SmoothSpire) | `npx tsx scripts/test-reasons-why-template.ts` (listicle) | `npx tsx scripts/test-product-page-template.ts` (product page) | `npx tsx scripts/test-checkout-template.ts` (checkout)
 ```
 
 ---
@@ -477,6 +479,12 @@ npx tsx scripts/test-template-generate.ts
 
 # Test listicle "Reasons Why" (hike-2 template)
 npx tsx scripts/test-reasons-why-template.ts
+
+# Test product page
+npx tsx scripts/test-product-page-template.ts
+
+# Test checkout page
+npx tsx scripts/test-checkout-template.ts
 
 # Test pipeline 3-step (block system)
 npx tsx scripts/test-generate.ts

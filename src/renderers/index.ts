@@ -172,8 +172,8 @@ const PRO_CSS = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: #02122E;
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #303030;
     background: #FFFFFF;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -198,6 +198,8 @@ const PRO_CSS = `
     padding: 16px;
     overflow-x: hidden;
   }
+  /* WHY: Winners use 20-25px spacing between sections */
+  .ec-section + .ec-section { padding-top: 24px; }
   .ec-container {
     max-width: 720px;
     margin: 0 auto;
@@ -215,25 +217,36 @@ const PRO_CSS = `
   h1, h2, h3 { line-height: 1.2; }
 
   /* ─── Buttons ─── */
-  /* WHY: Winners use 60px height, 20-22px font, full-width for main CTAs */
+  /* WHY: Winners use 60px height, 20px font, UPPERCASE, border-radius 5px.
+     No pulse animations — winners use static buttons only. */
   .ec-btn-primary {
-    background: #00c249;
+    background: #16a34a;
     color: #FFFFFF;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 200ms ease-in-out;
-    box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.05);
+    min-height: 60px;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    transition: background-color 200ms ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   .ec-btn-primary:hover {
-    background: #53A81E;
-    transform: translateY(-1px);
+    background: #22c55e;
   }
   .ec-btn-primary:active {
-    transform: scale(0.97);
+    transform: scale(0.98);
   }
   .ec-btn-urgency {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    background: #dc2626;
     color: #FFFFFF;
-    animation: ec-cta-pulse 2.5s ease-in-out infinite;
-    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
+    min-height: 60px;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
   }
   .ec-btn-secondary {
     background: transparent;
@@ -252,10 +265,7 @@ const PRO_CSS = `
     transform: translateY(-1px);
   }
 
-  @keyframes ec-cta-pulse {
-    0%, 100% { box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4); }
-    50% { box-shadow: 0 4px 28px rgba(220, 38, 38, 0.6); }
-  }
+  /* WHY: No pulse animation — winners use static buttons only */
 
   /* ─── Visibility ─── */
   .ec-mobile-only { }
@@ -395,7 +405,7 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
       font-family: 'Inter', sans-serif;
       font-size: 28px;
       font-weight: 800;
-      color: #00c249;
+      color: #16a34a;
     }
     .adv-price-was {
       font-family: 'Inter', sans-serif;
@@ -416,7 +426,7 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
       color: #fff;
       text-decoration: none;
       border-radius: 8px;
-      background: #00c249;
+      background: #16a34a;
       box-shadow: 0 4px 14px rgba(0,194,73,0.3);
       transition: background 200ms ease, transform 0.15s ease;
       margin-bottom: 12px;
@@ -472,7 +482,7 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
     }
     .adv-review-verified {
       font-size: 11px;
-      color: #00c249;
+      color: #16a34a;
       font-weight: 500;
     }
     .adv-review-text {
@@ -523,7 +533,7 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
                 <rect x="80" y="85" width="40" height="3" rx="1.5" fill="#fff" opacity="0.5"/>
                 <rect x="80" y="93" width="40" height="3" rx="1.5" fill="#fff" opacity="0.5"/>
                 <rect x="80" y="101" width="30" height="3" rx="1.5" fill="#fff" opacity="0.5"/>
-                <rect x="65" y="145" width="70" height="30" rx="6" fill="#00c249"/>
+                <rect x="65" y="145" width="70" height="30" rx="6" fill="#16a34a"/>
                 <text x="100" y="165" font-size="12" fill="#fff" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">SHOP NOW</text>
               </svg>`
           }
@@ -561,7 +571,7 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
   <meta property="og:title" content="${escapeSimple(normalizeUtf8(tree.metadata.title))}">
   <meta property="og:description" content="${escapeSimple(normalizeUtf8(tree.metadata.description || ''))}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     ${PRO_CSS}
 
@@ -573,19 +583,19 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
 
     /* Palette: ${palette} */
     :root {
-      --color-primary: #00c249;
-      --color-primary-hover: #53A81E;
+      --color-primary: #16a34a;
+      --color-primary-hover: #22c55e;
       --color-secondary: #40916C;
       --color-bg: #FFFFFF;
       --color-bg-alt: #F5F5F5;
       --color-bg-warm: #FFFBef;
-      --color-text: #02122E;
-      --color-text-dark: #1B2A43;
-      --color-text-body: #1B1B1B;
+      --color-text: #303030;
+      --color-text-dark: #1B1B1B;
+      --color-text-body: #303030;
       --color-muted: #6B7280;
-      --color-border: #E6E7EA;
-      --color-success: #00c249;
-      --color-warning: #F59E0B;
+      --color-border: #E5E5E5;
+      --color-success: #16a34a;
+      --color-warning: #F5C74D;
       --color-error: #EC0B43;
       --color-urgency-red: #D0021B;
       --color-highlight: #FDCC5E;
@@ -598,8 +608,8 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
       --color-footer-dark: #0E0F11;
       --color-paypal: #FFC43A;
       --color-paypal-text: #253B80;
-      --font-heading: 'DM Serif Display', serif;
-      --font-body: 'Inter', sans-serif;
+      --font-heading: 'Open Sans', sans-serif;
+      --font-body: 'Open Sans', sans-serif;
     }
   </style>
 </head>

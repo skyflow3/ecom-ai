@@ -775,6 +775,19 @@ export async function generatePage(
 
       // Validation passed — extract the block tree
       const tree = rawJson as BlockTree;
+
+      // WHY: Composer ignores prompt-level bans on certain block types.
+      //      Post-generation filtering is the only reliable way to remove them.
+      const BANNED_ADVERTORIAL_BLOCKS = ['numbered-benefits'];
+      if (request.pageType === 'advertorial' && Array.isArray(tree.blocks)) {
+        const before = tree.blocks.length;
+        tree.blocks = tree.blocks.filter(b => !BANNED_ADVERTORIAL_BLOCKS.includes(b.type));
+        const removed = before - tree.blocks.length;
+        if (removed > 0) {
+          console.warn(`[block-filter] Removed ${removed} banned blocks: ${BANNED_ADVERTORIAL_BLOCKS.join(', ')}`);
+        }
+      }
+
       lastBlockTree = tree;
 
       // Render HTML

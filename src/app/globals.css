@@ -22,8 +22,8 @@
   --spacing-16: 64px;
 
   /* ─── Typography ─────────────────────────────────────────────── */
-  --font-heading: 'DM Serif Display', Georgia, serif;
-  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-heading: 'Open Sans', sans-serif;
+  --font-body: 'Open Sans', -apple-system, sans-serif;
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;

@@ -70,11 +70,11 @@ export function renderBundleOffers(block: Block): string {
   const isCards = layout === 'cards';
 
   const offerCards = offers.map(offer => {
-    // WHY: CheckoutChamp/Webflow pattern — unselected = transparent border, selected = green #00c249
+    // WHY: CheckoutChamp/Webflow pattern — unselected = transparent border, selected = green #16a34a
     const borderStyle = offer.selected
-      ? 'border:2px solid #00c249;box-shadow:0 0 8px rgba(0,0,0,0.16);'
+      ? 'border:2px solid #16a34a;box-shadow:0 0 8px rgba(0,0,0,0.16);'
       : offer.popular
-        ? 'border:2px solid #00c249;box-shadow:0 0 8px rgba(0,0,0,0.16);'
+        ? 'border:2px solid #16a34a;box-shadow:0 0 8px rgba(0,0,0,0.16);'
         : 'border:2px solid transparent;box-shadow:0 0 8px rgba(0,0,0,0.16);';
 
     // WHY: Red #EC0B43 rotated ribbon from Webflow "Most Popular" badge pattern
@@ -102,7 +102,7 @@ export function renderBundleOffers(block: Block): string {
 
     // WHY: Free shipping badge — black bg or light blue bg pattern from checkout pages
     const freeShippingHtml = offer.freeShipping
-      ? `<div style="font-size:13px;font-weight:600;color:#00c249;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><span>&#10003;</span> FREE Shipping</div>`
+      ? `<div style="font-size:13px;font-weight:600;color:#16a34a;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><span>&#10003;</span> FREE Shipping</div>`
       : '';
 
     const bonusHtml = offer.bonusItems && offer.bonusItems.length > 0
@@ -171,7 +171,7 @@ export function renderPricingCard(block: Block): string {
 
   // WHY: Card shadow from Webflow checkout -- 0 0 8px rgba(0,0,0,0.16)
   const borderStyle = popular
-    ? 'border:2px solid #00c249;box-shadow:0 0 8px rgba(0,0,0,0.16);'
+    ? 'border:2px solid #16a34a;box-shadow:0 0 8px rgba(0,0,0,0.16);'
     : 'border:2px solid #E5E7EB;';
 
   const priceBlock = `
@@ -182,16 +182,16 @@ export function renderPricingCard(block: Block): string {
   `;
 
   const featuresList = features.map(f =>
-    `<li style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:15px;color:#1B2A43;"><span style="color:#00c249;font-weight:700;flex-shrink:0;">&#10003;</span>${escapeHtml(f)}</li>`
+    `<li style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:15px;color:#1B2A43;"><span style="color:#16a34a;font-weight:700;flex-shrink:0;">&#10003;</span>${escapeHtml(f)}</li>`
   ).join('');
 
   const ctaHtml = ctaText
-    ? `<button style="${BUTTON_BASE_STYLE}background:#00c249;color:#fff;margin-top:16px;">${escapeHtml(ctaText)}</button>`
+    ? `<button style="${BUTTON_BASE_STYLE}background:#16a34a;color:#fff;margin-top:16px;">${escapeHtml(ctaText)}</button>`
     : '';
 
   const content = `
     ${badgeHtml}
-    <div style="text-align:center;font-size:18px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--color-text);">${escapeHtml(title)}</div>
+    <div style="text-align:center;font-size:18px;font-weight:700;font-family:'Open Sans',sans-serif;color:var(--color-text);">${escapeHtml(title)}</div>
     ${priceBlock}
     <ul style="list-style:none;padding:0;margin:0;">${featuresList}</ul>
     ${ctaHtml}
@@ -236,10 +236,10 @@ export function renderAddToCart(block: Block): string {
     `
     : '';
 
-  // WHY: Green #00c249 full-width CTA from Webflow checkout — "ORDER NOW" button pattern
+  // WHY: Green #16a34a full-width CTA from Webflow checkout — "ORDER NOW" button pattern
   const content = `
     ${expressButtons}
-    <button class="ec-add-to-cart" style="${BUTTON_BASE_STYLE}background:#00c249;color:#fff;height:56px;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);"${variantAttr}>${escapeHtml(buttonText)}</button>
+    <button class="ec-add-to-cart" style="${BUTTON_BASE_STYLE}background:#16a34a;color:#fff;height:56px;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);"${variantAttr}>${escapeHtml(buttonText)}</button>
   `;
 
   const visibilityClass = buildVisibilityClass(block.visibility);
@@ -285,7 +285,7 @@ export function renderOrderSummary(block: Block): string {
 
   const content = `
     <details open style="border:1px solid #e5e7eb;border-radius:12px;padding:16px;">
-      <summary style="font-size:16px;font-weight:700;cursor:pointer;font-family:'DM Serif Display',serif;color:var(--color-text);">Order Summary</summary>
+      <summary style="font-size:16px;font-weight:700;cursor:pointer;font-family:'Open Sans',sans-serif;color:var(--color-text);">Order Summary</summary>
       <table style="width:100%;border-collapse:collapse;margin-top:12px;">
         <tbody>
           ${rowsHtml}
@@ -620,7 +620,7 @@ export function renderNegativeOptOut(block: Block): string {
   const checkboxHtml = checkboxLabel
     ? `
       <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#818997;cursor:pointer;font-family:'Inter',sans-serif;">
-        <input type="checkbox" style="width:16px;height:16px;accent-color:#00c249;">
+        <input type="checkbox" style="width:16px;height:16px;accent-color:#16a34a;">
         ${escapeHtml(checkboxLabel)}
       </label>
     `
@@ -662,7 +662,7 @@ export function renderSellingPlanToggle(block: Block): string {
   const { oneTimeLabel = 'One-time', subscribeLabel = 'Subscribe', discountPercent } = getProps<SellingPlanToggleProps>(block);
 
   const discountBadge = discountPercent
-    ? `<span style="display:inline-block;background:#dcfce7;color:#00c249;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;margin-left:6px;">Save ${discountPercent}%</span>`
+    ? `<span style="display:inline-block;background:#dcfce7;color:#16a34a;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;margin-left:6px;">Save ${discountPercent}%</span>`
     : '';
 
   const content = `
@@ -670,7 +670,7 @@ export function renderSellingPlanToggle(block: Block): string {
       <button style="flex:1;padding:14px 12px;font-size:15px;font-weight:600;border:none;background:transparent;color:#9AA0AB;cursor:pointer;font-family:'Inter',sans-serif;" data-plan="one-time">
         ${escapeHtml(oneTimeLabel)}
       </button>
-      <button style="flex:1;padding:14px 12px;font-size:15px;font-weight:700;border:none;background:#00c249;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;" data-plan="subscribe">
+      <button style="flex:1;padding:14px 12px;font-size:15px;font-weight:700;border:none;background:#16a34a;color:#fff;cursor:pointer;font-family:'Inter',sans-serif;" data-plan="subscribe">
         ${escapeHtml(subscribeLabel)}${discountBadge}
       </button>
     </div>
@@ -790,12 +790,11 @@ const GUARANTEE_LABELS: Record<string, string> = {
 export function renderGuarantee(block: Block): string {
   const { text, days, icon, guaranteeType = 'money-back', description } = getProps<GuaranteeProps>(block);
 
-  // WHY: Winners use actual badge images, not SVG shields.
-  //      Use real guarantee badge from /assets/images/winners/badges/
+  // WHY: Matched set of badge images — use 90-day.png for guarantee (same style as trust badges)
   const GUARANTEE_BADGES: Record<string, string> = {
-    'money-back': '/assets/images/winners/badges/money-back-guarantee.png',
-    'satisfaction': '/assets/images/winners/badges/guarantee-seal.png',
-    'results': '/assets/images/winners/badges/guarantee-badge.svg',
+    'money-back': '/assets/images/winners/badges/90-day.png',
+    'satisfaction': '/assets/images/winners/badges/90-day.png',
+    'results': '/assets/images/winners/badges/90-day.png',
     'bottom-of-the-bottle': '/assets/images/winners/badges/90-day.png',
   };
 
@@ -814,8 +813,8 @@ export function renderGuarantee(block: Block): string {
 
   const content = `
     <div class="ec-guarantee" style="text-align:center;padding:24px 16px;border-radius:8px;background:#FFFBef;border:1px solid #FAB73C;">
-      <div style="margin-bottom:12px;"><img src="${badgeImage}" alt="${escapeHtml(heading)}" style="width:120px;height:auto;" loading="lazy"></div>
-      <div style="font-size:18px;font-weight:800;font-family:'DM Serif Display',serif;color:#1B1B1B;">${escapeHtml(heading)}</div>
+      <div style="margin-bottom:12px;display:flex;justify-content:center;"><img src="${badgeImage}" alt="${escapeHtml(heading)}" style="width:120px;height:auto;" loading="lazy"></div>
+      <div style="font-size:18px;font-weight:800;font-family:'Open Sans',sans-serif;color:#1B1B1B;">${escapeHtml(heading)}</div>
       <div style="font-size:15px;font-weight:600;margin-top:4px;color:#1B1B1B;font-family:'Inter',sans-serif;">${escapeHtml(text)}</div>
       ${descriptionHtml}
     </div>

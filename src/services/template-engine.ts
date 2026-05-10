@@ -498,6 +498,17 @@ interface ImageReplacementMapping {
   commentScreenshots: string[];
   /** Reason block images (10 images for 10 reasons) */
   reasonImages: string[];
+  // Product-page-specific fields
+  /** Dark variant logo (nav bar) */
+  logoDark?: string;
+  /** White variant logo (footer, sticky) */
+  logoWhite?: string;
+  /** Multiple product detail images */
+  productImages?: string[];
+  /** Review avatar image */
+  reviewAvatar?: string;
+  /** Video URL needle substrings — all matching src get replaced */
+  videoNeedles?: string[];
 }
 
 const TEMPLATE_IMAGE_MAP: Record<string, ImageReplacementMapping> = {
@@ -520,10 +531,50 @@ const TEMPLATE_IMAGE_MAP: Record<string, ImageReplacementMapping> = {
       'Customer_review_image_5',
     ],
     reasonImages: [
-      // All 10 reason images now use portrait placeholder format (766x883)
-      // Single needle matches all placehold.co URLs
+      // 5 remaining image-only reasons (3, 5, 7, 9, 10) use portrait placeholder
       'placehold.co/766x883',
     ],
+    // Video slots for reasons 1, 2, 4, 6, 8 — SRC needles in <source> tags
+    videoNeedles: ['VIDEO_SLOT'],
+  },
+  'product-page-tryemsense': {
+    // WHY: Product page has nav logo, footer logo, doctor photo, product images, and videos
+    // Nav logo handled by logoDark/logoWhite below — NOT productHero (which uses squareUrl)
+    productHero: '',
+    productCta: 'media-change-the-product-device-in-m',
+    // WHY: productCompare is the "Our Product" image in the comparison table
+    productCompare: '(p_EM1112-5)(cp_PM)(c_MI)(y_25)(w_47)(a_Advertorial).avif',
+    authorPhoto: 'drol.avif',
+    sidebarPlaceholder: '',
+    commentScreenshots: [],
+    reasonImages: [],
+    // Product-page-specific: footer logo (white), product detail images
+    logoDark: 'EMSense%20logo.svg',
+    logoWhite: 'EMSense%20logo%20white.svg',
+    // WHY: Replace product detail images + competitor image in comparison table
+    //      Do NOT replace olt1/olt2 (review avatars)
+    productImages: [
+      'ola.avif',
+    ],
+    reviewAvatar: '',
+    // Video URLs (all pagepipeline videos are product-specific)
+    videoNeedles: [
+      'cdn2.pagepipeline.com/videos/',
+    ],
+  },
+  'checkout-clarifion': {
+    // WHY: Checkout images are ALL handled by markers (gallery, bundle, logo, etc.)
+    //      No needle-based replacement needed.
+    productHero: '',
+    productCta: '',
+    productCompare: '',
+    authorPhoto: '',
+    sidebarPlaceholder: '',
+    commentScreenshots: [],
+    reasonImages: [],
+    productImages: [],
+    reviewAvatar: '',
+    videoNeedles: [],
   },
 };
 
@@ -542,6 +593,8 @@ function replaceImages(html: string, content: ContentMap, templateId: string): s
   const logoUrl = extractString(content['_logoUrl']);
   const commentUrls = (content['_commentScreenshotUrls'] as string[]) ?? [];
   const videoReplacementUrl = extractString(content['_productVideoUrl']);
+  const videoUrls = (content['_productVideoUrls'] as string[]) ?? [];
+  const useVideos = String(content['_useVideos'] ?? '') === 'true';
 
   const mapping = TEMPLATE_IMAGE_MAP[templateId];
   if (!mapping) {
@@ -588,11 +641,93 @@ function replaceImages(html: string, content: ContentMap, templateId: string): s
   }
 
   // ─── SmoothSpire-specific: Video → image replacement ─────────────────────
-  if (templateId === 'smoothspire-advertorial' && productImageUrl) {
+  if (templateId === 'smoothspire-advertorial' && !useVideos && productImageUrl) {
+    // MODE IMAGE (default): Replace entire video block with image
     html = replaceVideoWithImage(html, VIDEO_URL_NEEDLE, productImageUrl);
   }
 
+  // ─── Hike-reasons-why-specific: Video slots → images ──────────────────────
+  // WHY: Hike template has 5 <video> tags (reasons 1, 2, 4, 6, 8) with VIDEO_SLOT needles.
+  //      In image mode, replace each video with <img> using productImageUrl.
+  if (templateId === 'hike-reasons-why' && !useVideos && productImageUrl) {
+    html = html.replace(
+      /<video[^>]*>\s*<source[^>]*VIDEO_SLOT[^>]*>\s*<\/video>/gi,
+      `<img src="${productImageUrl}" alt="" style="width: 100%; max-width: 766px; aspect-ratio: 766/883; object-fit: cover; border-radius: 12px;" loading="lazy">`
+    );
+  }
+
+  // ─── Product-page-specific: logos, detail images, avatars ────────────────
+
+  if (mapping.logoDark && logoUrl) {
+    html = replaceExactUrl(html, mapping.logoDark, logoUrl);
+  }
+  if (mapping.logoWhite && logoUrl) {
+    html = replaceExactUrl(html, mapping.logoWhite, logoUrl);
+  }
+
+  if (mapping.productImages && mapping.productImages.length > 0 && productImageUrl) {
+    for (const needle of mapping.productImages) {
+      html = replaceExactUrl(html, needle, productImageUrl);
+    }
+  }
+
+  if (mapping.reviewAvatar && productImageUrl) {
+    html = replaceExactUrl(html, mapping.reviewAvatar, productImageUrl);
+  }
+
+  // ─── Product-page-specific: w-embed video containers → image ──────────────
+  // WHY: Product page has video containers with w-embed inner divs showing wrong product.
+  //      In image mode, replace inner <video> with <img>, keeping container structure.
+  if (templateId === 'product-page-tryemsense' && !useVideos && productImageUrl) {
+    html = html.replace(
+      /(<div class="(?:int-embeded-video|int-nu-top-card-video-embed) w-embed">)\s*<video[^>]*>[\s\S]*?<\/video>\s*(<\/div>)/gi,
+      `$1<img src="${productImageUrl}" alt="" style="width:100%;height:100%;object-fit:cover;">$2`
+    );
+  }
+
+  // ─── UNIVERSAL VIDEO MODE (all templates) ───────────────────────────────
+  // WHY: When useVideos=true, replace all video source URLs with provided .mp4 URLs
+  //      and ensure every <video> tag has GIF-like attributes:
+  //      autoplay + loop + muted + playsinline (iPhone) + preload="auto" (CDN R2)
+  if (useVideos) {
+    const mp4Urls = videoUrls.length > 0 ? videoUrls : (videoReplacementUrl ? [videoReplacementUrl] : []);
+    const needles = mapping.videoNeedles ?? ['cdn2.pagepipeline.com/videos/'];
+
+    if (mp4Urls.length > 0) {
+      // Replace all video source URLs with provided .mp4 URLs (cycle if fewer)
+      for (const needle of needles) {
+        for (let i = 0; i < mp4Urls.length; i++) {
+          html = replaceVideoSrc(html, needle, mp4Urls[i % mp4Urls.length]);
+        }
+      }
+    }
+
+    // Inject GIF-like attributes on ALL <video> tags across the entire HTML
+    html = ensureVideoAutoplayGif(html);
+  }
+
   return html;
+}
+
+/**
+ * Ensure ALL <video> tags have GIF-like autoplay attributes.
+ * WHY: Videos must loop like GIFs without play button or sound.
+ *      playsinline is CRITICAL for iPhone (without it, iOS opens fullscreen).
+ *      preload="auto" ensures instant playback with CDN R2.
+ */
+function ensureVideoAutoplayGif(html: string): string {
+  return html.replace(
+    /<video([^>]*?)>/gi,
+    (_match, attrs: string) => {
+      let updated = attrs;
+      if (!/\bautoplay\b/i.test(updated)) updated += ' autoplay';
+      if (!/\bloop\b/i.test(updated)) updated += ' loop';
+      if (!/\bmuted\b/i.test(updated)) updated += ' muted';
+      if (!/\bplaysinline\b/i.test(updated)) updated += ' playsinline';
+      if (!/\bpreload\b/i.test(updated)) updated += ' preload="auto"';
+      return `<video${updated}>`;
+    }
+  );
 }
 
 /**
@@ -654,6 +789,49 @@ function replaceVideoWithImage(html: string, videoUrlNeedle: string, imageUrl: s
   }
 
   return html;
+}
+
+/**
+ * Replace video src URLs matching a needle substring.
+ * WHY: Product page templates have multiple <video> and <source> tags
+ *      with product-specific video URLs. We replace all matching src URLs.
+ */
+function replaceVideoSrc(html: string, needle: string, newUrl: string): string {
+  const escaped = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Match src="...needle..." in <video> and <source> tags
+  const regex = new RegExp(`((?:src)=["'])[^"']*${escaped}[^"']*(["'])`, 'gi');
+  return html.replace(regex, `$1${newUrl}$2`);
+}
+
+/**
+ * Replace ALL video container blocks in the HTML with a static product image.
+ * WHY: Product page templates have 5+ video containers showing the original product.
+ *      When generating for a different product, we can't use those videos.
+ *      We replace each ENTIRE video container (wrapper divs + video + inner divs)
+ *      with a single <img> tag. Replacing only the <video> tag breaks the layout
+ *      because the Webflow CSS expects the full container structure.
+ */
+function replaceAllVideosWithImage(html: string, imageUrl: string): string {
+  let result = html;
+
+  // Pattern 1: Webflow background video containers
+  // <div ... class="int-embeded-video-container ..."><video ...>...</video><div class="int-embeded-video w-embed"><video ...>...</video></div></div>
+  // Replace the ENTIRE outer container with just an <img>
+  result = result.replace(
+    /<div[^>]*class="[^"]*int-embeded-video-container[^"]*"[^>]*>[\s\S]*?<\/div>\s*<\/div>/gi,
+    `<img src="${imageUrl}" alt="" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">`
+  );
+
+  // Pattern 2: Any remaining standalone <video> tags
+  result = result.replace(
+    /<video[^>]*>[\s\S]*?<\/video>/gi,
+    ''
+  );
+
+  // Clean up leftover text
+  result = result.replace(/Your browser does not support the video tag\.?/gi, '');
+
+  return result;
 }
 
 /**

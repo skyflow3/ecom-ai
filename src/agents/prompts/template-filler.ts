@@ -49,6 +49,8 @@ export interface ProductBrief {
   productVideoUrl?: string;
   /** Comment screenshot image URLs (replaces fake FB comment screenshots) */
   commentScreenshotUrls?: string[];
+  /** When true, keep <video> tags and inject .mp4 URLs instead of replacing with images */
+  useVideos?: boolean;
   /** Content section image URLs (inserted between sections). Keyed by section number */
   contentImageUrls?: Record<number, string>;
 }

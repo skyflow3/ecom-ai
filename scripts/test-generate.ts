@@ -234,7 +234,13 @@ async function main() {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const modelTag = cliModel ? `-${cliModel.replace(/[^a-z0-9]/gi, '-')}` : '';
     const htmlFile = path.join(OUTPUT_DIR, `advertorial${modelTag}-${timestamp}.html`);
-    fs.writeFileSync(htmlFile, result.html);
+
+    // WHY: Replace /assets/ paths with relative ../public/assets/ so images work
+    //      when opening HTML from test-output/ via file:// protocol locally.
+    //      In production (Next.js), /assets/ maps to public/ automatically.
+    const localHtml = result.html.replace(/\/assets\/images\/winners\//g, '../public/assets/images/winners/');
+
+    fs.writeFileSync(htmlFile, localHtml);
     console.log(`\nHTML saved: ${htmlFile}`);
     console.log(`Open in browser: file://${htmlFile.replace(/\\/g, '/')}`);
 

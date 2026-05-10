@@ -104,20 +104,23 @@ export function renderEditorialHeader(block: Block): string {
   // WHY: Logo left — 28px height matches SmoothSpire/rejuvera editorial headers
   const logoHtml = props.logoSrc
     ? `<img src="${escapeHtml(props.logoSrc)}" alt="${escapeHtml(props.siteName)}" style="height:28px;width:auto;object-fit:contain;">`
-    : `<span style="font-family:'DM Serif Display',serif;font-size:1.25rem;font-weight:700;color:#1B1B1B;">${escapeHtml(props.siteName)}</span>`;
+    : `<span style="font-family:'Open Sans',sans-serif;font-size:1.25rem;font-weight:700;color:#1B1B1B;">${escapeHtml(props.siteName)}</span>`;
 
   // WHY: "Trending in [Category]" badge with pulsing dot — SmoothSpire pattern
   const badgeHtml = props.categoryBadge
     ? `<div style="display:flex;align-items:center;gap:6px;">
         <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${categoryColor};animation:ec-pulse-dot 2s infinite;"></span>
-        <span style="font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:${categoryColor};text-transform:uppercase;letter-spacing:0.05em;">${escapeHtml(props.categoryBadge)}</span>
+        <span style="font-family:'Open Sans',sans-serif;font-size:13px;font-weight:600;color:${categoryColor};text-transform:uppercase;letter-spacing:0.05em;">${escapeHtml(props.categoryBadge)}</span>
       </div>`
     : '';
 
   const content = `
     <div style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:720px;margin:0 auto;padding:12px 0;">
       ${logoHtml}
-      ${badgeHtml}
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-family:'Open Sans',sans-serif;font-size:11px;color:#9AA0AB;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;">Advertorial</span>
+        ${badgeHtml}
+      </div>
     </div>
   `;
 
@@ -153,7 +156,7 @@ export function renderBreadcrumb(block: Block): string {
       ? 'font-weight:600;color:#1B1B1B;'
       : 'color:#6B7280;';
     const sep = isLast ? '' : `<span style="margin:0 8px;color:#CCC;">${separator}</span>`;
-    return `<span style="font-family:'Inter',sans-serif;font-size:13px;${style}">${escapeHtml(label)}</span>${sep}`;
+    return `<span style="font-family:'Open Sans',sans-serif;font-size:13px;${style}">${escapeHtml(label)}</span>${sep}`;
   }).join('');
 
   const content = `<nav aria-label="Breadcrumb" style="padding:8px 0;">${crumbs}</nav>`;
@@ -194,11 +197,11 @@ export function renderByline(block: Block): string {
     <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #CCC;margin-bottom:16px;">
       ${avatarHtml}
       <div>
-        <div style="font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#1B1B1B;">
+        <div style="font-family:'Open Sans',sans-serif;font-size:14px;font-weight:600;color:#1B1B1B;">
           ${escapeHtml(props.authorName)}<span style="font-weight:400;color:#6B7280;">${escapeHtml(credText)}</span>
         </div>
-        <div style="font-family:'Inter',sans-serif;font-size:12px;color:#6B7280;margin-top:2px;">
-          <span style="color:#00c249;font-weight:600;">&#10003; Verified Author</span>${escapeHtml(dateText)}${escapeHtml(readText)}
+        <div style="font-family:'Open Sans',sans-serif;font-size:12px;color:#6B7280;margin-top:2px;">
+          <span style="color:#16a34a;font-weight:600;">&#10003; Verified Author</span>${escapeHtml(dateText)}${escapeHtml(readText)}
         </div>
       </div>
     </div>
@@ -221,17 +224,17 @@ export function renderStickyCta(block: Block): string {
 
   // WHY: Urgency text in yellow/gold above CTA — matches mobile sticky bar pattern
   const urgencyHtml = props.urgencyText
-    ? `<div style="font-family:'Inter',sans-serif;font-size:11px;color:#F59E0B;text-align:center;margin-bottom:4px;font-weight:600;">${escapeHtml(props.urgencyText)}</div>`
+    ? `<div style="font-family:'Open Sans',sans-serif;font-size:11px;color:#F59E0B;text-align:center;margin-bottom:4px;font-weight:600;">${escapeHtml(props.urgencyText)}</div>`
     : '';
 
   // WHY: Green gradient for primary, red gradient for urgency — matches winning sticky bars
   const btnBg = variant === 'urgency'
     ? 'background:linear-gradient(135deg,#dc2626 0%,#b91c1c 100%);'
-    : 'background:linear-gradient(135deg,#00c249 0%,#53A81E 100%);';
+    : 'background:linear-gradient(135deg,#16a34a 0%,#53A81E 100%);';
 
   const btnHtml = props.url
-    ? `<a href="${escapeHtml(props.url)}" style="display:block;width:100%;min-height:48px;padding:10px 16px;line-height:1.3;text-align:center;font-family:'Inter',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:none;border-radius:8px;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</a>`
-    : `<button style="display:block;width:100%;min-height:52px;font-family:'Inter',sans-serif;font-size:17px;font-weight:700;color:#fff;border:none;border-radius:8px;cursor:pointer;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</button>`;
+    ? `<a href="${escapeHtml(props.url)}" style="display:block;width:100%;min-height:48px;padding:10px 16px;line-height:1.3;text-align:center;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:none;border-radius:8px;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</a>`
+    : `<button style="display:block;width:100%;min-height:52px;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;border:none;border-radius:8px;cursor:pointer;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</button>`;
 
   const content = `
     <div style="max-width:480px;margin:0 auto;">
@@ -243,9 +246,7 @@ export function renderStickyCta(block: Block): string {
   const visClass = buildVisibilityClass(block.visibility);
   const responsiveStyles = buildResponsiveStyles(block.id, block.styles);
 
-  // WHY: Fixed bottom on mobile with dark semi-transparent bg + blur — matches NAV-05 pattern
-  //      z-index 100 from winning pages, safe-area-inset for iOS notch
-  //      On desktop: becomes inline CTA (no sticky)
+  // WHY: Fixed bottom on mobile with solid semi-transparent bg (no blur/gradient — winners use solid)
   const stickyStyle = `<style>
     [data-block-id="${block.id}"] {
       position: fixed;
@@ -253,19 +254,15 @@ export function renderStickyCta(block: Block): string {
       left: 0;
       right: 0;
       z-index: 100;
-      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%);
+      background: rgba(0,0,0,0.85);
       padding: 10px 16px;
       padding-bottom: max(10px, env(safe-area-inset-bottom));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
     }
     @media (min-width: 768px) {
       [data-block-id="${block.id}"] {
         position: relative;
         background: transparent;
         padding: 16px;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
       }
     }
   </style>`;
@@ -283,22 +280,17 @@ export function renderEditorialSectionHeading(block: Block): string {
   const props = getProps<EditorialSectionHeadingProps>(block);
   const style = props.style ?? 'default';
 
-  // WHY: Section headings from editorial winners — serif font, optional left border or underline accent
-  //      Default style uses DM Serif Display at 22px (matches --text-h3 mobile)
-  let headingStyle: string;
-  switch (style) {
-    case 'underline':
-      headingStyle = "font-family:'DM Serif Display',serif;font-size:22px;font-weight:700;color:#1B1B1B;border-bottom:3px solid #2D6A4F;padding-bottom:8px;display:inline-block;";
-      break;
-    case 'highlight':
-      // WHY: Left border accent — clean editorial divider without colored background
-      headingStyle = "font-family:'DM Serif Display',serif;font-size:22px;font-weight:700;color:#1B1B1B;padding:8px 16px;border-left:4px solid #2D6A4F;";
-      break;
-    default:
-      headingStyle = "font-family:'DM Serif Display',serif;font-size:22px;font-weight:700;color:#1B1B1B;";
+  // WHY: Winners use ALL CAPS sans-serif bold headings (28px, weight 800).
+  //      "highlight" style = yellow callout box (Drivse, Clarifion, SmoothSpire pattern)
+  let content: string;
+  if (style === 'highlight') {
+    content = `<div style="background:#FEFBD9;border:2px solid #DBDB95;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:12px;">
+      <span style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:600;color:#1B1B1B;line-height:1.5;">${escapeHtml(props.text)}</span>
+    </div>`;
+  } else {
+    const headingStyle = "font-family:'Open Sans',sans-serif;font-size:28px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;color:#1B1B1B;margin-bottom:16px;";
+    content = `<h2 style="${headingStyle}">${escapeHtml(props.text)}</h2>`;
   }
-
-  const content = `<h2 style="${headingStyle}">${escapeHtml(props.text)}</h2>`;
 
   const visClass = buildVisibilityClass(block.visibility);
   const responsiveStyles = buildResponsiveStyles(block.id, block.styles);
@@ -320,21 +312,21 @@ export function renderAuthorCta(block: Block): string {
     : '';
 
   const ratingHtml = props.ratingCount
-    ? `<div style="font-family:'Inter',sans-serif;font-size:13px;color:#6B7280;margin-bottom:12px;">${escapeHtml(props.ratingCount)}</div>`
+    ? `<div style="font-family:'Open Sans',sans-serif;font-size:13px;color:#6B7280;margin-bottom:12px;">${escapeHtml(props.ratingCount)}</div>`
     : '';
 
   const productHtml = props.productText
-    ? `<div style="font-family:'Inter',sans-serif;font-size:15px;color:#1B1B1B;margin-bottom:16px;line-height:1.5;">${escapeHtml(props.productText)}</div>`
+    ? `<div style="font-family:'Open Sans',sans-serif;font-size:15px;color:#1B1B1B;margin-bottom:16px;line-height:1.5;">${escapeHtml(props.productText)}</div>`
     : '';
 
   const authorHtml = props.authorName
-    ? `<div style="font-family:'Inter',sans-serif;font-size:13px;color:#6B7280;font-style:italic;">— ${escapeHtml(props.authorName)}</div>`
+    ? `<div style="font-family:'Open Sans',sans-serif;font-size:13px;color:#6B7280;font-style:italic;">— ${escapeHtml(props.authorName)}</div>`
     : '';
 
-  // WHY: Green #00c249 CTA button with 8px radius — matches checkout CTA button pattern
+  // WHY: Green #16a34a CTA button with 8px radius — matches checkout CTA button pattern
   const btnHtml = props.url
-    ? `<a href="${escapeHtml(props.url)}" style="display:block;width:100%;min-height:52px;line-height:52px;text-align:center;font-family:'Inter',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:none;border-radius:8px;background:#00c249;box-shadow:0 4px 14px rgba(0,194,73,0.3);margin-top:12px;">${escapeHtml(props.ctaText)}</a>`
-    : `<button style="display:block;width:100%;min-height:52px;font-family:'Inter',sans-serif;font-size:17px;font-weight:700;color:#fff;border:none;border-radius:8px;cursor:pointer;background:#00c249;box-shadow:0 4px 14px rgba(0,194,73,0.3);margin-top:12px;">${escapeHtml(props.ctaText)}</button>`;
+    ? `<a href="${escapeHtml(props.url)}" style="display:block;width:100%;min-height:52px;line-height:52px;text-align:center;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:none;border-radius:8px;background:#16a34a;box-shadow:0 4px 14px rgba(0,194,73,0.3);margin-top:12px;">${escapeHtml(props.ctaText)}</a>`
+    : `<button style="display:block;width:100%;min-height:52px;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;border:none;border-radius:8px;cursor:pointer;background:#16a34a;box-shadow:0 4px 14px rgba(0,194,73,0.3);margin-top:12px;">${escapeHtml(props.ctaText)}</button>`;
 
   // WHY: Card with subtle green border and light bg — matches mid-article callout pattern
   const content = `
