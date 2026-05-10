@@ -154,10 +154,8 @@ export function buildResponsiveStyles(
 export function buildVisibilityClass(visibility: DeviceVisibility = 'all'): string {
   switch (visibility) {
     case 'mobile-only':
-    case 'mobile':
       return 'ec-mobile-only';
     case 'desktop-only':
-    case 'desktop':
       return 'ec-desktop-only';
     default:
       return '';

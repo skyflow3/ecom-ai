@@ -94,6 +94,13 @@ export const PAGE_COMPOSITION_RULES: Record<PageType, CompositionRule> = {
     sectionGap: '8',
   },
 
+  listicle: {
+    requiredSequence: ['editorial-header', 'hero', 'body-text'],
+    requiredBlocks: ['editorial-header', 'hero', 'body-text', 'sticky-cta', 'media-badges'],
+    forbiddenBlocks: ['payment-form', 'order-summary', 'quiz-step'],
+    sectionGap: '8',
+  },
+
   vsl: {
     requiredSequence: ['hero', 'button'],
     requiredBlocks: ['hero', 'button'],
@@ -162,6 +169,10 @@ export const PAGE_TYPE_GUIDES: Record<PageType, { structure: string; keyPoints: 
   advertorial: {
     structure: 'Editorial Header (logo + badge) → Breadcrumb (desktop) → Hero (headline only, NO CTA) → Byline (author + date) → Hero Image → Body Text (opening hook, 4-5 paragraphs) → Editorial Heading → Body Text (pain, 3-5 paragraphs) → Image → Body Text → Image → Body Text → Editorial Heading (discovery) → Body Text (4-5 paragraphs) → Image → Body Text (science) → Image → Author CTA #1 → Body Text (endorsement) → Editorial Heading (proof) → Testimonial #1 → Image → Testimonial #2 → Body Text (social proof) → Image → Author CTA #2 → Benefits List → Editorial Heading (offer) → Social Proof → Bundle Offers → Image → Testimonial #3 → Body Text (urgency) → Image → Guarantee → Body Text (reassurance) → Button CTA → Trust Badges → FAQ → Sticky CTA (mobile)',
     keyPoints: 'MUST look like a NEWS ARTICLE with 2000-3000 words. 30-45 blocks minimum. 8-12 images distributed throughout. 3+ testimonials. 3+ editorial headings. 2 author-cta mid-article callouts. Body text = 3-6 paragraphs per block (2-4 sentences each). Section headings in ALL CAPS. Hero = headline only (NO CTA button). CTAs every 8-10 blocks. Sticky CTA fixed bottom on mobile. 2-column desktop layout with sidebar.',
+  },
+  listicle: {
+    structure: 'Editorial Header → Hero ("10 Reasons Why") → List Items (each = heading + image + body text) → CTA every 3-4 items → Social Proof → Guarantee → Final CTA → Sticky CTA (mobile)',
+    keyPoints: 'Numbered list format (5-10 items). Each item = mini-article with heading, image, body. CTAs every 3-4 items. Sticky CTA on mobile. Editorial header with logo + badge.',
   },
   vsl: {
     structure: 'Hero with video → Problem → Solution → Proof → CTA (repeat 3-5x) → Guarantee → Final CTA',

@@ -42,8 +42,8 @@ interface EditorialHeaderProps {
 }
 
 interface BreadcrumbProps {
-  /** Breadcrumb items, e.g., ["Home", "Pain Relief", "Sciatica"] */
-  items: string[];
+  /** Breadcrumb items — strings or objects with label/text */
+  items: (string | { label?: string; text?: string; href?: string })[];
   /** Separator character (default: ">") */
   separator?: string;
 }

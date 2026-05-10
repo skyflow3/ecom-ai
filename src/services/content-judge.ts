@@ -91,7 +91,7 @@ export interface JudgeResult {
   /** Number of judges that responded */
   judgeCount: number;
   /** Per-judge raw scores for transparency */
-  rawScores: Record<string, number>[];
+  rawScores: Record<string, string | number>[];
 }
 
 // ─── Judge Config Loader ─────────────────────────────────────────────────────
@@ -101,7 +101,7 @@ import type { GeneratorConfig } from './page-generator';
 // WHY: Cache avoids filesystem reads on every judge call.
 const _judgeConfigCache = new Map<string, JudgeConfig>();
 
-const JUDGE_FILE_MAP: Partial<Record<PageType, string>> = {
+const JUDGE_FILE_MAP: Record<string, string> = {
   'advertorial': 'advertorial_judge_v2.json',
   'product-page': 'product_page_judge_v2.json',
   'vsl': 'vsl_judge_v2.json',

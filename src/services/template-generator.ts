@@ -135,10 +135,10 @@ export async function generateFromTemplate(
         _productImageSquareUrl: brief.productImageSquareUrl ?? '',
         _logoUrl: brief.logoUrl ?? '',
         _productVideoUrl: brief.productVideoUrl ?? '',
-        _productVideoUrls: brief.productVideoUrls ?? [],
+        _productVideoUrls: (brief as any).productVideoUrls ?? [] as any,
         _commentScreenshotUrls: brief.commentScreenshotUrls ?? [],
-        _contentImageUrls: brief.contentImageUrls ?? {},
-        _useVideos: brief.useVideos ?? false,
+        _contentImageUrls: (brief.contentImageUrls ?? {}) as any,
+        _useVideos: (brief.useVideos ?? false) as any,
         ...contentMap,
       };
 
@@ -222,7 +222,7 @@ function buildPromptForTemplate(templateId: string, brief: ProductBrief): string
     return buildReasonsWhyPrompt(brief);
   }
   if (templateId.startsWith('product-page')) {
-    return buildProductPageFillerPrompt(brief);
+    return buildProductPageFillerPrompt(brief as any);
   }
   if (templateId.startsWith('checkout')) {
     return buildCheckoutFillerPrompt(brief);

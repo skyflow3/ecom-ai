@@ -258,7 +258,7 @@ export function renderHero(block: Block): string {
     container: true,
     analyticsId: block.analyticsId,
     abTestId: block.metadata?.abTestId,
-  });
+  })}`;
 
   const finalHtml = props.backgroundImage
     ? sectionHtml.replace(

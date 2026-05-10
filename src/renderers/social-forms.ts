@@ -230,6 +230,8 @@ interface TestimonialProps {
   quote?: string;
   /** WHY: AI sends "text" instead of "quote" */
   text?: string;
+  /** WHY: AI sometimes sends "content" — accept all aliases */
+  content?: string;
   rating?: number;
   avatar?: string;
   title?: string;

@@ -447,7 +447,7 @@ function buildDummyTree(copy: CopywriterOutput): BlockTree {
   return {
     version: '1.0',
     pageType: 'advertorial',
-    palette: 'health',
+    palette: 'health-warm',
     blocks,
     metadata: { title: copy.headline, description: '' },
   };
