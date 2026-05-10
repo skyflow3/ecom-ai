@@ -8,7 +8,6 @@
  *      enabling gradual deployment (add auth later).
  */
 
-import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { QueryProvider } from "@/lib/query-provider";
@@ -25,10 +24,10 @@ export const metadata: Metadata = {
   description: "E-commerce funnel builder with AI-powered testing",
 };
 
-// WHY: Clerk is optional during initial deploy
+// WHY: Clerk is optional — dynamic import prevents crash when keys are missing
 const hasClerkKey = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -41,9 +40,15 @@ export default function RootLayout({
     </html>
   );
 
-  if (hasClerkKey) {
-    return <ClerkProvider>{body}</ClerkProvider>;
+  if (!hasClerkKey) {
+    return body;
   }
 
-  return body;
+  try {
+    const { ClerkProvider } = await import("@clerk/nextjs");
+    return <ClerkProvider>{body}</ClerkProvider>;
+  } catch {
+    // WHY: If Clerk fails to initialize (invalid key, API down), render without it
+    return body;
+  }
 }
