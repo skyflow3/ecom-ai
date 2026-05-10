@@ -55,6 +55,10 @@ export interface CheckoutBrief extends ProductBrief {
   logoUrl: string;
   /** Brand badge image URL */
   brandImageUrl: string;
+  /** WHY: Consumable products (supplements, food, cosmetics, oils, skincare, drinks)
+   *      don't need a 2-year warranty upsell. The AI filler prompt auto-detects
+   *      this from the product description and sets the flag. Default: true. */
+  hasWarranty?: boolean; // default: true
 }
 
 export interface CheckoutBundle {
@@ -195,7 +199,8 @@ The visitor has already decided to buy — your job is to prevent abandonment.
   "faq_q10": "FAQ question 10 about energy/power usage.",
   "faq_a10": "Energy efficiency answer with specifics.",
   "faq_q11": "FAQ question 11 about maintenance/care.",
-  "faq_a11": "Simple maintenance answer."
+  "faq_a11": "Simple maintenance answer.",
+  "hasWarranty": "true or false. true = physical durable product (electronics, devices, tools). false = consumable product (supplements, food, cosmetics, oils, drinks)."
 }
 
 ## CRITICAL RULES
@@ -205,5 +210,8 @@ The visitor has already decided to buy — your job is to prevent abandonment.
 4. Do NOT generate any pricing, URL, or bundle fields — those are handled separately.
 5. Testimonials must sound like REAL PEOPLE — imperfect grammar OK, specific details required.
 6. FAQ answers must be CONCISE (checkout pages need quick answers, not essays).
-7. All 11 FAQ questions must cover DIFFERENT topics (no duplicates).`;
+7. All 11 FAQ questions must cover DIFFERENT topics (no duplicates).
+8. WARRANTY RULE: If the product is CONSUMABLE (supplements, food, drinks, cosmetics,
+   skincare, oils, vitamins, coffee, tea, protein powder, etc.) → output "hasWarranty": false.
+   If the product is a PHYSICAL DURABLE (electronics, devices, tools, equipment, accessories) → output "hasWarranty": true.`;
 }

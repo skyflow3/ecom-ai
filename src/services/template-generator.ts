@@ -307,6 +307,10 @@ function buildCheckoutBriefValues(brief: ProductBrief): ContentMap {
     values['compare_shipping'] = defaultBundle.shipValue === 'FREE' ? 'FREE' : defaultBundle.shipValue;
   }
 
+  // Warranty display — WHY: Consumable products don't need warranty upsell
+  // AI sets hasWarranty in contentMap. Brief can override. Default: show (true).
+  values['warranty_display'] = cb.hasWarranty === false ? 'display:none' : 'display:block';
+
   // Warranty
   const warranty = cb.warranty;
   if (warranty) {
