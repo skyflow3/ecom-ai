@@ -74,6 +74,9 @@ ECOM-AI/
 │   ├── hike-reasons-why.html              Listicle "10 Reasons Why" original (Winner)
 │   ├── hike-reasons-why.marked.html       Version avec {{SLOT}} markers (72 slots)
 │   └── hike-reasons-why.html.json         Config des slots
+│   ├── checkout-clarifion.html            Checkout original (127 slots, 3/4 bundles)
+│   ├── checkout-clarifion.marked.html     Version avec {{SLOT}} markers + geo + Places
+│   └── checkout-clarifion.html.json       Config des slots
 │
 ├── src/
 │   ├── services/
@@ -83,15 +86,21 @@ ECOM-AI/
 │   ├── agents/prompts/
 │   │   ├── template-filler.ts          Prompt advertorial narratif (SmoothSpire)
 │   │   ├── reasons-why-filler.ts       Prompt listicle (hike-reasons-why, Champion #4)
+│   │   ├── product-page-filler.ts      Prompt product page DTC (tryemsense)
+│   │   ├── checkout-filler.ts          Prompt checkout (clarifion, 127 slots, warranty auto-hide)
 │   │   └── block-composer.ts           Composer de blocks (3-step pipeline)
 │   └── design-system/
 │       └── tokens.ts                   Design tokens + page types
+│
+├── src/app/api/
+│   ├── checkout-preview/route.ts       Sert le HTML checkout depuis public/
+│   └── geo/route.ts                    Proxy géolocalisation (bypass CORS 403)
 │
 ├── scripts/
 │   ├── test-template-generate.ts       Test SmoothSpire advertorial
 │   ├── test-reasons-why-template.ts    Test hike-reasons-why listicle
 │   ├── test-product-page-template.ts   Test product page
-│   └── test-checkout-template.ts       Test checkout page
+│   └── test-checkout-template.ts       Test checkout page (3-bundle, $4.95 shipping)
 │
 ├── capabilities/                     ← CAPACITÉS MÉDIA
 │   ├── voice_gen.py                     ElevenLabs (text → audio)

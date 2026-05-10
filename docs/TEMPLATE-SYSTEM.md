@@ -213,8 +213,47 @@ Le template injecte les prix du `CheckoutBrief.bundles` → ils sont garantis co
 Le bouton PayPal est visuel uniquement (background image). Pour un vrai paiement PayPal, il faut ajouter le SDK PayPal JS et un handler de paiement dans le template.
 
 ### Auto-détection du pays
-Le template détecte automatiquement le pays du visiteur via `ipapi.co` et pré-sélectionne le pays dans les dropdowns shipping/billing.
-80+ pays sont inclus dans la dropdown. State/Province est un champ texte libre (pas de dropdown — trop de régions pour tous les pays).
+Le template détecte automatiquement le pays du visiteur via 2 méthodes :
+1. **Client-side**: `geolocation-db.com/json/` — détecte l'IP du visiteur (pays + région)
+2. **Server-side fallback**: `/api/geo` — proxy server-side si l'API client échoue
+
+80+ pays sont inclus dans la dropdown. State/Province est un champ texte libre.
+Le pays est pré-sélectionné automatiquement dans les dropdowns shipping + billing.
+
+**POURQUOI 2 méthodes**: Les APIs externes (ipwhois.app, ipapi.co) renvoient 403 quand le navigateur
+envoie un header `Origin`. `geolocation-db.com` est la seule API qui accepte les requêtes CORS avec Origin.
+
+### Google Places Autocomplete
+Le champ Street Address propose des suggestions d'adresse via Google Places API.
+- Clé API configurée via le marker `{{google_places_api_key}}`
+- Fonctionne sur les champs `#shipAddress1` et `#address1`
+- Remplit automatiquement ville, état, zip, pays après sélection
+
+**PRÉREQUIS Google Cloud Console**:
+- Activer **Maps JavaScript API** et **Places API** dans API Library
+- Configurer la clé API (pas de restriction Application nécessaire)
+
+### Warranty auto-hide
+Le bloc warranty ("2-Year Protection") s'affiche ou se cache automatiquement selon le type de produit :
+- **Produit physique/durable** (électronique, appareil, outil) → `hasWarranty: true` → bloc visible
+- **Produit consommable** (suppléments, cosmétiques, huiles, nourriture) → `hasWarranty: false` → bloc caché
+
+L'IA détecte automatiquement le type de produit depuis la description et set le flag `hasWarranty`.
+Le marker `{{warranty_display}}` contrôle la visibilité (`display:block` / `display:none`).
+
+### Affichage shipping
+Le texte barré dans la section shipping montre la valeur du shipping :
+- **Bundle x1**: `~~$4.95 worth~~ $4.95`
+- **Bundle x3**: `~~$4.95 worth~~ FREE`
+- **Bundle x6**: `~~$4.95 worth~~ FREE`
+
+Les valeurs `shipSpan` et `shipValue` dans chaque bundle du brief contrôlent ce display.
+
+### API Routes (serveur)
+| Route | Rôle |
+|-------|------|
+| `/api/checkout-preview` | Sert le HTML checkout depuis `public/checkout-preview.html` |
+| `/api/geo` | Proxy géolocalisation (server-side, bypass CORS) |
 
 ---
 
