@@ -16,6 +16,8 @@
 import { fillTemplate, saveFilledTemplate, type ContentMap, type TemplateResult } from './template-engine';
 import { buildTemplateFillerPrompt, type ProductBrief } from '../agents/prompts/template-filler';
 import { buildReasonsWhyPrompt } from '../agents/prompts/reasons-why-filler';
+import { buildProductPageFillerPrompt } from '../agents/prompts/product-page-filler';
+import { buildCheckoutFillerPrompt, type CheckoutBrief } from '../agents/prompts/checkout-filler';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -95,6 +97,8 @@ export async function generateFromTemplate(
       if (!contentMap) {
         lastError = 'AI response is not valid JSON';
         console.warn(`[template-gen] Attempt ${attempt}: ${lastError}`);
+        console.warn(`[template-gen] Raw response (first 500 chars): ${aiResponse.text.substring(0, 500)}`);
+        console.warn(`[template-gen] Raw response length: ${aiResponse.text.length}`);
         continue;
       }
 
@@ -108,14 +112,33 @@ export async function generateFromTemplate(
         hero_rating_text: `${brief.ratingCount ?? '4,891'} Ratings`,
         // Trust badge guarantee text (not in slot config but exists in template HTML)
         trust_badge_guarantee: brief.guarantee,
+        // Product page specific: static slots that come from the brief, not AI
+        ...(templateId.startsWith('product-page') ? {
+          cta_text: `GET ${brief.discountPct} OFF TODAY ONLY!`,
+          sticky_cta_text: 'ORDER NOW!',
+          sale_discount_text: `${brief.discountPct} OFF`,
+          review_count: brief.ratingCount ?? '1,257+',
+          review_score: (brief as any).ratingScore ?? '4.9',
+          stock_level: 'LOW',
+          stock_level_text: 'Current stock level:',
+          stock_urgency_text: `if you order now. Better hurry -- stock is running out!`,
+          discount_urgency_text: `Get ${brief.discountPct} OFF Discount`,
+          doctor_meet: 'Meet',
+          copyright_text: `${brief.name}. All rights reserved.`,
+          sale_banner_uk_text: `Limited Time Promo: ${brief.discountPct} OFF`,
+        } : {}),
+        // Checkout specific: bundle pricing, URLs, warranty — all from brief
+        ...(templateId.startsWith('checkout') ? buildCheckoutBriefValues(brief) : {}),
         // Image URLs passed through for post-processing replacement
         _doctorImageUrl: brief.doctorImageUrl ?? '',
         _productImageUrl: brief.productImageUrl ?? '',
         _productImageSquareUrl: brief.productImageSquareUrl ?? '',
         _logoUrl: brief.logoUrl ?? '',
         _productVideoUrl: brief.productVideoUrl ?? '',
+        _productVideoUrls: brief.productVideoUrls ?? [],
         _commentScreenshotUrls: brief.commentScreenshotUrls ?? [],
         _contentImageUrls: brief.contentImageUrls ?? {},
+        _useVideos: brief.useVideos ?? false,
         ...contentMap,
       };
 
@@ -198,8 +221,128 @@ function buildPromptForTemplate(templateId: string, brief: ProductBrief): string
   if (templateId.startsWith('hike-reasons-why')) {
     return buildReasonsWhyPrompt(brief);
   }
+  if (templateId.startsWith('product-page')) {
+    return buildProductPageFillerPrompt(brief);
+  }
+  if (templateId.startsWith('checkout')) {
+    return buildCheckoutFillerPrompt(brief);
+  }
   // Default: SmoothSpire narrative advertorial
   return buildTemplateFillerPrompt(brief);
+}
+
+// ─── Checkout Brief Values Builder ─────────────────────────────────────────────
+
+/**
+ * Build checkout-specific ContentMap values from the brief.
+ * WHY: Checkout has 54 bundle/pricing/URL markers that must come from the brief,
+ *      NOT from AI. This function maps CheckoutBrief → ContentMap for those slots.
+ *      Brief values go AFTER AI contentMap in the merge so they always win.
+ */
+function buildCheckoutBriefValues(brief: ProductBrief): ContentMap {
+  const cb = brief as any; // CheckoutBrief passed as ProductBrief
+  const values: ContentMap = {
+    product_name: brief.name,
+    product_name_plural: cb.namePlural ?? `${brief.name}s`,
+    product_type: cb.productType ?? 'Product',
+  };
+
+  // Bundle pricing (3 or 4 bundles)
+  const bundles = cb.bundles ?? [];
+  for (let i = 0; i < bundles.length; i++) {
+    const b = bundles[i];
+    const n = i + 1;
+    values[`bundle_${n}_id`] = b.id ?? '';
+    values[`bundle_${n}_label`] = b.label ?? '';
+    values[`bundle_${n}_qty_label`] = b.qtyLabel ?? '';
+    values[`bundle_${n}_price`] = b.unitPrice ?? '';
+    values[`bundle_${n}_compare_price`] = b.comparePrice ?? '';
+    values[`bundle_${n}_total`] = b.totalPrice ?? '';
+    values[`bundle_${n}_compare_total`] = b.compareTotal ?? '';
+    values[`bundle_${n}_discount`] = b.totalDiscount ?? '';
+    values[`bundle_${n}_unit_price`] = b.unitPrice ?? '';
+    values[`bundle_${n}_ship_span`] = b.shipSpan ?? '';
+    values[`bundle_${n}_ship_value`] = b.shipValue ?? '';
+    values[`bundle_${n}_img`] = b.img ?? '';
+    values[`bundle_${n}_price_display`] = b.priceDisplay ?? '';
+    values[`bundle_${n}_compare_display`] = b.compareDisplay ?? '';
+    values[`bundle_${n}_discount_pct`] = b.discountPct ?? '';
+    if (n === 1) {
+      // Bundle 1 has shipping text instead of FREE SHIPPING
+      values[`bundle_${n}_shipping`] = b.shipping ?? '';
+    }
+  }
+
+  // Bundle 4 visibility (hide if only 3 bundles)
+  values['bundle_4_display'] = bundles.length >= 4 ? 'display:block' : 'display:none';
+  // Clear bundle 4 data if hidden
+  if (bundles.length < 4) {
+    values['bundle_4_id'] = '';
+    values['bundle_4_label'] = '';
+    values['bundle_4_qty_label'] = '';
+    values['bundle_4_price'] = '';
+    values['bundle_4_compare_price'] = '';
+    values['bundle_4_total'] = '';
+    values['bundle_4_compare_total'] = '';
+    values['bundle_4_discount'] = '';
+    values['bundle_4_unit_price'] = '';
+    values['bundle_4_ship_span'] = '';
+    values['bundle_4_ship_value'] = '';
+    values['bundle_4_img'] = '';
+    values['bundle_4_price_display'] = '';
+    values['bundle_4_compare_display'] = '';
+    values['bundle_4_discount_pct'] = '';
+  }
+
+  // Initial order summary (defaults to bundle 2 = best seller)
+  const defaultBundle = bundles.length >= 2 ? bundles[1] : bundles[0];
+  if (defaultBundle) {
+    values['order_initial_subtotal'] = defaultBundle.totalPrice;
+    values['order_initial_price'] = defaultBundle.totalPrice;
+    values['order_initial_compare_price'] = defaultBundle.comparePrice;
+    values['order_initial_total'] = defaultBundle.totalPrice;
+    values['order_initial_compare_total'] = defaultBundle.compareTotal;
+    values['order_initial_grand_total'] = defaultBundle.totalPrice;
+    values['order_initial_shipping_worth'] = defaultBundle.shipValue;
+    values['compare_shipping'] = defaultBundle.shipValue === 'FREE' ? 'FREE' : defaultBundle.shipValue;
+  }
+
+  // Warranty
+  const warranty = cb.warranty;
+  if (warranty) {
+    values['warranty_description'] = warranty.description;
+    values['warranty_duration'] = warranty.duration;
+    values['warranty_price'] = warranty.price;
+    values['warranty_price_num'] = warranty.priceNum;
+  }
+
+  // URLs
+  values['checkout_base_url'] = cb.checkoutBaseUrl ?? '';
+  values['checkout_url'] = cb.checkoutUrl ?? '';
+  values['secure_base_url'] = cb.secureBaseUrl ?? cb.checkoutBaseUrl ?? '';
+  values['stripe_api_endpoint'] = cb.stripeApiEndpoint ?? '';
+  values['google_places_api_key'] = cb.googlePlacesApiKey ?? '';
+  values['stripe_redirect_base_url'] = cb.stripeRedirectBaseUrl ?? cb.checkoutBaseUrl ?? '';
+  values['terms_url'] = cb.termsUrl ?? '#';
+  values['privacy_url'] = cb.privacyUrl ?? '#';
+  values['refund_url'] = cb.refundUrl ?? '#';
+
+  // Discount banner text (matches brief discountPct)
+  values['sale_discount_text'] = `${brief.discountPct} OFF`;
+  values['discount_applied_text'] = `${brief.discountPct} OFF Applied`;
+
+  // Image URLs
+  values['logo_image'] = cb.logoUrl ?? '';
+  values['brand_image'] = cb.brandImageUrl ?? '';
+  values['product_assets_base_url'] = cb.productAssetsBaseUrl ?? '';
+  values['product_gallery_base_url'] = cb.galleryBaseUrl ?? '';
+  const galleryImages = cb.galleryImages ?? [];
+  for (let i = 0; i < 5; i++) {
+    values[`product_gallery_img_${i + 1}`] = galleryImages[i] ?? '';
+  }
+  values['flag_sprite_url'] = cb.flagSpriteUrl ?? '';
+
+  return values;
 }
 
 // ─── LLM Call ─────────────────────────────────────────────────────────────────

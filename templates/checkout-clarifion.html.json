@@ -1,0 +1,721 @@
+{
+  "templateId": "checkout-clarifion",
+  "source": "Checkout Clarifion Air Purifier (winner, 845KB, 15K lines)",
+  "description": "Checkout/order page with product gallery, 4-bundle quantity selector, warranty upsell, Stripe+PayPal payment, urgency timer, 3 testimonials, 11 FAQ. Desktop+mobile responsive. Bundle 4 can be hidden for 3-bundle products.",
+
+  "slots": {
+
+    "_comment_product": "=== PRODUCT IDENTITY ===",
+    "product_name": {
+      "description": "Product name (singular). Used throughout the page (19x).",
+      "example": "Clarifion",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "product_name_plural": {
+      "description": "Product name plural form (for bundle labels like '3 Xs').",
+      "example": "Clarifions",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "product_type": {
+      "description": "Product type/category label (8x, in JS items array + order summary).",
+      "example": "Air Purifier",
+      "ai_generated": false,
+      "from_brief": true
+    },
+
+    "_comment_images": "=== IMAGES & URLS ===",
+    "logo_image": {
+      "description": "Header logo image URL.",
+      "example": "https://cdn.example.com/logo.png",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "brand_image": {
+      "description": "Brand/trust badge image next to logo.",
+      "example": "https://cdn.example.com/brand-badge.png",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "flag_sprite_url": {
+      "description": "Country flag sprite sheet URL for shipping dropdown.",
+      "example": "https://cdn.example.com/flags.png",
+      "ai_generated": false,
+      "from_brief": false,
+      "notes": "Usually static, can keep original URL"
+    },
+    "product_assets_base_url": {
+      "description": "Base URL for product assets (5x in JS). Images are appended directly.",
+      "example": "cdn.example.com/assets/",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "product_gallery_base_url": {
+      "description": "Base URL for gallery images (11x). Image filenames appended.",
+      "example": "cdn.example.com/gallery/",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "product_gallery_img_1": {
+      "description": "Gallery image 1 filename (appended to base_url).",
+      "example": "product-front.webp",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "product_gallery_img_2": {
+      "description": "Gallery image 2 filename.",
+      "example": "product-side.webp",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "product_gallery_img_3": {
+      "description": "Gallery image 3 filename.",
+      "example": "product-top.webp",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "product_gallery_img_4": {
+      "description": "Gallery image 4 filename.",
+      "example": "product-box.webp",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "product_gallery_img_5": {
+      "description": "Gallery image 5 filename.",
+      "example": "product-use.webp",
+      "ai_generated": false,
+      "from_brief": true
+    },
+
+    "_comment_urls": "=== URLS & ENDPOINTS ===",
+    "google_places_api_key": {
+      "description": "Google Places API key for address autocomplete.",
+      "example": "AIzaSy...",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "checkout_base_url": {
+      "description": "Base checkout URL (6x in JS for API calls).",
+      "example": "https://checkout.example.com",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "checkout_url": {
+      "description": "Full checkout page URL (for yotpo reviews link).",
+      "example": "https://checkout.example.com/order",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "secure_base_url": {
+      "description": "Secure base URL for payment redirects (2x).",
+      "example": "https://checkout.example.com",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "stripe_api_endpoint": {
+      "description": "Stripe payment intent API endpoint.",
+      "example": "https://api.example.com/create-payment-intent",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "stripe_redirect_base_url": {
+      "description": "Stripe redirect base URL after payment (3x).",
+      "example": "https://checkout.example.com",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "terms_url": {
+      "description": "Terms of service URL.",
+      "example": "https://example.com/terms",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "privacy_url": {
+      "description": "Privacy policy URL.",
+      "example": "https://example.com/privacy",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "refund_url": {
+      "description": "Refund policy URL.",
+      "example": "https://example.com/refund",
+      "ai_generated": false,
+      "from_brief": true
+    },
+
+    "sale_discount_text": {
+      "description": "Discount percentage shown in the sale banner (e.g. '60% OFF'). Matches the best bundle discount.",
+      "example": "60% OFF",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "_comment_hero": "=== HERO SECTION ===",
+    "hero_headline": {
+      "description": "Main hero headline above the product gallery.",
+      "example": "Is Your Home's Air Making You Sick?",
+      "ai_generated": true
+    },
+    "feature_1_text": {
+      "description": "Feature bullet 1 (under hero, with icon).",
+      "example": "Purifies 300 sq ft in 30 min",
+      "ai_generated": true
+    },
+    "feature_2_text": {
+      "description": "Feature bullet 2.",
+      "example": "No filters to replace, ever",
+      "ai_generated": true
+    },
+    "feature_3_text": {
+      "description": "Feature bullet 3.",
+      "example": "Whisper quiet operation",
+      "ai_generated": true
+    },
+    "feature_4_text": {
+      "description": "Feature bullet 4.",
+      "example": "Works in any room",
+      "ai_generated": true
+    },
+    "urgency_text": {
+      "description": "Urgency banner text above the order form.",
+      "example": "Hurry! Sale Ends When Timer Hits Zero!",
+      "ai_generated": true
+    },
+    "discount_applied_text": {
+      "description": "Text showing discount applied to order.",
+      "example": "60% OFF Applied",
+      "ai_generated": false,
+      "from_brief": true,
+      "notes": "Derived from bundle discount"
+    },
+
+    "_comment_bundle1": "=== BUNDLE 1 (1 unit, base tier) ===",
+    "bundle_1_id": {
+      "description": "Unique identifier for bundle 1 in JS items array.",
+      "example": "1x-unit",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_price": {
+      "description": "Unit price for bundle 1.",
+      "example": "$39.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_compare_price": {
+      "description": "Compare-at (original) unit price for bundle 1.",
+      "example": "$49.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_total": {
+      "description": "Total price for bundle 1.",
+      "example": "$39.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_compare_total": {
+      "description": "Compare-at total price for bundle 1.",
+      "example": "$49.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_discount": {
+      "description": "Total discount amount for bundle 1.",
+      "example": "$10.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_unit_price": {
+      "description": "Per-unit price display (2x: HTML card + JS).",
+      "example": "$39.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_qty_label": {
+      "description": "Quantity label for JS items array.",
+      "example": "1x",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_ship_span": {
+      "description": "Shipping time span text for bundle 1.",
+      "example": "3-5 Days",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_ship_value": {
+      "description": "Shipping cost text for bundle 1.",
+      "example": "$4.95",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_shipping": {
+      "description": "Shipping display text on bundle card (HTML).",
+      "example": "+ $4.95 Shipping",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_img": {
+      "description": "Product image filename for bundle 1 (used in JS populateOrderSummary).",
+      "example": "product-1x.webp",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_1_discount_pct": {
+      "description": "Marketing discount percentage for bundle 1 (e.g. '40%'). Empty = no discount badge.",
+      "example": "",
+      "ai_generated": false,
+      "from_brief": true
+    },
+
+    "_comment_bundle2": "=== BUNDLE 2 (multi-unit, BEST SELLER tier) ===",
+    "bundle_2_id": {
+      "description": "Unique identifier for bundle 2 in JS.",
+      "example": "3x-pack",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_img": {
+      "description": "Product image filename for bundle 2 (in JS items array).",
+      "example": "product-3x.webp",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_discount_pct": {
+      "description": "Marketing discount percentage for bundle 2 (e.g. '40%'). Empty = no discount badge.",
+      "example": "40%",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_label": {
+      "description": "Bundle card label with discount and qty.",
+      "example": "17% OFF: 3 Clarifions",
+      "ai_generated": false,
+      "from_brief": true,
+      "notes": "Format: '{discount_pct} OFF: {qty} {product_name_plural}'"
+    },
+    "bundle_2_price": {
+      "description": "Unit price for bundle 2.",
+      "example": "$32.30",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_compare_price": {
+      "description": "Compare-at unit price for bundle 2.",
+      "example": "$49.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_total": {
+      "description": "Total price for bundle 2.",
+      "example": "$96.90",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_compare_total": {
+      "description": "Compare-at total price for bundle 2.",
+      "example": "$147.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_discount": {
+      "description": "Total discount amount for bundle 2.",
+      "example": "$50.10",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_unit_price": {
+      "description": "Per-unit price display for bundle 2.",
+      "example": "$32.30",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_price_display": {
+      "description": "Formatted price with compare-at for JS price display.",
+      "example": "$32.30",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_compare_display": {
+      "description": "Compare-at price display in strikethrough.",
+      "example": "$49.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_qty_label": {
+      "description": "Quantity label.",
+      "example": "3x",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_ship_span": {
+      "description": "Shipping time for bundle 2.",
+      "example": "FREE 3-5 Days",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_2_ship_value": {
+      "description": "Shipping cost text for bundle 2.",
+      "example": "FREE",
+      "ai_generated": false,
+      "from_brief": true
+    },
+
+    "_comment_bundle3": "=== BUNDLE 3 (multi-unit) ===",
+    "bundle_3_id": {
+      "description": "Unique identifier for bundle 3 in JS.",
+      "example": "6x-pack",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_img": {
+      "description": "Product image filename for bundle 3.",
+      "example": "product-6x.webp",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_discount_pct": {
+      "description": "Marketing discount percentage for bundle 3 (e.g. '60%'). Empty = no discount badge.",
+      "example": "60%",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_label": {
+      "description": "Bundle card label with discount and qty.",
+      "example": "33% OFF: 6 Clarifions",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_price": {
+      "description": "Unit price for bundle 3.",
+      "example": "$19.90",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_compare_price": {
+      "description": "Compare-at unit price for bundle 3.",
+      "example": "$49.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_total": {
+      "description": "Total price for bundle 3.",
+      "example": "$119.40",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_compare_total": {
+      "description": "Compare-at total price for bundle 3.",
+      "example": "$294.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_discount": {
+      "description": "Total discount for bundle 3.",
+      "example": "$174.60",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_unit_price": {
+      "description": "Per-unit price for bundle 3.",
+      "example": "$19.90",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_price_display": {
+      "description": "Formatted price for JS.",
+      "example": "$19.90",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_compare_display": {
+      "description": "Compare-at price display.",
+      "example": "$49.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_qty_label": {
+      "description": "Quantity label.",
+      "example": "6x",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_ship_span": {
+      "description": "Shipping time for bundle 3.",
+      "example": "FREE 3-5 Days",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_3_ship_value": {
+      "description": "Shipping cost for bundle 3.",
+      "example": "FREE",
+      "ai_generated": false,
+      "from_brief": true
+    },
+
+    "_comment_bundle4": "=== BUNDLE 4 (multi-unit, optional - hide for 3-bundle) ===",
+    "bundle_4_display": {
+      "description": "CSS display style for bundle 4 card. Use 'display:none' to hide (3-bundle mode), 'display:block' to show.",
+      "example": "display:block",
+      "ai_generated": false,
+      "from_brief": true,
+      "notes": "Set to 'display:none' when only 3 bundles needed"
+    },
+    "bundle_4_id": {
+      "description": "Unique identifier for bundle 4 in JS. Empty string if unused.",
+      "example": "9x-pack",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_img": {
+      "description": "Product image filename for bundle 4.",
+      "example": "product-9x.webp",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_discount_pct": {
+      "description": "Marketing discount percentage for bundle 4. Empty = no discount badge.",
+      "example": "66%",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_label": {
+      "description": "Bundle card label.",
+      "example": "46% OFF: 9 Clarifions",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_price": {
+      "description": "Unit price for bundle 4.",
+      "example": "$14.91",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_compare_price": {
+      "description": "Compare-at unit price for bundle 4.",
+      "example": "$49.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_total": {
+      "description": "Total price for bundle 4.",
+      "example": "$134.19",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_compare_total": {
+      "description": "Compare-at total price for bundle 4.",
+      "example": "$441.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_discount": {
+      "description": "Total discount for bundle 4.",
+      "example": "$306.81",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_unit_price": {
+      "description": "Per-unit price for bundle 4.",
+      "example": "$14.91",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_price_display": {
+      "description": "Formatted price for JS.",
+      "example": "$14.91",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_compare_display": {
+      "description": "Compare-at price display.",
+      "example": "$49.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_qty_label": {
+      "description": "Quantity label.",
+      "example": "9x",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_ship_span": {
+      "description": "Shipping time for bundle 4.",
+      "example": "FREE 3-5 Days",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "bundle_4_ship_value": {
+      "description": "Shipping cost for bundle 4.",
+      "example": "FREE",
+      "ai_generated": false,
+      "from_brief": true
+    },
+
+    "_comment_order": "=== ORDER SUMMARY (initial state) ===",
+    "order_initial_subtotal": {
+      "description": "Initial order subtotal (2x: summary + hidden field).",
+      "example": "$96.90",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "order_initial_price": {
+      "description": "Initial order price.",
+      "example": "$96.90",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "order_initial_compare_price": {
+      "description": "Initial compare-at price.",
+      "example": "$147.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "order_initial_total": {
+      "description": "Initial order total.",
+      "example": "$96.90",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "order_initial_compare_total": {
+      "description": "Initial compare-at total.",
+      "example": "$147.00",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "order_initial_grand_total": {
+      "description": "Initial grand total (after discount).",
+      "example": "$96.90",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "order_initial_shipping_worth": {
+      "description": "Shipping value text.",
+      "example": "$4.95",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "compare_shipping": {
+      "description": "Shipping comparison text (2x).",
+      "example": "FREE",
+      "ai_generated": false,
+      "from_brief": true
+    },
+
+    "_comment_warranty": "=== WARRANTY UPSELL ===",
+    "warranty_description": {
+      "description": "Warranty product description.",
+      "example": "2-Year Extended Protection Plan",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "warranty_duration": {
+      "description": "Warranty duration text.",
+      "example": "2 Years",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "warranty_price": {
+      "description": "Warranty price (2x: label + JS).",
+      "example": "$9.99",
+      "ai_generated": false,
+      "from_brief": true
+    },
+    "warranty_price_num": {
+      "description": "Warranty price as number for JS calculation (2x).",
+      "example": "9.99",
+      "ai_generated": false,
+      "from_brief": true
+    },
+
+    "_comment_testimonials": "=== TESTIMONIALS (3 reviews) ===",
+    "testimonial_1_name": {
+      "description": "Testimonial 1 reviewer name (2x: desktop + mobile).",
+      "example": "Sarah M.",
+      "ai_generated": true
+    },
+    "testimonial_1_headline": {
+      "description": "Testimonial 1 review headline/title (1x: desktop).",
+      "example": "I got the family bundle and I LOVE THEM!",
+      "ai_generated": true
+    },
+    "testimonial_1_text": {
+      "description": "Testimonial 1 review text (2x: desktop + mobile).",
+      "example": "I live in a smaller home and have grandkids over every week...",
+      "ai_generated": true
+    },
+    "testimonial_2_name": {
+      "description": "Testimonial 2 reviewer name (2x).",
+      "example": "Clinton G.",
+      "ai_generated": true
+    },
+    "testimonial_2_headline": {
+      "description": "Testimonial 2 headline (2x).",
+      "example": "Excellent product",
+      "ai_generated": true
+    },
+    "testimonial_2_text": {
+      "description": "Testimonial 2 review text (2x).",
+      "example": "I'm an older guy and don't usually mess with this...",
+      "ai_generated": true
+    },
+    "testimonial_3_name": {
+      "description": "Testimonial 3 reviewer name (2x).",
+      "example": "Ashley P.",
+      "ai_generated": true
+    },
+    "testimonial_3_headline": {
+      "description": "Testimonial 3 headline (2x).",
+      "example": "This easily cleans my dusty home.",
+      "ai_generated": true
+    },
+    "testimonial_3_text": {
+      "description": "Testimonial 3 review text (2x).",
+      "example": "Our house always picks up dust easily...",
+      "ai_generated": true
+    },
+    "testimonial_4_name": {
+      "description": "Recent buyer popup name (1x, social proof notification).",
+      "example": "Jessica R.",
+      "ai_generated": true
+    },
+
+    "_comment_faq": "=== FAQ SECTION (11 Q&A) ===",
+    "faq_heading": {
+      "description": "FAQ section heading.",
+      "example": "Frequently Asked Questions",
+      "ai_generated": true
+    },
+    "faq_q1": {
+      "description": "FAQ question 1.",
+      "example": "How does this product work?",
+      "ai_generated": true
+    },
+    "faq_a1": {
+      "description": "FAQ answer 1.",
+      "example": "It uses negative ion technology to...",
+      "ai_generated": true
+    },
+    "faq_q2": { "description": "FAQ question 2.", "example": "Is it safe for pets?", "ai_generated": true },
+    "faq_a2": { "description": "FAQ answer 2.", "example": "Yes, completely safe...", "ai_generated": true },
+    "faq_q3": { "description": "FAQ question 3.", "example": "How long does it last?", "ai_generated": true },
+    "faq_a3": { "description": "FAQ answer 3.", "example": "Each unit lasts...", "ai_generated": true },
+    "faq_q4": { "description": "FAQ question 4.", "example": "Does it make noise?", "ai_generated": true },
+    "faq_a4": { "description": "FAQ answer 4.", "example": "No, it's whisper quiet...", "ai_generated": true },
+    "faq_q5": { "description": "FAQ question 5.", "example": "What's the coverage area?", "ai_generated": true },
+    "faq_a5": { "description": "FAQ answer 5.", "example": "Each unit covers...", "ai_generated": true },
+    "faq_q6": { "description": "FAQ question 6.", "ai_generated": true },
+    "faq_a6": { "description": "FAQ answer 6.", "ai_generated": true },
+    "faq_q7": { "description": "FAQ question 7.", "ai_generated": true },
+    "faq_a7": { "description": "FAQ answer 7.", "ai_generated": true },
+    "faq_q8": { "description": "FAQ question 8.", "ai_generated": true },
+    "faq_a8": { "description": "FAQ answer 8.", "ai_generated": true },
+    "faq_q9": { "description": "FAQ question 9.", "ai_generated": true },
+    "faq_a9": { "description": "FAQ answer 9.", "ai_generated": true },
+    "faq_q10": { "description": "FAQ question 10.", "ai_generated": true },
+    "faq_a10": { "description": "FAQ answer 10.", "ai_generated": true },
+    "faq_q11": { "description": "FAQ question 11.", "ai_generated": true },
+    "faq_a11": { "description": "FAQ answer 11.", "ai_generated": true }
+  }
+}

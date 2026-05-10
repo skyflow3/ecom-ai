@@ -36,6 +36,8 @@ FICHIERS PAR TEMPLATE:
 |-------------|--------|-------|--------|--------------|--------------|
 | `smoothspire-advertorial` | Advertorial narratif | 47 | `template-filler.ts` | advertorial_judge_v2.json | 9.76/10 |
 | `hike-reasons-why` | Listicle "10 Reasons Why" | 72 | `reasons-why-filler.ts` | advertorial_listicle_judge_v2.json | 9.23-10.41/10 |
+| `product-page-tryemsense` | Product Page DTC | 129 | `product-page-filler.ts` | product_page_judge_v2.json | 8.77/10 |
+| `checkout-clarifion` | Checkout/Order Page | 127 | `checkout-filler.ts` | (no judge yet) | 127/127 slots OK |
 
 ---
 
@@ -95,13 +97,124 @@ const result = await generateFromTemplate('hike-reasons-why', brief, config, './
 ```typescript
 function buildPromptForTemplate(templateId: string, brief: ProductBrief): string {
   if (templateId.startsWith('hike-reasons-why')) {
-    return buildReasonsWhyPrompt(brief);     // Listicle, Champion #4
+    return buildReasonsWhyPrompt(brief);        // Listicle, Champion #4
   }
-  return buildTemplateFillerPrompt(brief);   // Advertorial narratif (default)
+  if (templateId.startsWith('product-page')) {
+    return buildProductPageFillerPrompt(brief); // Product Page DTC
+  }
+  if (templateId.startsWith('checkout')) {
+    return buildCheckoutFillerPrompt(brief);    // Checkout/Order page
+  }
+  return buildTemplateFillerPrompt(brief);      // Advertorial narratif (default)
 }
 ```
 
 **Ajouter un nouveau template** : ajouter une condition dans cette fonction.
+
+---
+
+## Checkout Template — Guide pour Agent IA (ZERO MEMORY)
+
+### Ce que l'agent IA doit savoir
+
+Le template `checkout-clarifion` génère des **pages de checkout/order** complètes avec:
+- 3 ou 4 bundles de prix (configurable)
+- Formulaire de paiement Stripe + PayPal
+- Gallery produit (5 images)
+- 3 témoignages
+- 11 FAQ
+- Urgence (timer 10 min)
+- Warranty upsell
+- 127 slots au total
+
+### Ce que l'agent doit fournir (CheckoutBrief)
+
+L'agent DOIT fournir ces valeurs dans le `CheckoutBrief` :
+
+**OBLIGATOIRE (le template ne fonctionnera pas sans):**
+1. **Product info**: `name`, `namePlural`, `productType`, `description`, `niche`, `targetAudience`, `benefits`
+2. **Bundle pricing** (array `bundles`): 3 ou 4 bundles avec:
+   - `id`: identifiant unique (ex: "1x-unit")
+   - `label`: texte affiché (ex: "50% OFF: 3 AirPures")
+   - `qtyLabel`: quantité (ex: "3x")
+   - `unitPrice`, `comparePrice`, `totalPrice`, `compareTotal`, `totalDiscount`
+   - `shipSpan`, `shipValue`, `shipping`, `img`, `priceDisplay`, `compareDisplay`
+3. **Stripe**: `stripeApiEndpoint` (endpoint `/create-payment-intent` de votre backend)
+4. **URLs**: `checkoutBaseUrl`, `checkoutUrl`, `stripeRedirectBaseUrl`
+5. **Legal URLs**: `termsUrl`, `privacyUrl`, `refundUrl`
+6. **Images**: `productAssetsBaseUrl`, `galleryBaseUrl`, `galleryImages` (5 filenames), `logoUrl`, `brandImageUrl`
+
+**OPTIONNEL:**
+- `warranty`: si absent, le slot warranty sera vide
+- Bundle 4: si seulement 3 bundles, bundle 4 sera automatiquement caché (`display:none`)
+
+### Ce que l'AI génère automatiquement (pas besoin de fournir)
+- Hero headline, feature bullets (4), urgency text
+- 3 témoignages (name + headline + text)
+- 11 FAQ (questions + réponses)
+- Discount applied text
+
+### Exemple d'utilisation
+
+```typescript
+import { generateFromTemplate } from './src/services/template-generator';
+import type { CheckoutBrief } from './src/agents/prompts/checkout-filler';
+
+const brief: CheckoutBrief = {
+  name: 'AirPure',
+  namePlural: 'AirPures',
+  productType: 'Air Purifier',
+  description: 'Compact negative ion air purifier...',
+  niche: 'Home & Wellness',
+  targetAudience: 'Homeowners with allergies',
+  benefits: ['Eliminates 99% allergens', 'No filter needed'],
+  price: '$19.67', originalPrice: '$79.00', discountPct: '50%',
+  guarantee: '30-Day Money-Back Guarantee',
+  mechanismName: 'Negative Ion Technology',
+  authorPersona: 'Air Quality Expert',
+  bundles: [
+    { id: '1x', label: '1 AirPure', qtyLabel: '1x', unitPrice: '$39.00', ... },
+    { id: '3x', label: '50% OFF: 3 AirPures', qtyLabel: '3x', unitPrice: '$19.67', ... },
+    { id: '6x', label: '60% OFF: 6 AirPures', qtyLabel: '6x', unitPrice: '$15.83', ... },
+  ],
+  warranty: { description: '2-Year Protection', duration: '2 Years', price: '$9.99', priceNum: '9.99' },
+  checkoutBaseUrl: 'https://checkout.example.com',
+  stripeApiEndpoint: 'https://api.example.com/create-payment-intent',
+  stripeRedirectBaseUrl: 'https://checkout.example.com',
+  checkoutUrl: 'https://checkout.example.com/order',
+  termsUrl: 'https://example.com/terms',
+  privacyUrl: 'https://example.com/privacy',
+  refundUrl: 'https://example.com/refund',
+  productAssetsBaseUrl: 'cdn.example.com/assets/',
+  galleryBaseUrl: 'cdn.example.com/gallery/',
+  galleryImages: ['front.webp', 'side.webp', 'top.webp', 'box.webp', 'use.webp'],
+  logoUrl: 'https://cdn.example.com/logo.png',
+  brandImageUrl: 'https://cdn.example.com/brand.png',
+};
+
+const result = await generateFromTemplate('checkout-clarifion', brief, config, './output');
+```
+
+### Support 3 vs 4 bundles
+- **3 bundles**: Fournir 3 éléments dans le tableau `bundles`. Le 4e bundle sera automatiquement caché.
+- **4 bundles**: Fournir 4 éléments. Le 4e sera visible.
+
+### Flux de paiement (Stripe)
+1. Client choisit un bundle → JS sélectionne les données du bundle dans le tableau `items[]`
+2. Client remplit le formulaire de paiement
+3. Client clique "Payer" → `processStripePayment()` appelle `stripeApiEndpoint`
+4. Votre backend crée un PaymentIntent Stripe avec le montant du bundle sélectionné
+5. Stripe confirme le paiement → redirect vers `stripeRedirectBaseUrl`
+
+**IMPORTANT**: Les prix affichés dans le HTML doivent correspondre exactement aux prix envoyés à Stripe.
+Le template injecte les prix du `CheckoutBrief.bundles` → ils sont garantis corrects.
+
+### Flux de paiement (PayPal)
+Le bouton PayPal est visuel uniquement (background image). Pour un vrai paiement PayPal, il faut ajouter le SDK PayPal JS et un handler de paiement dans le template.
+
+### Auto-détection du pays
+Le template détecte automatiquement le pays du visiteur via `ipapi.co` et pré-sélectionne le pays dans les dropdowns shipping/billing.
+80+ pays sont inclus dans la dropdown. State/Province est un champ texte libre (pas de dropdown — trop de régions pour tous les pays).
 
 ---
 
@@ -187,3 +300,5 @@ Les images passent via le `ProductBrief` :
 | **hike-reasons-why (HF Stride)** | **10.41/10** | DeepSeek, listicle, 72 slots, sanitization |
 | **smoothspire-advertorial** | **9.76/10** | DeepSeek, advertorial, 47 slots |
 | **hike-reasons-why (Nutrovia)** | **9.23/10** | DeepSeek, listicle, 72 slots, sanitization |
+| **product-page-tryemsense** | **8.77/10** | DeepSeek, product page, 129 slots |
+| **checkout-clarifion** | **N/A (checkout)** | DeepSeek, 127/127 slots, 3-bundle OK |
