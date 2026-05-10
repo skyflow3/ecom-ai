@@ -14302,48 +14302,27 @@
         }
 
         function detectLocationByIP() {
-          console.log('[GEO] Starting IP detection...');
-          var GEO_APIS = [
-            {
-              url: 'https://ipwhois.app/json/?lang=en',
-              extract: function(d) { return { country: d.country_code, region: d.region }; }
-            },
-            {
-              url: 'https://ipapi.co/json/',
-              extract: function(d) { return { country: d.country_code, region: d.region }; }
-            }
-          ];
-
-          function tryAPI(index) {
-            if (index >= GEO_APIS.length) {
-              console.log('[GEO] All APIs failed — user will fill manually');
-              return;
-            }
-            var api = GEO_APIS[index];
-            console.log('[GEO] Trying API ' + (index + 1) + ': ' + api.url);
-            fetch(api.url)
-              .then(function(r) {
-                console.log('[GEO] API ' + (index + 1) + ' status: ' + r.status);
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.json();
-              })
-              .then(function(data) {
-                console.log('[GEO] API ' + (index + 1) + ' raw data: country_code=' + data.country_code + ', region=' + data.region + ', success=' + data.success);
-                var loc = api.extract(data);
-                console.log('[GEO] Extracted: country=' + loc.country + ', region=' + loc.region);
-                // WHY: ipwhois returns {success:false} on error, old ip-api returned {status:"fail"}
-                if (data.success === false || data.status === 'fail' || !loc.country) {
-                  console.log('[GEO] API ' + (index + 1) + ' returned error or empty — trying next');
-                  tryAPI(index + 1);
-                  return;
-                }
-                applyLocation(loc.country, loc.region);
-              })
-              .catch(function(err) {
-                console.log('[GEO] API ' + (index + 1) + ' fetch error: ' + err.message);
-                tryAPI(index + 1);
-              });
-          }
+          console.log('[GEO] Starting IP detection via server proxy...');
+          // WHY: Using /api/geo server proxy instead of calling external APIs directly.
+          //      External APIs (ipwhois.app, ipapi.co) return 403 when browser sends Origin header.
+          //      Server-side proxy has no Origin header → always works.
+          fetch('/api/geo')
+            .then(function(r) {
+              console.log('[GEO] Proxy status: ' + r.status);
+              if (!r.ok) throw new Error('HTTP ' + r.status);
+              return r.json();
+            })
+            .then(function(data) {
+              console.log('[GEO] Proxy response: country=' + data.country + ', region=' + data.region + ', city=' + data.city);
+              if (!data.country) {
+                console.log('[GEO] No country detected — user fills manually');
+                return;
+              }
+              applyLocation(data.country, data.region);
+            })
+            .catch(function(err) {
+              console.log('[GEO] Proxy error: ' + err.message + ' — user fills manually');
+            });
 
           function applyLocation(userCountryCode, userRegionName) {
             userCountryCode = (userCountryCode || '').trim().toUpperCase();
@@ -14391,17 +14370,18 @@
         //      Selecting one auto-fills street, city, state, zip, country.
         //      Reduces typos = fewer shipping errors = fewer refund claims.
         function initGooglePlacesAutocomplete() {
-          var maxRetries = 20;
-          var retryCount = 0;
-          console.log('[PLACES] init called, google=' + (typeof google) + ', maps=' + !!(google && google.maps) + ', places=' + !!(google && google.maps && google.maps.places));
+          var _placesRetries = typeof _placesRetries === 'undefined' ? 0 : _placesRetries + 1;
+          var _maxRetries = 20;
+          var hasGoogle = typeof google !== 'undefined';
+          var hasMaps = hasGoogle && !!google.maps;
+          var hasPlaces = hasMaps && !!google.maps.places;
+          console.log('[PLACES] init called, google=' + hasGoogle + ', maps=' + hasMaps + ', places=' + hasPlaces + ', retry=' + _placesRetries);
           // Retry until Google Maps API is loaded (script is async)
-          if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
-            retryCount++;
-            if (retryCount > maxRetries) {
-              console.log('[PLACES] ERROR: Google Maps never loaded after ' + maxRetries + ' retries. Check API key and domain authorization.');
+          if (!hasGoogle || !hasMaps || !hasPlaces) {
+            if (_placesRetries > _maxRetries) {
+              console.log('[PLACES] ERROR: Google Maps never loaded after ' + _maxRetries + ' retries. Check API key and domain authorization.');
               return;
             }
-            console.log('[PLACES] Google Maps not ready (retry ' + retryCount + '/' + maxRetries + '), retrying in 500ms...');
             setTimeout(function() { initGooglePlacesAutocomplete(); }, 500);
             return;
           }
