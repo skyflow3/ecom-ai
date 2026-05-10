@@ -14306,7 +14306,8 @@
           // WHY: Using /api/geo server proxy instead of calling external APIs directly.
           //      External APIs (ipwhois.app, ipapi.co) return 403 when browser sends Origin header.
           //      Server-side proxy has no Origin header → always works.
-          fetch('/api/geo')
+          // WHY: Must use absolute URL — <base> tag redirects relative URLs to checkout.example.com
+          fetch(window.location.origin + '/api/geo')
             .then(function(r) {
               console.log('[GEO] Proxy status: ' + r.status);
               if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -14362,7 +14363,6 @@
             }
           }
 
-          tryAPI(0);
         }
 
         // ─── Google Places Autocomplete ──────────────────────────────────────────
