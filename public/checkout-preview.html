@@ -14245,6 +14245,8 @@
 
     <script type="text/javascript">
 
+        console.log('[CHECKOUT-INIT] Script loaded, DOM ready:', document.readyState);
+
         // ─── Country List + IP Auto-Detection ────────────────────────────────────
         // WHY: Populate country dropdowns + auto-select country/state/city via IP geolocation.
         //      State dropdown stays dynamic (populated after country selection).
@@ -14300,9 +14302,7 @@
         }
 
         function detectLocationByIP() {
-          // WHY: Using ip-api.com instead of ipapi.co — more reliable, no Cloudflare blocking.
-          //      Free tier: 45 req/min, returns countryCode + regionName.
-          //      Fallback: ipapi.co (same format but less reliable).
+          console.log('[GEO] Starting IP detection...');
           var GEO_APIS = [
             {
               url: 'https://ipwhois.app/json/?lang=en',
@@ -14315,20 +14315,32 @@
           ];
 
           function tryAPI(index) {
-            if (index >= GEO_APIS.length) return; // All failed — user fills manually
+            if (index >= GEO_APIS.length) {
+              console.log('[GEO] All APIs failed — user will fill manually');
+              return;
+            }
             var api = GEO_APIS[index];
+            console.log('[GEO] Trying API ' + (index + 1) + ': ' + api.url);
             fetch(api.url)
-              .then(function(r) { return r.json(); })
+              .then(function(r) {
+                console.log('[GEO] API ' + (index + 1) + ' status: ' + r.status);
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+              })
               .then(function(data) {
+                console.log('[GEO] API ' + (index + 1) + ' raw data: country_code=' + data.country_code + ', region=' + data.region + ', success=' + data.success);
                 var loc = api.extract(data);
-                // ip-api returns {status:"fail"} on error
-                if (data.status === 'fail' || !loc.country) {
+                console.log('[GEO] Extracted: country=' + loc.country + ', region=' + loc.region);
+                // WHY: ipwhois returns {success:false} on error, old ip-api returned {status:"fail"}
+                if (data.success === false || data.status === 'fail' || !loc.country) {
+                  console.log('[GEO] API ' + (index + 1) + ' returned error or empty — trying next');
                   tryAPI(index + 1);
                   return;
                 }
                 applyLocation(loc.country, loc.region);
               })
-              .catch(function() {
+              .catch(function(err) {
+                console.log('[GEO] API ' + (index + 1) + ' fetch error: ' + err.message);
                 tryAPI(index + 1);
               });
           }
@@ -14379,13 +14391,21 @@
         //      Selecting one auto-fills street, city, state, zip, country.
         //      Reduces typos = fewer shipping errors = fewer refund claims.
         function initGooglePlacesAutocomplete() {
+          var maxRetries = 20;
+          var retryCount = 0;
           console.log('[PLACES] init called, google=' + (typeof google) + ', maps=' + !!(google && google.maps) + ', places=' + !!(google && google.maps && google.maps.places));
           // Retry until Google Maps API is loaded (script is async)
           if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
-            console.log('[PLACES] Google Maps not ready, retrying in 500ms...');
-            setTimeout(initGooglePlacesAutocomplete, 500);
+            retryCount++;
+            if (retryCount > maxRetries) {
+              console.log('[PLACES] ERROR: Google Maps never loaded after ' + maxRetries + ' retries. Check API key and domain authorization.');
+              return;
+            }
+            console.log('[PLACES] Google Maps not ready (retry ' + retryCount + '/' + maxRetries + '), retrying in 500ms...');
+            setTimeout(function() { initGooglePlacesAutocomplete(); }, 500);
             return;
           }
+          console.log('[PLACES] Google Maps loaded! Proceeding with autocomplete setup...');
 
           var addressFields = [
             { street: 'shipAddress1', city: 'shipCity', state: 'shipState', zip: 'shipPostalCode', country: 'shipCountry' },
@@ -14466,9 +14486,9 @@
         // Init — call directly (script is at bottom of body, DOM is already parsed)
         // WHY: DOMContentLoaded already fired by the time this inline script executes.
         //      Using the event listener means the functions NEVER run.
-        populateCountryDropdowns();
-        detectLocationByIP();
-        initGooglePlacesAutocomplete();
+        try { populateCountryDropdowns(); console.log('[CHECKOUT-INIT] Country dropdowns populated'); } catch(e) { console.log('[CHECKOUT-INIT] ERROR in populateCountryDropdowns: ' + e.message); }
+        try { detectLocationByIP(); console.log('[CHECKOUT-INIT] IP detection started'); } catch(e) { console.log('[CHECKOUT-INIT] ERROR in detectLocationByIP: ' + e.message); }
+        try { initGooglePlacesAutocomplete(); console.log('[CHECKOUT-INIT] Google Places init started'); } catch(e) { console.log('[CHECKOUT-INIT] ERROR in initGooglePlacesAutocomplete: ' + e.message); }
 
         $(document).ready(function () {
 
