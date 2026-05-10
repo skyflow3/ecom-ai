@@ -14305,8 +14305,8 @@
           //      Fallback: ipapi.co (same format but less reliable).
           var GEO_APIS = [
             {
-              url: 'http://ip-api.com/json/?fields=status,countryCode,regionName',
-              extract: function(d) { return { country: d.countryCode, region: d.regionName }; }
+              url: 'https://ipwhois.app/json/?lang=en',
+              extract: function(d) { return { country: d.country_code, region: d.region }; }
             },
             {
               url: 'https://ipapi.co/json/',
