@@ -38,6 +38,12 @@
       "ai_generated": false,
       "from_brief": true
     },
+    "contact_email": {
+      "description": "Contact email shown in header. Used in mailto link + display text.",
+      "example": "contact@nutrovia.co",
+      "ai_generated": false,
+      "from_brief": true
+    },
     "flag_sprite_url": {
       "description": "Country flag sprite sheet URL for shipping dropdown.",
       "example": "https://cdn.example.com/flags.png",
@@ -239,13 +245,13 @@
       "from_brief": true
     },
     "bundle_1_ship_span": {
-      "description": "Shipping time span text for bundle 1.",
-      "example": "3-5 Days",
+      "description": "Strikethrough shipping value for bundle 1. Empty for paid shipping bundles. '$4.95 worth' for free shipping bundles (shows crossed-out value).",
+      "example": "",
       "ai_generated": false,
       "from_brief": true
     },
     "bundle_1_ship_value": {
-      "description": "Shipping cost text for bundle 1.",
+      "description": "Shipping cost display for bundle 1. '$4.95' for paid shipping, 'FREE' for free shipping.",
       "example": "$4.95",
       "ai_generated": false,
       "from_brief": true
@@ -350,13 +356,13 @@
       "from_brief": true
     },
     "bundle_2_ship_span": {
-      "description": "Shipping time for bundle 2.",
-      "example": "FREE 3-5 Days",
+      "description": "Strikethrough shipping value for bundle 2. '$4.95 worth' for free shipping (shows crossed-out value). Empty if paid shipping.",
+      "example": "$4.95 worth",
       "ai_generated": false,
       "from_brief": true
     },
     "bundle_2_ship_value": {
-      "description": "Shipping cost text for bundle 2.",
+      "description": "Shipping cost display for bundle 2. 'FREE' for free shipping, '$4.95' for paid.",
       "example": "FREE",
       "ai_generated": false,
       "from_brief": true
@@ -442,13 +448,13 @@
       "from_brief": true
     },
     "bundle_3_ship_span": {
-      "description": "Shipping time for bundle 3.",
-      "example": "FREE 3-5 Days",
+      "description": "Strikethrough shipping value for bundle 3. '$4.95 worth' for free shipping (shows crossed-out value). Empty if paid shipping.",
+      "example": "$4.95 worth",
       "ai_generated": false,
       "from_brief": true
     },
     "bundle_3_ship_value": {
-      "description": "Shipping cost for bundle 3.",
+      "description": "Shipping cost display for bundle 3. 'FREE' for free shipping, '$4.95' for paid.",
       "example": "FREE",
       "ai_generated": false,
       "from_brief": true
@@ -541,13 +547,13 @@
       "from_brief": true
     },
     "bundle_4_ship_span": {
-      "description": "Shipping time for bundle 4.",
-      "example": "FREE 3-5 Days",
+      "description": "Strikethrough shipping value for bundle 4. '$4.95 worth' for free shipping (shows crossed-out value). Empty if paid shipping.",
+      "example": "$4.95 worth",
       "ai_generated": false,
       "from_brief": true
     },
     "bundle_4_ship_value": {
-      "description": "Shipping cost for bundle 4.",
+      "description": "Shipping cost display for bundle 4. 'FREE' for free shipping, '$4.95' for paid.",
       "example": "FREE",
       "ai_generated": false,
       "from_brief": true

@@ -354,6 +354,12 @@ export function fillTemplate(
   //      Per-template routing because different templates use different CDN hosts/URLs.
   html = replaceImages(html, content, templateId);
 
+  // ─── Strip <base href="..."> from templates ─────────────────────────────────
+  // WHY: Original winner templates have <base href="https://try.smoothspine.com/...">.
+  //      This makes ALL relative URLs resolve to the original domain instead of local files.
+  //      In a funnel, we need relative URLs (checkout.html, oto1.html) to work from file:// or any host.
+  html = html.replace(/<base\s+href="[^"]*"[^>]*>\s*/gi, '');
+
   return { html, templateId, slotsFilled, slotsEmpty, warnings };
 }
 
@@ -437,6 +443,9 @@ function fillSimpleMarkers(
   // ─── Replace images (same as main fillTemplate path) ────────────────────────
   // WHY: Marker mode needs image replacement too — product images, author photos, etc.
   html = replaceImages(html, content, templateId);
+
+  // ─── Strip <base href="..."> from templates ─────────────────────────────────
+  html = html.replace(/<base\s+href="[^"]*"[^>]*>\s*/gi, '');
 
   return { html, templateId, slotsFilled, slotsEmpty, warnings };
 }
@@ -565,6 +574,73 @@ const TEMPLATE_IMAGE_MAP: Record<string, ImageReplacementMapping> = {
   'checkout-clarifion': {
     // WHY: Checkout images are ALL handled by markers (gallery, bundle, logo, etc.)
     //      No needle-based replacement needed.
+    productHero: '',
+    productCta: '',
+    productCompare: '',
+    authorPhoto: '',
+    sidebarPlaceholder: '',
+    commentScreenshots: [],
+    reasonImages: [],
+    productImages: [],
+    reviewAvatar: '',
+    videoNeedles: [],
+  },
+  'upsell-vibriance': {
+    // WHY: Upsell images are ALL handled by markers (logo_image_url, product_image_url).
+    //      Only 2 images on the page — logo and product bundle image.
+    productHero: '',
+    productCta: '',
+    productCompare: '',
+    authorPhoto: '',
+    sidebarPlaceholder: '',
+    commentScreenshots: [],
+    reasonImages: [],
+    productImages: [],
+    reviewAvatar: '',
+    videoNeedles: [],
+  },
+  'upsell-cross-sell': {
+    // WHY: Cross-sell upsell (OTO2) images handled by markers.
+    productHero: '',
+    productCta: '',
+    productCompare: '',
+    authorPhoto: '',
+    sidebarPlaceholder: '',
+    commentScreenshots: [],
+    reasonImages: [],
+    productImages: [],
+    reviewAvatar: '',
+    videoNeedles: [],
+  },
+  'upsell-product': {
+    // WHY: Product upsell (OTO3-4) images handled by markers (logo_image_url, product_image_url, product_image_url_cta).
+    productHero: '',
+    productCta: '',
+    productCompare: '',
+    authorPhoto: '',
+    sidebarPlaceholder: '',
+    commentScreenshots: [],
+    reasonImages: [],
+    productImages: [],
+    reviewAvatar: '',
+    videoNeedles: [],
+  },
+  'upsell-protection': {
+    // WHY: Protection upsell (OTO5) images handled by markers (logo_image_url, product_image_url).
+    productHero: '',
+    productCta: '',
+    productCompare: '',
+    authorPhoto: '',
+    sidebarPlaceholder: '',
+    commentScreenshots: [],
+    reasonImages: [],
+    productImages: [],
+    reviewAvatar: '',
+    videoNeedles: [],
+  },
+  'thank-you-page-smoothspine': {
+    // WHY: Thank you page images are ALL handled by markers (flag, hero, product,
+    //      guide_1, guide_2, community, trust badges). No needle-based replacement needed.
     productHero: '',
     productCta: '',
     productCompare: '',

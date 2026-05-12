@@ -1,21 +1,40 @@
 # CLAUDE.md — ECOM-AI (Production Hub AUTONOME)
 
+## OBLIGATOIRE: LECTURE DE DEMARRAGE (AVANT TOUTE ACTION)
+
+**CECI EST LA PREMIERE CHOSE QUE TU LIS. TU NE PEUX PAS CODER AVANT D'AVOIR LU CES FICHIERS.**
+
+**POURQUOI**: Tu es une IA sans mémoire. Chaque session, chaque /compact = perte totale du contexte.
+Ces fichiers CONTIENNENT ton contexte. Sans eux, tu codes à l'aveugle et tu casses l'architecture.
+
+```
+LECTURE OBLIGATOIRE AVANT CHAQUE SESSION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. CE FICHIER (CLAUDE.md)              ← Structure, règles, stack, conventions
+2. Architecture Finale.md              ← Architecture complète (7400 lignes, source de vérité)
+3. Agent Prompt Architecture.md        ← Pipeline agent, composition engine, block grammar
+4. progress.txt                        ← Ce qui a été fait, ce qui reste, patterns importants
+5. docs/TEMPLATE-SYSTEM.md             ← Pipeline templates HTML (si tu touches aux templates)
+
+LECTURE OBLIGATOIRE AVANT DE TOUCHER AU CODE:
+- Relire les sections de "Architecture Finale.md" liées à ta tâche
+- Relire "Agent Prompt Architecture.md" si tu touches aux agents/renderers
+- Relire "docs/TEMPLATE-SYSTEM.md" si tu touches aux templates
+- Relire "progress.txt" pour connaître l'état actuel et les patterns
+```
+
+**APRÈS CHAQUE ACTION MAJEURE** (code écrit, fichier créé, bug fixé):
+1. Relire les sections concernées de `Architecture Finale.md`
+2. Vérifier cohérence avec `progress.txt`
+3. Mettre à jour `progress.txt` (APPEND, jamais replace)
+
+**APRÈS CHAQUE /compact OU PERTE DE CONTEXTE**:
+→ Re-lire les 4 fichiers ci-dessus AVANT de continuer à coder.
+
 ## Zero Memory Rule
 Chaque session commence avec ZERO mémoire. Le code doit s'auto-expliquer.
 Tu écris pour TOI-MÊME dans une future session avec ZERO mémoire.
 But: < 30s pour comprendre un fichier, contexte minimal pour reprendre le travail.
-
-## REGLE OBLIGATOIRE: Relecture après chaque action
-
-**APRÈS chaque nouvelle chose faite** (section ajoutée, code écrit, table créée, commit, etc.):
-1. Relire `PLAN-DESIGN-SYSTEM.md` en entier
-2. Relire les sections concernées de `Architecture Finale.md`
-3. Vérifier cohérence entre les deux fichiers
-4. Cocher les checkboxes dans PLAN-DESIGN-SYSTEM.md
-5. Mettre à jour `progress.txt` avec ce qui a été fait
-
-**POURQUOI**: L'IA perd le contexte entre les actions. La relecture garantit l'alignement.
-Une future IA sans mémoire doit pouvoir reprendre sans erreur ni contradiction.
 
 ## REGLE OBLIGATOIRE: Fin de session
 
@@ -77,17 +96,32 @@ ECOM-AI/
 │   ├── checkout-clarifion.html            Checkout original (127 slots, 3/4 bundles)
 │   ├── checkout-clarifion.marked.html     Version avec {{SLOT}} markers + geo + Places
 │   └── checkout-clarifion.html.json       Config des slots
+│   ├── upsell-vibriance.marked.html       Upsell OTO1 volume deal (same_product)
+│   ├── upsell-vibriance.html + .json
+│   ├── upsell-cross-sell.marked.html      Upsell OTO2 cross-sell (AM/PM routine)
+│   ├── upsell-cross-sell.html + .json
+│   ├── upsell-product.marked.html         Upsell OTO3+OTO4 cross-sell (body_extra/ingredients)
+│   ├── upsell-product.html + .json
+│   └── upsell-protection.marked.html      Upsell OTO5 protection (package loss)
+│       upsell-protection.html + .json
 │
 ├── src/
 │   ├── services/
 │   │   ├── template-engine.ts          Moteur de remplissage (markers + zones + images)
 │   │   ├── template-generator.ts       Orchestrateur (ProductBrief → AI JSON → HTML rempli)
+│   │   ├── funnel-generator.ts         Funnel orchestrateur (variants + CTA wiring + router)
+│   │   ├── cta-injector.ts             CTA URL post-processor (regex structural targeting)
+│   │   ├── variant-router.ts           Client-side A/B traffic splitter HTML generator
+│   │   ├── funnel-metrics.ts           JSON-file A/B metrics tracking
+│   │   ├── page-generator.ts           Block system (AI compose blocks → HTML)
 │   │   └── content-judge.ts            Juge V5 Council (3 personas)
 │   ├── agents/prompts/
 │   │   ├── template-filler.ts          Prompt advertorial narratif (SmoothSpire)
 │   │   ├── reasons-why-filler.ts       Prompt listicle (hike-reasons-why, Champion #4)
 │   │   ├── product-page-filler.ts      Prompt product page DTC (tryemsense)
 │   │   ├── checkout-filler.ts          Prompt checkout (clarifion, 127 slots, warranty auto-hide)
+│   │   ├── upsell-filler.ts            Prompt upsell OTO1-5 (16 Vibriance techniques)
+│   │   ├── funnel-filler.ts            Prompt auto-config (product brief → FunnelConfig)
 │   │   └── block-composer.ts           Composer de blocks (3-step pipeline)
 │   └── design-system/
 │       └── tokens.ts                   Design tokens + page types
@@ -100,7 +134,12 @@ ECOM-AI/
 │   ├── test-template-generate.ts       Test SmoothSpire advertorial
 │   ├── test-reasons-why-template.ts    Test hike-reasons-why listicle
 │   ├── test-product-page-template.ts   Test product page
-│   └── test-checkout-template.ts       Test checkout page (3-bundle, $4.95 shipping)
+│   ├── test-checkout-template.ts       Test checkout page (3-bundle, $4.95 shipping)
+│   ├── test-upsell-oto1.ts             Test upsell OTO1 (volume deal, Super C Serum)
+│   ├── test-upsell-oto2.ts             Test upsell OTO2 (cross-sell, Retinol Serum)
+│   ├── test-upsell-oto3.ts             Test upsell OTO3 (cross-sell, Eye Renewal)
+│   ├── test-upsell-oto4.ts             Test upsell OTO4 (cross-sell, Moisturizing Cream)
+│   └── test-upsell-oto5.ts             Test upsell OTO5 (protection, Porch Pirates)
 │
 ├── capabilities/                     ← CAPACITÉS MÉDIA
 │   ├── voice_gen.py                     ElevenLabs (text → audio)
@@ -171,6 +210,158 @@ Génère des pages HTML complètes à partir de templates winners (99.9% fidéli
 
 **TESTS**: `npx tsx scripts/test-template-generate.ts` (SmoothSpire) | `npx tsx scripts/test-reasons-why-template.ts` (listicle) | `npx tsx scripts/test-product-page-template.ts` (product page) | `npx tsx scripts/test-checkout-template.ts` (checkout)
 ```
+
+---
+
+## UPSELL TEMPLATE SYSTEM (5-OTO Funnel)
+
+Genere des pages upsell HTML completes a partir de 4 templates couvrant 5 positions OTO.
+**Score: 6.7/10 -> 9.1/10** (avg, 16 Vibriance copywriting techniques integrees).
+
+### Architecture
+
+```
+5 OTO positions, 4 templates:
+
+  OTO1 — upsell-vibriance      Volume deal (same_product, ex: 3x Super C Serum a prix reduit)
+  OTO2 — upsell-cross-sell     Cross-sell complementaire (ex: Retinol Serum, AM/PM routine)
+  OTO3 — upsell-product        Cross-sell premium (ex: Eye Renewal, body_extra zone)
+  OTO4 — upsell-product        Cross-sell surprise (ex: Moisturizing Cream, ingredients zone)
+  OTO5 — upsell-protection     Protection package (ex: Porch Pirates, perte/vol colis)
+```
+
+### Pipeline flow
+```
+Product Brief → test script → template-generator.ts → upsell-filler.ts (prompt)
+→ AI JSON → template-engine.ts (fill markers) → HTML output
+```
+
+### Prompt: `src/agents/prompts/upsell-filler.ts`
+Contient TOUTES les regles copywriting pour les 5 OTO:
+- **Position psychology**: chaque OTO a un role psychologique distinct (desir -> complement -> premium -> surprise -> protection)
+- **Type-specific rules**: same_product, cross_sell, protection, subscription
+- **Category vocabulary**: consumable, device, apparel, digital (ex: "supply" pour consumable, "unit" pour device)
+- **16 Vibriance techniques**: competitor price anchoring, "80% social proof", AM/PM protocol, FOMO rejection, identity threat, product-specific CTAs
+- **No country references**: OTO5 utilise "Over 40% of packages" (pas de mention de pays specifique)
+
+### 16 Vibriance Techniques (integrees dans le prompt)
+1. Competitor price anchoring ($79 comparison, OTO1)
+2. Rejection with full retail price reminder
+3. "80% social proof" opening (OTO2)
+4. "WARNING:" exclusivity framing
+5. "FIRST & ONLY" USP positioning
+6. AM/PM protocol (morning/evening routine, OTO2)
+7. FOMO rejection with double scarcity
+8. "Take Years Off" aspirational headline (OTO3)
+9. 4 named ingredients (not 3)
+10. Social pain-pierce ("people saying you look tired")
+11. Surprise multi-use tip ("purse hand cream", OTO4)
+12. Specific package loss statistics (OTO5)
+13. "Don't Be The Next Victim" identity threat
+14. CTA specific to protection threat ("AGAINST LOSS & THEFT")
+15. Guilt-trip rejection ("against theft")
+16. Product-specific CTAs per OTO position
+
+### Test commands
+```bash
+npx tsx scripts/test-upsell-oto1.ts   # OTO1 - volume deal (Super C Serum)
+npx tsx scripts/test-upsell-oto2.ts   # OTO2 - cross-sell (Retinol Serum)
+npx tsx scripts/test-upsell-oto3.ts   # OTO3 - cross-sell (Eye Renewal, body_extra)
+npx tsx scripts/test-upsell-oto4.ts   # OTO4 - cross-sell (Moisturizing Cream, ingredients)
+npx tsx scripts/test-upsell-oto5.ts   # OTO5 - protection (Porch Pirates)
+```
+
+### Files created
+- `src/agents/prompts/upsell-filler.ts` — Prompt avec 16 techniques Vibriance
+- `templates/upsell-vibriance.marked.html` + `.html` + `.html.json` — OTO1 volume deal
+- `templates/upsell-cross-sell.marked.html` + `.html` + `.html.json` — OTO2 cross-sell
+- `templates/upsell-product.marked.html` + `.html` + `.html.json` — OTO3+OTO4 cross-sell
+- `templates/upsell-protection.marked.html` + `.html` + `.html.json` — OTO5 protection
+- `scripts/test-upsell-oto1.ts` through `test-upsell-oto5.ts` — 5 test scripts
+- `scripts/test-upsell-template.ts` — Generic test script
+- `public/upsell-oto1.html` through `upsell-oto5.html` — Preview HTML files
+
+### CSS fix
+`#ibodyextra` in `upsell-product.marked.html` matches `#i9gchl` styling (Poppins 20px, centered).
+
+---
+
+## FUNNEL SYSTEM (7-step complete funnel with A/B testing)
+
+Genere des funnels complets avec connexion CTA entre toutes les pages + A/B testing sur l'entry page.
+
+### Architecture
+
+```
+Product Brief → FunnelConfig → generateFunnel() → HTML pages + router + metrics
+                                            ↓
+                        ┌───────────────────┼───────────────────┐
+                        │                   │                   │
+                   Template mode       Block mode          Variant router
+                   (99.9% fidelity)    (~82% fidelity)    (client-side split)
+```
+
+### Dual Mode
+- **Template mode** (`mode: 'template'`): Utilise les .marked.html templates. 99.9% visual fidelity.
+- **Block mode** (`mode: 'block'`): AI compose des blocks from scratch via page-generator.ts. ~82% fidelity.
+- Les deux modes peuvent coexister dans le meme funnel (ex: template entry + block upsell).
+
+### A/B Testing
+- Chaque FunnelStep peut avoir plusieurs `variants` avec `trafficWeight` (%).
+- Un router HTML (client-side JS + localStorage) split le traffic entre les variants.
+- Sticky sessions: localStorage conserve le variant assigné.
+- Metrics tracking: JSON-file-based, pas de DB requise.
+
+### Funnel Flow
+```
+Entry (A/B: advertorial / listicle / product page)
+  → [Checkout] (backend handles payment)
+    → OTO1 (volume deal)
+      → OTO2 (cross-sell)
+        → OTO3 (premium cross-sell)
+          → OTO4 (surprise cross-sell)
+            → OTO5 (protection)
+              → Thank You
+```
+
+### Files
+- `src/services/funnel-generator.ts` — Orchestrateur (variants + CTA wiring + router generation)
+- `src/services/cta-injector.ts` — Post-processor CTA URL injection (regex-based structural targeting)
+- `src/services/variant-router.ts` — Client-side traffic splitter HTML generator
+- `src/services/funnel-metrics.ts` — JSON-file-based A/B metrics tracking
+- `src/agents/prompts/funnel-filler.ts` — Auto-config prompt (product brief → FunnelConfig)
+- `scripts/test-funnel.ts` — Test funnel simple (1 variant per step)
+- `scripts/test-funnel-ab.ts` — Test A/B funnel (3 entry variants)
+
+### Test commands
+```bash
+# Test funnel simple (7 pages, 1 variant each)
+npx tsx scripts/test-funnel.ts
+
+# Test A/B funnel (3 entry variants + 5 upsells + thank you)
+npx tsx scripts/test-funnel-ab.ts
+```
+
+### Backward Compatibility
+L'ancien format FunnelStep avec `templateId` direct fonctionne toujours:
+```typescript
+{ id: 'entry', templateId: 'smoothspire-advertorial', outputFilename: 'index.html', nextOnAccept: 'oto1' }
+```
+Nouveau format avec variants:
+```typescript
+{
+  id: 'entry', outputFilename: 'index.html', nextOnAccept: 'oto1',
+  variants: [
+    { id: 'a', name: 'Advertorial', mode: 'template', templateId: 'smoothspire-advertorial', trafficWeight: 34 },
+    { id: 'b', name: 'Listicle', mode: 'template', templateId: 'hike-reasons-why', trafficWeight: 33 },
+    { id: 'c', name: 'Product Page', mode: 'template', templateId: 'product-page-tryemsense', trafficWeight: 33 },
+  ]
+}
+```
+
+### Auto-Config (AI-generated FunnelConfig)
+`funnel-filler.ts` fournit un prompt qui demande a l'IA de generer un FunnelConfig complet a partir d'un product brief seul. L'IA choisit les templates, les upsells, les prix, et les weights.
+Usage: `buildFunnelConfigPrompt(brief)` → LLM → FunnelConfig JSON → `generateFunnel()`
 
 ---
 
@@ -471,7 +662,11 @@ Logs typés (Info, Error, Warn).
 
 ### Quels fichiers déclenchent un test
 **RÈGLE:** Après TOUT changement sur ces fichiers, lancer le test AVANT de commit :
-- `src/agents/prompts/*` (copywriter, composer, template filler, reasons-why filler)
+- `src/agents/prompts/*` (copywriter, composer, template filler, reasons-why filler, upsell filler, funnel filler)
+- `src/services/funnel-generator.ts` (funnel orchestrateur)
+- `src/services/cta-injector.ts` (CTA injection)
+- `src/services/variant-router.ts` (A/B router)
+- `src/services/funnel-metrics.ts` (A/B metrics)
 - `src/renderers/*` (renderers HTML)
 - `src/services/template-engine.ts` (moteur de templates)
 - `src/services/template-generator.ts` (orchestrateur templates)
@@ -495,8 +690,21 @@ npx tsx scripts/test-product-page-template.ts
 # Test checkout page
 npx tsx scripts/test-checkout-template.ts
 
+# Test upsell OTO1-5
+npx tsx scripts/test-upsell-oto1.ts   # OTO1 volume deal
+npx tsx scripts/test-upsell-oto2.ts   # OTO2 cross-sell
+npx tsx scripts/test-upsell-oto3.ts   # OTO3 cross-sell (body_extra)
+npx tsx scripts/test-upsell-oto4.ts   # OTO4 cross-sell (ingredients)
+npx tsx scripts/test-upsell-oto5.ts   # OTO5 protection
+
 # Test pipeline 3-step (block system)
 npx tsx scripts/test-generate.ts
+
+# Test funnel complet (7 pages, 1 variant each)
+npx tsx scripts/test-funnel.ts
+
+# Test A/B funnel (3 entry variants + upsells)
+npx tsx scripts/test-funnel-ab.ts
 
 # Test avec modèle alternatif
 npx tsx scripts/test-generate.ts deepseek-v4-pro
@@ -554,9 +762,11 @@ Fichier: `test-results/YYYY-MM-DD-{sujet}.md`
 | **Template hike-reasons-why (HF Stride)** | **10.41/10** | **DeepSeek, listicle, 72 slots, HTML sanitization** |
 | **Template hike-reasons-why (Nutrovia)** | **9.23/10** | **DeepSeek, listicle, 72 slots, HTML sanitization** |
 | **Template smoothspire-advertorial** | **9.76/10** | **DeepSeek, advertorial narratif, 47 slots** |
+| **Upsell templates (avg 5 OTO)** | **9.1/10** | **DeepSeek, upsell-filler, 16 Vibriance techniques** |
 | **ECOM-AI 3-step (lab briefs avg)** | **8.92/10** | **MiMo, free text, anti-bias fix, Dual Persona** |
 | Lab (testing-ai-prompt) | 8.58/10 | MiMo, free text, temp=0.3 |
 | ECOM-AI 3-step (Nutrovia) | 7.77/10 | MiMo, free text, anti-bias fix |
+| Upsell before Vibriance techniques | 6.7/10 | DeepSeek, basic upsell prompt |
 | ECOM-AI JSON best (#5) | 6.44/10 | DeepSeek, JSON, triggers, long prompt |
 | ECOM-AI JSON Dual Persona | 6.0/10 | DeepSeek, JSON, judge pick-best |
 

@@ -49,7 +49,7 @@ const TEST_BUNDLES: CheckoutBundle[] = [
     totalPrice: '$79.00',
     compareTotal: '$79.00',
     totalDiscount: '$0.00',
-    shipSpan: '$4.95 worth',
+    shipSpan: '',
     shipValue: '$4.95',
     shipping: '+ $4.95 Shipping',
     img: '80x80/4CAF50/ffffff?text=1x',

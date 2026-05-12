@@ -38,6 +38,10 @@ FICHIERS PAR TEMPLATE:
 | `hike-reasons-why` | Listicle "10 Reasons Why" | 72 | `reasons-why-filler.ts` | advertorial_listicle_judge_v2.json | 9.23-10.41/10 |
 | `product-page-tryemsense` | Product Page DTC | 129 | `product-page-filler.ts` | product_page_judge_v2.json | 8.77/10 |
 | `checkout-clarifion` | Checkout/Order Page | 127 | `checkout-filler.ts` | (no judge yet) | 127/127 slots OK |
+| `upsell-vibriance` | Upsell OTO1 Volume Deal | varies | `upsell-filler.ts` | (per OTO position) | 9.1/10 avg |
+| `upsell-cross-sell` | Upsell OTO2 Cross-Sell | varies | `upsell-filler.ts` | (per OTO position) | 9.1/10 avg |
+| `upsell-product` | Upsell OTO3+OTO4 Cross-Sell | varies | `upsell-filler.ts` | (per OTO position) | 9.1/10 avg |
+| `upsell-protection` | Upsell OTO5 Protection | varies | `upsell-filler.ts` | (per OTO position) | 9.1/10 avg |
 
 ---
 
@@ -257,6 +261,106 @@ Les valeurs `shipSpan` et `shipValue` dans chaque bundle du brief contrôlent ce
 
 ---
 
+## Upsell Templates — Guide pour Agent IA (ZERO MEMORY)
+
+### Architecture du funnel upsell
+
+Le systeme genere **5 pages OTO (One-Time Offer)** qui s'enchainerent apres le checkout. Chaque OTO a un role psychologique distinct:
+
+```
+CHECKOUT → OTO1 → OTO2 → OTO3 → OTO4 → OTO5 → Thank You
+              │       │       │       │       │
+              │       │       │       │       └─ Protection (perte/vol colis)
+              │       │       │       └───────── Surprise multi-use
+              │       │       └───────────────── Premium cross-sell
+              │       └───────────────────────── Complementaire (AM/PM)
+              └───────────────────────────────── Volume deal (same product)
+```
+
+### 4 templates, 5 OTO positions
+
+| Position | Template ID | Type | Role psychologique | Exemple Vibriance |
+|----------|------------|------|--------------------|--------------------|
+| OTO1 | `upsell-vibriance` | `same_product` | Desir + quantite → "achetez plus du meme a prix reduit" | 3x Super C Serum au lieu de $79 → $XX |
+| OTO2 | `upsell-cross-sell` | `cross_sell` | Complementarite → "routine complete AM/PM" | Retinol Serum pour le soir |
+| OTO3 | `upsell-product` | `cross_sell` | Premium → "zone probleme specifique" (body_extra) | Eye Renewal pour le contour des yeux |
+| OTO4 | `upsell-product` | `cross_sell` | Surprise → "astuce inattendue" (ingredients) | Moisturizing Cream = hand cream portable |
+| OTO5 | `upsell-protection` | `protection` | Peur de perte → "protection contre vol/perte" | Porch Pirates protection |
+
+### Prompt: `src/agents/prompts/upsell-filler.ts`
+
+Un seul prompt gere les 5 positions OTO. Il contient:
+
+**Position psychology** — chaque OTO a une structure de persuasion differente:
+- OTO1: Anchoring (competitor price) → Volume deal → FOMO rejection
+- OTO2: Social proof opening (80%) → Complementarity → AM/PM routine
+- OTO3: Aspirational headline → Premium positioning → Specific benefit
+- OTO4: Surprise multi-use → "Vous n'y aviez pas pense" → Reveal
+- OTO5: Threat statistics → Identity ("Don't Be The Next Victim") → Protection CTA
+
+**Type-specific rules** — 4 types de contenu:
+- `same_product`: Volume discount, supply talk ("3-month supply"), competitor anchoring
+- `cross_sell`: Complementarity, "routine complete", specific benefit
+- `protection`: Threat statistics, identity fear, "AGAINST LOSS & THEETH"
+- `subscription`: Auto-ship savings, convenience, "never run out"
+
+**Category vocabulary** — adapte le vocabulaire au type de produit:
+- `consumable`: "supply", "bottle", "capsule", "scoop" (ex: supplements, serums)
+- `device`: "unit", "device", "system" (ex: air purifier, massager)
+- `apparel`: "pair", "item", "piece" (ex: shoes, clothing)
+- `digital`: "access", "program", "guide" (ex: ebook, course)
+
+### 16 techniques Vibriance (integrees dans le prompt)
+
+Ces techniques sont extraites des pages upsell gagnantes de Vibriance et injectees dans le prompt selon la position OTO:
+
+| # | Technique | Position | Description |
+|---|-----------|----------|-------------|
+| 1 | Competitor price anchoring | OTO1 | Compare a un prix concurrent ($79) pour ancrer la valeur |
+| 2 | Rejection with retail reminder | OTO1 | "No thanks, I prefer paying full retail price" |
+| 3 | "80% social proof" opening | OTO2 | "80% of customers also add..." |
+| 4 | "WARNING:" exclusivity | OTO1-2 | Framing d'exclusivite, acces limite |
+| 5 | "FIRST & ONLY" USP | OTO2-3 | Positionnement unique du produit |
+| 6 | AM/PM protocol | OTO2 | Routine matin/soir pour justifier le cross-sell |
+| 7 | FOMO double scarcity | OTO1 | Scarcite sur le prix ET la quantite |
+| 8 | "Take Years Off" aspirational | OTO3 | Headline aspirationale ( resultat visible ) |
+| 9 | 4 named ingredients | OTO3-4 | Plus credible que 3 ( nombre pair = recherché ) |
+| 10 | Social pain-pierce | OTO3-4 | "people saying you look tired" → emotional trigger |
+| 11 | Surprise multi-use tip | OTO4 | "purse hand cream" → usage inattendu |
+| 12 | Package loss statistics | OTO5 | Chiffres specifiques sur les pertes de colis |
+| 13 | "Don't Be The Next Victim" | OTO5 | Identity threat, peur de la perte |
+| 14 | Protection-specific CTA | OTO5 | "PROTECT AGAINST LOSS & THEETH" |
+| 15 | Guilt-trip rejection | OTO5 | "No thanks, I'm OK with theft risk" |
+| 16 | Product-specific CTAs | All | CTA adapte au type de produit et position |
+
+### OTO3 vs OTO4: meme template, zones differentes
+
+OTO3 et OTO4 partagent le template `upsell-product` mais utilisent des zones differentes:
+- **OTO3**: utilise la zone `body_extra` (zone supplementaire dans le corps)
+- **OTO4**: utilise la zone `ingredients` (liste d'ingredients)
+
+CSS fix: `#ibodyextra` in `upsell-product.marked.html` matches `#i9gchl` styling (Poppins 20px, centered).
+
+### No country references
+
+OTO5 (protection) n'utilise JAMAIS de reference a un pays specifique. Au lieu de "40% of Americans", utilise "Over 40% of packages". Le prompt `upsell-filler.ts` enforce cette regle.
+
+### Test commands
+
+```bash
+npx tsx scripts/test-upsell-oto1.ts   # OTO1 - volume deal (Super C Serum)
+npx tsx scripts/test-upsell-oto2.ts   # OTO2 - cross-sell (Retinol Serum)
+npx tsx scripts/test-upsell-oto3.ts   # OTO3 - cross-sell (Eye Renewal, body_extra)
+npx tsx scripts/test-upsell-oto4.ts   # OTO4 - cross-sell (Moisturizing Cream, ingredients)
+npx tsx scripts/test-upsell-oto5.ts   # OTO5 - protection (Porch Pirates)
+```
+
+### Score
+
+Score moyen: **9.1/10** (amelioration de 6.7/10 avant les techniques Vibriance).
+
+---
+
 ## Sanitisation HTML (CRITIQUE)
 
 `template-engine.ts` sanitize automatiquement le contenu AI AVANT injection via `sanitizeHtmlContent()` :
@@ -339,5 +443,6 @@ Les images passent via le `ProductBrief` :
 | **hike-reasons-why (HF Stride)** | **10.41/10** | DeepSeek, listicle, 72 slots, sanitization |
 | **smoothspire-advertorial** | **9.76/10** | DeepSeek, advertorial, 47 slots |
 | **hike-reasons-why (Nutrovia)** | **9.23/10** | DeepSeek, listicle, 72 slots, sanitization |
+| **upsell templates (avg 5 OTO)** | **9.1/10** | DeepSeek, upsell-filler, 16 Vibriance techniques |
 | **product-page-tryemsense** | **8.77/10** | DeepSeek, product page, 129 slots |
 | **checkout-clarifion** | **N/A (checkout)** | DeepSeek, 127/127 slots, 3-bundle OK |

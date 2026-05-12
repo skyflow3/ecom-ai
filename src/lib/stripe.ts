@@ -141,3 +141,50 @@ export async function createPortalSession(
 // can get plan mapping without a second import)
 
 export { getPlanFromPriceId } from '@/lib/plans';
+
+// ─── E-Commerce Payment Intent ────────────────────────────────────────────────
+
+/**
+ * Create a Stripe Payment Intent for a one-time e-commerce purchase.
+ * WHY: Funnel checkout pages need Payment Intents (not Checkout Sessions).
+ *      The checkout template uses Stripe Elements with confirmCardPayment().
+ *      This creates the server-side intent; the client confirms it.
+ *
+ * @param amount - Amount in cents (e.g., 4900 = $49.00)
+ * @param currency - 3-letter currency code (e.g., 'usd')
+ * @param metadata - Optional metadata (order info, funnel step, etc.)
+ * @returns { clientSecret, paymentIntentId }
+ */
+export async function createEcomPaymentIntent(
+  amount: number,
+  currency: string = 'usd',
+  metadata?: Record<string, string>,
+): Promise<{ clientSecret: string; paymentIntentId: string }> {
+  const stripe = getStripe();
+
+  log.info('Creating e-commerce payment intent', { amount, currency });
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount,
+    currency,
+    metadata: metadata ?? {},
+    // WHY: automatic_payment_methods lets Stripe handle available methods
+    //      based on the dashboard settings (cards, Apple Pay, Google Pay, etc.)
+    automatic_payment_methods: { enabled: true },
+  });
+
+  if (!paymentIntent.client_secret) {
+    throw new Error('Payment intent created without client_secret');
+  }
+
+  log.info('Payment intent created', {
+    paymentIntentId: paymentIntent.id,
+    amount,
+    currency,
+  });
+
+  return {
+    clientSecret: paymentIntent.client_secret,
+    paymentIntentId: paymentIntent.id,
+  };
+}

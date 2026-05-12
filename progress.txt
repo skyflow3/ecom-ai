@@ -313,3 +313,149 @@
 
 ### Commit
 - `749d093` feat: hike-reasons-why listicle template with HTML sanitization
+
+---
+
+## Session 2026-05-10 — Upsell Template System (5-OTO Funnel)
+
+### Done
+- Created complete upsell template system with 5 OTO pages driven by `upsell-filler.ts`
+- **4 templates** covering 5 OTO positions:
+  - `upsell-vibriance` — OTO1 volume deal (same_product, ex: 3x Super C Serum)
+  - `upsell-cross-sell` — OTO2 cross-sell complementaire (ex: Retinol Serum, AM/PM routine)
+  - `upsell-product` — OTO3+OTO4 cross-sell premium/surprise (Eye Renewal + Moisturizing Cream)
+  - `upsell-protection` — OTO5 protection (Porch Pirates, perte/vol colis)
+- Created `src/agents/prompts/upsell-filler.ts` — prompt with 16 Vibriance-proven copywriting techniques:
+  - Position psychology (OTO1-5 distinct roles)
+  - Type-specific rules (same_product, cross_sell, protection, subscription)
+  - Category vocabulary (consumable, device, apparel, digital)
+  - No country references (OTO5 uses "Over 40% of packages")
+- CSS fix: `#ibodyextra` in `upsell-product.marked.html` matches `#i9gchl` styling (Poppins 20px, centered)
+- Created 5 test scripts (`test-upsell-oto1.ts` through `test-upsell-oto5.ts`)
+- Created generic test script `test-upsell-template.ts`
+- Created preview HTML files (`public/upsell-oto1.html` through `upsell-oto5.html`)
+
+### Test Results
+- **Score improvement**: 6.7/10 → 9.1/10 average across all 5 OTO positions
+- Key improvement driver: 16 Vibriance techniques integrated into prompt
+
+### 16 Vibriance Techniques (integrated)
+1. Competitor price anchoring ($79 comparison, OTO1)
+2. Rejection with full retail price reminder
+3. "80% social proof" opening (OTO2)
+4. "WARNING:" exclusivity framing
+5. "FIRST & ONLY" USP positioning
+6. AM/PM protocol (morning/evening routine, OTO2)
+7. FOMO rejection with double scarcity
+8. "Take Years Off" aspirational headline (OTO3)
+9. 4 named ingredients (not 3)
+10. Social pain-pierce ("people saying you look tired")
+11. Surprise multi-use tip ("purse hand cream", OTO4)
+12. Specific package loss statistics (OTO5)
+13. "Don't Be The Next Victim" identity threat
+14. CTA specific to protection threat ("AGAINST LOSS & THEFT")
+15. Guilt-trip rejection ("against theft")
+16. Product-specific CTAs per OTO position
+
+### Files Created
+- `src/agents/prompts/upsell-filler.ts` — Prompt with 16 Vibriance techniques
+- `templates/upsell-vibriance.marked.html` + `.html` + `.html.json` — OTO1
+- `templates/upsell-cross-sell.marked.html` + `.html` + `.html.json` — OTO2
+- `templates/upsell-product.marked.html` + `.html` + `.html.json` — OTO3+OTO4
+- `templates/upsell-protection.marked.html` + `.html` + `.html.json` — OTO5
+- `scripts/test-upsell-oto1.ts` through `test-upsell-oto5.ts`
+- `scripts/test-upsell-template.ts`
+- `public/upsell-oto1.html` through `upsell-oto5.html`
+
+### Pipeline Flow
+```
+Product Brief → test script → template-generator.ts → upsell-filler.ts (prompt)
+→ AI JSON → template-engine.ts (fill markers) → HTML output
+```
+
+### Architecture Decisions
+- Single prompt (`upsell-filler.ts`) handles ALL 5 OTO positions via type parameter
+- OTO3 and OTO4 share the same template (`upsell-product`) but use different zones (body_extra vs ingredients)
+- OTO5 has no country-specific references — uses generic statistics
+
+---
+
+## 2026-05-11 — Funnel System + A/B Testing + Auto-Config
+
+### What
+Extended the funnel system with A/B testing, dual mode (template + block), auto-config prompt, and metrics tracking.
+
+### Files Created
+- `src/services/funnel-generator.ts` — REWRITTEN: variants + block mode + router generation + backward compatible
+- `src/services/cta-injector.ts` — UPDATED: added page types for block mode (downsell, optin, quiz, bridge)
+- `src/services/variant-router.ts` — NEW: client-side traffic splitter HTML generator (localStorage sticky sessions)
+- `src/services/funnel-metrics.ts` — NEW: JSON-file A/B metrics tracking (page views, CTA clicks, CVR)
+- `src/agents/prompts/funnel-filler.ts` — NEW: auto-config prompt (product brief → FunnelConfig JSON)
+- `scripts/test-funnel.ts` — UPDATED: adapted to new FunnelResult format (steps instead of pages)
+- `scripts/test-funnel-ab.ts` — NEW: A/B test with 3 entry variants (advertorial, listicle, product page)
+
+### Architecture
+```
+FunnelConfig (backward compatible):
+  FunnelStep:
+    - legacy: templateId + briefOverrides (single variant)
+    - new: variants[] with mode: 'template' | 'block', trafficWeight
+
+  FunnelVariant:
+    - mode: 'template' → generateFromTemplate()
+    - mode: 'block' → generatePage()
+    - trafficWeight: percentage for A/B split
+
+  Router: client-side JS + localStorage for traffic splitting
+  Metrics: JSON-file tracking (no DB required)
+  Auto-config: AI generates FunnelConfig from product brief alone
+```
+
+### A/B Test Entry
+- Variant A: smoothspire-advertorial (34%)
+- Variant B: hike-reasons-why (33%)
+- Variant C: product-page-tryemsense (33%)
+- Router at index.html → redirects to entry-a/b/c.html
+
+### Tests
+- `npx tsx scripts/test-funnel.ts` — single variant funnel (backward compatible)
+- `npx tsx scripts/test-funnel-ab.ts` — 3 entry variants A/B test
+
+---
+
+## 2026-05-12 — Checkout Template Bug Fixes + UX Improvements
+
+### Done
+- **Fix `orComprice` display**: Hidden when `comprice === price` (no unit discount). Was showing "$79.00 $79.00" (first crossed out) for x1 bundle.
+- **Fix `totalComprice` hardcoded check**: Replaced `fltrdData[0].id == "{{bundle_1_id}}"` with dynamic `totalComprice === totalPrice` comparison.
+- **Dynamic country flag**: Replaced hardcoded US flag sprite with flagcdn.com image + JS geo IP auto-update.
+  - Desktop: 48x36px, Mobile: 58x44px (responsive via CSS media query)
+  - Updated by `applyLocation()` after IP detection
+- **Phone field**: Removed hardcoded `+1` prefix + `<span>` wrapper. Changed mask from `(000)-000-0000` (US-only) to `+0000000000000000` (international).
+- **Header brand image → Contact**: Replaced `{{brand_image}}` picture with "Contact Us: / contact@nutrovia.co" text (clickable mailto).
+- **Merge order fix** (template-generator.ts): Moved `...contentMap` to FIRST position in mergedMap so brief values always override AI values for `from_brief` slots.
+- **Auto-sync shipSpan** (template-generator.ts): Free shipping → `"$4.95 worth"` (crossed out); paid shipping → `""` (empty).
+- **Auto-calc compare price** (template-generator.ts): `comparePrice = price / (1 - discountPct/100)` when no comparePrice provided.
+- **`<base href>` tag stripping** (template-engine.ts): Added in both `fillTemplate()` and `fillSimpleMarkers()` to prevent CTA buttons redirecting to original domain.
+
+### Files Modified
+- `templates/checkout-clarifion.marked.html` — flag, phone, contact, JS fixes
+- `src/services/template-engine.ts` — base tag stripping
+- `src/services/template-generator.ts` — merge order + auto-calc + shipSpan sync
+- `scripts/test-checkout-template.ts` — fixed bundle 1 shipSpan test value
+- `templates/checkout-clarifion.html.json` — updated slot descriptions
+
+### Remaining
+- `{{warranty_display}}` marker unfilled (1 marker, minor)
+- Server-side price validation needed for production (Stripe Payment Intent amounts)
+
+### Also Done (same session)
+- `{{contact_email}}` marker — dynamic, default `contact@nutrovia.com`, filled from brief
+- `funnel-filler.ts` updated — AI auto-config now knows about image generation (ComfyUI, generic, not template-specific)
+- `scripts/test-funnel-preview.ts` — **OFFICIAL FULL FUNNEL TEST** (8 pages, 19 CTAs)
+  - Flow: Advertorial → Checkout → OTO1 (volume) → OTO2 (cross-sell) → OTO3 (premium) → OTO4 (surprise) → OTO5 (protection) → Thank You
+  - All images replaced (product, doctor, logo, review screenshots, videos→images)
+  - Product: Nutrovia Turmeric, 3 bundles, placeholders orange
+  - Output: `test-output/funnel-preview/`
+  - Command: `npx tsx scripts/test-funnel-preview.ts`
+  - Start URL: `file:///C:/Users/Admin/ECOM-AI/test-output/funnel-preview/index.html`

@@ -4512,14 +4512,12 @@
         }
 
         .xvxeQN82BJ2CYoJBUxuuA ._33aUvGChd7xKHc4mNA5YNm {
-            background-image: url("https://assets.funnelkonnekt.com/e5728d10-9616-11ed-9f25-d7c672798aaf/1674188293964_us_flag.png");
-            background-size: 100%;
-            background-repeat: no-repeat;
-            background-position: center !important;
             display: block;
-            height: 56px;
-            width: 56px;
-            margin-right: 17.6px;
+            height: 36px;
+            width: 48px;
+            margin-right: 10px;
+            border-radius: 3px;
+            object-fit: cover;
         }
 
         img#fkt-image-92b-1b4-b6a {
@@ -11309,6 +11307,8 @@
             }
 
             .xvxeQN82BJ2CYoJBUxuuA ._33aUvGChd7xKHc4mNA5YNm {
+                height: 44px;
+                width: 58px;
                 margin-right: initial;
             }
 
@@ -11514,14 +11514,13 @@
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="xvxeQN82BJ2CYoJBUxuuA">
-                            <div data-text="text" href="" srcset="" data-secondsdelay="" id="immfu" class="_33aUvGChd7xKHc4mNA5YNm PH_56px re-fk-lazy">
-                            </div>
+                            <!-- WHY: Dynamic country flag — updated by JS after geo IP detection -->
+                            <img id="geo-flag" src="https://flagcdn.com/w80/us.png" alt="Flag" class="_33aUvGChd7xKHc4mNA5YNm" width="48" height="36">
                             <div href="" srcset="" data-secondsdelay="" class="_1QN43T6F16JSePT1t2KXvQ">
-                                <picture href="" srcset="">
-                                    <source srcset="" type="image/jpeg" href="">
-                                    <source srcset="" type="image/webp" href="">
-                                    <source srcset="" type="image/jpeg" href=""><img alt="Brand" src="{{brand_image}}" href="" srcset="" id="fkt-image-92b-1b4-b6a" title="" target="_self" align="center" width="" height="" onclick="" class="">
-                                </picture>
+                                <div style="text-align: right; line-height: 1.3;">
+                                    <div style="font-size: 0.75em; color: #666; font-weight: 600;">Contact Us:</div>
+                                    <a href="mailto:{{contact_email}}" style="font-size: 0.75em; color: #333; text-decoration: none;">{{contact_email}}</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -12045,10 +12044,6 @@
                                                 letter-spacing: 0.3px;
                                             }
                                         </style>
-                                        <div class="icon-flag">
-                                            <span></span>
-                                            <span class="">+1</span>
-                                        </div>
                                         <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone" autocomplete="tel" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval="">
                                     </div>
                                     <p data-text="text" id="msgErrorPhone" data-secondsdelay="" class="inputError">
@@ -12982,7 +12977,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             const phoneNumInput = document.querySelector('#phoneNumber');
             const phoneMaskOptions = {
-                mask: '(000)-000-0000'
+                mask: '{+}0000000000000000'
             };
             var maskPhone = IMask(phoneNumInput, phoneMaskOptions);
             //Facebook AddToCart Event
@@ -13441,6 +13436,8 @@
             orTitle.innerText = fltrdData[0].title;
             orQty.innerText = fltrdData[0].qty;
             orComprice.innerText = fltrdData[0].comprice;
+            // WHY: Hide strikethrough unit price when no discount (comprice === price)
+            orComprice.style.display = (fltrdData[0].comprice === fltrdData[0].price) ? 'none' : 'inline';
             orPrice.innerText = fltrdData[0].price;
             shipSpn.innerText = fltrdData[0].shipspan;
             shipStrng.innerText = fltrdData[0].shipstrong;
@@ -13448,7 +13445,8 @@
             // WHY: Hide discount badge when empty (bundle 1 has no discount)
             totalDiscount.style.display = fltrdData[0].totalDiscount ? 'inline' : 'none';
             totalPrice.innerText = fltrdData[0].totalPrice;
-            fltrdData[0].id == "{{bundle_1_id}}" ? totalComprice.style.display = 'none' : totalComprice.style.display = 'inline';
+            // WHY: Hide strikethrough total when no discount (totalComprice === totalPrice)
+            totalComprice.style.display = (fltrdData[0].totalComprice === fltrdData[0].totalPrice) ? 'none' : 'inline';
             totalComprice.innerText = fltrdData[0].totalComprice;
 
         }
@@ -14353,6 +14351,14 @@
             if (!userCountryCode) return;
 
             console.log('[GEO] Detected: Country=' + userCountryCode + ', Region=' + userRegionName);
+
+            // WHY: Update header flag to visitor's country
+            var flagImg = document.getElementById('geo-flag');
+            if (flagImg) {
+              var code = userCountryCode.toLowerCase();
+              flagImg.src = 'https://flagcdn.com/w80/' + code + '.png';
+              flagImg.alt = userCountryCode + ' flag';
+            }
 
             // Step 1: Auto-select country in both shipping + billing dropdowns
             ['#shipCountry', '#country'].forEach(function(sel) {
