@@ -7,7 +7,6 @@
  *      then passes it to the client component for interactive data fetching.
  */
 
-import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { DashboardClient } from "@/components/dashboard/dashboard-client";
 
@@ -16,15 +15,22 @@ export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   const hasClerk = !!process.env.CLERK_SECRET_KEY;
-  const user = hasClerk ? await currentUser() : null;
 
-  if (hasClerk && !user) {
-    redirect("/sign-in");
+  if (!hasClerk) {
+    return <DashboardClient userName="User" />;
   }
 
-  const name = user
-    ? [user.firstName, user.lastName].filter(Boolean).join(" ") || null
-    : "User";
+  try {
+    const { currentUser } = await import("@clerk/nextjs/server");
+    const user = await currentUser();
 
-  return <DashboardClient userName={name} />;
+    if (!user) {
+      redirect("/sign-in");
+    }
+
+    const name = [user.firstName, user.lastName].filter(Boolean).join(" ") || "User";
+    return <DashboardClient userName={name} />;
+  } catch {
+    return <DashboardClient userName="User" />;
+  }
 }

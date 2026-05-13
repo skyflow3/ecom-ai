@@ -354,6 +354,17 @@ export function fillTemplate(
   //      Per-template routing because different templates use different CDN hosts/URLs.
   html = replaceImages(html, content, templateId);
 
+  // ─── Sync data-src → src for lazy-loaded images ─────────────────────────────
+  // WHY: Some templates use data-src for lazy loading but leave src="" empty.
+  //      When viewing locally (file:///) the lazy loader JS may not run.
+  //      Copying data-src to src ensures images display everywhere.
+  html = html.replace(/(<img[^>]*?)src=""([^>]*?)data-src="([^"]*)"([^>]*>)/gi, (match, before, mid, url, after) => {
+    if (url && !url.startsWith('data:')) {
+      return `${before}src="${url}"${mid}data-src="${url}"${after}`;
+    }
+    return match;
+  });
+
   // ─── Strip <base href="..."> from templates ─────────────────────────────────
   // WHY: Original winner templates have <base href="https://try.smoothspine.com/...">.
   //      This makes ALL relative URLs resolve to the original domain instead of local files.
@@ -561,10 +572,11 @@ const TEMPLATE_IMAGE_MAP: Record<string, ImageReplacementMapping> = {
     logoDark: 'EMSense%20logo.svg',
     logoWhite: 'EMSense%20logo%20white.svg',
     // WHY: Replace product detail images + competitor image in comparison table
-    //      Do NOT replace olt1/olt2 (review avatars)
     productImages: [
       'ola.avif',
     ],
+    // WHY: Reviewer avatars use CDN URLs — load fine in HTTPS production.
+    //      No replacement needed at generation time.
     reviewAvatar: '',
     // Video URLs (all pagepipeline videos are product-specific)
     videoNeedles: [
@@ -813,8 +825,9 @@ function ensureVideoAutoplayGif(html: string): string {
  */
 function replaceExactUrl(html: string, needle: string, newUrl: string): string {
   const escaped = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  // Only match src="...needle..." or srcset="...needle..." or poster="...needle..."
-  const regex = new RegExp(`((?:src|srcset|poster|href)=["'])[^"']*${escaped}[^"']*(["'])`, 'gi');
+  // Match src="...needle..." or srcset="...needle..." or poster="...needle..." or data-src="...needle..."
+  // WHY: Some templates use data-src for lazy-loaded images (e.g. SmoothSpire review screenshots).
+  const regex = new RegExp(`((?:src|srcset|poster|href|data-src)=["'])[^"']*${escaped}[^"']*(["'])`, 'gi');
   return html.replace(regex, `$1${newUrl}$2`);
 }
 

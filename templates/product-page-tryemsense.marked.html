@@ -1880,10 +1880,17 @@ document.addEventListener('DOMContentLoaded', function () {
             })();
     </script>
     <script>
-    // WHY: Replace hardcoded avatar images with unique initials-based avatars.
+    // WHY: Replace hardcoded avatar images with pure CSS initials.
     //      Original avatars from winner template have wrong genders and duplicates.
-    //      ui-avatars.com generates unique colored circles with initials — no gender mismatch.
+    //      CSS-based approach works offline (no external API like ui-avatars.com needed).
     (function() {
+      var colors = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#98D8C8','#F7DC6F','#BB8FCE','#85C1E9'];
+      function hashCode(s) { var h = 0; for (var i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; } return h; }
+      function getInitials(name) {
+        var parts = name.trim().split(/\s+/);
+        if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        return name.substring(0, 2).toUpperCase();
+      }
       var selectors = ['.int-testimonial-author', '.int-review-author'];
       selectors.forEach(function(sel) {
         document.querySelectorAll(sel).forEach(function(el) {
@@ -1892,8 +1899,14 @@ document.addEventListener('DOMContentLoaded', function () {
           if (!img || !nameEl) return;
           var name = (nameEl.textContent || '').trim();
           if (!name) return;
-          // WHY: ui-avatars.com generates initials from name. background=random ensures unique colors.
-          img.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name) + '&background=random&color=fff&size=96&bold=true';
+          var initials = getInitials(name);
+          var color = colors[Math.abs(hashCode(name)) % colors.length];
+          var size = img.offsetWidth || 48;
+          // WHY: SVG data URI works offline, no external API call needed
+          var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '">'
+            + '<rect width="' + size + '" height="' + size + '" rx="' + (size/2) + '" fill="' + color + '"/>'
+            + '<text x="50%" y="50%" dy=".1em" font-family="Arial,sans-serif" font-size="' + Math.round(size*0.4) + '" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="central">' + initials + '</text></svg>';
+          img.src = 'data:image/svg+xml,' + encodeURIComponent(svg);
           img.alt = name;
         });
       });

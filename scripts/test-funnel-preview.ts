@@ -46,15 +46,15 @@ const BRIEF: ProductBrief = {
   mechanismName: 'BioPerine-Enhanced Curcumin',
   authorPersona: 'Dr. Sarah Mitchell, Nutrition Specialist',
   // Image URLs for replacement system — same aspect ratios as original winner (1376x768)
-  productImageUrl: 'https://placehold.co/1376x768/FF9800/ffffff?text=Nutrovia+Turmeric',
-  productImageSquareUrl: 'https://placehold.co/768x768/FF9800/ffffff?text=Nutrovia',
-  doctorImageUrl: 'https://placehold.co/200x200/4CAF50/ffffff?text=Dr+Sarah',
-  logoUrl: 'https://placehold.co/160x40/FF9800/ffffff?text=Nutrovia',
+  productImageUrl: 'images/nutrovia-hero.png',
+  productImageSquareUrl: 'images/nutrovia-hero.png',
+  doctorImageUrl: 'images/nutrovia-doctor.png',
+  logoUrl: 'images/nutrovia-logo.svg',
   useVideos: false,
   // Facebook review screenshots to replace originals
   commentScreenshotUrls: [
-    'https://placehold.co/400x300/FF9800/ffffff?text=Review+1',
-    'https://placehold.co/400x300/FF9800/ffffff?text=Review+2',
+    'images/nutrovia-hero.png',
+    'images/nutrovia-doctor.png',
   ],
 };
 
@@ -73,7 +73,7 @@ const BUNDLES: CheckoutBundle[] = [
     shipSpan: '',
     shipValue: '$4.95',
     shipping: '+ $4.95 Shipping',
-    img: 'nutrovia-1x.webp',
+    img: 'images/nutrovia-1x.png',
     priceDisplay: '$49.00',
     compareDisplay: '$129.00',
     discountPct: '62%',
@@ -90,7 +90,7 @@ const BUNDLES: CheckoutBundle[] = [
     shipSpan: '$4.95 worth',
     shipValue: 'FREE',
     shipping: 'FREE SHIPPING',
-    img: 'nutrovia-3x.webp',
+    img: 'images/nutrovia-3x.png',
     priceDisplay: '$20.60',
     compareDisplay: '$129.00',
     discountPct: '52%',
@@ -107,7 +107,7 @@ const BUNDLES: CheckoutBundle[] = [
     shipSpan: '$4.95 worth',
     shipValue: 'FREE',
     shipping: 'FREE SHIPPING',
-    img: 'nutrovia-6x.webp',
+    img: 'images/nutrovia-6x.png',
     priceDisplay: '$15.00',
     compareDisplay: '$129.00',
     discountPct: '65%',
@@ -134,17 +134,17 @@ const CHECKOUT_OVERRIDES: Record<string, any> = {
   termsUrl: '#terms',
   privacyUrl: '#privacy',
   refundUrl: '#refund',
-  productAssetsBaseUrl: 'placehold.co/400x400/FF9800/ffffff?text=Nutrovia/',
-  galleryBaseUrl: 'placehold.co/',
+  productAssetsBaseUrl: '',
+  galleryBaseUrl: '',
   galleryImages: [
-    '600x700/FF9800/ffffff?text=Front+View',
-    '600x700/4CAF50/ffffff?text=Side+View',
-    '600x700/2196F3/ffffff?text=Top+View',
-    '600x700/9C27B0/ffffff?text=In+Box',
-    '600x700/F44336/ffffff?text=In+Use',
+    'images/nutrovia-hero.png',
+    'images/nutrovia-1x.png',
+    'images/nutrovia-3x.png',
+    'images/nutrovia-6x.png',
+    'images/nutrovia-doctor.png',
   ],
-  logoUrl: 'https://placehold.co/160x40/FF9800/ffffff?text=Nutrovia',
-  brandImageUrl: 'https://placehold.co/120x40/333/fff?text=Trusted',
+  logoUrl: 'images/nutrovia-logo.svg',
+  brandImageUrl: 'images/nutrovia-logo.svg',
   contactEmail: 'contact@nutrovia.com',
 };
 
@@ -173,7 +173,7 @@ async function main() {
   console.log(`Product: ${BRIEF.name}`);
   console.log(`Price: ${BRIEF.price} (was ${BRIEF.originalPrice}, ${BRIEF.discountPct} off)`);
   console.log(`Bundles: ${BUNDLES.length} tiers`);
-  console.log(`Steps: 8 (advertorial → checkout → OTO1-5 → thank you)\n`);
+  console.log(`Steps: 9 (advertorial → product page → checkout → OTO1-5 → thank you)\n`);
 
   // Ensure output dir exists
   if (!fs.existsSync(OUTPUT_DIR)) {
@@ -181,8 +181,8 @@ async function main() {
   }
 
   const UPSELL_COMMON: Record<string, any> = {
-    productImageUrl: 'https://placehold.co/600x600/FF9800/ffffff?text=Nutrovia',
-    logoUrl: 'https://placehold.co/160x40/FF9800/ffffff?text=Nutrovia',
+    productImageUrl: 'images/nutrovia-hero.png',
+    logoUrl: 'images/nutrovia-logo.svg',
     contactEmail: 'contact@nutrovia.com',
   };
 
@@ -195,8 +195,15 @@ async function main() {
       {
         id: 'entry',
         outputFilename: 'index.html',
-        nextOnAccept: 'checkout',
+        nextOnAccept: 'product',
         templateId: 'smoothspire-advertorial',
+      },
+      // Product Page
+      {
+        id: 'product',
+        outputFilename: 'product.html',
+        nextOnAccept: 'checkout',
+        templateId: 'product-page-tryemsense',
       },
       // Checkout
       {
@@ -330,8 +337,8 @@ async function main() {
 
   // Output clickable URLs
   console.log('\n=== CLICK TO TEST ===');
-  const files = ['index.html', 'checkout.html', 'oto1.html', 'oto2.html', 'oto3.html', 'oto4.html', 'oto5.html', 'thankyou.html'];
-  const labels = ['1. Advertorial (START HERE)', '2. Checkout', '3. OTO1 Volume Deal', '4. OTO2 Cross-Sell', '5. OTO3 Premium', '6. OTO4 Surprise', '7. OTO5 Protection', '8. Thank You'];
+  const files = ['index.html', 'product.html', 'checkout.html', 'oto1.html', 'oto2.html', 'oto3.html', 'oto4.html', 'oto5.html', 'thankyou.html'];
+  const labels = ['1. Advertorial (START HERE)', '2. Product Page', '3. Checkout', '4. OTO1 Volume Deal', '5. OTO2 Cross-Sell', '6. OTO3 Premium', '7. OTO4 Surprise', '8. OTO5 Protection', '9. Thank You'];
   files.forEach((f, i) => {
     const p = path.join(OUTPUT_DIR, f);
     console.log(`\n${labels[i]}:`);

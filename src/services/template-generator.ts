@@ -495,7 +495,7 @@ function buildCheckoutBriefValues(brief: ProductBrief): ContentMap {
   // Image URLs
   values['logo_image'] = cb.logoUrl ?? '';
   values['brand_image'] = cb.brandImageUrl ?? '';
-  values['contact_email'] = (brief as Record<string, unknown>).contactEmail as string ?? 'contact@nutrovia.com';
+  values['contact_email'] = (brief as unknown as Record<string, unknown>).contactEmail as string ?? 'contact@nutrovia.com';
   values['product_assets_base_url'] = cb.productAssetsBaseUrl ?? '';
   values['product_gallery_base_url'] = cb.galleryBaseUrl ?? '';
   const galleryImages = cb.galleryImages ?? [];

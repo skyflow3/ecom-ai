@@ -7,21 +7,24 @@
  *      at build time). Client component uses useUser() which needs ClerkProvider.
  */
 
-import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import SettingsClient from "./settings-client";
 
-// WHY: Prevents static generation — Clerk may not be configured at build time
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
   const hasClerk = !!process.env.CLERK_SECRET_KEY;
-  const user = hasClerk ? await currentUser() : null;
 
-  // WHY: Settings requires auth — redirect if not signed in
-  if (hasClerk && !user) {
-    redirect("/sign-in");
+  if (!hasClerk) {
+    return <SettingsClient />;
   }
 
-  return <SettingsClient />;
+  try {
+    const { currentUser } = await import("@clerk/nextjs/server");
+    const user = await currentUser();
+    if (!user) redirect("/sign-in");
+    return <SettingsClient />;
+  } catch {
+    return <SettingsClient />;
+  }
 }

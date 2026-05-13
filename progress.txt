@@ -504,3 +504,37 @@ FAL_KEY=954e783d-...  # fal.ai API key
 
 ### Not Committed Yet
 - Everything above needs commit
+
+---
+
+## 2026-05-14 — Funnel Image Replacement Fixes + Checkout Template Fixes
+
+### What: Fixed all image replacement issues across the full 9-page funnel
+
+### Issues Fixed
+1. **Checkout `https://https://` double prefix**: Template had `https://{{product_gallery_base_url}}` hardcoded. Removed `https://` from all 11 occurrences in `checkout-clarifion.marked.html`. Now uses `{{product_gallery_base_url}}` alone (value includes protocol).
+2. **Checkout 4th bundle duplicate**: Script had 5 bundles (3 original + 2 duplicates added for ORDER SUMMARY sync). Removed duplicates, kept 3 bundles (1x, 3x, 6x). ORDER SUMMARY sync still works via JS.
+3. **Checkout images**: Gallery and logo URLs changed from `placehold.co` to local images (`images/nutrovia-*.png`, `images/nutrovia-logo.svg`). placehold.co doesn't load from `file:///`.
+4. **Product page logos**: 3 EMSense logos replaced via template engine (`logoDark`/`logoWhite` mapping). New value: `images/nutrovia-logo.svg` (local SVG placeholder).
+5. **Product page avatars**: Replaced `ui-avatars.com` JS with pure CSS SVG data URI approach in `product-page-tryemsense.marked.html`. Works offline. In HTTPS production, original CDN avatars (olt1.avif, olt2.avif, Review 3 avatar.avif) load fine too.
+6. **Product brief images**: All changed from `placehold.co` URLs to local `images/nutrovia-*.png` paths.
+
+### Files Modified (NOT committed)
+- `templates/checkout-clarifion.marked.html` — Removed `https://` prefix from `{{product_gallery_base_url}}` (11 occurrences)
+- `templates/product-page-tryemsense.marked.html` — Avatar script: `ui-avatars.com` → CSS SVG data URI
+- `scripts/test-funnel-preview.ts` — 3 bundles (removed 2 duplicates), local images, SVG logo
+- `src/services/template-engine.ts` — Added `data-src` to `replaceExactUrl()`, added `data-src`→`src` sync post-processing
+
+### Files Created
+- `test-output/funnel-preview/images/nutrovia-logo.svg` — Simple orange SVG placeholder logo
+
+### Key Insight
+`placehold.co` and `ui-avatars.com` don't work from `file:///`. All external URL dependencies replaced with local images or inline SVG for testing. In HTTPS production (Coolify), CDN URLs work fine.
+
+### Funnel Status: ALL 9 PAGES WORKING
+- Advertorial (index.html) ✅
+- Product Page (product.html) ✅
+- Checkout (checkout.html) ✅ — 3 bundles, gallery images, logo
+- OTO1-5 (oto1-5.html) ✅
+- Thank You (thankyou.html) ✅
+- CTA wiring: 31 CTAs total, all linked correctly
