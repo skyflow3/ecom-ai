@@ -11496,6 +11496,27 @@
     </style></head>
 
 <body class="fk-web dom-pending">
+<!-- WHY: callMethod and callAddToCartEvent were from the original platform (CheckoutChamp).
+     In our standalone version, callMethod redirects to the next funnel step. -->
+<script>
+function callAddToCartEvent() {
+    console.log('[TRACKING] AddToCart event (no-op in standalone mode)');
+}
+function callMethod(event) {
+    console.log('[CHECKOUT] callMethod → redirecting to next step');
+    // WHY: Redirect to OTO1 (next step after checkout in our funnel)
+    var nextUrl = '/api/funnel/oto1.html';
+    // Check if the button has a data attribute for the next step
+    var btn = event && event.target ? event.target.closest('button, a') : null;
+    if (btn) {
+        var stepUrl = btn.getAttribute('data-step-url') || btn.getAttribute('href');
+        if (stepUrl && !stepUrl.includes('javascript')) {
+            nextUrl = stepUrl.startsWith('/') ? stepUrl : '/api/funnel/' + stepUrl;
+        }
+    }
+    window.location.href = nextUrl;
+}
+</script>
     <div id="app" href="" srcset="" data-secondsdelay="" class="">
         <div class="modal-loader">
             <div class="wrapper">
@@ -11507,7 +11528,7 @@
         </div>
         <div href="" srcset="" data-secondsdelay="" class="">
             <div href="" srcset="" data-secondsdelay="" id="im5c" class="main">
-                <head><base href="/">er data-recording-click-props="{&quot;event&quot;:&quot;checkout-header-interact&quot;}" href="" srcset="" id="ih7f" class="_3epVhoWrG5FER-YVBLs6MA">
+                <header data-recording-click-props="{&quot;event&quot;:&quot;checkout-header-interact&quot;}" href="" srcset="" id="ih7f" class="_3epVhoWrG5FER-YVBLs6MA">
                     <div href="" srcset="" data-secondsdelay="" class="_1DGMl-hq37edcRGzuot0fA">
                         <div href="" srcset="" data-secondsdelay="" class="_3zp-v44T6ez-FOpwlllgK7">
                             <picture href="" srcset="">
