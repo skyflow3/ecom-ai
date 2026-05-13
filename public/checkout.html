@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class=""><!-- Clone created with Funnel Builder Pro --><head class=""><base href="/"><meta charset="utf-8">
+    <script src="/api/track/script?v=00000000-0000-0000-0000-000000000002" defer></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -11547,6 +11548,7 @@
             }
 
             console.log('[STRIPE] Initializing with publishable key:', config.publishableKey.substring(0, 12) + '...');
+            window.__stripePk = config.publishableKey;
             stripe = Stripe(config.publishableKey);
 
             // WHY: Mount Stripe Card Element inside the existing card number input area
@@ -11695,6 +11697,47 @@
                 priceNum: bundles[selectedBundle].priceNum
             }];
             try { localStorage.setItem('nutrovia_order_items', JSON.stringify(orderItems)); } catch(e) {}
+
+            // WHY: Create purchase record in DB so AI agents can track orders
+            var sessionId = localStorage.getItem('ecom_sid') || 's-' + Date.now();
+            var shippingCost = bundles[selectedBundle].shipping === 'FREE' ? 0 : 4.95;
+            var orderPayload = {
+                sessionId: sessionId,
+                customerEmail: formData.email,
+                customerName: formData.firstName + ' ' + formData.lastName,
+                customerPhone: formData.phone,
+                customerAddress: {
+                    street: formData.address1,
+                    city: formData.city,
+                    state: formData.state,
+                    zip: formData.postalCode,
+                    country: formData.country
+                },
+                items: [{ name: bundles[selectedBundle].name, qty: bundles[selectedBundle].qty, price: bundles[selectedBundle].priceNum, type: 'main' }],
+                subtotal: bundles[selectedBundle].priceNum,
+                shipping: shippingCost,
+                total: bundles[selectedBundle].priceNum + shippingCost,
+                currency: 'USD',
+                paymentTransactionId: result.paymentIntent.id,
+                // WHY: Detect test vs live from the publishable key prefix
+                liveMode: (window.__stripePk ? !window.__stripePk.startsWith('pk_test_') : false),
+                source: 'funnel-checkout'
+            };
+            try {
+                var orderResp = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderPayload)
+                });
+                var orderData = await orderResp.json();
+                if (orderData.success && orderData.order) {
+                    localStorage.setItem('nutrovia_purchase_id', orderData.order.id);
+                    localStorage.setItem('nutrovia_order_number', orderData.order.orderNumber);
+                    console.log('[ORDER] Created #' + orderData.order.orderNumber);
+                }
+            } catch(orderErr) {
+                console.warn('[ORDER] Failed to create purchase (non-blocking):', orderErr);
+            }
 
             window.location.href = '/api/funnel/oto1.html';
 

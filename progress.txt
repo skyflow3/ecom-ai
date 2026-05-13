@@ -519,11 +519,10 @@ FAL_KEY=954e783d-...  # fal.ai API key
 5. **Product page avatars**: Replaced `ui-avatars.com` JS with pure CSS SVG data URI approach in `product-page-tryemsense.marked.html`. Works offline. In HTTPS production, original CDN avatars (olt1.avif, olt2.avif, Review 3 avatar.avif) load fine too.
 6. **Product brief images**: All changed from `placehold.co` URLs to local `images/nutrovia-*.png` paths.
 
-### Files Modified (NOT committed)
-- `templates/checkout-clarifion.marked.html` — Removed `https://` prefix from `{{product_gallery_base_url}}` (11 occurrences)
-- `templates/product-page-tryemsense.marked.html` — Avatar script: `ui-avatars.com` → CSS SVG data URI
-- `scripts/test-funnel-preview.ts` — 3 bundles (removed 2 duplicates), local images, SVG logo
-- `src/services/template-engine.ts` — Added `data-src` to `replaceExactUrl()`, added `data-src`→`src` sync post-processing
+### Also in this commit
+- **Clerk disabled**: Middleware → passthrough, dashboard pages → dynamic import + try/catch. Never blocks build/runtime.
+- **TypeScript fix**: `template-generator.ts:498` — `brief as unknown as Record<string, unknown>` instead of direct cast.
+- **Commit**: `a456a3d` — pushed to master, awaiting Coolify deploy
 
 ### Files Created
 - `test-output/funnel-preview/images/nutrovia-logo.svg` — Simple orange SVG placeholder logo
@@ -538,3 +537,47 @@ FAL_KEY=954e783d-...  # fal.ai API key
 - OTO1-5 (oto1-5.html) ✅
 - Thank You (thankyou.html) ✅
 - CTA wiring: 31 CTAs total, all linked correctly
+
+---
+
+## 2026-05-14 — E-Commerce Tracking System (Orders + Upsells + Export API)
+
+### What: Full e-commerce order tracking for real orders on app.nutrovia.co
+
+### Architecture
+- **Orders stored in PostgreSQL** via existing `purchases` table (extended)
+- **API-first**: AI agents call REST endpoints to list/export orders
+- **Upsell tracking**: Each OTO page sends accept/decline to `/api/orders/[id]/upsell`
+- **Stripe webhook**: Server-side payment confirmation via `payment_intent.succeeded`
+- **Client tracking**: `/api/track/script` injected on all 9 funnel pages
+
+### Files Created
+- `src/app/api/orders/route.ts` — POST (create purchase) + GET (list orders with filters)
+- `src/app/api/orders/[id]/route.ts` — GET (detail) + PATCH (update status)
+- `src/app/api/orders/[id]/upsell/route.ts` — POST (track upsell accept/decline per OTO)
+- `src/app/api/orders/export/route.ts` — GET (export JSON/CSV for logistics)
+- `drizzle/0001_reflective_squirrel_girl.sql` — Migration: purchases table extended
+
+### Files Modified
+- `src/db/schema/core.ts` — purchases: funnelId nullable + orderNumber, customerPhone, customerAddress, upsellHistory, source
+- `src/db/schema/index.ts` — Export new types (CustomerAddress, UpsellEntry, OrderItem)
+- `src/app/api/webhooks/stripe/route.ts` — Added `payment_intent.succeeded` handler
+- `public/checkout.html` — POST /api/orders after Stripe payment + tracking script
+- `public/oto1.html` - `public/oto5.html` — Upsell tracking JS + tracking script
+- `public/index.html`, `product.html`, `thankyou.html` — Tracking script added
+
+### API Endpoints for AI Agents
+```
+GET  /api/orders?status=paid&from=2024-01-01&limit=50  — List orders
+GET  /api/orders/[id]                                    — Order detail
+PATCH /api/orders/[id]  {status: 'shipped'}              — Update status
+POST /api/orders/[id]/upsell {oto:1, accepted:true}      — Track upsell
+GET  /api/orders/export?format=csv&status=paid           — Export for logistics
+```
+
+### Migration Needed
+- `drizzle/0001_reflective_squirrel_girl.sql` must be applied on Coolify DB
+- Sequence `order_number_seq` created automatically on first order (idempotent)
+
+### TypeScript: 0 errors
+### Status: Code complete, migration pending

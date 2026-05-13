@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class=""><!-- Clone created with Funnel Builder Pro --><head class=""><base href="/"><meta charset="utf-8">
+    <script src="/api/track/script?v=00000000-0000-0000-0000-000000000003" defer></script>
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
         <meta http-equiv="Pragma" content="no-cache">
         <meta http-equiv="Expires" content="0">
@@ -5174,4 +5175,31 @@ const e="",t="EXPIRED";let n="",a="10",s="",i="";const r=this.querySelector("[da
 
     // ========== END PAYMENT HANDLING ==========
             })();
+    </script>
+    <!-- WHY: Upsell tracking — sends accept/decline to /api/orders/[id]/upsell -->
+    <script>
+    (function(){
+        var OTO_NUM = 1;
+        var OTO_PRICE = 0;
+        var OTO_NAME = 'OTO1 Upsell';
+        function trackUpsell(accepted) {
+            var pid = localStorage.getItem('nutrovia_purchase_id');
+            if (!pid) return;
+            var price = accepted ? OTO_PRICE : 0;
+            var payload = JSON.stringify({ oto: OTO_NUM, accepted: accepted, price: price, name: OTO_NAME });
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon('/api/orders/' + pid + '/upsell', new Blob([payload], {type: 'application/json'}));
+            } else {
+                fetch('/api/orders/' + pid + '/upsell', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true });
+            }
+        }
+        document.addEventListener('click', function(e) {
+            var el = e.target.closest('a[href="#next-step"]');
+            if (el) { trackUpsell(false); }
+        }, true);
+        document.addEventListener('click', function(e) {
+            var el = e.target.closest('[data-action="payment"], #btnCard, .payment-button');
+            if (el) { trackUpsell(true); }
+        }, true);
+    })();
     </script></body></html>

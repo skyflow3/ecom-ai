@@ -179,30 +179,69 @@ export const bundles = pgTable("bundles", {
   index("bundle_funnel_idx").on(table.funnelId),
 ]);
 
-// ─── Purchases ─────────────────────────────────────────────────────────────────
+// ─── Purchases (E-Commerce Orders) ──────────────────────────────────────────────
+// WHY: Extended from basic purchases to full e-commerce order tracking.
+//      funnelId nullable allows standalone orders without funnel reference.
+//      upsellHistory tracks accept/decline per OTO for revenue attribution.
+//      orderNumber is human-readable (auto-increment #1001, #1002...).
+
+export type CustomerAddress = {
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+};
+
+export type UpsellEntry = {
+  oto: number;
+  accepted: boolean;
+  price: number;
+  name: string;
+};
+
+export type OrderItem = {
+  name: string;
+  qty: number;
+  price: number;
+  type: 'main' | 'upsell';
+};
 
 export const purchases = pgTable("purchases", {
   id: uuid("id").defaultRandom().primaryKey(),
-  funnelId: uuid("funnel_id").notNull(),
+  // WHY: nullable — standalone e-commerce orders don't have a funnel reference
+  funnelId: uuid("funnel_id"),
   variantId: uuid("variant_id"),
+  orderNumber: integer("order_number").unique(),
   sessionId: text("session_id").notNull(),
   customerEmail: text("customer_email").notNull(),
   customerName: text("customer_name"),
-  items: jsonb("items").default([]).notNull(),
+  customerPhone: text("customer_phone"),
+  customerAddress: jsonb("customer_address").$type<CustomerAddress>(),
+  items: jsonb("items").$type<OrderItem[]>().default([]).notNull(),
+  upsellHistory: jsonb("upsell_history").$type<UpsellEntry[]>().default([]),
   subtotal: numeric("subtotal", { precision: 12, scale: 2 }).notNull(),
   shipping: numeric("shipping", { precision: 12, scale: 2 }).default("0"),
   tax: numeric("tax", { precision: 12, scale: 2 }).default("0"),
   total: numeric("total", { precision: 12, scale: 2 }).notNull(),
   currency: text("currency").default("USD"),
-  stripePaymentIntentId: text("stripe_payment_intent_id"),
+  // WHY: Generic — works with Stripe, PayPal, Mercado Pago, or any processor
+  paymentTransactionId: text("payment_transaction_id"),
+  // WHY: pending → paid → shipped → delivered | refunded
   status: text("status").default("pending"),
+  // WHY: false = Stripe test mode (4242 card), true = real payment
+  //      AI agents filter with GET /api/orders?liveMode=true to export only real orders
+  liveMode: boolean("live_mode").default(false),
+  source: text("source").default("funnel-checkout"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (table) => [
   index("purchase_funnel_idx").on(table.funnelId),
   index("purchase_variant_idx").on(table.variantId),
   index("purchase_email_idx").on(table.customerEmail),
-  index("purchase_stripe_idx").on(table.stripePaymentIntentId),
+  index("purchase_payment_idx").on(table.paymentTransactionId),
+  index("purchase_status_idx").on(table.status),
+  index("purchase_created_idx").on(table.createdAt),
 ]);
 
 // ─── Pixel Configs ─────────────────────────────────────────────────────────────

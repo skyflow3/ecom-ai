@@ -47,6 +47,10 @@ export {
   bundles,
   purchases,
   pixelConfigs,
+  // WHY: Export types for API request/response validation
+  type CustomerAddress,
+  type UpsellEntry,
+  type OrderItem,
 } from "./core";
 
 // ─── Analytics ─────────────────────────────────────────────────────────────────

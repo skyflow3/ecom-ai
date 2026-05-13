@@ -1,18 +1,21 @@
 /**
  * Purpose: POST /api/webhooks/stripe — Stripe webhook handler.
  *          Receives billing events and updates user plans in the DB.
+ *          Also handles e-commerce payment confirmations.
  * Dependencies: stripe, @/lib/db, @/db/schema, @/lib/plans, @/lib/logger
  * Related: src/app/api/billing/checkout/route.ts (creates the subscription)
+ *          src/app/api/create-payment-intent/route.ts (e-commerce payments)
  *
  * WHY: Stripe pushes events to this endpoint when subscriptions change.
  *      This is the ONLY reliable way to know the user's billing state.
  *      Client-side confirmation is unreliable (user can close the tab).
  *
  * EVENTS HANDLED:
- *   checkout.session.completed   → New subscription, set plan from priceId
- *   customer.subscription.updated → Plan change (upgrade/downgrade)
+ *   checkout.session.completed     → New subscription, set plan from priceId
+ *   customer.subscription.updated  → Plan change (upgrade/downgrade)
  *   customer.subscription.deleted  → Cancellation, downgrade to free
  *   invoice.payment_failed         → Log warning (user may need to update card)
+ *   payment_intent.succeeded       → E-commerce payment confirmed, update purchase status
  *
  * IMPORTANT:
  *   - Always returns 200 for valid webhooks (Stripe retries on non-200).
@@ -23,7 +26,7 @@
 import { eq } from 'drizzle-orm';
 import Stripe from 'stripe';
 import { db } from '@/lib/db';
-import { users } from '@/db/schema';
+import { users, purchases } from '@/db/schema';
 import { getPlanFromPriceId } from '@/lib/plans';
 import { createLogger } from '@/lib/logger';
 
@@ -94,6 +97,10 @@ export async function POST(request: Request): Promise<Response> {
 
       case 'invoice.payment_failed':
         await handlePaymentFailed(event.data.object as Stripe.Invoice);
+        break;
+
+      case 'payment_intent.succeeded':
+        await handlePaymentIntentSucceeded(event.data.object as Stripe.PaymentIntent);
         break;
 
       default:
@@ -236,6 +243,60 @@ async function handlePaymentFailed(invoice: Stripe.Invoice): Promise<void> {
   // WHY: Don't downgrade on first failure. Stripe retries automatically.
   //      If all retries fail, Stripe sends customer.subscription.deleted.
   //      We just log for monitoring — the ops team can reach out if needed.
+}
+
+// ─── E-Commerce Payment Handler ────────────────────────────────────────────────
+
+/**
+ * Handle payment_intent.succeeded — e-commerce one-time payment confirmed.
+ * WHY: When funnel checkout completes, Stripe sends this event.
+ *      We update the purchase status from 'pending' to 'paid'.
+ *      Race condition: the client may not have created the purchase yet
+ *      (it happens in parallel). If not found, we log and the client will
+ *      create it with status 'pending', then this webhook will be received again
+ *      on Stripe's retry (or the client's POST /api/orders sets status directly).
+ */
+async function handlePaymentIntentSucceeded(paymentIntent: Stripe.PaymentIntent): Promise<void> {
+  const piId = paymentIntent.id;
+
+  log.info('Payment intent succeeded', {
+    paymentIntentId: piId,
+    amount: paymentIntent.amount,
+    currency: paymentIntent.currency,
+    metadata: paymentIntent.metadata,
+  });
+
+  // WHY: Try to find existing purchase by paymentTransactionId
+  //      Client-side creates the purchase after confirmCardPayment, webhook may arrive first
+  const existing = await db.query.purchases.findFirst({
+    where: eq(purchases.paymentTransactionId, piId),
+  });
+
+  if (existing) {
+    if (existing.status === 'pending') {
+      await db
+        .update(purchases)
+        .set({ status: 'paid', updatedAt: new Date() })
+        .where(eq(purchases.paymentTransactionId, piId));
+
+      log.info('Purchase status updated to paid', {
+        purchaseId: existing.id,
+        orderNumber: existing.orderNumber,
+      });
+    } else {
+      log.info('Purchase already processed', {
+        purchaseId: existing.id,
+        status: existing.status,
+      });
+    }
+  } else {
+    // WHY: Purchase not created yet by client — webhook arrived first.
+    //      The client's POST /api/orders will create it.
+    //      We log this for debugging — it's expected behavior.
+    log.warn('Payment intent succeeded but no purchase found (client may not have created it yet)', {
+      paymentIntentId: piId,
+    });
+  }
 }
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
