@@ -106,11 +106,45 @@
     };
 
     document.addEventListener('DOMContentLoaded', function() {
+        // WHY: Replace {{markers}} with order data
         var html = document.body.innerHTML;
         for (var marker in replacements) {
             html = html.split(marker).join(replacements[marker]);
         }
         document.body.innerHTML = html;
+
+        // WHY: Fill "Items Ordered" table with actual order data
+        var items = [];
+        try { items = JSON.parse(localStorage.getItem('nutrovia_order_items') || '[]'); } catch(e) {}
+
+        if (items.length > 0) {
+            var tbody = document.querySelector('#items-list');
+            if (tbody) {
+                var rowsHtml = '';
+                var total = 0;
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    total += item.priceNum || 0;
+                    rowsHtml += '<tr>'
+                        + '<td title="Item" class="table-cell table-text">' + (item.name || 'Nutrovia') + '</td>'
+                        + '<td class="text-center table-text">' + (item.qty || 1) + '</td>'
+                        + '<td class="fk-text-right table-text">' + (item.price || '$0.00') + '</td>'
+                        + '</tr>';
+                }
+                // Add shipping
+                rowsHtml += '<tr><td colspan="3"><div class="each-price">'
+                    + '<label>Shipping: </label><span>' + (order.shipping || '$4.95') + '</span></div></td></tr>';
+                var grandTotal = document.querySelector('#grandTotal');
+                if (grandTotal) {
+                    var totalStr = '$' + total.toFixed(2);
+                    rowsHtml += '<tr id="fk-dynamic-invoice-price-row"><td colspan="3">'
+                        + '<div class="total-prices"><div class="each-price">'
+                        + '<label>Total: </label><span id="grandTotal">' + totalStr + '</span></div></div></td></tr>';
+                }
+                // Remove old rows and add new ones
+                tbody.innerHTML = rowsHtml;
+            }
+        }
     });
 })();
 </script>

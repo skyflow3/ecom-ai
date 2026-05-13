@@ -11515,15 +11515,23 @@
     // WHY: Selected bundle price in cents — updated when user selects a bundle
     var selectedPriceCents = 4900; // default: $49.00 (1x unit)
 
-    // ─── Get selected bundle price from the page ───
+    // ─── Get selected bundle info (price + name + qty) ───
+    var bundles = {
+        '1x': { name: 'Nutrovia Turmeric Supplement', qty: 1, price: '$49.00', priceNum: 49.00, shipping: '$4.95', cents: 4900 },
+        '3x': { name: 'Nutrovia Turmeric (3-Pack)', qty: 3, price: '$61.80', priceNum: 61.80, shipping: 'FREE', cents: 6180 },
+        '6x': { name: 'Nutrovia Turmeric (6-Pack)', qty: 6, price: '$90.00', priceNum: 90.00, shipping: 'FREE', cents: 9000 }
+    };
+    var selectedBundle = '1x';
+
     function getSelectedPriceCents() {
         // WHY: The checkout has hidden radio inputs for bundles
         // .inpt-1 = 1x ($49), .inpt-2 = 3x ($61.80), .inpt-3 = 6x ($90)
         var inpt1 = document.querySelector('.inpt-1');
         var inpt2 = document.querySelector('.inpt-2');
         var inpt3 = document.querySelector('.inpt-3');
-        if (inpt3 && inpt3.checked) return 9000;   // $90.00
-        if (inpt2 && inpt2.checked) return 6180;    // $61.80
+        if (inpt3 && inpt3.checked) { selectedBundle = '6x'; return 9000; }
+        if (inpt2 && inpt2.checked) { selectedBundle = '3x'; return 6180; }
+        selectedBundle = '1x';
         return 4900; // $49.00 (1x default)
     }
 
@@ -11674,9 +11682,19 @@
                 country: (document.querySelector('#country') || {}).value || (document.querySelector('#shipCountry') || {}).value || '',
                 amountPaid: '$' + (selectedPriceCents / 100).toFixed(2),
                 currencySymbol: '$',
-                paymentId: result.paymentIntent.id
+                paymentId: result.paymentIntent.id,
+                shipping: bundles[selectedBundle].shipping
             };
             try { localStorage.setItem('nutrovia_order', JSON.stringify(formData)); } catch(e) {}
+
+            // WHY: Save order items for thank you page invoice table
+            var orderItems = [{
+                name: bundles[selectedBundle].name,
+                qty: bundles[selectedBundle].qty,
+                price: bundles[selectedBundle].price,
+                priceNum: bundles[selectedBundle].priceNum
+            }];
+            try { localStorage.setItem('nutrovia_order_items', JSON.stringify(orderItems)); } catch(e) {}
 
             window.location.href = '/api/funnel/oto1.html';
 
