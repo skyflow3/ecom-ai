@@ -525,8 +525,10 @@ interface ImageReplacementMapping {
   logoWhite?: string;
   /** Multiple product detail images */
   productImages?: string[];
-  /** Review avatar image */
+  /** Review avatar image — needle substring to match */
   reviewAvatar?: string;
+  /** Additional avatar needles replaced with doctorImageUrl */
+  reviewAvatarExtra?: string[];
   /** Video URL needle substrings — all matching src get replaced */
   videoNeedles?: string[];
 }
@@ -575,9 +577,9 @@ const TEMPLATE_IMAGE_MAP: Record<string, ImageReplacementMapping> = {
     productImages: [
       'ola.avif',
     ],
-    // WHY: Reviewer avatars use CDN URLs — load fine in HTTPS production.
-    //      No replacement needed at generation time.
-    reviewAvatar: '',
+    // WHY: Replace all 3 reviewer avatar CDN images with doctor/product image
+    reviewAvatar: 'olt1.avif',
+    reviewAvatarExtra: ['olt2.avif', 'Review%203%20avatar'],
     // Video URLs (all pagepipeline videos are product-specific)
     videoNeedles: [
       'cdn2.pagepipeline.com/videos/',
@@ -759,8 +761,15 @@ function replaceImages(html: string, content: ContentMap, templateId: string): s
     }
   }
 
-  if (mapping.reviewAvatar && productImageUrl) {
-    html = replaceExactUrl(html, mapping.reviewAvatar, productImageUrl);
+  // WHY: Replace reviewer avatars with doctorImageUrl (person photo, not product)
+  const avatarUrl = doctorImageUrl || productImageUrl;
+  if (mapping.reviewAvatar && avatarUrl) {
+    html = replaceExactUrl(html, mapping.reviewAvatar, avatarUrl);
+  }
+  if (mapping.reviewAvatarExtra && mapping.reviewAvatarExtra.length > 0 && avatarUrl) {
+    for (const needle of mapping.reviewAvatarExtra) {
+      html = replaceExactUrl(html, needle, avatarUrl);
+    }
   }
 
   // ─── Product-page-specific: w-embed video containers → image ──────────────

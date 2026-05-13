@@ -49,7 +49,7 @@ const BRIEF: ProductBrief = {
   productImageUrl: 'images/nutrovia-hero.png',
   productImageSquareUrl: 'images/nutrovia-hero.png',
   doctorImageUrl: 'images/nutrovia-doctor.png',
-  logoUrl: 'images/nutrovia-logo.svg',
+  logoUrl: 'images/nutrovia-hero.png',
   useVideos: false,
   // Facebook review screenshots to replace originals
   commentScreenshotUrls: [
@@ -143,8 +143,8 @@ const CHECKOUT_OVERRIDES: Record<string, any> = {
     'images/nutrovia-6x.png',
     'images/nutrovia-doctor.png',
   ],
-  logoUrl: 'images/nutrovia-logo.svg',
-  brandImageUrl: 'images/nutrovia-logo.svg',
+  logoUrl: 'images/nutrovia-hero.png',
+  brandImageUrl: 'images/nutrovia-hero.png',
   contactEmail: 'contact@nutrovia.com',
 };
 
@@ -182,7 +182,7 @@ async function main() {
 
   const UPSELL_COMMON: Record<string, any> = {
     productImageUrl: 'images/nutrovia-hero.png',
-    logoUrl: 'images/nutrovia-logo.svg',
+    logoUrl: 'images/nutrovia-hero.png',
     contactEmail: 'contact@nutrovia.com',
   };
 
