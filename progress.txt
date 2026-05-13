@@ -459,3 +459,48 @@ FunnelConfig (backward compatible):
   - Output: `test-output/funnel-preview/`
   - Command: `npx tsx scripts/test-funnel-preview.ts`
   - Start URL: `file:///C:/Users/Admin/ECOM-AI/test-output/funnel-preview/index.html`
+
+---
+
+## 2026-05-13 — Image Generation Pipeline (fal.ai + ComfyUI local)
+
+### Done
+- Created `capabilities/image_gen.py` — unified image generator with 2 providers:
+  - **fal.ai** (primary, cloud): Flux.1 [dev] + LoRA, $0.035/megapixel, ~4s/image
+  - **ComfyUI** (fallback, local): Flux GGUF + LoRA, free but slow
+- Provider switch via `IMAGE_PROVIDER=fal|comfyui` env var
+- `FAL_KEY` added to `.env`
+- ComfyUI + ComfyUI-Manager + ComfyUI-GGUF installed in `comfyui/`
+- Downloaded Flux models: Q2_K GGUF (3.76 GB) + CLIP-L (235 MB) + T5XXL fp8 (4.56 GB) + VAE bf16 (160 MB)
+- 10 image presets matching funnel template sizes (hero 1376x768, gallery 600x700, bundles 400x400, etc.)
+- Full catalog generation: `generate_product_catalog()` — 15 images in one call
+- LoRA training via fal.ai: `train_lora()` — upload product images → trained LoRA
+- CLI: `python capabilities/image_gen.py --prompt "..." --preset hero --catalog --product-slug nutrovia`
+
+### Test Results
+| Test | Provider | Time | Quality | Cost |
+|------|----------|------|---------|------|
+| Hero 512x512, 4 steps | fal.ai | 3.9s | Excellente | $0.04 |
+| Hero 512x512, 4 steps | Local (lowvram) | 10m41s | Horrible (Q2_K) | $0 |
+
+### Decision
+- **Production = fal.ai** (4s, qualité Flux maximale, $0.04/image)
+- **Local = inutile** pour la production (MX550 4Go trop faible, Q2_K qualité inacceptable)
+- ComfyUI local gardé pour développement/future GPU upgrade
+- `comfyui/` ajouté au `.gitignore` (~9 Go de modèles)
+
+### .env changes
+```
+FAL_KEY=954e783d-...  # fal.ai API key
+```
+
+### Files Created
+- `capabilities/image_gen.py` — Unified image gen client (fal.ai + ComfyUI)
+- `public/products/nutrovia/nutrovia-hero.jpg` — Test image fal.ai
+
+### Files Modified
+- `.env` — Added FAL_KEY
+- `.gitignore` — Added comfyui/
+
+### Not Committed Yet
+- Everything above needs commit
