@@ -11651,8 +11651,33 @@
                 return;
             }
 
-            // Step 3: Success — redirect to next step
+            // Step 3: Success — save customer data and redirect to next step
             console.log('[STRIPE] Payment successful!', result.paymentIntent.id);
+
+            // WHY: Save customer info to localStorage for thank you page
+            var formData = {
+                firstName: (document.querySelector('#firstName') || {}).value || '',
+                lastName: (document.querySelector('#lastName') || {}).value || '',
+                email: (document.querySelector('#email') || {}).value || '',
+                phone: (document.querySelector('#phoneNumber') || {}).value || '',
+                shipFirstName: (document.querySelector('#shipFirstName') || {}).value || (document.querySelector('#firstName') || {}).value || '',
+                shipLastName: (document.querySelector('#shipLastName') || {}).value || (document.querySelector('#lastName') || {}).value || '',
+                shipAddress1: (document.querySelector('#shipAddress1') || {}).value || '',
+                shipCity: (document.querySelector('#shipCity') || {}).value || '',
+                shipState: (document.querySelector('#shipState') || {}).value || '',
+                shipPostalCode: (document.querySelector('#shipPostalCode') || {}).value || '',
+                shipCountry: (document.querySelector('#shipCountry') || {}).value || '',
+                address1: (document.querySelector('#address1') || {}).value || (document.querySelector('#shipAddress1') || {}).value || '',
+                city: (document.querySelector('#city') || {}).value || (document.querySelector('#shipCity') || {}).value || '',
+                state: (document.querySelector('#state') || {}).value || (document.querySelector('#shipState') || {}).value || '',
+                postalCode: (document.querySelector('#postalCode') || {}).value || (document.querySelector('#shipPostalCode') || {}).value || '',
+                country: (document.querySelector('#country') || {}).value || (document.querySelector('#shipCountry') || {}).value || '',
+                amountPaid: '$' + (selectedPriceCents / 100).toFixed(2),
+                currencySymbol: '$',
+                paymentId: result.paymentIntent.id
+            };
+            try { localStorage.setItem('nutrovia_order', JSON.stringify(formData)); } catch(e) {}
+
             window.location.href = '/api/funnel/oto1.html';
 
         } catch (err) {
