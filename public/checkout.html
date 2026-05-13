@@ -11496,26 +11496,182 @@
     </style></head>
 
 <body class="fk-web dom-pending">
-<!-- WHY: callMethod and callAddToCartEvent were from the original platform (CheckoutChamp).
-     In our standalone version, callMethod redirects to the next funnel step. -->
+<!-- WHY: Stripe.js integration + fallback for missing functions from CheckoutChamp platform.
+     When Stripe is configured (env vars set), processes real payment.
+     When Stripe is NOT configured, redirects to next step (preview mode). -->
+<script src="https://js.stripe.com/v3/"></script>
 <script>
-function callAddToCartEvent() {
-    console.log('[TRACKING] AddToCart event (no-op in standalone mode)');
-}
-function callMethod(event) {
-    console.log('[CHECKOUT] callMethod → redirecting to next step');
-    // WHY: Redirect to OTO1 (next step after checkout in our funnel)
-    var nextUrl = '/api/funnel/oto1.html';
-    // Check if the button has a data attribute for the next step
-    var btn = event && event.target ? event.target.closest('button, a') : null;
-    if (btn) {
-        var stepUrl = btn.getAttribute('data-step-url') || btn.getAttribute('href');
-        if (stepUrl && !stepUrl.includes('javascript')) {
-            nextUrl = stepUrl.startsWith('/') ? stepUrl : '/api/funnel/' + stepUrl;
+(function() {
+    // ─── Platform stubs (CheckoutChamp functions that don't exist in standalone) ───
+    window.callAddToCartEvent = function() {
+        console.log('[TRACKING] AddToCart event (no-op in standalone mode)');
+    };
+
+    // WHY: Stripe instance + card element — initialized after DOM loads
+    var stripe = null;
+    var cardElement = null;
+    var stripeReady = false;
+
+    // WHY: Selected bundle price in cents — updated when user selects a bundle
+    var selectedPriceCents = 4900; // default: $49.00 (1x unit)
+
+    // ─── Get selected bundle price from the page ───
+    function getSelectedPriceCents() {
+        // WHY: The checkout has hidden radio inputs for bundles
+        // .inpt-1 = 1x ($49), .inpt-2 = 3x ($61.80), .inpt-3 = 6x ($90)
+        var inpt1 = document.querySelector('.inpt-1');
+        var inpt2 = document.querySelector('.inpt-2');
+        var inpt3 = document.querySelector('.inpt-3');
+        if (inpt3 && inpt3.checked) return 9000;   // $90.00
+        if (inpt2 && inpt2.checked) return 6180;    // $61.80
+        return 4900; // $49.00 (1x default)
+    }
+
+    // ─── Initialize Stripe.js ───
+    async function initStripe() {
+        try {
+            var response = await fetch('/api/stripe-config');
+            var config = await response.json();
+
+            if (!config.configured) {
+                console.log('[STRIPE] Not configured — using redirect-only mode');
+                return;
+            }
+
+            console.log('[STRIPE] Initializing with publishable key:', config.publishableKey.substring(0, 12) + '...');
+            stripe = Stripe(config.publishableKey);
+
+            // WHY: Mount Stripe Card Element inside the existing card number input area
+            var elements = stripe.elements();
+            cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        fontSize: '16px',
+                        color: '#32325d',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                    }
+                }
+            });
+
+            // WHY: Find the card number input container and replace it with Stripe Element
+            var cardNumberContainer = document.querySelector('#cardNumber');
+            if (cardNumberContainer && cardNumberContainer.parentElement) {
+                // Hide the original card inputs
+                var cardSection = cardNumberContainer.closest('div[data-secondsdelay]');
+                if (cardSection && cardSection.parentElement) {
+                    var wrapper = cardSection.parentElement;
+                    // Hide all original card inputs (number, cvc, month, year)
+                    var allInputs = wrapper.querySelectorAll('input, select');
+                    allInputs.forEach(function(el) {
+                        el.style.display = 'none';
+                    });
+                    // Also hide SVG icons next to inputs
+                    var svgs = wrapper.querySelectorAll('svg');
+                    svgs.forEach(function(el) { el.style.display = 'none'; });
+
+                    // Create Stripe Element container
+                    var stripeContainer = document.createElement('div');
+                    stripeContainer.id = 'stripe-card-element';
+                    stripeContainer.style.cssText = 'padding: 12px; border: 1px solid #e0e0e0; border-radius: 6px; background: white; margin: 8px 0;';
+                    cardNumberContainer.parentElement.insertBefore(stripeContainer, cardNumberContainer);
+                    cardElement.mount('#stripe-card-element');
+                    stripeReady = true;
+                    console.log('[STRIPE] Card Element mounted successfully');
+                }
+            } else {
+                console.warn('[STRIPE] Card number container not found');
+            }
+        } catch (err) {
+            console.error('[STRIPE] Init failed:', err);
         }
     }
-    window.location.href = nextUrl;
-}
+
+    // ─── Process Stripe payment ───
+    async function processStripePayment() {
+        if (!stripe || !cardElement) {
+            console.log('[STRIPE] Not initialized — redirecting to next step');
+            window.location.href = '/api/funnel/oto1.html';
+            return;
+        }
+
+        selectedPriceCents = getSelectedPriceCents();
+        var btnCard = document.querySelector('#btnCard');
+        var originalText = btnCard ? btnCard.textContent : '';
+        if (btnCard) {
+            btnCard.disabled = true;
+            btnCard.textContent = 'Processing...';
+            btnCard.style.opacity = '0.7';
+        }
+
+        try {
+            // Step 1: Create Payment Intent
+            console.log('[STRIPE] Creating Payment Intent for', selectedPriceCents, 'cents');
+            var response = await fetch('/api/create-payment-intent', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: selectedPriceCents,
+                    currency: 'usd'
+                })
+            });
+            var data = await response.json();
+
+            if (!data.success) {
+                throw new Error(data.error || 'Failed to create Payment Intent');
+            }
+
+            console.log('[STRIPE] Payment Intent created:', data.paymentIntentId);
+
+            // Step 2: Confirm payment
+            var result = await stripe.confirmCardPayment(data.clientSecret, {
+                payment_method: { card: cardElement }
+            });
+
+            if (result.error) {
+                console.error('[STRIPE] Payment failed:', result.error.message);
+                alert('Payment failed: ' + result.error.message);
+                if (btnCard) {
+                    btnCard.disabled = false;
+                    btnCard.textContent = originalText;
+                    btnCard.style.opacity = '1';
+                }
+                return;
+            }
+
+            // Step 3: Success — redirect to next step
+            console.log('[STRIPE] Payment successful!', result.paymentIntent.id);
+            window.location.href = '/api/funnel/oto1.html';
+
+        } catch (err) {
+            console.error('[STRIPE] Error:', err);
+            alert('Payment error: ' + err.message);
+            if (btnCard) {
+                btnCard.disabled = false;
+                btnCard.textContent = originalText;
+                btnCard.style.opacity = '1';
+            }
+        }
+    }
+
+    // ─── callMethod — called by checkout button onclick ───
+    window.callMethod = function(event) {
+        console.log('[CHECKOUT] callMethod triggered');
+        if (stripeReady) {
+            processStripePayment();
+        } else {
+            // WHY: No Stripe configured — redirect to next step (preview mode)
+            console.log('[CHECKOUT] No Stripe — redirecting to next step');
+            window.location.href = '/api/funnel/oto1.html';
+        }
+    };
+
+    // ─── Init on DOM ready ───
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initStripe);
+    } else {
+        initStripe();
+    }
+})();
 </script>
     <div id="app" href="" srcset="" data-secondsdelay="" class="">
         <div class="modal-loader">
