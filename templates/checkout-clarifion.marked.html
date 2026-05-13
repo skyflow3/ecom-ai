@@ -10126,6 +10126,22 @@
             color: rgb(50, 50, 70);
         }
 
+        .bundle-pack-img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin: 0 10px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+        @media (max-width: 768px) {
+            .bundle-pack-img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
         #i98zb3 {
             margin: 0px;
         }
@@ -11651,6 +11667,7 @@
                                                     </div>
                                                 </div><span href="" srcset=""></span><input type="checkbox" name="product" quantity="" price="" value="50542" variantvalue="" replaceproductid="" freeshipping="" id="ipprak" class="inpt-shipping inpt-variant fk-product-checkbox"><input type="checkbox" name="product" quantity="" price="" value="50533" variantvalue="" replaceproductid="" freeshipping="" id="i1nn9d" class="inpt-1 inpt-variant fk-product-checkbox">
                                             </div>
+                                            <img src="{{bundle_1_img}}" alt="" class="bundle-pack-img">
                                             <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"> 1 {{product_name}}
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="_2mEjvBM9S3DJWDRg-7WheS">
@@ -11672,6 +11689,7 @@
                                                     </div>
                                                 </div><span href="" srcset=""></span><input type="checkbox" name="product" quantity="" price="" value="50534" variantvalue="" replaceproductid="" freeshipping="" id="iucarw" class="inpt-2 inpt-variant fk-product-checkbox">
                                             </div>
+                                            <img src="{{bundle_2_img}}" alt="" class="bundle-pack-img">
                                             <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"><span data-text="text" href="" srcset="" data-secondsdelay="" class="_2leIjE1D0wtYC9mV5HVZze">BEST SELLER
                                                 </span> {{bundle_2_label}}
                                             </div>
@@ -11701,6 +11719,7 @@
                                                     </div>
                                                 </div><span href="" srcset=""></span><input type="checkbox" name="product" quantity="" price="" value="50535" variantvalue="" replaceproductid="" freeshipping="" id="iy90zk" class="inpt-3 inpt-variant fk-product-checkbox">
                                             </div>
+                                            <img src="{{bundle_3_img}}" alt="" class="bundle-pack-img">
                                             <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"> {{bundle_3_label}}
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="_2mEjvBM9S3DJWDRg-7WheS">
@@ -11723,6 +11742,7 @@
                                                     </div>
                                                 </div><span href="" srcset=""></span><input type="checkbox" name="product" quantity="" price="" value="50976" variantvalue="" replaceproductid="" freeshipping="" id="iqgdyh" class="inpt-4 inpt-variant fk-product-checkbox">
                                             </div>
+                                            <img src="{{bundle_4_img}}" alt="" class="bundle-pack-img">
                                             <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"> {{bundle_4_label}}
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="_2mEjvBM9S3DJWDRg-7WheS">
@@ -12920,34 +12940,33 @@
     <script src="https://unpkg.com/imask@7.6.1/dist/imask.min.js"></script>
 
     <script>
-        let cnt = 25;
+        let cnt = 0;
         const loadText = document.querySelector('.load-text');
         const loadBar = document.querySelector('.load-bar');
         const modal = document.querySelector('.modal-loader');
         const shwLdr = localStorage.getItem('shwLdr');
         if (shwLdr == null) {
-            const loader = setInterval(setLoad, 3000);
+            loadText.innerText = "Checking if you Qualify for Special Offers..";
+            loadBar.style.width = "25%";
+            const loader = setInterval(setLoad, 1500);
             function setLoad() {
                 cnt = cnt + 25;
                 switch (cnt) {
                     case 25:
-                        loadText.innerText = "Checking if you Qualify for Special Offers..";
-                        loadBar.style.width = "25%";
-                        break;
-                    case 50:
                         loadText.innerText = "Congratulations You Qualified!";
                         loadBar.style.width = "50%";
                         break;
-                    case 75:
+                    case 50:
                         loadText.innerText = "Checking for Stock...";
                         loadBar.style.width = "75%";
                         break;
-                    case 100:
+                    case 75:
                         loadText.innerText = "Stock Available!";
                         loadBar.style.width = "100%";
                         break;
-                    case 125:
+                    case 100:
                         modal.style.display = "none";
+                        localStorage.setItem('shwLdr', '1');
                         clearInterval(loader);
                         break;
                 }
