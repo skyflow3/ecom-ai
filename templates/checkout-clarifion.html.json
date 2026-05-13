@@ -634,6 +634,12 @@
       "ai_generated": false,
       "from_brief": true
     },
+    "warranty_display": {
+      "description": "CSS display value for warranty section. 'display:block' to show, 'display:none' to hide. Consumables (supplements) hide warranty, devices show it.",
+      "example": "display:block",
+      "ai_generated": false,
+      "from_brief": true
+    },
 
     "_comment_testimonials": "=== TESTIMONIALS (3 reviews) ===",
     "testimonial_1_name": {
