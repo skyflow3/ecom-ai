@@ -34,14 +34,19 @@ export function getStripe(): Stripe {
 
   const env = getEnv();
 
-  if (!env.STRIPE_SECRET_KEY) {
+  // WHY: Support both naming conventions — TEST_/LIVE_ prefix or plain STRIPE_
+  const secretKey = process.env.STRIPE_TEST_SECRET_KEY
+    ?? process.env.STRIPE_LIVE_SECRET_KEY
+    ?? env.STRIPE_SECRET_KEY;
+
+  if (!secretKey) {
     throw new Error(
-      'STRIPE_SECRET_KEY is required for billing. ' +
+      'STRIPE_TEST_SECRET_KEY or STRIPE_SECRET_KEY is required. ' +
       'Set it in .env or disable billing routes.',
     );
   }
 
-  _stripe = new Stripe(env.STRIPE_SECRET_KEY, {
+  _stripe = new Stripe(secretKey, {
     // WHY: Pin API version to avoid breaking changes on Stripe upgrades.
     //      v18 of the SDK ships with this API version as default.
     typescript: true,

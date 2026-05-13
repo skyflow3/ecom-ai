@@ -10,7 +10,10 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY
+  // WHY: Support both naming conventions — TEST_/LIVE_ prefix or plain STRIPE_
+  const publishableKey = process.env.STRIPE_TEST_PUBLISHABLE_KEY
+    ?? process.env.STRIPE_LIVE_PUBLISHABLE_KEY
+    ?? process.env.STRIPE_PUBLISHABLE_KEY
     ?? process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
     ?? '';
 
