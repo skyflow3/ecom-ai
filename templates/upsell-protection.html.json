@@ -1,0 +1,92 @@
+{
+  "templateId": "upsell-protection",
+  "pageType": "upsell_protection",
+  "source": "upsell-oto5-vibriance.html (order protection/insurance page)",
+  "slots": {
+    "page_title": {
+      "description": "SEO page title",
+      "example": "Protect Your Order - Porch Pirates Protection",
+      "ai_generated": true
+    },
+    "headline_top": {
+      "description": "Final step headline at top.",
+      "example": "FINAL STEP: Protect Your Order",
+      "ai_generated": true
+    },
+    "progress_text": {
+      "description": "Progress bar text.",
+      "example": "Almost Complete...",
+      "ai_generated": false
+    },
+    "hook_stat": {
+      "description": "Fear-based statistic for protection hook.",
+      "example": "40% Of Americans Are Porch Pirate Victims!",
+      "ai_generated": true
+    },
+    "hook_subtitle_1": {
+      "description": "First subtitle under the stat.",
+      "example": "Don't Be The Next Victim Of Porch Pirates",
+      "ai_generated": true
+    },
+    "hook_subtitle_2": {
+      "description": "Second subtitle completing the fear hook.",
+      "example": "And Make Sure You Get Your Order...",
+      "ai_generated": true
+    },
+    "countdown_label": {
+      "description": "Text before countdown timer.",
+      "example": "Hurry! This offer ends in:",
+      "ai_generated": false
+    },
+    "countdown_minutes": {
+      "description": "Countdown timer minutes.",
+      "example": "10",
+      "ai_generated": false
+    },
+    "product_image_url": {
+      "description": "Protection product image URL.",
+      "example": "https://placehold.co/200x200/ffffff/F59E0B?text=Protection",
+      "ai_generated": false
+    },
+    "offer_headline": {
+      "description": "Main offer headline. ALL CAPS.",
+      "example": "NO QUESTIONS ASKED ORDER REPLACEMENT FOR ONLY $4.95",
+      "ai_generated": true
+    },
+    "offer_desc_1": {
+      "description": "First description paragraph. What the protection covers.",
+      "example": "In the event that your package is lost, stolen, or damaged in transit.",
+      "ai_generated": true
+    },
+    "offer_desc_2": {
+      "description": "Second description paragraph. How it works.",
+      "example": "Just add it to your order, and it will allow us to ship you a replacement at no extra cost to you, no questions asked.",
+      "ai_generated": true
+    },
+    "currency_label": {
+      "description": "Currency label.",
+      "example": "USD",
+      "ai_generated": false
+    },
+    "price_display": {
+      "description": "Price amount.",
+      "example": "$4.95",
+      "ai_generated": false
+    },
+    "cta_text": {
+      "description": "YES CTA button text. ALL CAPS. Protection framing.",
+      "example": "YES! PROTECT MY ORDER AGAINST LOSS & THEFT",
+      "ai_generated": true
+    },
+    "rejection_text": {
+      "description": "Decline link text. Neutral, no guilt trip.",
+      "example": "No thanks, I don't want to protect my order against theft",
+      "ai_generated": true
+    },
+    "logo_image_url": {
+      "description": "Logo image URL.",
+      "example": "https://placehold.co/160x40/30bd51/ffffff?text=Vibriance",
+      "ai_generated": false
+    }
+  }
+}

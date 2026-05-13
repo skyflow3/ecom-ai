@@ -1,0 +1,153 @@
+{
+  "templateId": "upsell-vibriance",
+  "source": "Vibriance Super C Serum OTO1 upsell page",
+  "description": "One-Time Offer upsell page with countdown timer, progress bar, persuasion copy, pricing strikethrough, and yes/no CTA. Post-checkout upsell for supplement/skincare products.",
+  "pageType": "upsell",
+  "judgeConfig": "judges/upsell_judge.json",
+  "slots": {
+    "page_title": {
+      "description": "SEO page title (product name or offer name)",
+      "example": "Super C Serum",
+      "ai_generated": false,
+      "format": "plain text"
+    },
+    "logo_image_url": {
+      "description": "Brand logo image URL. Displayed at top of page.",
+      "example": "https://example.com/logo.webp",
+      "ai_generated": false,
+      "format": "URL"
+    },
+    "wait_banner": {
+      "description": "Attention-grabbing banner text at top of page. Must create urgency and stop the user from leaving.",
+      "example": "WAIT! Your order is not complete!",
+      "ai_generated": true,
+      "format": "plain text, uppercase acceptable"
+    },
+    "progress_text": {
+      "description": "Text inside progress bar. Shows order completion status.",
+      "example": "Almost Complete...",
+      "ai_generated": true,
+      "format": "plain text"
+    },
+    "upsell_headline": {
+      "description": "Main upsell offer headline. Must state the exact deal: quantity + product name + price per unit.",
+      "example": "Upgrade your order and get 3 more bottles of Super C Serum for ONLY $28.20 each!",
+      "ai_generated": true,
+      "format": "plain text, include $price"
+    },
+    "countdown_label": {
+      "description": "Text before the countdown timer. Creates urgency.",
+      "example": "Hurry! This offer ends in:",
+      "ai_generated": true,
+      "format": "plain text"
+    },
+    "countdown_minutes": {
+      "description": "Countdown timer duration in minutes. Usually 10 minutes.",
+      "example": "10",
+      "ai_generated": false,
+      "format": "integer as string"
+    },
+    "persuasion_1": {
+      "description": "Hook paragraph (bold). Opens the persuasion sequence. Addresses a specific pain point or desire that requires stocking up.",
+      "example": "If you're looking to firm your jowls or reduce your age spots we recommend stocking up as it can take several months to see impressive results in those areas.",
+      "ai_generated": true,
+      "format": "plain text, 1-2 sentences"
+    },
+    "persuasion_2": {
+      "description": "Offer explanation. Restates what the customer gets in the upsell deal.",
+      "example": "We've upgraded your order so you can claim 3 extra bottles of Vibriance Super C Serum at a substantial discount.",
+      "ai_generated": true,
+      "format": "plain text, 1 sentence"
+    },
+    "persuasion_3": {
+      "description": "Price anchoring. Compares upsell price to retail/competitor prices to show value.",
+      "example": "You'll never see Super C Serum this low. It retails for $47 a bottle and comparable serums sell for over $79 per bottle.",
+      "ai_generated": true,
+      "format": "plain text, include $price comparisons"
+    },
+    "persuasion_4": {
+      "description": "Scarcity trigger (bold). Creates fear of missing out with stock/supply urgency.",
+      "example": "We're also expecting to go out of stock very soon...",
+      "ai_generated": true,
+      "format": "plain text, 1 short sentence"
+    },
+    "persuasion_5": {
+      "description": "Action step. Tells customer exactly what to do and why.",
+      "example": "Add 3 more bottles to your order so you can continue to enjoy beautifully glowing skin - even if we do run out of stock in the coming weeks.",
+      "ai_generated": true,
+      "format": "plain text, 1 sentence"
+    },
+    "persuasion_6": {
+      "description": "Guarantee mention. Reduces perceived risk.",
+      "example": "All orders are protected by a 1 year 'bottom of the bottle' money back guarantee.",
+      "ai_generated": true,
+      "format": "plain text, 1 sentence"
+    },
+    "persuasion_7a": {
+      "description": "Risk reversal part 1 (bold). Bold statement about refund policy.",
+      "example": "If you don't get the promised results you can call us back for a full refund - ",
+      "ai_generated": true,
+      "format": "plain text, partial sentence"
+    },
+    "persuasion_7b": {
+      "description": "Risk reversal part 2. Completes the guarantee promise.",
+      "example": "even if you use all the bottles!",
+      "ai_generated": true,
+      "format": "plain text, completes persuasion_7a"
+    },
+    "product_image_url": {
+      "description": "Product bundle/offer image URL. Shows the actual product being offered.",
+      "example": "https://example.com/product-3pk.webp",
+      "ai_generated": false,
+      "format": "URL"
+    },
+    "original_price": {
+      "description": "Original/retail price shown with strikethrough. Must include $ symbol.",
+      "example": "$141.00",
+      "ai_generated": false,
+      "format": "$XX.XX"
+    },
+    "discount_badge": {
+      "description": "Discount percentage badge text. Shows savings percentage.",
+      "example": "40% OFF!",
+      "ai_generated": false,
+      "format": "XX% OFF!"
+    },
+    "currency_label": {
+      "description": "Currency label before sale price.",
+      "example": "USD",
+      "ai_generated": false,
+      "format": "3-letter currency code"
+    },
+    "sale_price": {
+      "description": "Discounted sale price. Must include $ symbol.",
+      "example": "$84.60",
+      "ai_generated": false,
+      "format": "$XX.XX"
+    },
+    "total_label": {
+      "description": "Label before the total price in second pricing block.",
+      "example": "Total:",
+      "ai_generated": false,
+      "format": "plain text"
+    },
+    "cta_text": {
+      "description": "Call-to-action button text. Must be enthusiastic and action-oriented.",
+      "example": "YES! CONFIRM THIS AMAZING UPGRADE",
+      "ai_generated": true,
+      "format": "UPPERCASE, action verb, includes yes/confirm"
+    },
+    "rejection_text": {
+      "description": "Rejection link anchor text. What the customer says no to.",
+      "example": "No thanks, I don't want to upgrade my order",
+      "ai_generated": true,
+      "format": "plain text, starts with 'No thanks'"
+    },
+    "rejection_reason": {
+      "description": "Rejection link reason. Explains the consequence of saying no (paying more later).",
+      "example": "When I run out I'll just pay the full price of $47 per bottle on my next order.",
+      "ai_generated": true,
+      "format": "plain text, includes $price"
+    }
+  }
+}

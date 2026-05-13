@@ -1,0 +1,212 @@
+{
+  "templateId": "thank-you-page-smoothspine",
+  "pageType": "thank_you",
+  "source": "thank-you-page-smoothspine.html (SmoothSpine post-purchase confirmation)",
+  "slots": {
+    "page_title": {
+      "description": "SEO page title",
+      "example": "Thank You — Your Order Is Confirmed",
+      "ai_generated": true
+    },
+    "contact_email": {
+      "description": "Support email displayed at top of page",
+      "example": "support@vibriance.com",
+      "ai_generated": false
+    },
+    "confirmation_headline": {
+      "description": "Main confirmation headline",
+      "example": "Order Confirmed",
+      "ai_generated": true
+    },
+    "confirmation_message": {
+      "description": "Confirmation paragraph after headline",
+      "example": "You'll receive a confirmation email with your order details shortly.",
+      "ai_generated": true
+    },
+    "change_request_notice": {
+      "description": "Warning about change request deadline",
+      "example": "For any change requests please make sure to contact us within 6 hours of placing your order to make sure we can process it before it's shipped",
+      "ai_generated": true
+    },
+    "order_table_header": {
+      "description": "Header above order summary table",
+      "example": "Items Ordered",
+      "ai_generated": false
+    },
+    "order_discount_label": {
+      "description": "Label for discount line in order table",
+      "example": "Discount:",
+      "ai_generated": false
+    },
+    "order_total_label": {
+      "description": "Label for total line in order table",
+      "example": "Total:",
+      "ai_generated": false
+    },
+    "billing_disclaimer": {
+      "description": "Notice about how charge appears on statement",
+      "example": "Your billing will appear as:",
+      "ai_generated": false
+    },
+    "brand_name": {
+      "description": "Brand name displayed on the page",
+      "example": "Nutrovia",
+      "ai_generated": false
+    },
+    "billing_name": {
+      "description": "Name that appears on billing statement (can differ from brand name)",
+      "example": "Serenova Digital LLC",
+      "ai_generated": false
+    },
+    "survey_question": {
+      "description": "Survey hook question text",
+      "example": "Do you have 2 minutes to answer an anonymous survey?",
+      "ai_generated": true
+    },
+    "survey_incentive": {
+      "description": "Reward for completing survey",
+      "example": "You will receive a special discount code valid on future orders!",
+      "ai_generated": true
+    },
+    "survey_cta_text": {
+      "description": "Survey button text",
+      "example": "Yes, I want the discount code!",
+      "ai_generated": true
+    },
+    "video_headline": {
+      "description": "Headline above video section",
+      "example": "Please watch this video to know how to use your product",
+      "ai_generated": true
+    },
+    "community_headline": {
+      "description": "Community offer headline — aspirational claim",
+      "example": "FIX YOUR SCIATICA AT HOME IN 30 DAYS",
+      "ai_generated": true
+    },
+    "community_cta_text": {
+      "description": "Community join button text. Appears 3 times.",
+      "example": "JOIN OUR FREE COMMUNITY NOW",
+      "ai_generated": true
+    },
+    "userguide_product_name": {
+      "description": "Product name in user guide section",
+      "example": "Smoothspine Triple Fusion Massager",
+      "ai_generated": false
+    },
+    "userguide_label": {
+      "description": "User guide section label",
+      "example": "User Guide",
+      "ai_generated": false
+    },
+    "shipping_method": {
+      "description": "Shipping method description",
+      "example": "Standard Shipping (3-7 days)",
+      "ai_generated": false
+    },
+    "continue_shopping_text": {
+      "description": "Continue shopping button text",
+      "example": "Continue Shopping",
+      "ai_generated": true
+    },
+    "support_headline": {
+      "description": "Support section title",
+      "example": "We're Here To Help You",
+      "ai_generated": true
+    },
+    "support_message": {
+      "description": "Support description text",
+      "example": "Please feel free to contact us at:",
+      "ai_generated": true
+    },
+    "support_email": {
+      "description": "Support email (appears in header + footer + mailto links)",
+      "example": "support@smoothspine.com",
+      "ai_generated": false
+    },
+    "support_phone": {
+      "description": "Support phone number",
+      "example": "+1 229 544 5875",
+      "ai_generated": false
+    },
+    "consent_text": {
+      "description": "Marketing consent/legal disclaimer text",
+      "example": "By filling out the field, you consent for [Brand] to use automated technology...",
+      "ai_generated": true
+    },
+    "logo_link_url": {
+      "description": "URL for logo click (usually homepage or shop)",
+      "example": "https://example.com",
+      "ai_generated": false
+    },
+    "flag_image_url": {
+      "description": "Country flag image URL (e.g., US flag for US orders)",
+      "example": "https://placehold.co/24x16/ffffff/10B981?text=US",
+      "ai_generated": false
+    },
+    "hero_image_url": {
+      "description": "Main hero/thank you banner image URL",
+      "example": "https://placehold.co/600x200/ffffff/10B981?text=Thank+You",
+      "ai_generated": false
+    },
+    "product_image_url": {
+      "description": "Product image in content area",
+      "example": "https://placehold.co/560x400/ffffff/10B981?text=Product",
+      "ai_generated": false
+    },
+    "guide_image_1_url": {
+      "description": "User guide image 1",
+      "example": "https://placehold.co/400x300/ffffff/10B981?text=Guide+1",
+      "ai_generated": false
+    },
+    "guide_image_2_url": {
+      "description": "User guide image 2",
+      "example": "https://placehold.co/400x300/ffffff/10B981?text=Guide+2",
+      "ai_generated": false
+    },
+    "community_image_url": {
+      "description": "Community/group banner image",
+      "example": "https://placehold.co/400x300/ffffff/10B981?text=Community",
+      "ai_generated": false
+    },
+    "survey_url": {
+      "description": "Survey form URL (e.g., Typeform, Google Forms)",
+      "example": "https://form.typeform.com/to/xxxxx",
+      "ai_generated": false
+    },
+    "community_url": {
+      "description": "Community/group join URL (Facebook group, Discord, etc.). Appears 3 times.",
+      "example": "https://facebook.com/groups/xxxxx",
+      "ai_generated": false
+    },
+    "terms_url": {
+      "description": "Terms & Conditions page URL",
+      "example": "https://example.com/policies/terms",
+      "ai_generated": false
+    },
+    "privacy_url": {
+      "description": "Privacy Policy page URL",
+      "example": "https://example.com/policies/privacy",
+      "ai_generated": false
+    },
+    "refund_url": {
+      "description": "Refund/Return Policy page URL",
+      "example": "https://example.com/policies/refund",
+      "ai_generated": false
+    },
+    "tracking_script_url": {
+      "description": "Analytics/tracking script URL (base, without query params)",
+      "example": "https://analytics.example.com/track.js",
+      "ai_generated": false
+    },
+    "trust_badge_1_url": {
+      "description": "Trust badge image 1 (e.g., secure checkout)",
+      "example": "https://placehold.co/80x40/ffffff/10B981?text=SSL",
+      "ai_generated": false
+    },
+    "trust_badge_2_url": {
+      "description": "Trust badge image 2 (e.g., DMCA protected)",
+      "example": "https://placehold.co/80x40/ffffff/10B981?text=DMCA",
+      "ai_generated": false
+    }
+  }
+}

@@ -226,8 +226,8 @@ export function renderHero(block: Block): string {
   // For editorial: NO CTA button in hero. For commerce: show CTA.
   const ctaHtml = (!isEditorial && props.ctaText)
     ? props.ctaUrl
-      ? `<a href="${escapeHtml(props.ctaUrl)}" class="ec-btn ec-btn-primary ec-hero-cta" style="display:inline-block;margin-top:20px;min-height:52px;line-height:52px;padding:0 24px;font-size:1.125rem;font-weight:700;border-radius:12px;text-decoration:none;">${escapeHtml(props.ctaText)}</a>`
-      : `<button class="ec-btn ec-btn-primary ec-hero-cta" style="margin-top:20px;min-height:52px;padding:0 24px;font-size:1.125rem;font-weight:700;border-radius:12px;border:none;cursor:pointer;">${escapeHtml(props.ctaText)}</button>`
+      ? `<a href="${escapeHtml(props.ctaUrl)}" data-funnel-cta class="ec-btn ec-btn-primary ec-hero-cta" style="display:inline-block;margin-top:20px;min-height:52px;line-height:52px;padding:0 24px;font-size:1.125rem;font-weight:700;border-radius:12px;text-decoration:none;">${escapeHtml(props.ctaText)}</a>`
+      : `<button data-funnel-cta class="ec-btn ec-btn-primary ec-hero-cta" style="margin-top:20px;min-height:52px;padding:0 24px;font-size:1.125rem;font-weight:700;border-radius:12px;border:none;cursor:pointer;">${escapeHtml(props.ctaText)}</button>`
     : '';
 
   // WHY: Winners use fixed 40px desktop / 24px mobile, Open Sans bold. No clamp().
@@ -528,8 +528,8 @@ export function renderCta(block: Block): string {
   ].filter(Boolean).join(';');
 
   const btnHtml = props.url
-    ? `<a href="${escapeHtml(props.url)}" class="ec-btn ${variantClass}" style="${baseBtnStyle}"${ariaLabel}>${escapedText}</a>`
-    : `<button class="ec-btn ${variantClass}" style="${baseBtnStyle}"${ariaLabel}>${escapedText}</button>`;
+    ? `<a href="${escapeHtml(props.url)}" data-funnel-cta class="ec-btn ${variantClass}" style="${baseBtnStyle}"${ariaLabel}>${escapedText}</a>`
+    : `<button data-funnel-cta class="ec-btn ${variantClass}" style="${baseBtnStyle}"${ariaLabel}>${escapedText}</button>`;
 
   const content = `<div class="ec-cta-container" style="text-align:center;overflow:hidden;">${btnHtml}</div>`;
   return renderBlock(block, 'ec-cta-block', content);

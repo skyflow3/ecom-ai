@@ -186,7 +186,7 @@ export function renderPricingCard(block: Block): string {
   ).join('');
 
   const ctaHtml = ctaText
-    ? `<button style="${BUTTON_BASE_STYLE}background:#16a34a;color:#fff;margin-top:16px;">${escapeHtml(ctaText)}</button>`
+    ? `<button data-funnel-cta style="${BUTTON_BASE_STYLE}background:#16a34a;color:#fff;margin-top:16px;">${escapeHtml(ctaText)}</button>`
     : '';
 
   const content = `
@@ -239,7 +239,7 @@ export function renderAddToCart(block: Block): string {
   // WHY: Green #16a34a full-width CTA from Webflow checkout — "ORDER NOW" button pattern
   const content = `
     ${expressButtons}
-    <button class="ec-add-to-cart" style="${BUTTON_BASE_STYLE}background:#16a34a;color:#fff;height:56px;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);"${variantAttr}>${escapeHtml(buttonText)}</button>
+    <button data-funnel-cta class="ec-add-to-cart" style="${BUTTON_BASE_STYLE}background:#16a34a;color:#fff;height:56px;box-shadow:0 2px 4px 2px rgba(0,0,0,0.05);"${variantAttr}>${escapeHtml(buttonText)}</button>
   `;
 
   const visibilityClass = buildVisibilityClass(block.visibility);

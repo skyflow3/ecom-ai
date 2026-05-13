@@ -233,8 +233,8 @@ export function renderStickyCta(block: Block): string {
     : 'background:linear-gradient(135deg,#16a34a 0%,#53A81E 100%);';
 
   const btnHtml = props.url
-    ? `<a href="${escapeHtml(props.url)}" style="display:block;width:100%;min-height:48px;padding:10px 16px;line-height:1.3;text-align:center;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:none;border-radius:8px;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</a>`
-    : `<button style="display:block;width:100%;min-height:52px;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;border:none;border-radius:8px;cursor:pointer;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</button>`;
+    ? `<a href="${escapeHtml(props.url)}" data-funnel-cta style="display:block;width:100%;min-height:48px;padding:10px 16px;line-height:1.3;text-align:center;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:none;border-radius:8px;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</a>`
+    : `<button data-funnel-cta style="display:block;width:100%;min-height:52px;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;border:none;border-radius:8px;cursor:pointer;${btnBg}box-shadow:0 4px 14px rgba(0,0,0,0.3);">${escapeHtml(props.text)}</button>`;
 
   const content = `
     <div style="max-width:480px;margin:0 auto;">
@@ -325,8 +325,8 @@ export function renderAuthorCta(block: Block): string {
 
   // WHY: Green #16a34a CTA button with 8px radius — matches checkout CTA button pattern
   const btnHtml = props.url
-    ? `<a href="${escapeHtml(props.url)}" style="display:block;width:100%;min-height:52px;line-height:52px;text-align:center;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:none;border-radius:8px;background:#16a34a;box-shadow:0 4px 14px rgba(0,194,73,0.3);margin-top:12px;">${escapeHtml(props.ctaText)}</a>`
-    : `<button style="display:block;width:100%;min-height:52px;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;border:none;border-radius:8px;cursor:pointer;background:#16a34a;box-shadow:0 4px 14px rgba(0,194,73,0.3);margin-top:12px;">${escapeHtml(props.ctaText)}</button>`;
+    ? `<a href="${escapeHtml(props.url)}" data-funnel-cta style="display:block;width:100%;min-height:52px;line-height:52px;text-align:center;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:none;border-radius:8px;background:#16a34a;box-shadow:0 4px 14px rgba(0,194,73,0.3);margin-top:12px;">${escapeHtml(props.ctaText)}</a>`
+    : `<button data-funnel-cta style="display:block;width:100%;min-height:52px;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;border:none;border-radius:8px;cursor:pointer;background:#16a34a;box-shadow:0 4px 14px rgba(0,194,73,0.3);margin-top:12px;">${escapeHtml(props.ctaText)}</button>`;
 
   // WHY: Card with subtle green border and light bg — matches mid-article callout pattern
   const content = `

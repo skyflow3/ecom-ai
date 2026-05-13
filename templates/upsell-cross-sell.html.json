@@ -1,0 +1,159 @@
+{
+  "templateId": "upsell-cross-sell",
+  "source": "Vibriance Retinol Serum OTO2 upsell page — simplified layout for cross-sell offers",
+  "description": "Cross-sell upsell page with stat banner, warning hook, product claims, benefit list, usage instructions, pricing, and CTA. Used for OTO2-5 (cross-sell, protection). Simpler than OTO1 template.",
+  "pageType": "upsell",
+  "judgeConfig": "judges/upsell_judge.json",
+  "slots": {
+    "page_title": {
+      "description": "SEO page title (product name or offer name)",
+      "example": "Vibriance Retinol Serum",
+      "ai_generated": false,
+      "format": "plain text"
+    },
+    "logo_url": {
+      "description": "Brand logo image URL. Displayed at top of page.",
+      "example": "https://example.com/logo.webp",
+      "ai_generated": false,
+      "format": "URL"
+    },
+    "banner_stat": {
+      "description": "Big stat/social proof at top of page. Must grab attention with a specific percentage or number.",
+      "example": "80% Of Repeat Customers Add THIS To Their Order...",
+      "ai_generated": true,
+      "format": "plain text, include stat/percentage"
+    },
+    "progress_text": {
+      "description": "Text inside progress bar. Shows order completion status.",
+      "example": "Almost Complete...",
+      "ai_generated": true,
+      "format": "plain text"
+    },
+    "warning_headline": {
+      "description": "Warning/attention headline. Creates curiosity and urgency. Two lines: warning label + benefit promise.",
+      "example": "WARNING: Only for those ready to uncover dramatically younger-looking skin.",
+      "ai_generated": true,
+      "format": "plain text, bold warning + benefit"
+    },
+    "product_image_url": {
+      "description": "Product image URL. Shows the cross-sell product alongside the main product.",
+      "example": "https://example.com/product.webp",
+      "ai_generated": false,
+      "format": "URL"
+    },
+    "product_intro": {
+      "description": "Product introduction line. Frames the cross-sell as an upgrade/addition to what they just bought.",
+      "example": "Upgrade your order now with Vibriance Retinol Serum:",
+      "ai_generated": true,
+      "format": "plain text, include product name"
+    },
+    "product_claim": {
+      "description": "Main product claim. The bold differentiator that makes this product unique. Can include multiple formatting breaks.",
+      "example": "It's the FIRST & ONLY retinol serum made exclusively for the delicate MATURE skin of women over 50...",
+      "ai_generated": true,
+      "format": "plain text, bold claims with specific qualifiers"
+    },
+    "product_science": {
+      "description": "Science/technology explanation. How the product works, mechanism of action. Builds credibility.",
+      "example": "It stimulates natural skin collagen while reducing DEEP WRINKLES using Poly-Pore Technology, our SLOW-RELEASE retinol that minimizes skin irritation!",
+      "ai_generated": true,
+      "format": "plain text, include mechanism + benefit"
+    },
+    "results_intro": {
+      "description": "Transition text before benefit list. Frames what results to expect.",
+      "example": "For results you can see:",
+      "ai_generated": true,
+      "format": "plain text, short"
+    },
+    "benefit_1": {
+      "description": "Benefit bullet 1. Starts with emoji heart. Specific outcome.",
+      "example": "🩷 Lifts sagging skin",
+      "ai_generated": true,
+      "format": "emoji + short benefit"
+    },
+    "benefit_2": {
+      "description": "Benefit bullet 2.",
+      "example": "🩷 Smoothes fine lines & wrinkles",
+      "ai_generated": true,
+      "format": "emoji + short benefit"
+    },
+    "benefit_3": {
+      "description": "Benefit bullet 3.",
+      "example": "🩷 Shrinks pores",
+      "ai_generated": true,
+      "format": "emoji + short benefit"
+    },
+    "benefit_4": {
+      "description": "Benefit bullet 4.",
+      "example": "🩷 Brightens complexion",
+      "ai_generated": true,
+      "format": "emoji + short benefit"
+    },
+    "benefit_5": {
+      "description": "Benefit bullet 5.",
+      "example": "🩷 Skin is glowing, more radiant",
+      "ai_generated": true,
+      "format": "emoji + short benefit"
+    },
+    "usage_instructions": {
+      "description": "How to use the product together with what they already bought. AM/PM routine or complementary usage. Must explain WHY both products work better together.",
+      "example": "Use Super C Serum in the morning to hydrate and protect. And use Vibriance Retinol in the evening to multiply the rejuvenating effects! Using both together ensures 24-hour care for mature skin.",
+      "ai_generated": true,
+      "format": "plain text, usage instructions + synergy explanation"
+    },
+    "pricing_headline": {
+      "description": "Pricing section headline. Frames the offer as a treatment/supply/plan.",
+      "example": "Upgrade Your Order Now With A One-Month Treatment:",
+      "ai_generated": true,
+      "format": "plain text, include product framing"
+    },
+    "price_display": {
+      "description": "Main price display. The offer price with context.",
+      "example": "Just $32",
+      "ai_generated": false,
+      "format": "Just $XX.XX or $XX.XX each"
+    },
+    "discount_display": {
+      "description": "Discount badge text. Shows savings percentage and exclusivity.",
+      "example": "25% OFF, today only!",
+      "ai_generated": false,
+      "format": "XX% OFF, today only!"
+    },
+    "countdown_label": {
+      "description": "Text before the countdown timer. Creates urgency.",
+      "example": "Hurry, offer ends in",
+      "ai_generated": true,
+      "format": "plain text"
+    },
+    "countdown_minutes": {
+      "description": "Countdown timer duration in minutes. Usually 10 minutes.",
+      "example": "10",
+      "ai_generated": false,
+      "format": "integer as string"
+    },
+    "guarantee_text": {
+      "description": "Guarantee/risk-free text. Must include guarantee duration and terms.",
+      "example": "Try It RISK FREE for one full year! Use it all and love it, or your money back!",
+      "ai_generated": true,
+      "format": "plain text, guarantee duration + terms"
+    },
+    "cta_text": {
+      "description": "Call-to-action button text. Must be enthusiastic and action-oriented.",
+      "example": "YES! Upgrade My Order Now...",
+      "ai_generated": true,
+      "format": "UPPERCASE, action verb, includes yes"
+    },
+    "rejection_text": {
+      "description": "Rejection link anchor text. The 'no thanks' option.",
+      "example": "No thanks, I'll pass on this offer",
+      "ai_generated": true,
+      "format": "plain text, starts with 'No thanks'"
+    },
+    "rejection_reason": {
+      "description": "Rejection consequence. Explains what they lose by saying no.",
+      "example": "on the lowest price we've ever offered. (Please note, this one-time discount isn't available anywhere else.)",
+      "ai_generated": true,
+      "format": "plain text, loss aversion framing"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html class=""><!-- Clone created with Funnel Builder Pro --><head class=""><meta charset="utf-8">
+<html class=""><!-- Clone created with Funnel Builder Pro --><head class=""><base href="https://checkout.clarifion.com/champognewgallery-longfaq/checkout">
+    <meta charset="utf-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -3883,7 +3884,7 @@
         }
 
         .slick-next:focus {
-            background-image: url('https://placehold.co/right-chevron-white-drop2.png') !important;
+            background-image: url('https://checkout.clarifion.com/champognewgallery-longfaq/images/right-chevron-white-drop2.png') !important;
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
@@ -3891,7 +3892,7 @@
         }
 
         .slick-next:hover {
-            background-image: url('https://placehold.co/right-chevron-blue-drop2.png') !important;
+            background-image: url('https://checkout.clarifion.com/champognewgallery-longfaq/images/right-chevron-blue-drop2.png') !important;
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
@@ -3900,7 +3901,7 @@
 
 
         .slick-next {
-            background-image: url('https://placehold.co/right-chevron-white-drop2.png') !important;
+            background-image: url('https://checkout.clarifion.com/champognewgallery-longfaq/images/right-chevron-white-drop2.png') !important;
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
@@ -3908,7 +3909,7 @@
         }
 
         .slick-prev:focus {
-            background-image: url('https://placehold.co/left-chevron-white-drop2.png') !important;
+            background-image: url('https://checkout.clarifion.com/champognewgallery-longfaq/images/left-chevron-white-drop2.png') !important;
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
@@ -3917,7 +3918,7 @@
         }
 
         .slick-prev:hover {
-            background-image: url('https://placehold.co/left-chevron-blue-drop2.png') !important;
+            background-image: url('https://checkout.clarifion.com/champognewgallery-longfaq/images/left-chevron-blue-drop2.png') !important;
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
@@ -3926,7 +3927,7 @@
         }
 
         .slick-prev {
-            background-image: url('https://placehold.co/left-chevron-white-drop2.png') !important;
+            background-image: url('https://checkout.clarifion.com/champognewgallery-longfaq/images/left-chevron-white-drop2.png') !important;
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
@@ -4511,12 +4512,14 @@
         }
 
         .xvxeQN82BJ2CYoJBUxuuA ._33aUvGChd7xKHc4mNA5YNm {
+            background-image: url("https://assets.funnelkonnekt.com/e5728d10-9616-11ed-9f25-d7c672798aaf/1674188293964_us_flag.png");
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center !important;
             display: block;
-            height: 36px;
-            width: 48px;
-            margin-right: 10px;
-            border-radius: 3px;
-            object-fit: cover;
+            height: 56px;
+            width: 56px;
+            margin-right: 17.6px;
         }
 
         img#fkt-image-92b-1b4-b6a {
@@ -5660,8 +5663,8 @@
             display: inline-block;
             width: 22px;
             height: 22px;
-            -webkit-clip-path: url('https://checkout.example.comcheckout?clickid=69fb26c1d85d8e357432edc9&gclid=#clip-star');
-            clip-path: url('https://checkout.example.comcheckout?clickid=69fb26c1d85d8e357432edc9&gclid=#clip-star');
+            -webkit-clip-path: url('https://checkout.clarifion.com/champognewgallery-longfaq/checkout?clickid=69fb26c1d85d8e357432edc9&gclid=#clip-star');
+            clip-path: url('https://checkout.clarifion.com/champognewgallery-longfaq/checkout?clickid=69fb26c1d85d8e357432edc9&gclid=#clip-star');
             margin-left: 2px;
             background-color: rgba(50, 50, 50, 0.2);
             position: relative;
@@ -6326,7 +6329,7 @@
         }
 
         ._2NmoFRDWQGDT78VaFhQOU_ ._1yv6ivJblf5PLNg7bpByHf ._11QU_BIqESitk6Tryg9hVJ {
-            background-image: url('https://checkout.example.comimg/flag_sprite.png');
+            background-image: url('https://checkout.clarifion.com/champognewgallery-longfaq/img/flag_sprite.png');
             background-size: 100%;
             background-repeat: no-repeat;
             display: inline-block;
@@ -7256,7 +7259,7 @@
 
         ._2NmoFRDWQGDT78VaFhQOU_ .yBiQ1tylQlUl3F4-r4bTi .kElX5iKFAiCTJumjTNYfd ._11QU_BIqESitk6Tryg9hVJ,
         ._2NmoFRDWQGDT78VaFhQOU_ ._8qI7v0yYJp8QRJbhnyHCf .kElX5iKFAiCTJumjTNYfd ._11QU_BIqESitk6Tryg9hVJ {
-            background-image: url('https://checkout.example.comimg/flag_sprite.png');
+            background-image: url('https://checkout.clarifion.com/champognewgallery-longfaq/img/flag_sprite.png');
             background-size: 100%;
             background-repeat: no-repeat;
             display: inline-block;
@@ -10125,22 +10128,6 @@
             color: rgb(50, 50, 70);
         }
 
-        .bundle-pack-img {
-            width: 90px;
-            height: 90px;
-            object-fit: contain;
-            margin: 0 10px;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-        }
-        @media (max-width: 768px) {
-            .bundle-pack-img {
-                width: 80px;
-                height: 80px;
-            }
-        }
-
         #i98zb3 {
             margin: 0px;
         }
@@ -11322,8 +11309,6 @@
             }
 
             .xvxeQN82BJ2CYoJBUxuuA ._33aUvGChd7xKHc4mNA5YNm {
-                height: 44px;
-                width: 58px;
                 margin-right: initial;
             }
 
@@ -11476,7 +11461,7 @@
             }
         }
     </style>
-    <title class="">AirPure™</title>
+    <title class="">Clarifion™</title>
 <style>
         html, body {
             margin: 0 !important;
@@ -11513,7 +11498,7 @@
                             <picture href="" srcset="">
                                 <source srcset="" type="image/png" href="">
                                 <source srcset="" type="image/webp" href="">
-                                <source srcset="" type="image/png" href=""><img alt="logo" src="https://placehold.co/160x40/4CAF50/ffffff?text=AirPure" href="" srcset="" id="fkt-image-2a4-5a5-af8" title="" target="_self" align="center" width="" height="" onclick="" class="">
+                                <source srcset="" type="image/png" href=""><img alt="logo" src="https://assets.funnelkonnekt.com/Funnel/assets/images/fa5b57ff-2b9f-40f9-afd4-6bd27f917220/a4773a03-3513-43d2-81b7-ed71cb49e3c6/5535d4779965093b578ccff3c6190385.png?versionId=Lddpwex.Q_0mpJES0YBbypiz3Rpg42VA" href="" srcset="" id="fkt-image-2a4-5a5-af8" title="" target="_self" align="center" width="" height="" onclick="" class="">
                             </picture>
                             <picture href="" srcset="">
                                 <source srcset="" type="image/png" href="">
@@ -11529,13 +11514,14 @@
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="xvxeQN82BJ2CYoJBUxuuA">
-                            <!-- WHY: Dynamic country flag — updated by JS after geo IP detection -->
-                            <img id="geo-flag" src="https://flagcdn.com/w80/us.png" alt="Flag" class="_33aUvGChd7xKHc4mNA5YNm" width="48" height="36">
+                            <div data-text="text" href="" srcset="" data-secondsdelay="" id="immfu" class="_33aUvGChd7xKHc4mNA5YNm PH_56px re-fk-lazy">
+                            </div>
                             <div href="" srcset="" data-secondsdelay="" class="_1QN43T6F16JSePT1t2KXvQ">
-                                <div style="text-align: right; line-height: 1.3;">
-                                    <div style="font-size: 0.75em; color: #666; font-weight: 600;">Contact Us:</div>
-                                    <a href="mailto:contact@nutrovia.com" style="font-size: 0.75em; color: #333; text-decoration: none;">contact@nutrovia.com</a>
-                                </div>
+                                <picture href="" srcset="">
+                                    <source srcset="" type="image/jpeg" href="">
+                                    <source srcset="" type="image/webp" href="">
+                                    <source srcset="" type="image/jpeg" href=""><img alt="Brand" src="https://assets.funnelkonnekt.com/Funnel/assets/images/fa5b57ff-2b9f-40f9-afd4-6bd27f917220/a4773a03-3513-43d2-81b7-ed71cb49e3c6/cc1e3a634970dec393740c6999cd45ae.jpeg?versionId=2A922kGdvKiXVs0MbhqNkpA6vS4y6dYo" href="" srcset="" id="fkt-image-92b-1b4-b6a" title="" target="_self" align="center" width="" height="" onclick="" class="">
+                                </picture>
                             </div>
                         </div>
                     </div>
@@ -11544,28 +11530,30 @@
                     <div data-recording-click-props="{&quot;event&quot;:&quot;gallery&quot;}" href="" srcset="" data-secondsdelay="" class="_34ezYQaIZnp_dnpWItpzNT">
                         <div data-secondsdelay="" class="slider-gallery">
                             <div class="">
-                                <img class="slideimg" src="https://placehold.co/600x700/4CAF50/ffffff?text=Front+View" alt="">
+                                <img class="slideimg" src="https://checkout.clarifion.com/champognewgallery-longfaq/images/newgal-img1.webp" alt="">
                             </div>
                             <div class="">
-                                <img class="slideimg" src="https://placehold.co/600x700/2196F3/ffffff?text=Side+View" alt="">
+                                <img class="slideimg" src="https://checkout.clarifion.com/champognewgallery-longfaq/images/newgal-img2.webp" alt="">
                             </div>
                             <div class="">
-                                <img class="slideimg" src="https://placehold.co/600x700/FF9800/ffffff?text=Top+View" alt="">
+                                <img class="slideimg" src="https://checkout.clarifion.com/champognewgallery-longfaq/images/newgal-img3.webp" alt="">
                             </div>
                             <div class="">
-                                <img class="slideimg" src="https://placehold.co/600x700/9C27B0/ffffff?text=In+Box" alt="">
+                                <img class="slideimg" src="https://checkout.clarifion.com/champognewgallery-longfaq/images/newgal-img4.webp" alt="">
                             </div>
                             <div class="">
-                                <img class="slideimg" src="https://placehold.co/600x700/F44336/ffffff?text=In+Use" alt="">
+                                <img class="slideimg" src="https://checkout.clarifion.com/champognewgallery-longfaq/images/newgal-img5.webp" alt="">
                             </div>
                         </div>
                     </div>
                     <div data-recording-click-props="{&quot;event&quot;:&quot;feature-box-interact&quot;}" href="" srcset="" data-secondsdelay="" class="jIMzewhjcx3q0VHIaMmO2">
                         <h1 data-recording-click-props="{&quot;event&quot;:&quot;feature-click-interact&quot;}" href="" srcset="" class="">
-                            <p data-text="text" href="" srcset="" data-secondsdelay="" id="ib9i9" class="">Breathe Easy, Sleep Deep – AirPure Cleans Your Air
+                            <p data-text="text" href="" srcset="" data-secondsdelay="" id="ib9i9" class="">Americans are Using
+                                This
+                                Device to Ionize and Rejuvenate Their Air
                             </p>
                         </h1><a href="#next-step" srcset="" id="fkt-link-06e-f88-878" title="" data-id="fkt-link-cab-d97-97b" target="_self" action="choose" align="center" animate="none" speed="none" delay="none" loop="none" variantvalue="" data-secondsdelay="" data-minutesdelay="" replaceproductid="" billnow="false" onclick="event.preventDefault(); event.stopPropagation(); window.location.hash=&quot;next-step&quot;; return false;" offer="choose" upsell="choose" quantity="" price="" class="_1hbTvFMRGYR2GZUCQlHRtQ" data-original-href="">
-                            <div data-text="text" data-url="https://https://checkout.example.com/order" data-domain="https://https://checkout.example.com" href="" srcset="" data-secondsdelay="" id="ic06s" class="yotpo bottomLine">
+                            <div data-text="text" data-url="https://secure.clarifion.com/clarifiondishop8/checkout" data-domain="https://secure.clarifion.com" href="" srcset="" data-secondsdelay="" id="ic06s" class="yotpo bottomLine">
                             </div>
                         </a>
                         <ul href="" srcset="" class="">
@@ -11574,7 +11562,8 @@
                                             <path d="M524.4 0c5.8 1 9.9 5.4 14 9.8l62.2 65.3 55.9 58.4 51.3 53.7 44.3 46.4c13.6 14.2 27 28.6 40.8 42.5 9.7 9.8 9.4 31.2-.8 41.2-17.5 17.3-34.3 35.6-51.4 53.5l-57.3 59.9-49.8 52.2-47 49.1-45.2 47.5c-1.7 1.8-3.5 3.4-5 5.3-11.9 15-28.3 3.9-31.7-10.3-.7-3-.9-6.2-.9-9.3V439.9v-5.2c-8.4 0-16.5-.3-24.5.1-13.7.5-27.5 1.1-41.2 2.3a627.4 627.4 0 0 0-38.7 4.4c-13.9 2-27.8 4.3-41.6 6.9-24.1 4.5-47.8 11-71.3 19a465 465 0 0 0-95.1 44.7A411 411 0 0 0 22.6 717 372 372 0 0 0 .5 799.2c0 .3-.3.7-.4 1V782c.2-1.2.5-2.4.6-3.7 1.6-20.2 2.7-40.6 4.7-60.7 3.2-31.4 8.2-62.5 14.5-93.2A825.4 825.4 0 0 1 84.3 428c29.8-61.4 67.3-115 114.7-158.5a407 407 0 0 1 115.5-74.8 377.4 377.4 0 0 1 83.2-25.7 856 856 0 0 1 61.7-8.8c14-1.5 28.1-1.3 42.1-1.8.7 0 1.4-.2 2.3-.4v-5.1V26.8c0-8.5 2.3-15.6 8-20.5 3.3-2.8 7.6-4.1 11.5-6 .3-.3.7-.3 1.1-.3z" href="" srcset="">
                                             </path>
                                         </svg></span></div>
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Eliminates 99% of airborne allergens
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Ionize the Air in Your Rooms
+                                    and Help Get the Stuffiness Out!
                                 </p>
                             </li>
                             <li data-recording-click-props="{&quot;event&quot;:&quot;feature-2-interact&quot;}" href="" srcset="" class="">
@@ -11582,7 +11571,9 @@
                                             <path d="M524.4 0c5.8 1 9.9 5.4 14 9.8l62.2 65.3 55.9 58.4 51.3 53.7 44.3 46.4c13.6 14.2 27 28.6 40.8 42.5 9.7 9.8 9.4 31.2-.8 41.2-17.5 17.3-34.3 35.6-51.4 53.5l-57.3 59.9-49.8 52.2-47 49.1-45.2 47.5c-1.7 1.8-3.5 3.4-5 5.3-11.9 15-28.3 3.9-31.7-10.3-.7-3-.9-6.2-.9-9.3V439.9v-5.2c-8.4 0-16.5-.3-24.5.1-13.7.5-27.5 1.1-41.2 2.3a627.4 627.4 0 0 0-38.7 4.4c-13.9 2-27.8 4.3-41.6 6.9-24.1 4.5-47.8 11-71.3 19a465 465 0 0 0-95.1 44.7A411 411 0 0 0 22.6 717 372 372 0 0 0 .5 799.2c0 .3-.3.7-.4 1V782c.2-1.2.5-2.4.6-3.7 1.6-20.2 2.7-40.6 4.7-60.7 3.2-31.4 8.2-62.5 14.5-93.2A825.4 825.4 0 0 1 84.3 428c29.8-61.4 67.3-115 114.7-158.5a407 407 0 0 1 115.5-74.8 377.4 377.4 0 0 1 83.2-25.7 856 856 0 0 1 61.7-8.8c14-1.5 28.1-1.3 42.1-1.8.7 0 1.4-.2 2.3-.4v-5.1V26.8c0-8.5 2.3-15.6 8-20.5 3.3-2.8 7.6-4.1 11.5-6 .3-.3.7-.3 1.1-.3z" href="" srcset="">
                                             </path>
                                         </svg></span></div>
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Saves $200+ a year on filters
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Super Easy-To-Use — Just plug
+                                    it
+                                    into a wall and it instantly starts ionizing your room's air!
                                 </p>
                             </li>
                             <li data-recording-click-props="{&quot;event&quot;:&quot;feature-3-interact&quot;}" href="" srcset="" class="">
@@ -11590,7 +11581,9 @@
                                             <path d="M524.4 0c5.8 1 9.9 5.4 14 9.8l62.2 65.3 55.9 58.4 51.3 53.7 44.3 46.4c13.6 14.2 27 28.6 40.8 42.5 9.7 9.8 9.4 31.2-.8 41.2-17.5 17.3-34.3 35.6-51.4 53.5l-57.3 59.9-49.8 52.2-47 49.1-45.2 47.5c-1.7 1.8-3.5 3.4-5 5.3-11.9 15-28.3 3.9-31.7-10.3-.7-3-.9-6.2-.9-9.3V439.9v-5.2c-8.4 0-16.5-.3-24.5.1-13.7.5-27.5 1.1-41.2 2.3a627.4 627.4 0 0 0-38.7 4.4c-13.9 2-27.8 4.3-41.6 6.9-24.1 4.5-47.8 11-71.3 19a465 465 0 0 0-95.1 44.7A411 411 0 0 0 22.6 717 372 372 0 0 0 .5 799.2c0 .3-.3.7-.4 1V782c.2-1.2.5-2.4.6-3.7 1.6-20.2 2.7-40.6 4.7-60.7 3.2-31.4 8.2-62.5 14.5-93.2A825.4 825.4 0 0 1 84.3 428c29.8-61.4 67.3-115 114.7-158.5a407 407 0 0 1 115.5-74.8 377.4 377.4 0 0 1 83.2-25.7 856 856 0 0 1 61.7-8.8c14-1.5 28.1-1.3 42.1-1.8.7 0 1.4-.2 2.3-.4v-5.1V26.8c0-8.5 2.3-15.6 8-20.5 3.3-2.8 7.6-4.1 11.5-6 .3-.3.7-.3 1.1-.3z" href="" srcset="">
                                             </path>
                                         </svg></span></div>
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Whisper quiet – under 20dB
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Perfect for: Kitchen, Closet,
+                                    Bedrooms, Corridors, Bathrooms, Living Rooms, Staircases, Basements, Offices, &amp;
+                                    Garages
                                 </p>
                             </li>
                             <li data-recording-click-props="{&quot;event&quot;:&quot;feature-4-interact&quot;}" href="" srcset="" class="">
@@ -11598,7 +11591,9 @@
                                             <path d="M524.4 0c5.8 1 9.9 5.4 14 9.8l62.2 65.3 55.9 58.4 51.3 53.7 44.3 46.4c13.6 14.2 27 28.6 40.8 42.5 9.7 9.8 9.4 31.2-.8 41.2-17.5 17.3-34.3 35.6-51.4 53.5l-57.3 59.9-49.8 52.2-47 49.1-45.2 47.5c-1.7 1.8-3.5 3.4-5 5.3-11.9 15-28.3 3.9-31.7-10.3-.7-3-.9-6.2-.9-9.3V439.9v-5.2c-8.4 0-16.5-.3-24.5.1-13.7.5-27.5 1.1-41.2 2.3a627.4 627.4 0 0 0-38.7 4.4c-13.9 2-27.8 4.3-41.6 6.9-24.1 4.5-47.8 11-71.3 19a465 465 0 0 0-95.1 44.7A411 411 0 0 0 22.6 717 372 372 0 0 0 .5 799.2c0 .3-.3.7-.4 1V782c.2-1.2.5-2.4.6-3.7 1.6-20.2 2.7-40.6 4.7-60.7 3.2-31.4 8.2-62.5 14.5-93.2A825.4 825.4 0 0 1 84.3 428c29.8-61.4 67.3-115 114.7-158.5a407 407 0 0 1 115.5-74.8 377.4 377.4 0 0 1 83.2-25.7 856 856 0 0 1 61.7-8.8c14-1.5 28.1-1.3 42.1-1.8.7 0 1.4-.2 2.3-.4v-5.1V26.8c0-8.5 2.3-15.6 8-20.5 3.3-2.8 7.6-4.1 11.5-6 .3-.3.7-.3 1.1-.3z" href="" srcset="">
                                             </path>
                                         </svg></span></div>
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Covers up to 300 sq ft per unit
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Join 17,194 Americans
+                                    Ionizing
+                                    their Homes Air.
                                 </p>
                             </li>
                         </ul>
@@ -11607,12 +11602,13 @@
                 <div href="" srcset="" data-secondsdelay="" id="i0e2jp" class="_3uxZOZTJwHEfK1nSfHdMqm">
                     <div href="" srcset="" data-secondsdelay="" class="_167HhQ81Fr53lFq81s7DFN"><img src="https://assets.funnelkonnekt.com/Funnel/assets/images/fa5b57ff-2b9f-40f9-afd4-6bd27f917220/a4773a03-3513-43d2-81b7-ed71cb49e3c6/c200e27a3d98c72c88a75ab2cdf5e569.svg?versionId=wWuQVkhAMQhQKDQxew99.M6mNhUbP7oZ" alt="flame" href="" srcset="" id="fkt-image-b3f-88a-800" title="" target="_self" align="center" width="" height="" onclick="" class=""></div>
                     <div href="" srcset="" data-secondsdelay="" class="_2FJdzAgOPXEjqfXCLqKFlO">
-                        <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Sale ends soon – 60% OFF won't last!
+                        <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Clarifion has been in high demand and
+                            inventory is limited. We have reserved your order for
                         </p><span href="" srcset="" class="_2QN1Tk-rIrQpd9QLQCF6tY"><span data-text="text" data-secondsdelay="" class="txt-timer">0 MIN 0
                                 SEC</span></span>
                     </div>
                 </div>
-                <form href="" srcset="" class="_2F24FpARfi-FhwC3WaK3YX form" novalidate>
+                <form href="" srcset="" class="_2F24FpARfi-FhwC3WaK3YX form">
                     <div href="" srcset="" data-secondsdelay="" id="idjz6b" class="_2FJdzAgOPXEjqfXCLqKFlO">
                         <div href="" srcset="" data-secondsdelay="" class="">
                             <div href="" srcset="" data-secondsdelay="" class="_34HyVxrZCtlBsvSXLjgBEE">
@@ -11624,14 +11620,16 @@
                                             <div href="" srcset="" data-secondsdelay="" class="_2z7NR0EqG_VBP2Rv9MzG2_">
                                                 <div data-text="text" href="" srcset="" data-secondsdelay="" class="_3jvfgvHMqSa8yLdawWhEBY">Up to
                                                 </div>
-                                                <div data-text="text" href="" srcset="" data-secondsdelay="" class="_3Mi0K5Sz_QkS7AKRP6BMiY">60% OFF
+                                                <div data-text="text" href="" srcset="" data-secondsdelay="" class="_3Mi0K5Sz_QkS7AKRP6BMiY">46% OFF
                                                 </div>
                                             </div>
                                         </div>
                                         <div href="" srcset="" data-secondsdelay="" class="_2z7NR0EqG_VBP2Rv9MzG2_ _3fD1AXM6Ygu4_kQdCc6MV">
                                             <div href="" srcset="" data-secondsdelay="" class="">
                                                 <h3 href="" srcset="" class="">
-                                                    <p data-text="text" href="" srcset="" data-secondsdelay="" class="">60% OFF Applied
+                                                    <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Your up
+                                                        to
+                                                        46% Discount Has Been Applied
                                                     </p>
                                                 </h3>
                                                 <h4 href="" srcset="" class="">
@@ -11666,14 +11664,14 @@
                                                     </div>
                                                 </div><span href="" srcset=""></span><input type="checkbox" name="product" quantity="" price="" value="50542" variantvalue="" replaceproductid="" freeshipping="" id="ipprak" class="inpt-shipping inpt-variant fk-product-checkbox"><input type="checkbox" name="product" quantity="" price="" value="50533" variantvalue="" replaceproductid="" freeshipping="" id="i1nn9d" class="inpt-1 inpt-variant fk-product-checkbox">
                                             </div>
-                                            <img src="https://placehold.co/120x120/4CAF50/ffffff?text=1x" alt="" class="bundle-pack-img">
-                                            <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"> 1 AirPure
+                                            <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"> 1 Clarifion
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="_2mEjvBM9S3DJWDRg-7WheS">
-                                                <div class="txt-each-price" data-text="text" href="" srcset="" data-secondsdelay="">$79.00 Each
+                                                <div class="txt-each-price" data-text="text" href="" srcset="" data-secondsdelay="">$44.97 Each
                                                     Including
                                                 </div>
-                                                <div data-text="text" href="" srcset="" data-secondsdelay="" class="">+ $4.95 Shipping
+                                                <div data-text="text" href="" srcset="" data-secondsdelay="" class="">$7.95
+                                                    Shipping
                                                 </div>
                                             </div>
                                         </div>
@@ -11688,12 +11686,12 @@
                                                     </div>
                                                 </div><span href="" srcset=""></span><input type="checkbox" name="product" quantity="" price="" value="50534" variantvalue="" replaceproductid="" freeshipping="" id="iucarw" class="inpt-2 inpt-variant fk-product-checkbox">
                                             </div>
-                                            <img src="https://placehold.co/120x120/2196F3/ffffff?text=3x" alt="" class="bundle-pack-img">
                                             <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"><span data-text="text" href="" srcset="" data-secondsdelay="" class="_2leIjE1D0wtYC9mV5HVZze">BEST SELLER
-                                                </span> 40% OFF: 3 AirPures
+                                                </span> 17% OFF: 3
+                                                Clarifions
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="_2bq4-lPj1p55-3fSfvGuwv">
-                                                <div class="txt-each-price" data-text="text" href="" srcset="" data-secondsdelay="">$47.40 Each
+                                                <div class="txt-each-price" data-text="text" href="" srcset="" data-secondsdelay="">$36.97 Each
                                                     Including
                                                 </div>
                                                 <div data-text="text" href="" srcset="" data-secondsdelay="" class="">FREE
@@ -11718,11 +11716,10 @@
                                                     </div>
                                                 </div><span href="" srcset=""></span><input type="checkbox" name="product" quantity="" price="" value="50535" variantvalue="" replaceproductid="" freeshipping="" id="iy90zk" class="inpt-3 inpt-variant fk-product-checkbox">
                                             </div>
-                                            <img src="https://placehold.co/120x120/FF9800/ffffff?text=6x" alt="" class="bundle-pack-img">
-                                            <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"> 60% OFF: 6 AirPures
+                                            <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"> 33% OFF: 6 Clarifions
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="_2mEjvBM9S3DJWDRg-7WheS">
-                                                <div class="txt-each-price" data-text="text" href="" srcset="" data-secondsdelay="">$31.60 Each
+                                                <div class="txt-each-price" data-text="text" href="" srcset="" data-secondsdelay="">$29.97 Each
                                                     Including
                                                 </div>
                                                 <div data-text="text" href="" srcset="" data-secondsdelay="" class="">FREE
@@ -11730,7 +11727,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="product-4" data-id="9" href="" srcset="" data-secondsdelay="" style="display:none" class="_2xKA_-oiMr9D3TG75XQEZa lbl-variant">
+                                        <div id="product-4" data-id="9" href="" srcset="" data-secondsdelay="" class="_2xKA_-oiMr9D3TG75XQEZa lbl-variant">
                                             <div data-id="checkbox" href="" srcset="" data-secondsdelay="" id="iisklb" class="_3eBT-caf7Z2L7t3J6X2-j6">
                                                 <div data-id="ripple" href="" srcset="" data-secondsdelay="" class="_21ffV9cayPfHIkFdZ_XvWn">
                                                     <div data-id="36958" href="" srcset="" data-secondsdelay="" class="_2xPBRAda4noR9g0haxPl8t">
@@ -11741,11 +11738,10 @@
                                                     </div>
                                                 </div><span href="" srcset=""></span><input type="checkbox" name="product" quantity="" price="" value="50976" variantvalue="" replaceproductid="" freeshipping="" id="iqgdyh" class="inpt-4 inpt-variant fk-product-checkbox">
                                             </div>
-                                            <img src="" alt="" class="bundle-pack-img">
-                                            <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"> 
+                                            <div data-text="text" href="" srcset="" data-secondsdelay="" class="Ek3NeExcM2Yq0Pq7Kk2-a"> 46% OFF: 9 Clarifions
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="_2mEjvBM9S3DJWDRg-7WheS">
-                                                <div class="txt-each-price" data-text="text" href="" srcset="" data-secondsdelay=""> Each
+                                                <div class="txt-each-price" data-text="text" href="" srcset="" data-secondsdelay="">$23.97 Each
                                                     Including
                                                 </div>
                                                 <div data-text="text" href="" srcset="" data-secondsdelay="" class="">FREE
@@ -11760,7 +11756,7 @@
                                 <div href="" srcset="" data-secondsdelay="" class="cOljQapguqRTB1j-L2VnL">
                                     <h2 data-text="text" href="" srcset="" data-secondsdelay="" class=""> What Customers say
                                         about
-                                        AirPure™:
+                                        Clarifion™:
                                     </h2>
                                 </div>
                                 <div href="" srcset="" data-secondsdelay="" class="_2Q_JVzJ8DwuE8-bCChqiHD">
@@ -11773,7 +11769,8 @@
                                                         </svg></span></div>
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="">
-                                                <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="igo8se" class="_2DsR5aXkFxKeV47iKKKeZr">Dorothy P.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
+                                                <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="igo8se" class="_2DsR5aXkFxKeV47iKKKeZr">Dorothy
+                                                        C.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
                                                         Buyer</span></p>
                                                 <p href="" srcset="" id="ibti6k" class="_1n1xpPAWqkWOTjNPmyS1CI"><span href="" srcset="" class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.87 55.87" href="" srcset="">
                                                             <path d="M55.82 21.58a1 1 0 0 0-.81-.68l-18.09-2.63-8.09-16.4a1 1 0 0 0-1.8 0l-8.08 16.4L.85 20.9a1 1 0 0 0-.55 1.7l13.1 12.76-3.1 18.02a1 1 0 0 0 1.45 1.06l16.18-8.51 16.18 8.5a1 1 0 0 0 1.45-1.05l-3.09-18.02 13.1-12.76a1 1 0 0 0 .25-1.02z" href="" srcset="">
@@ -11798,7 +11795,13 @@
                                                 THEM!!
                                             </p>
                                             <div href="" srcset="" data-secondsdelay="" class="_3CNuAmr124L_9BKr5VpnuQ">
-                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">I was skeptical at first, but after a week my morning congestion is gone. I bought three AirPures for the whole house. My cat's dander doesn't bother me anymore. Best $60 I ever spent.</p>
+                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">I live in a
+                                                    smaller home and have grandkids over every week. One of them has
+                                                    allergies, so I wanted to try something that might help. I plugged
+                                                    in the Clarifion devices to my living room, bedrooms, and bathrooms.
+                                                    and wouldn’t you know! Less sneezing, less dust! It’s quiet, no
+                                                    filter nonsense, and it just works.
+                                                </p>
                                             </div>
                                             <div data-text="text" href="" srcset="" data-secondsdelay="" class="_280kepO3K9NIGqKQbd763E">06/17/2025
                                             </div>
@@ -11813,7 +11816,8 @@
                                                         </svg></span></div>
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="">
-                                                <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="i9fbed" class="_2DsR5aXkFxKeV47iKKKeZr">Mark S.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
+                                                <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="i9fbed" class="_2DsR5aXkFxKeV47iKKKeZr">Clinton
+                                                        G.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
                                                         Buyer</span></p>
                                                 <p href="" srcset="" id="i0jxyo" class="_1n1xpPAWqkWOTjNPmyS1CI"><span href="" srcset="" class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.87 55.87" href="" srcset="">
                                                             <path d="M55.82 21.58a1 1 0 0 0-.81-.68l-18.09-2.63-8.09-16.4a1 1 0 0 0-1.8 0l-8.08 16.4L.85 20.9a1 1 0 0 0-.55 1.7l13.1 12.76-3.1 18.02a1 1 0 0 0 1.45 1.06l16.18-8.51 16.18 8.5a1 1 0 0 0 1.45-1.05l-3.09-18.02 13.1-12.76a1 1 0 0 0 .25-1.02z" href="" srcset="">
@@ -11834,9 +11838,12 @@
                                             </div>
                                         </div>
                                         <div href="" srcset="" data-secondsdelay="" class="_1qfMr0DXjo3J10DBnZFefO">
-                                            <p data-text="text" href="" srcset="" data-secondsdelay="" class="_1p2_TzHXiQeSJjLl-pPdWa">No more dusting every day</p>
+                                            <p data-text="text" href="" srcset="" data-secondsdelay="" class="_1p2_TzHXiQeSJjLl-pPdWa">Excellence product.
+                                            </p>
                                             <div href="" srcset="" data-secondsdelay="" class="_3CNuAmr124L_9BKr5VpnuQ">
-                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">I'm a busy dad and our house always had that dusty smell. AirPure changed that. I just plugged it in and forgot about it. The air feels cleaner and I'm not sneezing as much. My wife noticed the difference too.
+                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">I’m an older
+                                                    guy and don’t usually mess w/ this kinda stuff but my daughter swore
+                                                    by it so figured why not. plugged it in...and way less dust! THANKS!
                                             </p></div>
                                             <div data-text="text" href="" srcset="" data-secondsdelay="" class="_280kepO3K9NIGqKQbd763E">05/29/25
                                             </div>
@@ -11851,7 +11858,8 @@
                                                         </svg></span></div>
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="">
-                                                <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="i5kyn7" class="_2DsR5aXkFxKeV47iKKKeZr">Linda R.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
+                                                <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="i5kyn7" class="_2DsR5aXkFxKeV47iKKKeZr">Ashley
+                                                        P.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
                                                         Buyer</span></p>
                                                 <p href="" srcset="" id="iz9fgt" class="_1n1xpPAWqkWOTjNPmyS1CI"><span href="" srcset="" class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.87 55.87" href="" srcset="">
                                                             <path d="M55.82 21.58a1 1 0 0 0-.81-.68l-18.09-2.63-8.09-16.4a1 1 0 0 0-1.8 0l-8.08 16.4L.85 20.9a1 1 0 0 0-.55 1.7l13.1 12.76-3.1 18.02a1 1 0 0 0 1.45 1.06l16.18-8.51 16.18 8.5a1 1 0 0 0 1.45-1.05l-3.09-18.02 13.1-12.76a1 1 0 0 0 .25-1.02z" href="" srcset="">
@@ -11872,9 +11880,15 @@
                                             </div>
                                         </div>
                                         <div href="" srcset="" data-secondsdelay="" class="_1qfMr0DXjo3J10DBnZFefO">
-                                            <p data-text="text" href="" srcset="" data-secondsdelay="" class="_1p2_TzHXiQeSJjLl-pPdWa">Finally, an air purifier that's silent</p>
+                                            <p data-text="text" href="" srcset="" data-secondsdelay="" class="_1p2_TzHXiQeSJjLl-pPdWa">This easily cleans my dusty home.
+                                            </p>
                                             <div href="" srcset="" data-secondsdelay="" class="_3CNuAmr124L_9BKr5VpnuQ">
-                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">I tried a HEPA purifier but it was too loud for my bedroom. AirPure is dead quiet – I can't even hear it. I sleep better and wake up without a stuffy nose. Highly recommend for light sleepers.</p>
+                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">our house
+                                                    ALWAYS picks up dust easily. But I got this lil plug in thing to try
+                                                    and honestly? shocked. not saying it’s magic but it’s def doing
+                                                    something. ended up getting 6 of them so now every room has one.
+                                                    soooo glad i did.
+                                                </p>
                                             </div>
                                             <div data-text="text" href="" srcset="" data-secondsdelay="" class="_280kepO3K9NIGqKQbd763E">03/21/25
                                             </div>
@@ -12022,7 +12036,7 @@
                                         </div>
                                     </div>
                                     <div href="" srcset="" data-secondsdelay="" class="">
-                                        <div href="" srcset="" data-secondsdelay="" id="ikexsm" class=""><input type="email" id="emailAddress" name="emailAddress" placeholder="E-mail" autocomplete="email" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval=""></div>
+                                        <div href="" srcset="" data-secondsdelay="" id="ikexsm" class=""><input type="text" id="emailAddress" name="emailAddress" placeholder="E-mail" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval=""></div>
                                         <p data-text="text" id="msgErrorEmail" data-secondsdelay="" class="inputError">
                                         </p>
                                     </div>
@@ -12050,7 +12064,7 @@
                                                 display: block;
                                                 width: 25px;
                                                 height: 25px;
-                                                background-image: url('https://https://checkout.example.com/');
+                                                background-image: url('https://secure.clarifion.com/clarifiondishop8/img/flag_sprite.png');
                                                 background-position: 0 -5150px;
                                                 background-size: 100%;
                                             }
@@ -12063,14 +12077,18 @@
                                                 letter-spacing: 0.3px;
                                             }
                                         </style>
-                                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone" autocomplete="tel" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval="">
+                                        <div class="icon-flag">
+                                            <span></span>
+                                            <span class="">+1</span>
+                                        </div>
+                                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval="">
                                     </div>
                                     <p data-text="text" id="msgErrorPhone" data-secondsdelay="" class="inputError">
                                     </p>
                                 </div>
                                 <div data-recording-click-props="{&quot;event&quot;:&quot;fb-comments&quot;}" href="" srcset="" data-secondsdelay="" id="i0ze9p" class="_2wQnhKJQKJ06PKoQC4B0gY">
                                     <div href="" srcset="" data-secondsdelay="" class="cOljQapguqRTB1j-L2VnL">
-                                        <h2 data-text="text" href="" srcset="" data-secondsdelay="" id="iyyn0j" class="N0b5FXzVT18Uwtlp80DTY"> What Customers say about AirPure™:
+                                        <h2 data-text="text" href="" srcset="" data-secondsdelay="" id="iyyn0j" class="N0b5FXzVT18Uwtlp80DTY"> What Customers say about Clarifion™:
                                         </h2>
                                         <div data-text="text" href="" srcset="" data-secondsdelay="" class="_1H3KQBf2F8-i-efa_oNLL1">
                                         </div>
@@ -12085,7 +12103,8 @@
                                                             </svg></span></div>
                                                 </div>
                                                 <div href="" srcset="" data-secondsdelay="" class="">
-                                                    <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="isrk53" class="_2DsR5aXkFxKeV47iKKKeZr">Dorothy P.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
+                                                    <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="isrk53" class="_2DsR5aXkFxKeV47iKKKeZr">Dorothy P.
+                                                        </span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
                                                             Buyer</span></p>
                                                     <p href="" srcset="" id="ip2psi" class="_1n1xpPAWqkWOTjNPmyS1CI">
                                                         <span href="" srcset="" class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.87 55.87" href="" srcset="">
@@ -12108,9 +12127,16 @@
                                                 </div>
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="_1qfMr0DXjo3J10DBnZFefO">
-                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="_1p2_TzHXiQeSJjLl-pPdWa">I got the family bundle and I LOVE THEM!</p>
+                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="_1p2_TzHXiQeSJjLl-pPdWa">I got the 9x family bundle and I
+                                                    LOVE THEM!!
+                                                </p>
                                                 <div href="" srcset="" data-secondsdelay="" class="_3CNuAmr124L_9BKr5VpnuQ">
-                                                    <p data-text="text" href="" srcset="" data-secondsdelay="" class="">I was skeptical at first, but after a week my morning congestion is gone. I bought three AirPures for the whole house. My cat's dander doesn't bother me anymore. Best $60 I ever spent.
+                                                    <p data-text="text" href="" srcset="" data-secondsdelay="" class="">I live in
+                                                        a smaller home and have grandkids over every week. One of them
+                                                        has allergies, so I wanted to try something that might help. I
+                                                        plugged in the Clarifion devices to my living room, bedrooms,
+                                                        and bathrooms. and wouldn’t you know! Less sneezing, less dust!
+                                                        It’s quiet, no filter nonsense, and it just works.
                                                     </p>
                                                 </div>
                                                 <div data-text="text" href="" srcset="" data-secondsdelay="" class="_280kepO3K9NIGqKQbd763E">06/17/25
@@ -12126,7 +12152,8 @@
                                                             </svg></span></div>
                                                 </div>
                                                 <div href="" srcset="" data-secondsdelay="" class="">
-                                                    <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="izldzi" class="_2DsR5aXkFxKeV47iKKKeZr">Mark S.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
+                                                    <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="izldzi" class="_2DsR5aXkFxKeV47iKKKeZr">Clinton
+                                                            G.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
                                                             Buyer</span></p>
                                                     <p href="" srcset="" id="i6hn4q" class="_1n1xpPAWqkWOTjNPmyS1CI">
                                                         <span href="" srcset="" class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.87 55.87" href="" srcset="">
@@ -12149,10 +12176,13 @@
                                                 </div>
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="_1qfMr0DXjo3J10DBnZFefO">
-                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="_1p2_TzHXiQeSJjLl-pPdWa">No more dusting every day</p>
+                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="_1p2_TzHXiQeSJjLl-pPdWa">Excellent product
+                                                </p>
                                                 <div href="" srcset="" data-secondsdelay="" class="_3CNuAmr124L_9BKr5VpnuQ">
                                                     <p data-text="text" href="" srcset="" data-secondsdelay="" class="">
-                                                        I'm a busy dad and our house always had that dusty smell. AirPure changed that. I just plugged it in and forgot about it. The air feels cleaner and I'm not sneezing as much. My wife noticed the difference too.
+                                                        i’m an older guy and don’t usually mess w/ this kinda stuff but
+                                                        my daughter swore by it so I figured why not. plugged it
+                                                        in...and way less dust! THANKS!
                                                     </p>
                                                 </div>
                                                 <div data-text="text" href="" srcset="" data-secondsdelay="" class="_280kepO3K9NIGqKQbd763E">05/29/25
@@ -12168,7 +12198,8 @@
                                                             </svg></span></div>
                                                 </div>
                                                 <div href="" srcset="" data-secondsdelay="" class="">
-                                                    <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="irhuge" class="_2DsR5aXkFxKeV47iKKKeZr">Linda R.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
+                                                    <p href="" srcset="" class="_2GAZaCI5lhqC8ipGB2chQt"><span data-text="text" href="" srcset="" data-secondsdelay="" id="irhuge" class="_2DsR5aXkFxKeV47iKKKeZr">Ashley
+                                                            P.</span><span data-text="text" href="" srcset="" data-secondsdelay="" class="y7Lxdef35rl_xZd88Xven">Verified
                                                             Buyer</span></p>
                                                     <p href="" srcset="" id="irqk1f" class="_1n1xpPAWqkWOTjNPmyS1CI">
                                                         <span href="" srcset="" class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.87 55.87" href="" srcset="">
@@ -12191,9 +12222,14 @@
                                                 </div>
                                             </div>
                                             <div href="" srcset="" data-secondsdelay="" class="_1qfMr0DXjo3J10DBnZFefO">
-                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="_1p2_TzHXiQeSJjLl-pPdWa">Finally, an air purifier that's silent</p>
+                                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="_1p2_TzHXiQeSJjLl-pPdWa">This easily cleans my dusty home.
+                                                </p>
                                                 <div href="" srcset="" data-secondsdelay="" class="_3CNuAmr124L_9BKr5VpnuQ">
-                                                    <p data-text="text" href="" srcset="" data-secondsdelay="" class="">I tried a HEPA purifier but it was too loud for my bedroom. AirPure is dead quiet – I can't even hear it. I sleep better and wake up without a stuffy nose. Highly recommend for light sleepers.
+                                                    <p data-text="text" href="" srcset="" data-secondsdelay="" class="">our house
+                                                        ALWAYS picks up dust easily. But I got this lil plug in thing to
+                                                        try and honestly? shocked. not saying it’s magic but it’s def
+                                                        doing something. ended up getting the 6 of them so now every
+                                                        room has one. soooo glad i did.
                                                     </p>
                                                 </div>
                                                 <div data-text="text" href="" srcset="" data-secondsdelay="" class="_280kepO3K9NIGqKQbd763E">03/21/25
@@ -12212,19 +12248,19 @@
                                 </div>
                                 <div data-recording-click-props="{&quot;event&quot;:&quot;fill-interact&quot;}" href="" srcset="" data-secondsdelay="" class="">
                                     <div href="" srcset="" data-secondsdelay="" class="">
-                                        <div href="" srcset="" data-secondsdelay="" class=""><input type="text" id="shipAddress1" name="shipAddress1" placeholder="Street Address" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval=""></div>
+                                        <div href="" srcset="" data-secondsdelay="" class=""><input type="text" id="shipAddress1" name="shipAddress1" placeholder="Street Address" autocomplete="off" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval=""></div>
                                         <p data-text="text" id="msgErrorStreet" data-secondsdelay="" class="inputError">
                                         </p>
                                     </div>
                                     <div href="" srcset="" data-secondsdelay="" class="">
-                                        <div href="" srcset="" data-secondsdelay="" class=""><input type="text" name="shipAddress2" placeholder="Apartment or Suite (Optional)" autocomplete="shipping address-line2" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval="" id="i4u71z"></div>
+                                        <div href="" srcset="" data-secondsdelay="" class=""><input type="text" name="shipAddress2" placeholder="Apartment or Suite (Optional)" autocomplete="off" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval="" id="i4u71z"></div>
                                     </div>
                                     <div href="" srcset="" data-secondsdelay="" class="">
-                                        <div href="" srcset="" data-secondsdelay="" id="i16dy1" class=""><input type="text" id="shipCity" name="shipCity" placeholder="City" autocomplete="shipping address-level2" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval=""></div>
+                                        <div href="" srcset="" data-secondsdelay="" id="i16dy1" class=""><input type="text" id="shipCity" name="shipCity" placeholder="City" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval=""></div>
                                         <p data-text="text" id="msgErrorCity" data-secondsdelay="" class="inputError">
                                         </p>
                                     </div>
-                                    <div href="" srcset="" data-secondsdelay="" class="fCQn644esZuhby1-DPB9J"><select type="select" id="shipCountry" name="shipCountry" placeholder="Country" autocomplete="shipping country" data-value="PH" href="" srcset="" customval="" value="" class="fk-form-select">
+                                    <div href="" srcset="" data-secondsdelay="" class="fCQn644esZuhby1-DPB9J"><select type="select" id="shipCountry" name="shipCountry" placeholder="Country" data-value="PH" href="" srcset="" customval="" value="" class="fk-form-select">
                                             <option data-text="text" value="" data-secondsdelay="">-- Choose Country --
                                             </option>
                                         </select><span href="" srcset="" class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 137.32 159.34" href="" srcset="">
@@ -12235,15 +12271,19 @@
                                         </p>
                                     </div>
                                     <div href="" srcset="" data-secondsdelay="" class="_3jo3RoxzvCUPJ3woMwA1H4">
-                                        <!-- WHY: State changed from <select> dropdown to <input type="text">.
-                                             A dropdown would need state lists for 80+ countries — unmaintainable.
-                                             Text input works for every country, and IP geolocation pre-fills it automatically. -->
-                                        <div href="" srcset="" data-secondsdelay="" id="iueaka" class="fCQn644esZuhby1-DPB9J"><input type="text" id="shipState" name="shipState" placeholder="State / Province" autocomplete="shipping address-level1" data-value="" href="" srcset="" customval="" value="" spellcheck="false">
+                                        <div href="" srcset="" data-secondsdelay="" id="iueaka" class="fCQn644esZuhby1-DPB9J"><select type="select" id="shipState" name="shipState" placeholder="State" data-value="" href="" srcset="" customval="" value="" class="fk-form-select">
+                                                <option data-text="text" value="" data-secondsdelay="">-- Choose State
+                                                    --
+                                                </option>
+                                            </select><span href="" srcset="" class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 137.32 159.34" href="" srcset="">
+                                                    <path d="M0 87.74h137.18c-.87 1.09-1.35 1.82-2 2.45Q104.15 123 73 155.84c-4.42 4.66-4.43 4.65-8.82 0L2.34 90.56C1.63 89.81 1 89 0 87.74zM137.32 72.1H.24a16.26 16.26 0 0 1 1.4-2.1Q34.27 35.51 66.88 1c1.64-1.74 2.47-1 3.73.3q27.71 29.34 55.46 58.6c3.09 3.26 6.19 6.53 9.26 9.8.55.58 1.02 1.22 1.99 2.4z" href="" srcset="">
+                                                    </path>
+                                                </svg></span>
                                             <p data-text="text" id="msgErrorState" data-secondsdelay="" class="inputError">
                                             </p>
                                         </div>
                                         <div href="" srcset="" data-secondsdelay="" id="ikzjcd" class="">
-                                            <div href="" srcset="" data-secondsdelay="" class=""><input type="text" id="shipPostalCode" name="shipPostalCode" placeholder="Zip Code" autocomplete="shipping postal-code" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval=""></div>
+                                            <div href="" srcset="" data-secondsdelay="" class=""><input type="text" id="shipPostalCode" name="shipPostalCode" placeholder="Zip Code" data-valid="true" data-value="" spellcheck="false" value="" href="" srcset="" customval=""></div>
                                             <p data-text="text" id="msgErrorZip" data-secondsdelay="" class="inputError">
                                             </p>
                                         </div>
@@ -12373,12 +12413,12 @@
                                     <div data-recording-click-props="{&quot;event&quot;:&quot;fill-interact&quot;}" data-secondsdelay="" id="i6nuwk" class="billing-wrapper">
                                         <div data-secondsdelay="" class="_3jo3RoxzvCUPJ3woMwA1H4">
                                             <div data-secondsdelay="" id="i0ybqm" class="">
-                                                <div data-secondsdelay="" class=""><input type="text" id="firstName" name="firstName" placeholder="First Name" autocomplete="shipping given-name" data-valid="true" data-value="" spellcheck="false" value="" customval=""></div>
+                                                <div data-secondsdelay="" class=""><input type="text" id="firstName" name="firstName" placeholder="First Name" data-valid="true" data-value="" spellcheck="false" value="" customval=""></div>
                                                 <p data-text="text" id="msgErrorBillFname" data-secondsdelay="" class="inputError">
                                                 </p>
                                             </div>
                                             <div data-secondsdelay="" id="inxxx7" class="">
-                                                <div data-secondsdelay="" class=""><input type="text" id="lastName" name="lastName" placeholder="Last Name" autocomplete="shipping family-name" data-valid="true" data-value="" spellcheck="false" value="" customval=""></div>
+                                                <div data-secondsdelay="" class=""><input type="text" id="lastName" name="lastName" placeholder="Last Name" data-valid="true" data-value="" spellcheck="false" value="" customval=""></div>
                                                 <p data-text="text" id="msgErrorBillLname" data-secondsdelay="" class="inputError">
                                                 </p>
                                             </div>
@@ -12408,8 +12448,15 @@
                                             </p>
                                         </div>
                                         <div data-secondsdelay="" class="_3jo3RoxzvCUPJ3woMwA1H4">
-                                            <!-- WHY: State changed from <select> to <input type="text">. Same as shipping state above. -->
-                                            <div data-secondsdelay="" id="itp9q4" class="fCQn644esZuhby1-DPB9J"><input type="text" id="state" name="state" placeholder="State / Province" data-value="" href="" srcset="" customval="" value="" autocomplete="off" spellcheck="false">
+                                            <div data-secondsdelay="" id="itp9q4" class="fCQn644esZuhby1-DPB9J"><select type="select" id="state" name="state" placeholder="State" data-value="" href="" srcset="" customval="" value="" class="fk-form-select">
+                                                    <option data-text="text" value="" data-secondsdelay="">-- Choose
+                                                        State
+                                                        --
+                                                    </option>
+                                                </select><span class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 137.32 159.34">
+                                                        <path d="M0 87.74h137.18c-.87 1.09-1.35 1.82-2 2.45Q104.15 123 73 155.84c-4.42 4.66-4.43 4.65-8.82 0L2.34 90.56C1.63 89.81 1 89 0 87.74zM137.32 72.1H.24a16.26 16.26 0 0 1 1.4-2.1Q34.27 35.51 66.88 1c1.64-1.74 2.47-1 3.73.3q27.71 29.34 55.46 58.6c3.09 3.26 6.19 6.53 9.26 9.8.55.58 1.02 1.22 1.99 2.4z">
+                                                        </path>
+                                                    </svg></span>
                                                 <p data-text="text" id="msgErrorBillState" data-secondsdelay="" class="inputError">
                                                 </p>
                                             </div>
@@ -12448,7 +12495,7 @@
                                                     </path>
                                                 </svg></span>
                                         </div>
-                                        <div data-id="checkbox" href="" srcset="" data-secondsdelay="" id="ixudtv" class="_3eBT-caf7Z2L7t3J6X2-j6 warranty-wrapper" style="display:block">
+                                        <div data-id="checkbox" href="" srcset="" data-secondsdelay="" id="ixudtv" class="_3eBT-caf7Z2L7t3J6X2-j6 warranty-wrapper">
                                             <div data-id="ripple" href="" srcset="" data-secondsdelay="" class="_21ffV9cayPfHIkFdZ_XvWn">
                                                 <div href="" srcset="" data-secondsdelay="" class="_3et9LG1syZ35af2gdNSAWq"><span href="" srcset="" class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 348.73 348.73" href="" srcset="">
                                                             <path d="M201.98 297.18c-2.79 0-9.26-1.26-9.26-13V230.3H14.39c-.5.08-1.16.15-1.94.15-3.17 0-6.1-1.2-8.24-3.4C1.4 224.19 0 219.83 0 214.09v-82.82c0-11.45 8.12-14.48 12.42-14.48h176.54V67.41c0-13.8 6.57-15.87 10.5-15.87 6.28 0 12.53 5.98 13.72 7.18 4.3 3.17 117.85 88.78 130.33 101.25 4.53 4.53 5.33 9.1 5.2 12.12-.3 7.27-5.9 12.22-6.53 12.77l-126.3 104.52c-1.4 1.5-7.8 7.8-13.9 7.8z" href="" srcset="">
@@ -12466,7 +12513,8 @@
                                         <div href="" srcset="" data-secondsdelay="" class="_3ZBIDpy0mQ4NkMkhRuDCR7">
                                             <p data-text="text" href="" srcset="" data-secondsdelay="" class=""><strong data-text="text" href="" srcset="" data-secondsdelay="" class="">One Time
                                                     Offer:</strong> By placing your order today you can have 2 years of
-                                                2-Year Extended Protection Plan
+                                                protection and replacement warranty for only an additional $19.97. This
+                                                extended warranty means your product is covered for 2 years.
                                             </p>
                                         </div>
                                     </div>
@@ -12480,23 +12528,23 @@
                                     <div href="" srcset="" data-secondsdelay="" class="_3Vw2axsKgGbDYckhWXHCFm q7WMQFrrcZUpRLLBLoP4Z">
                                         <div data-text="text" href="" srcset="" data-secondsdelay="" class="_2Mxvibj-hCDui-vZhS9PMC var-title">
                                             <strong class="">One Time Purchase Today</strong>
-                                            <span class="">17% OFF: 3 AirPures</span>
+                                            <span class="">17% OFF: 3 Clarifions</span>
                                         </div>
                                         <div href="" srcset="" data-secondsdelay="" class="_3WMqOWxQaJ5xwHMRDUW2Jw">
                                             <div data-text="text" id="order-product-22668" href="" srcset="" data-secondsdelay="" class="_1AJ4KzQD7s4FAX7J8kcunq var-price">
-                                                <span class="comprice">$79.00</span>
-                                                <span class="regprice">$142.20</span>
+                                                <span class="comprice">$110.91</span>
+                                                <span class="regprice">$110.91</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div data-secondsdelay="" id="iqiwjw" class="_3Vw2axsKgGbDYckhWXHCFm warranty-line-item">
                                         <div data-text="text" data-secondsdelay="" class="_2Mxvibj-hCDui-vZhS9PMC">
-                                            AirPure
-                                            2 Years
+                                            Clarifion
+                                            2 Year Warranty
                                         </div>
                                         <div data-secondsdelay="" class="_3WMqOWxQaJ5xwHMRDUW2Jw">
                                             <div data-text="text" id="order-product-30767" data-secondsdelay="" class="_1AJ4KzQD7s4FAX7J8kcunq warranty-price">
-                                                $9.99
+                                                $19.97
                                             </div>
                                         </div>
                                     </div>
@@ -12520,7 +12568,7 @@
                                             </div>
                                             <div id="total" href="" srcset="" data-secondsdelay="" class="_3WMqOWxQaJ5xwHMRDUW2Jw">
                                                 <div href="" srcset="" data-secondsdelay="" class="">
-                                                    <div data-text="text" href="" srcset="" data-secondsdelay="" class="_1AJ4KzQD7s4FAX7J8kcunq order-total">$142.20
+                                                    <div data-text="text" href="" srcset="" data-secondsdelay="" class="_1AJ4KzQD7s4FAX7J8kcunq order-total">$110.91
                                                     </div>
                                                 </div>
                                             </div>
@@ -12674,16 +12722,16 @@
                                     <ul class="variant">
                                         <li class="">
                                             <div class="prod-cut">
-                                                <img src="https://placehold.co/400x400/4CAF50/ffffff?text=AirPure/https://placehold.co/120x120/2196F3/ffffff?text=3x" alt="" class="">
+                                                <img src="https://assets.checkoutchamp.com/71766f90-bbc6-11ee-9616-27070f6fefc7/1725656041635_og_1x.webp" alt="" class="">
                                             </div>
                                             <div class="prod-details">
-                                                <h4 class="">AirPure™ Air Purifier</h4>
+                                                <h4 class="">Clarifion™ Air Ionizer</h4>
                                                 <span class="">3x devices</span>
                                             </div>
                                         </li>
                                         <li class="">
-                                            <span class="compr">Regular $237.00</span>
-                                            <strong class="regpr">$142.20</strong>
+                                            <span class="compr">Regular $289.09</span>
+                                            <strong class="regpr">$124.32</strong>
                                         </li>
                                     </ul>
                                     <ul class="shipping">
@@ -12694,7 +12742,7 @@
                                             <strong class="">Free shipping</strong>
                                         </li>
                                         <li class="">
-                                            <span class="spn">FREE</span>
+                                            <span class="spn">$4.95 worth</span>
                                             <strong class="strng">FREE</strong>
                                         </li>
                                     </ul>
@@ -12706,7 +12754,7 @@
                                             <strong class="">Warranty</strong>
                                         </li>
                                         <li class="">
-                                            <strong class="strng">$9.99</strong>
+                                            <strong class="strng">$19.97</strong>
                                         </li>
                                     </ul>
                                     <ul class="total">
@@ -12715,7 +12763,7 @@
                                         </li>
                                         <li class="">
                                             <span class="spn1">-65%</span>
-                                            <strong class="strng">$142.20</strong><span class="spn2">$142.20</span>
+                                            <strong class="strng">$124.32</strong><span class="spn2">$294.07</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -12732,7 +12780,7 @@
                                     </div>
                                     <div href="" srcset="" data-secondsdelay="" class="_1WVOO0Z3oFeY268677bFTs">
                                         <p data-text="text" href="" srcset="" data-secondsdelay="" class="">🔒 By placing this
-                                            order you accept AirPure's Privacy Policy and Terms of Use.
+                                            order you accept Clarifion's Privacy Policy and Terms of Use.
 
                                         </p>
                                     </div>
@@ -12752,7 +12800,7 @@
 
                                 <button type="button" id="btnCard" href="" srcset="" data-id="fkt-button-6b4-686-947" title="" align="center" data-secondsdelay="" data-minutesdelay="" action="submit" variantvalue="" replaceproductid="" size="none" billnow="false" offer="choose" upsell="choose" quantity="" price="" desktopsize="none" onclick="callMethod(event)" class="fk-iglxff fk-idsc5j fk-ikgmhy fk-btnCard">YES! Send me
                                     my
-                                    AirPure™!</button><button type="button" id="btnPaypal" href="" srcset="" data-id="fkt-button-6b4-686-947" title="" align="center" data-secondsdelay="" data-minutesdelay="" action="submit" variantvalue="" replaceproductid="" size="none" billnow="false" offer="choose" upsell="choose" quantity="" price="" desktopsize="none" onclick="callMethod(event)" class="btn btnPayPal fk-iglxff fk-idsc5j fk-ikgmhy fk-ikgmhy-2 fk-btnPaypal">Checkout
+                                    Clarifion™!</button><button type="button" id="btnPaypal" href="" srcset="" data-id="fkt-button-6b4-686-947" title="" align="center" data-secondsdelay="" data-minutesdelay="" action="submit" variantvalue="" replaceproductid="" size="none" billnow="false" offer="choose" upsell="choose" quantity="" price="" desktopsize="none" onclick="callMethod(event)" class="btn btnPayPal fk-iglxff fk-idsc5j fk-ikgmhy fk-ikgmhy-2 fk-btnPaypal">Checkout
                                     with </button>
                                 <div data-recording-click-props="{&quot;event&quot;:&quot;guarantee&quot;}" href="" srcset="" data-secondsdelay="" id="it0dpv" class="_2ZoiunF6vkEmF-2lOPbVCG">
                                     <picture href="" srcset="">
@@ -12777,7 +12825,7 @@
                                         <div href="" srcset="" data-secondsdelay="" class="_3TFfZWC6rSdyEfVGS4T5mP">
                                             <p data-text="text" href="" srcset="" data-secondsdelay="" class=""><strong data-text="text" href="" srcset="" data-secondsdelay="" class="">30 DAY
                                                     GUARANTEE:</strong> If you are not completely thrilled with your
-                                                AirPure - We have a 30 day satisfaction guarantee. Please refer to our
+                                                Clarifion - We have a 30 day satisfaction guarantee. Please refer to our
                                                 return policy at the bottom of the page for more details. Happy
                                                 Shopping!
                                             </p>
@@ -12792,107 +12840,174 @@
                 </div>
                 <div data-recording-click-props="{&quot;event&quot;:&quot;faq&quot;}" href="" srcset="" data-secondsdelay="" id="i4wcli" class="">
                     <div href="" srcset="" data-secondsdelay="" class="_3Vc2ecJxUC1umyYx1ncecR">
-                        <h2 data-text="text" href="" srcset="" data-secondsdelay="" id="i5war9" class="">Frequently Asked Questions
+                        <h2 data-text="text" href="" srcset="" data-secondsdelay="" id="i5war9" class="">FREQUENTLY ASKED
+                            QUESTIONS
                         </h2>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">How does it work?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Does it really work? How soon
+                                    will I see results?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">AirPure uses negative ion technology to charge particles in the air, causing them to clump together and fall out of your breathing zone. It's silent and chemical-free.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Yes — most customers notice
+                                    fresher air in as little as 24–72 hours. The device starts working the moment you
+                                    plug it in, silently releasing negative ions that bind to dust, dander, and odor
+                                    particles, causing them to drop out of the air. Many users say they wake up
+                                    breathing easier after just a couple of nights.
+                                </p>
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" id="ioqs7v" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Is it safe? Any side effects?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Do I need to replace filters
+                                    or maintain it?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Yes, it's completely safe. Negative ion technology has been used for decades. No ozone or harmful emissions. It's as safe as the air outside after a thunderstorm.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">No. Unlike bulky air
+                                    purifiers that require expensive filter changes, this device is 100% filter
+                                    maintenance-free. Just plug it in and let it run — no filters, no “refills”, no
+                                    complex upkeep.
+                                </p>
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">How soon will I notice results?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Will it target dust, odors,
+                                    and pet dander?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Many people notice fresher air within 15 minutes. For allergies, you may feel relief in a day or two. Give it a week for full effect.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Absolutely. It targets the
+                                    microscopic particles floating in the air — dust mites, pet dander, pollen, and even
+                                    stubborn odorant particles like kitchen or cigarette smoke. That’s why so many pet
+                                    owners and allergy sufferers love it.
+                                </p>
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Is it easy to set up?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Can this help with allergies
+                                    or asthma?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Just plug it into any standard wall outlet. That's it. No assembly, no filters, no apps. Works instantly.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Many customers with allergies
+                                    and asthma report fewer flare-ups and easier breathing. While it’s not a medical
+                                    device, cleaner air reduces common triggers — which can mean less sneezing, less
+                                    congestion, and more restful sleep.
+                                </p>
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Who is AirPure for?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Is it safe for pets, kids,
+                                    and long-term use?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Anyone who wants cleaner air – especially allergy sufferers, pet owners, smokers, and people with dust issues. Works in bedrooms, living rooms, offices, and even bathrooms.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Yes — the device is 100%
+                                    CARB-Certified so it’s completely safe to use around kids and pets when used as
+                                    directed. It simply releases negative ions, a natural process that occurs in
+                                    forests, waterfalls, and fresh mountain air.
+                                </p>
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">How long does it last?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">How long does each device
+                                    last?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">AirPure is built to last for years. The ionizer has no moving parts, so it's very durable. We've tested units running continuously for over 5 years.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Each unit is built to last
+                                    years of continuous use. Many customers have run theirs daily for multiple years
+                                    with no drop in performance. It’s a long-term investment in your home’s air quality.
+                                </p>
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">How long does shipping take?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">What if I don’t notice a
+                                    difference — is there a guarantee?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Orders ship within 24 hours. Standard delivery takes 5-7 business days. Expedited options are available at checkout.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Yes. If you don’t absolutely
+                                    love it, simply return it within 30 days for an easy refund. Our customer support
+                                    team will gladly help you! We take on all the risk so you can try it with total
+                                    peace of mind.
+                                </p>
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">What if I don't like it?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Will it fit in my outlets
+                                    without blocking others?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">No problem. You're covered by our 30-Day Money-Back Guarantee. If you're not satisfied, return it for a full refund – no questions asked.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Yes. The compact design means
+                                    it fits in standard outlets without taking up extra space. You can still use the
+                                    second plug for lamps, chargers, or appliances.
+                                </p>
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">How does it compare to HEPA purifiers?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">How many units do I need for
+                                    my home size?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">AirPure is smaller, quieter, and costs nothing to maintain. HEPA filters need expensive replacements every 6 months. AirPure works 24/7 with zero upkeep.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">We recommend <strong class="">one unit
+                                        per
+                                        room</strong> where you want cleaner air. For best results, place units in
+                                    bedrooms, living
+                                    rooms, and high-traffic areas. Many customers buy multiple units to cover their
+                                    entire home
+                                </p>
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Does it use a lot of electricity?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Is it really quiet? Can I use
+                                    it in a bedroom?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">No, it uses about 2 watts – less than a nightlight. Running it 24/7 costs less than $2 per year.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Yes — it’s completely silent.
+                                    Unlike purifiers with loud fans, this device has no moving parts. You can sleep
+                                    right next to it and never hear a sound.
+                                </p>
                             </div>
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="ERxklc1DEy6MRbHq8F_oL">
                             <div href="" srcset="" data-secondsdelay="" class="_3qG_M93hEacQkijHPJkGp3">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">How do I clean or maintain it?</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Why is it priced higher than
+                                    air fresheners or sprays?
+                                </p>
                             </div>
                             <div href="" srcset="" data-secondsdelay="" class="xFfiAqzH9NFPaQ_MJUds_">
-                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Wipe the exterior with a dry cloth occasionally. No filters to change, no parts to replace. It's truly maintenance-free.</p>
+                                <p data-text="text" href="" srcset="" data-secondsdelay="" class="">Air fresheners only mask
+                                    odors temporarily, and bulky purifiers cost hundreds plus ongoing filter
+                                    replacements. This device is different — it continuously works 24/7 to clean the air
+                                    without chemicals, filters, or maintenance. One-time purchase, long-term results.
+                                </p>
                             </div>
                         </div>
                         <input type="text" name="custom_order_clickid" customval="order_clickid" placeholder="clickid" id="i2qok5y" value="" class="custom_order_clickid form-input fk-form-input">
                     </div>
                 </div>
                 <section data-recording-click-props="{&quot;event&quot;:&quot;footer&quot;}" href="" srcset="" class="">
-                    <footer href="" srcset="" class="_2tvn_yfiTpk_IaTBb6-faO"><a id="fkt-link-13c-0b8-9fa" data-id="fkt-link-3d6-2a3-86e" title="" target="_blank" action="choose" align="center" animate="none" speed="none" delay="" loop="none" variantvalue="" data-secondsdelay="" data-minutesdelay="" replaceproductid="" billnow="false" href="#next-step" offer="choose" upsell="choose" quantity="" price="" class="_2ux7dQlfG3AfK0VFObGTR3" data-original-href="https://example.com/terms" onclick="event.preventDefault(); event.stopPropagation(); window.location.hash=&quot;next-step&quot;; return false;">Terms &amp; Conditions</a><a id="fkt-link-1dc-891-8c1" data-id="fkt-link-f84-9b9-8ac" title="" target="_blank" action="choose" align="center" animate="none" speed="none" delay="" loop="none" variantvalue="" data-secondsdelay="" data-minutesdelay="" replaceproductid="" billnow="false" href="#next-step" offer="choose" upsell="choose" quantity="" price="" class="_2ux7dQlfG3AfK0VFObGTR3" data-original-href="https://example.com/privacy" onclick="event.preventDefault(); event.stopPropagation(); window.location.hash=&quot;next-step&quot;; return false;">Privacy Policy /
-                            CCPA</a><a id="fkt-link-574-5ba-871" data-id="fkt-link-4f3-88b-88c" title="" target="_blank" action="choose" align="center" animate="none" speed="none" delay="" loop="none" variantvalue="" data-secondsdelay="" data-minutesdelay="" replaceproductid="" billnow="false" href="#next-step" offer="choose" upsell="choose" quantity="" price="" class="_2ux7dQlfG3AfK0VFObGTR3" data-original-href="https://example.com/refund" onclick="event.preventDefault(); event.stopPropagation(); window.location.hash=&quot;next-step&quot;; return false;">Returns</a>
+                    <footer href="" srcset="" class="_2tvn_yfiTpk_IaTBb6-faO"><a id="fkt-link-13c-0b8-9fa" data-id="fkt-link-3d6-2a3-86e" title="" target="_blank" action="choose" align="center" animate="none" speed="none" delay="" loop="none" variantvalue="" data-secondsdelay="" data-minutesdelay="" replaceproductid="" billnow="false" href="#next-step" offer="choose" upsell="choose" quantity="" price="" class="_2ux7dQlfG3AfK0VFObGTR3" data-original-href="https://clarifion.com/policies/terms-of-service" onclick="event.preventDefault(); event.stopPropagation(); window.location.hash=&quot;next-step&quot;; return false;">Terms &amp; Conditions</a><a id="fkt-link-1dc-891-8c1" data-id="fkt-link-f84-9b9-8ac" title="" target="_blank" action="choose" align="center" animate="none" speed="none" delay="" loop="none" variantvalue="" data-secondsdelay="" data-minutesdelay="" replaceproductid="" billnow="false" href="#next-step" offer="choose" upsell="choose" quantity="" price="" class="_2ux7dQlfG3AfK0VFObGTR3" data-original-href="https://clarifion.com/policies/privacy-policy" onclick="event.preventDefault(); event.stopPropagation(); window.location.hash=&quot;next-step&quot;; return false;">Privacy Policy /
+                            CCPA</a><a id="fkt-link-574-5ba-871" data-id="fkt-link-4f3-88b-88c" title="" target="_blank" action="choose" align="center" animate="none" speed="none" delay="" loop="none" variantvalue="" data-secondsdelay="" data-minutesdelay="" replaceproductid="" billnow="false" href="#next-step" offer="choose" upsell="choose" quantity="" price="" class="_2ux7dQlfG3AfK0VFObGTR3" data-original-href="https://clarifion.com/policies/refund-policy" onclick="event.preventDefault(); event.stopPropagation(); window.location.hash=&quot;next-step&quot;; return false;">Returns</a>
                         <div href="" srcset="" data-secondsdelay="" class="_123Sz2fMD4qBC5C125_Snu">
                             <p data-text="text" href="" srcset="" data-secondsdelay="" class="">By filling out the field, you
                                 consent
-                                for AirPure™ to use automated technology, including texts and prerecorded messages, to
-                                contact you at the number and email provided about AirPure™ offers.
+                                for Clarifion™ to use automated technology, including texts and prerecorded messages, to
+                                contact you at the number and email provided about Clarifion™ offers.
                             </p>
                         </div><a href="#next-step" title="DMCA.com Protection Status" target="_blank" rel="noopener" srcset="" id="fkt-link-69a-bbc-a32" data-id="fkt-link-183-59f-801" action="choose" align="center" animate="none" speed="none" delay="none" loop="none" variantvalue="" data-secondsdelay="" data-minutesdelay="" replaceproductid="" billnow="false" onclick="event.preventDefault(); event.stopPropagation(); window.location.hash=&quot;next-step&quot;; return false;" offer="choose" upsell="choose" quantity="" price="" class="dmca-badge" data-original-href=""><img src="https://assets.funnelkonnekt.com/Funnel/assets/images/fa5b57ff-2b9f-40f9-afd4-6bd27f917220/a4773a03-3513-43d2-81b7-ed71cb49e3c6/dmca_protected_sml_120ac.png?versionId=82QAa7AcxgKPX_Hr_.mORZ0Wxm_IxAmP" alt="DMCA.com Protection Status" href="" srcset="" id="fkt-image-bc2-59a-870" title="" target="_self" align="center" width="" height="" onclick="" class=""></a>
                     </footer>
@@ -12902,16 +13017,16 @@
                         <picture href="" srcset="">
                             <source srcset="" type="image/jpeg" href="">
                             <source srcset="" type="image/webp" href="">
-                            <source srcset="" type="image/jpeg" href=""><img alt="AirPure Plug-In Air Purifier" src="https://placehold.co/400x400/4CAF50/ffffff?text=AirPure/https://placehold.co/120x120/2196F3/ffffff?text=3x" href="" srcset="" id="fkt-image-71e-5be-b16" title="" target="_self" align="center" width="" height="" onclick="" class="">
+                            <source srcset="" type="image/jpeg" href=""><img alt="Clarifion Plug-In Air Ionizer - Three Cl" src="https://assets.funnelkonnekt.com/Funnel/assets/images/fa5b57ff-2b9f-40f9-afd4-6bd27f917220/a4773a03-3513-43d2-81b7-ed71cb49e3c6/effeee202d78abbc45cf048d5b68c962.jpeg?versionId=kZZLHrii.UA1q0R6NIaglvXvvwFjSYcN" href="" srcset="" id="fkt-image-71e-5be-b16" title="" target="_self" align="center" width="" height="" onclick="" class="">
                         </picture>
                     </div>
                     <div href="" srcset="" data-secondsdelay="" class="_2aoXngB9i7hXnWxW9feDj7">
                         <div data-text="text" href="" srcset="" data-secondsdelay="" class="_3F7l8kS-MzFkE3hLeu9ti-">
-                            James K.
+                            Wesley
                             In Rochester
                         </div>
                         <div data-text="text" href="" srcset="" data-secondsdelay="" class="_2VRkyg54QZkaEbpJ4VoquO"><b data-text="text" href="" srcset="" data-secondsdelay="" class="">bought:
-                            </b>AirPure Plug In Air Purifier Three Cl!
+                            </b>Clarifion Plug In Air Ionizer Three Cl!
                         </div>
                         <div href="" srcset="" data-secondsdelay="" class="GrCbT77cZ3fSodwurZxaE">
                             <div href="" srcset="" data-secondsdelay="" class="_1cifUjH7VtIlR5csD6r8KA"><span href="" srcset="" class="isvg loaded"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612" href="" srcset="">
@@ -12936,36 +13051,37 @@
     </div>
     <div data-text="text" id="bodyElementDummy" data-secondsdelay="" class="fk-web">
     </div>
-    <script src="https://unpkg.com/imask@7.6.1/dist/imask.min.js"></script>
+    <script src="https://checkout.clarifion.com/champognewgallery-longfaq/imask.js"></script>
 
     <script>
-        let cnt = 0;
+        let cnt = 25;
         const loadText = document.querySelector('.load-text');
         const loadBar = document.querySelector('.load-bar');
         const modal = document.querySelector('.modal-loader');
         const shwLdr = localStorage.getItem('shwLdr');
         if (shwLdr == null) {
-            loadText.innerText = "Checking if you Qualify for Special Offers..";
-            loadBar.style.width = "25%";
-            const loader = setInterval(setLoad, 1500);
+            const loader = setInterval(setLoad, 3000);
             function setLoad() {
                 cnt = cnt + 25;
                 switch (cnt) {
                     case 25:
+                        loadText.innerText = "Checking if you Qualify for Special Offers..";
+                        loadBar.style.width = "25%";
+                        break;
+                    case 50:
                         loadText.innerText = "Congratulations You Qualified!";
                         loadBar.style.width = "50%";
                         break;
-                    case 50:
+                    case 75:
                         loadText.innerText = "Checking for Stock...";
                         loadBar.style.width = "75%";
                         break;
-                    case 75:
+                    case 100:
                         loadText.innerText = "Stock Available!";
                         loadBar.style.width = "100%";
                         break;
-                    case 100:
+                    case 125:
                         modal.style.display = "none";
-                        localStorage.setItem('shwLdr', '1');
                         clearInterval(loader);
                         break;
                 }
@@ -12995,7 +13111,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             const phoneNumInput = document.querySelector('#phoneNumber');
             const phoneMaskOptions = {
-                mask: '{+}0000000000000000'
+                mask: '(000)-000-0000'
             };
             var maskPhone = IMask(phoneNumInput, phoneMaskOptions);
             //Facebook AddToCart Event
@@ -13022,7 +13138,7 @@
                             inpt1.checked = true;
                             inptShip.checked = true;
                             //Order Summary
-                            populateOrderSummary("1x-unit");
+                            populateOrderSummary(50533);
                             generateOrderSummary();
                             break;
                         case 1:
@@ -13031,7 +13147,7 @@
                             inpt2.checked = true;
                             inptShip.checked = false;
                             //Order Summary
-                            populateOrderSummary("3x-pack");
+                            populateOrderSummary(50534);
                             generateOrderSummary();
                             break;
                         case 2:
@@ -13040,7 +13156,7 @@
                             inpt3.checked = true;
                             inptShip.checked = false;
                             //Order Summary
-                            populateOrderSummary("6x-pack");
+                            populateOrderSummary(50535);
                             generateOrderSummary();
                             break;
                         case 3:
@@ -13049,7 +13165,7 @@
                             inpt4.checked = true;
                             inptShip.checked = false;
                             //Order Summary
-                            populateOrderSummary("");
+                            populateOrderSummary(50536);
                             generateOrderSummary();
                             break;
                     }
@@ -13232,7 +13348,7 @@
                     inpt1.checked = true;
                     inptShip.checked = true;
                     //Order Summary
-                    populateOrderSummary("1x-unit");
+                    populateOrderSummary(50533);
                     generateOrderSummary();
                     break;
                 case 2:
@@ -13241,7 +13357,7 @@
                     inpt2.checked = true;
                     inptShip.checked = false;
                     //Order Summary
-                    populateOrderSummary("3x-pack");
+                    populateOrderSummary(50534);
                     generateOrderSummary();
                     break;
                 case 3:
@@ -13250,7 +13366,7 @@
                     inpt3.checked = true;
                     inptShip.checked = false;
                     //Order Summary
-                    populateOrderSummary("6x-pack");
+                    populateOrderSummary(50535);
                     generateOrderSummary();
                     break;
                 case 4:
@@ -13259,7 +13375,7 @@
                     inpt4.checked = true;
                     inptShip.checked = false;
                     //Order Summary
-                    populateOrderSummary("");
+                    populateOrderSummary(50536);
                     generateOrderSummary();
                     break;
                 default:
@@ -13268,7 +13384,7 @@
                     inpt2.checked = true;
                     inptShip.checked = false;
                     //Order Summary
-                    populateOrderSummary("3x-pack");
+                    populateOrderSummary(50534);
                     generateOrderSummary();
             }
             if (totalPrice) {
@@ -13276,16 +13392,16 @@
                 txtPrice.forEach((item, index) => {
                     switch (index) {
                         case 0:
-                            item.innerHTML = "$79.00";
+                            item.innerHTML = "$44.97";
                             break;
                         case 1:
-                            item.innerHTML = '<span style="text-decoration:line-through;">$79.00</span> $47.40';
+                            item.innerHTML = '<span style="text-decoration:line-through;">$134.00</span> $110.97';
                             break;
                         case 2:
-                            item.innerHTML = '<span style="text-decoration:line-through;">$79.00</span> $31.60';
+                            item.innerHTML = '<span style="text-decoration:line-through;">$269.00</span> $179.97';
                             break;
                         case 3:
-                            item.innerHTML = '<span style="text-decoration:line-through;"></span> ';
+                            item.innerHTML = '<span style="text-decoration:line-through;">$404.00</span> $242.97';
                             break;
                     }
                 });
@@ -13302,12 +13418,12 @@
             const total = document.querySelector('.total .strng');
             const totalComprice = document.querySelector('.total .spn2');
             if (warrantyWrapper.children[0].children[1].classList.contains('checked')) {
-                total.innerText = calculateTotal(curPrice, curShipprice, 9.99);
-                totalComprice.innerText = calculateTotal(curComprice, 'FREE', 9.99);
+                total.innerText = calculateTotal(curPrice, curShipprice, 19.97);
+                totalComprice.innerText = calculateTotal(curComprice, '$7.95', 19.97);
             }
             else {
                 total.innerText = calculateTotal(curPrice, curShipprice, 0);
-                totalComprice.innerText = calculateTotal(curComprice, 'FREE', 0);
+                totalComprice.innerText = calculateTotal(curComprice, '$7.95', 0);
             }
         }
         function calculateTotal(price, shipping, warranty) {
@@ -13315,10 +13431,8 @@
             let orderTotal = 0;
             let orderPrice = 0;
             orderPrice = parseFloat((price).slice(1));
-            // WHY: Shipping can be "FREE", "Free", "$4.95", "+ $4.95 Shipping". Must handle all.
-            if (shipping.toLowerCase() !== "free" && shipping !== "") {
-                shipFee = parseFloat(shipping.replace(/[^0-9.]/g, ''));
-                if (isNaN(shipFee)) shipFee = 0;
+            if (shipping != "Free") {
+                shipFee = parseFloat((shipping).slice(1));
             }
 
             orderTotal = orderPrice + shipFee + warranty;
@@ -13382,56 +13496,56 @@
             //Product data
             const productData = [
                 {
-                    id: "1x-unit",
-                    title: "AirPure™ Air Purifier",
-                    img: "https://placehold.co/400x400/4CAF50/ffffff?text=AirPure/https://placehold.co/120x120/4CAF50/ffffff?text=1x",
-                    qty: "1x",
-                    comprice: "$79.00",
-                    price: "$79.00",
-                    shipspan: "",
-                    shipstrong: "$4.95",
-                    totalDiscount: "" ? "" + " OFF" : "",
-                    totalPrice: "$79.00",
-                    totalComprice: "$79.00"
-                },
-                {
-                    id: "3x-pack",
-                    title: "AirPure™ Air Purifier",
-                    img: "https://placehold.co/400x400/4CAF50/ffffff?text=AirPure/https://placehold.co/120x120/2196F3/ffffff?text=3x",
-                    qty: "3x",
-                    comprice: "$237.00",
-                    price: "$142.20",
-                    shipspan: "$4.95 worth",
-                    shipstrong: "FREE",
-                    totalDiscount: "40%" ? "40%" + " OFF" : "",
-                    totalPrice: "$142.20",
-                    totalComprice: "$237.00"
-                },
-                {
-                    id: "6x-pack",
-                    title: "AirPure™ Air Purifier",
-                    img: "https://placehold.co/400x400/4CAF50/ffffff?text=AirPure/https://placehold.co/120x120/FF9800/ffffff?text=6x",
-                    qty: "6x",
-                    comprice: "$474.00",
-                    price: "$189.60",
-                    shipspan: "$4.95 worth",
-                    shipstrong: "FREE",
-                    totalDiscount: "60%" ? "60%" + " OFF" : "",
-                    totalPrice: "$189.60",
-                    totalComprice: "$474.00"
-                },
-                {
-                    id: "",
-                    title: "AirPure™ Air Purifier",
-                    img: "https://placehold.co/400x400/4CAF50/ffffff?text=AirPure/",
-                    qty: "",
+                    id: "50533",
+                    title: "Clarifion™ Air Ionizer",
+                    img: "https://assets.checkoutchamp.com/71766f90-bbc6-11ee-9616-27070f6fefc7/1725656041635_og_1x.webp",
+                    qty: "1x device",
                     comprice: "",
-                    price: "",
+                    price: "$44.97",
                     shipspan: "",
-                    shipstrong: "",
-                    totalDiscount: "" ? "" + " OFF" : "",
-                    totalPrice: "",
-                    totalComprice: ""
+                    shipstrong: "$7.95",
+                    totalDiscount: "",
+                    totalPrice: "$52.92",
+                    totalComprice: "$0"
+                },
+                {
+                    id: "50534",
+                    title: "Clarifion™ Air Ionizer",
+                    img: "https://assets.checkoutchamp.com/71766f90-bbc6-11ee-9616-27070f6fefc7/1725656043808_og_3x.webp",
+                    qty: "3x devices",
+                    comprice: "Regular $134.91",
+                    price: "$110.91",
+                    shipspan: "$7.95 worth",
+                    shipstrong: "Free",
+                    totalDiscount: "-17%",
+                    totalPrice: "$110.91",
+                    totalComprice: "$134.91"
+                },
+                {
+                    id: "50535",
+                    title: "Clarifion™ Air Ionizer",
+                    img: "https://assets.checkoutchamp.com/71766f90-bbc6-11ee-9616-27070f6fefc7/1725656046237_og_6x.webp",
+                    qty: "6x devices",
+                    comprice: "Regular $269.82",
+                    price: "$179.82",
+                    shipspan: "$7.95 worth",
+                    shipstrong: "Free",
+                    totalDiscount: "-33%",
+                    totalPrice: "$179.82",
+                    totalComprice: "$269.82"
+                },
+                {
+                    id: "50536",
+                    title: "Clarifion™ Air Ionizer",
+                    img: "https://assets.checkoutchamp.com/71766f90-bbc6-11ee-9616-27070f6fefc7/1725656048072_og_9x.webp",
+                    qty: "9x devices",
+                    comprice: "Regular $404.73",
+                    price: "$215.73",
+                    shipspan: "$7.95 worth",
+                    shipstrong: "Free",
+                    totalDiscount: "-46%",
+                    totalPrice: "$215.73",
+                    totalComprice: "$404.73"
                 }
             ];
             const fltrdData = productData.filter(prod => prod.id == id);
@@ -13454,17 +13568,12 @@
             orTitle.innerText = fltrdData[0].title;
             orQty.innerText = fltrdData[0].qty;
             orComprice.innerText = fltrdData[0].comprice;
-            // WHY: Hide strikethrough unit price when no discount (comprice === price)
-            orComprice.style.display = (fltrdData[0].comprice === fltrdData[0].price) ? 'none' : 'inline';
             orPrice.innerText = fltrdData[0].price;
             shipSpn.innerText = fltrdData[0].shipspan;
             shipStrng.innerText = fltrdData[0].shipstrong;
             totalDiscount.innerText = fltrdData[0].totalDiscount;
-            // WHY: Hide discount badge when empty (bundle 1 has no discount)
-            totalDiscount.style.display = fltrdData[0].totalDiscount ? 'inline' : 'none';
             totalPrice.innerText = fltrdData[0].totalPrice;
-            // WHY: Hide strikethrough total when no discount (totalComprice === totalPrice)
-            totalComprice.style.display = (fltrdData[0].totalComprice === fltrdData[0].totalPrice) ? 'none' : 'inline';
+            fltrdData[0].id == 50533 ? totalComprice.style.display = 'none' : totalComprice.style.display = 'inline';
             totalComprice.innerText = fltrdData[0].totalComprice;
 
         }
@@ -14005,7 +14114,7 @@
             dataLayer.push({
                 'event': 'champEvent',
                 'champEventLabel': `${event}`,
-                'champProdName': 'AirPure',
+                'champProdName': 'Clarifion',
                 'champTotal': data == null ? 110.91 : data.subTotal,
                 'champRedTrackSum': "false"
             }
@@ -14229,7 +14338,7 @@
 
         <div id="recentImg" class="">
 
-            <img src="https://placehold.co/400x400/4CAF50/ffffff?text=AirPure/https://placehold.co/120x120/2196F3/ffffff?text=3x" width="100%" class="">
+            <img src="https://d3hlrrbqydii6y.cloudfront.net/img/effeee202d78abbc45cf048d5b68c962.jpeg" width="100%" class="">
 
         </div>
 
@@ -14238,7 +14347,7 @@
             <strong style="font-size:12px;" class=""><span id="randFirst" class="">Charles</span> <span id="randLast" class="">C</span>. in <span id="randLocation" class="">Charlotte,
                     NC</span></strong>
 
-            <br><span style="font-size:11px;" class=""><strong class="">bought: </strong> AirPure Plug In Air Purifier</span><br>
+            <br><span style="font-size:11px;" class=""><strong class="">bought: </strong> Clarifion Plug In Air Ionizer</span><br>
             <span style="display:flex;align-items:center;" class="">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612">
                     <path d="M444.2 276.4H335.6V148a29.6 29.6 0 1 0-59.2 0v187.5h167.8a29.6 29.6 0 1 0 0-59.2zM306 0a306 306 0 1 0 0 612 306 306 0 0 0 0-612zm0 552.8C170 552.8 59.2 442 59.2 306S170 59.2 306 59.2 552.8 170 552.8 306 442 552.8 306 552.8z">
@@ -14254,267 +14363,9 @@
 
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <!-- WHY: Google Places Autocomplete — when user types address, Google suggests full addresses.
-         Selecting one auto-fills street, city, state, zip, country. Reduces typos = fewer lost packages. -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuSoHHXTNymNfNBtAfLZoDW0jCSIByNTk&libraries=places" async defer></script>
 
 
     <script type="text/javascript">
-
-        console.log('[CHECKOUT-INIT] Script loaded, DOM ready:', document.readyState);
-
-        // ─── Country List + IP Auto-Detection ────────────────────────────────────
-        // WHY: Populate country dropdowns + auto-select country/state/city via IP geolocation.
-        //      State dropdown stays dynamic (populated after country selection).
-        //      Based on user's proven funnelish code, adapted for this template.
-
-        var COUNTRIES = [
-          {code:'US',name:'United States'},{code:'CA',name:'Canada'},{code:'GB',name:'United Kingdom'},
-          {code:'AU',name:'Australia'},{code:'DE',name:'Germany'},{code:'FR',name:'France'},
-          {code:'IT',name:'Italy'},{code:'ES',name:'Spain'},{code:'NL',name:'Netherlands'},
-          {code:'BE',name:'Belgium'},{code:'CH',name:'Switzerland'},{code:'AT',name:'Austria'},
-          {code:'SE',name:'Sweden'},{code:'NO',name:'Norway'},{code:'DK',name:'Denmark'},
-          {code:'FI',name:'Finland'},{code:'IE',name:'Ireland'},{code:'PT',name:'Portugal'},
-          {code:'PL',name:'Poland'},{code:'CZ',name:'Czech Republic'},{code:'RO',name:'Romania'},
-          {code:'HU',name:'Hungary'},{code:'GR',name:'Greece'},{code:'BG',name:'Bulgaria'},
-          {code:'HR',name:'Croatia'},{code:'SK',name:'Slovakia'},{code:'SI',name:'Slovenia'},
-          {code:'LT',name:'Lithuania'},{code:'LV',name:'Latvia'},{code:'EE',name:'Estonia'},
-          {code:'MT',name:'Malta'},{code:'CY',name:'Cyprus'},{code:'LU',name:'Luxembourg'},
-          {code:'IS',name:'Iceland'},{code:'NZ',name:'New Zealand'},{code:'JP',name:'Japan'},
-          {code:'KR',name:'South Korea'},{code:'SG',name:'Singapore'},{code:'HK',name:'Hong Kong'},
-          {code:'TW',name:'Taiwan'},{code:'MY',name:'Malaysia'},{code:'TH',name:'Thailand'},
-          {code:'PH',name:'Philippines'},{code:'ID',name:'Indonesia'},{code:'VN',name:'Vietnam'},
-          {code:'IN',name:'India'},{code:'PK',name:'Pakistan'},{code:'BD',name:'Bangladesh'},
-          {code:'AE',name:'United Arab Emirates'},{code:'SA',name:'Saudi Arabia'},{code:'IL',name:'Israel'},
-          {code:'TR',name:'Turkey'},{code:'ZA',name:'South Africa'},{code:'NG',name:'Nigeria'},
-          {code:'EG',name:'Egypt'},{code:'KE',name:'Kenya'},{code:'MA',name:'Morocco'},
-          {code:'BR',name:'Brazil'},{code:'MX',name:'Mexico'},{code:'AR',name:'Argentina'},
-          {code:'CL',name:'Chile'},{code:'CO',name:'Colombia'},{code:'PE',name:'Peru'},
-          {code:'EC',name:'Ecuador'},{code:'UY',name:'Uruguay'},{code:'CR',name:'Costa Rica'},
-          {code:'PA',name:'Panama'},{code:'DO',name:'Dominican Republic'},{code:'GT',name:'Guatemala'},
-          {code:'PR',name:'Puerto Rico'},{code:'JM',name:'Jamaica'},{code:'TT',name:'Trinidad and Tobago'},
-          {code:'UA',name:'Ukraine'},{code:'RU',name:'Russia'},{code:'BY',name:'Belarus'},
-          {code:'MD',name:'Moldova'},{code:'GE',name:'Georgia'},{code:'AM',name:'Armenia'},
-          {code:'AZ',name:'Azerbaijan'},{code:'KZ',name:'Kazakhstan'},{code:'UZ',name:'Uzbekistan'},
-          {code:'CN',name:'China'}
-        ];
-
-        function populateCountryDropdowns() {
-          var selectors = ['#shipCountry', '#country'];
-          selectors.forEach(function(sel) {
-            var select = document.querySelector(sel);
-            if (!select) { console.log('[COUNTRY] Select not found: ' + sel); return; }
-            var placeholder = select.querySelector('option');
-            select.innerHTML = '';
-            if (placeholder) select.appendChild(placeholder);
-            COUNTRIES.forEach(function(c) {
-              var opt = document.createElement('option');
-              opt.value = c.code;
-              opt.textContent = c.name;
-              select.appendChild(opt);
-            });
-            console.log('[COUNTRY] Populated ' + sel + ' with ' + (select.options.length - 1) + ' countries');
-          });
-        }
-
-        function detectLocationByIP() {
-          console.log('[GEO] Starting IP detection (client-side)...');
-          // WHY: Must detect CLIENT's IP, not server's. geolocation-db.com allows CORS + Origin header.
-          var GEO_APIS = [
-            {
-              url: 'https://geolocation-db.com/json/',
-              extract: function(d) { return { country: d.country_code, region: d.state, city: d.city }; }
-            },
-            {
-              // WHY: Must use absolute URL — <base> tag redirects relative URLs to checkout.example.com
-              url: window.location.origin + '/api/geo',
-              extract: function(d) { return { country: d.country, region: d.region, city: d.city }; }
-            }
-          ];
-
-          function tryAPI(index) {
-            if (index >= GEO_APIS.length) {
-              console.log('[GEO] All APIs failed — user fills manually');
-              return;
-            }
-            var api = GEO_APIS[index];
-            console.log('[GEO] Trying API ' + (index + 1) + ': ' + api.url);
-            fetch(api.url)
-              .then(function(r) {
-                console.log('[GEO] API ' + (index + 1) + ' status: ' + r.status);
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.json();
-              })
-              .then(function(data) {
-                var loc = api.extract(data);
-                console.log('[GEO] API ' + (index + 1) + ' result: country=' + loc.country + ', region=' + loc.region + ', city=' + loc.city);
-                if (!loc.country) {
-                  console.log('[GEO] API ' + (index + 1) + ' empty — trying next');
-                  tryAPI(index + 1);
-                  return;
-                }
-                applyLocation(loc.country, loc.region);
-              })
-              .catch(function(err) {
-                console.log('[GEO] API ' + (index + 1) + ' error: ' + err.message);
-                tryAPI(index + 1);
-              });
-          }
-
-          tryAPI(0);
-
-          function applyLocation(userCountryCode, userRegionName) {
-            userCountryCode = (userCountryCode || '').trim().toUpperCase();
-            userRegionName = (userRegionName || '').trim();
-            if (!userCountryCode) return;
-
-            console.log('[GEO] Detected: Country=' + userCountryCode + ', Region=' + userRegionName);
-
-            // WHY: Update header flag to visitor's country
-            var flagImg = document.getElementById('geo-flag');
-            if (flagImg) {
-              var code = userCountryCode.toLowerCase();
-              flagImg.src = 'https://flagcdn.com/w80/' + code + '.png';
-              flagImg.alt = userCountryCode + ' flag';
-            }
-
-            // Step 1: Auto-select country in both shipping + billing dropdowns
-            ['#shipCountry', '#country'].forEach(function(sel) {
-              var select = document.querySelector(sel);
-              if (!select) { console.log('[GEO] Select not found: ' + sel); return; }
-              var options = Array.from(select.options);
-              var found = false;
-              for (var i = 0; i < options.length; i++) {
-                if (options[i].value === userCountryCode) {
-                  select.value = options[i].value;
-                  select.dispatchEvent(new Event('change', { bubbles: true }));
-                  found = true;
-                  console.log('[GEO] Country set to ' + userCountryCode + ' on ' + sel);
-                  break;
-                }
-              }
-              if (!found) console.log('[GEO] Country ' + userCountryCode + ' not found in options of ' + sel + ' (options: ' + options.length + ')');
-            });
-
-            // Step 2: Auto-fill state/province text inputs
-            if (userRegionName) {
-              ['#shipState', '#state'].forEach(function(sel) {
-                var input = document.querySelector(sel);
-                if (input && !input.value) {
-                  input.value = userRegionName;
-                  input.dispatchEvent(new Event('input', { bubbles: true }));
-                  console.log('[GEO] State set to "' + userRegionName + '" on ' + sel);
-                }
-              });
-            }
-          }
-
-        }
-
-        // ─── Google Places Autocomplete ──────────────────────────────────────────
-        // WHY: When user types their street address, Google suggests full addresses.
-        //      Selecting one auto-fills street, city, state, zip, country.
-        //      Reduces typos = fewer shipping errors = fewer refund claims.
-        function initGooglePlacesAutocomplete() {
-          var _placesRetries = typeof _placesRetries === 'undefined' ? 0 : _placesRetries + 1;
-          var _maxRetries = 20;
-          var hasGoogle = typeof google !== 'undefined';
-          var hasMaps = hasGoogle && !!google.maps;
-          var hasPlaces = hasMaps && !!google.maps.places;
-          console.log('[PLACES] init called, google=' + hasGoogle + ', maps=' + hasMaps + ', places=' + hasPlaces + ', retry=' + _placesRetries);
-          // Retry until Google Maps API is loaded (script is async)
-          if (!hasGoogle || !hasMaps || !hasPlaces) {
-            if (_placesRetries > _maxRetries) {
-              console.log('[PLACES] ERROR: Google Maps never loaded after ' + _maxRetries + ' retries. Check API key and domain authorization.');
-              return;
-            }
-            setTimeout(function() { initGooglePlacesAutocomplete(); }, 500);
-            return;
-          }
-          console.log('[PLACES] Google Maps loaded! Proceeding with autocomplete setup...');
-
-          var addressFields = [
-            { street: 'shipAddress1', city: 'shipCity', state: 'shipState', zip: 'shipPostalCode', country: 'shipCountry' },
-            { street: 'address1', city: 'city', state: 'state', zip: 'postalCode', country: 'country' }
-          ];
-
-          addressFields.forEach(function(fields) {
-            var streetInput = document.getElementById(fields.street);
-            console.log('[PLACES] Looking for #' + fields.street + ': ' + (streetInput ? 'FOUND' : 'NOT FOUND'));
-            if (!streetInput) return;
-
-            try {
-              var autocomplete = new google.maps.places.Autocomplete(streetInput, {
-                types: ['address'],
-                fields: ['address_components']
-              });
-              console.log('[PLACES] Autocomplete created for #' + fields.street);
-            } catch(e) {
-              console.log('[PLACES] ERROR creating autocomplete: ' + e.message);
-              return;
-            }
-
-            autocomplete.addListener('place_changed', function() {
-              var place = autocomplete.getPlace();
-              if (!place.address_components) return;
-
-              var components = {};
-              place.address_components.forEach(function(c) {
-                c.types.forEach(function(t) { components[t] = c; });
-              });
-
-              // Street number + route
-              var streetNum = components.street_number ? components.street_number.long_name : '';
-              var route = components.route ? components.route.long_name : '';
-              streetInput.value = (streetNum + ' ' + route).trim();
-
-              // City
-              var cityInput = document.getElementById(fields.city);
-              var cityVal = components.locality ? components.locality.long_name :
-                            components.postal_town ? components.postal_town.long_name :
-                            components.administrative_area_level_2 ? components.administrative_area_level_2.long_name : '';
-              if (cityInput && cityVal) cityInput.value = cityVal;
-
-              // State / Province
-              var stateInput = document.getElementById(fields.state);
-              var stateVal = components.administrative_area_level_1 ? components.administrative_area_level_1.long_name : '';
-              if (stateInput && stateVal) stateInput.value = stateVal;
-
-              // Postal code
-              var zipInput = document.getElementById(fields.zip);
-              var zipVal = components.postal_code ? components.postal_code.long_name : '';
-              if (zipInput && zipVal) zipInput.value = zipVal;
-
-              // Country
-              var countrySelect = document.getElementById(fields.country);
-              var countryCode = components.country ? components.country.short_name : '';
-              if (countrySelect && countryCode) {
-                var opts = Array.from(countrySelect.options);
-                for (var i = 0; i < opts.length; i++) {
-                  if (opts[i].value === countryCode) {
-                    countrySelect.value = opts[i].value;
-                    countrySelect.dispatchEvent(new Event('change', { bubbles: true }));
-                    break;
-                  }
-                }
-              }
-
-              // Prevent Google from overwriting the street field with full address
-              // (we already set it correctly above with just street number + route)
-              var container = streetInput.closest('.fCQn644esZuhby1-DPB9J');
-              if (container) container.querySelectorAll('input').forEach(function(inp) {
-                if (inp !== streetInput) inp.value = inp.value; // noop, just trigger
-              });
-            });
-          });
-        }
-
-        // Init — call directly (script is at bottom of body, DOM is already parsed)
-        // WHY: DOMContentLoaded already fired by the time this inline script executes.
-        //      Using the event listener means the functions NEVER run.
-        try { populateCountryDropdowns(); console.log('[CHECKOUT-INIT] Country dropdowns populated'); } catch(e) { console.log('[CHECKOUT-INIT] ERROR in populateCountryDropdowns: ' + e.message); }
-        try { detectLocationByIP(); console.log('[CHECKOUT-INIT] IP detection started'); } catch(e) { console.log('[CHECKOUT-INIT] ERROR in detectLocationByIP: ' + e.message); }
-        try { initGooglePlacesAutocomplete(); console.log('[CHECKOUT-INIT] Google Places init started'); } catch(e) { console.log('[CHECKOUT-INIT] ERROR in initGooglePlacesAutocomplete: ' + e.message); }
 
         $(document).ready(function () {
 
@@ -14640,8 +14491,8 @@
             const newBtn = btn.cloneNode(true);
 
             // Construire l'URL absolue correcte avec le domaine complet
-            // Format: https://checkout.example.com[funnel-name]/[step-url]
-            const absoluteUrl = 'https://checkout.example.com' + currentFunnelName + '/' + stepUrl;
+            // Format: http://localhost:3001/sites/[funnel-name]/[step-url]
+            const absoluteUrl = 'http://localhost:3001/sites/' + currentFunnelName + '/' + stepUrl;
 
             console.log('🔗 Absolute URL constructed:', absoluteUrl);
             newBtn.setAttribute('href', absoluteUrl);
@@ -15711,7 +15562,7 @@
             console.log('📡 Currency:', currency, 'Type:', typeof currency);
             const secretKey = localStorage.getItem('stripe_secret_key');
 
-            const response = await fetch('https://api.example.com/create-payment-intent', {
+            const response = await fetch('http://localhost:3001/create-payment-intent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -15763,7 +15614,7 @@
 
             // Step 3: Redirect to next step
             if (stepUrl) {
-                const absoluteUrl = 'https://checkout.example.com' + currentFunnelName + '/' + stepUrl;
+                const absoluteUrl = 'http://localhost:3001/sites/' + currentFunnelName + '/' + stepUrl;
                 console.log('🔗 Redirecting to:', absoluteUrl);
                 window.location.href = absoluteUrl;
             } else if (nextStepIndex) {

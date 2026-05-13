@@ -544,7 +544,7 @@ export function renderFullPage(tree: BlockTree, palette: string = 'health-warm')
             ${productOriginalPrice ? `<span class="adv-price-was">${escapeSimple(productOriginalPrice)}</span>` : ''}
           </div>
         ` : ''}
-        <a href="${escapeSimple(productUrl)}" class="adv-sidebar-cta">Claim Your Offer Now</a>
+        <a href="${escapeSimple(productUrl)}" data-funnel-cta class="adv-sidebar-cta">Claim Your Offer Now</a>
         <div class="adv-sidebar-stars">${generateStars(productRating)}</div>
         <div class="adv-sidebar-rating-text">${escapeSimple(productRatingCount)} Ratings</div>
         <div class="adv-sidebar-guarantee">

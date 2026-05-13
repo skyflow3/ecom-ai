@@ -1,0 +1,187 @@
+{
+  "templateId": "upsell-product",
+  "pageType": "upsell_product",
+  "source": "upsell-oto4-vibriance.html (OTO3+OTO4 product upsell)",
+  "slots": {
+    "page_title": {
+      "description": "SEO page title",
+      "example": "Vibriance Eye Renewal Serum - Exclusive Upgrade Offer",
+      "ai_generated": true
+    },
+    "headline_top": {
+      "description": "Attention banner at very top. Pattern interrupt.",
+      "example": "One More Special Offer Before We Ship Your Order...",
+      "ai_generated": true
+    },
+    "progress_text": {
+      "description": "Progress bar text. Usually static.",
+      "example": "Almost Complete...",
+      "ai_generated": false
+    },
+    "sub_headline": {
+      "description": "Main hook headline. Pain question or bold claim.",
+      "example": "Does Your Skin Get Extra Dry?",
+      "ai_generated": true
+    },
+    "sub_benefit": {
+      "description": "Benefit promise following the hook headline.",
+      "example": "Upgrade Your Order With This Extra BOOST Of Hydration...",
+      "ai_generated": true
+    },
+    "discount_badge": {
+      "description": "Discount percentage badge.",
+      "example": "30% OFF, Today Only!",
+      "ai_generated": false
+    },
+    "product_intro": {
+      "description": "First body copy paragraph. Product context + pain/solution.",
+      "example": "Super C Serum gives your skin lightweight hydration -- but sometimes, extra dry skin needs a little more.",
+      "ai_generated": true
+    },
+    "product_intro_2": {
+      "description": "Second body copy paragraph. Product description with key formula details.",
+      "example": "That's why we created Vibriance Moisturizing Cream, featuring a triple-action hydrating complex for mature skin, with:",
+      "ai_generated": true
+    },
+    "body_text_3": {
+      "description": "Ingredient/mechanism details. Only shown for OTO3 (hidden for OTO4).",
+      "example": "A powerful formula featuring Pepha-Tight that plumps, Ecoslim that firms, and PrimalHyal that smooths.",
+      "ai_generated": true
+    },
+    "bullet_1": {
+      "description": "Benefit bullet 1 with checkmark. Only shown for OTO3.",
+      "example": "✔ Depuff & tighten eye bags instantly",
+      "ai_generated": true
+    },
+    "bullet_2": {
+      "description": "Benefit bullet 2 with checkmark. Only shown for OTO3.",
+      "example": "✔ Brighten dark circles with targeted botanicals",
+      "ai_generated": true
+    },
+    "bullet_3": {
+      "description": "Benefit bullet 3 with checkmark. Only shown for OTO3.",
+      "example": "✔ Smooth fine lines & wrinkles for younger-looking eyes",
+      "ai_generated": true
+    },
+    "body_text_4": {
+      "description": "Social proof paragraph. Only shown for OTO3.",
+      "example": "Vibriance Eye Renewal Serum has already helped thousands of women worldwide give their eyes an INSTANT REFRESH.",
+      "ai_generated": true
+    },
+    "body_text_5": {
+      "description": "Risk-free offer transition. Only shown for OTO3.",
+      "example": "Now you can try a FULL SERUM risk-free for one year!",
+      "ai_generated": true
+    },
+    "ingredient_1_name": {
+      "description": "Ingredient 1 name with benefit. Inside ingredient box (optional section).",
+      "example": "#1 - Fucogel \"skin sugar\" Plumps fine lines while locking in hydration",
+      "ai_generated": true
+    },
+    "ingredient_2_name": {
+      "description": "Ingredient 2 name with benefit.",
+      "example": "#2 - Plant-based Squalane Mimics skin's natural oils to combat dryness",
+      "ai_generated": true
+    },
+    "ingredient_3_name": {
+      "description": "Ingredient 3 name with benefit.",
+      "example": "#3 - Mineral-rich Red Algae Strengthens the skin barrier to prevent moisture loss",
+      "ai_generated": true
+    },
+    "ingredient_1_benefit": {
+      "description": "Ingredient 1 extended benefit (if separate field). Often empty.",
+      "example": "",
+      "ai_generated": true
+    },
+    "ingredient_2_benefit": {
+      "description": "Ingredient 2 extended benefit. Often empty.",
+      "example": "",
+      "ai_generated": true
+    },
+    "ingredient_3_benefit": {
+      "description": "Ingredient 3 extended benefit. Often empty.",
+      "example": "",
+      "ai_generated": true
+    },
+    "usage_tip_1": {
+      "description": "Usage tip or use case 1. Inside usage section (optional).",
+      "example": "Layer it with Super C Serum for extra hydration!",
+      "ai_generated": true
+    },
+    "usage_tip_2": {
+      "description": "Usage tip or use case 2.",
+      "example": "Wear it under your makeup for a flawless look!",
+      "ai_generated": true
+    },
+    "usage_tip_3": {
+      "description": "Usage tip or use case 3.",
+      "example": "Even keep it in your purse as a luxurious hand cream to combat dryness from frequent washing.",
+      "ai_generated": true
+    },
+    "usage_tip_4": {
+      "description": "Usage tip or use case 4. Can be empty.",
+      "example": "",
+      "ai_generated": true
+    },
+    "usage_guarantee": {
+      "description": "Guarantee line inside usage section. Replaces hardcoded Vibriance text.",
+      "example": "Like all of our products, it comes with a Bottom Of The Bottle money-back guarantee!",
+      "ai_generated": true
+    },
+    "guarantee_text": {
+      "description": "Risk reversal guarantee text.",
+      "example": "Like all of Vibriance skincare & makeup products, it comes with a \"Bottom Of The Bottle\" money-back guarantee!",
+      "ai_generated": true
+    },
+    "countdown_label": {
+      "description": "Text before countdown timer.",
+      "example": "Hurry! This offer ends in:",
+      "ai_generated": false
+    },
+    "countdown_minutes": {
+      "description": "Countdown timer minutes (number string).",
+      "example": "10",
+      "ai_generated": false
+    },
+    "pricing_headline": {
+      "description": "Pricing section CTA headline.",
+      "example": "Upgrade your order now: 30% OFF, just $24.",
+      "ai_generated": false
+    },
+    "price_display": {
+      "description": "Price amount displayed.",
+      "example": "Just $24.00",
+      "ai_generated": false
+    },
+    "discount_text": {
+      "description": "Discount text below price.",
+      "example": "30% OFF, today only!",
+      "ai_generated": false
+    },
+    "cta_text": {
+      "description": "YES CTA button text. ALL CAPS.",
+      "example": "YES! UPGRADE MY ORDER",
+      "ai_generated": true
+    },
+    "rejection_text": {
+      "description": "No thanks link text with loss framing.",
+      "example": "NO THANKS, but this 30% OFF deal won't be offered again.",
+      "ai_generated": true
+    },
+    "logo_image_url": {
+      "description": "Logo image URL.",
+      "example": "https://placehold.co/160x40/30bd51/ffffff?text=Vibriance",
+      "ai_generated": false
+    },
+    "product_image_url": {
+      "description": "Main product image URL.",
+      "example": "https://placehold.co/600x600/ffffff/10B981?text=Product",
+      "ai_generated": false
+    },
+    "product_image_url_cta": {
+      "description": "Product image URL in CTA/pricing section.",
+      "example": "https://placehold.co/600x600/ffffff/10B981?text=Product",
+      "ai_generated": false
+    }
+  }
+}
