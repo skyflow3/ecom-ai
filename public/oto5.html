@@ -1833,11 +1833,15 @@ const e="",t="EXPIRED";let a="",n="10",l="",i="",s="";const o=this.querySelector
                 fetch('/api/orders/' + pid + '/upsell', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true });
             }
         }
+        // WHY: Track YES click — the main CTA button
         document.addEventListener('click', function(e) {
-            if (e.target.closest('a[href="#next-step"]')) trackUpsell(false);
+            var btn = e.target.closest('button.btn-primary, button[class*="btnStyle"]');
+            if (btn) { trackUpsell(true); }
         }, true);
+        // WHY: Track NO click — the "No thanks" link
         document.addEventListener('click', function(e) {
-            if (e.target.closest('[data-action="payment"], #btnCard, .payment-button')) trackUpsell(true);
+            var link = e.target.closest('a[href="thankyou.html"]');
+            if (link) { trackUpsell(false); }
         }, true);
     })();
     </script></body></html>

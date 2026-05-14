@@ -11666,8 +11666,8 @@
 
             // WHY: Save customer info to localStorage for thank you page
             var formData = {
-                firstName: (document.querySelector('#firstName') || {}).value || '',
-                lastName: (document.querySelector('#lastName') || {}).value || '',
+                firstName: (document.querySelector('#firstName') || {}).value || (document.querySelector('#shipFirstName') || {}).value || '',
+                lastName: (document.querySelector('#lastName') || {}).value || (document.querySelector('#shipLastName') || {}).value || '',
                 email: (document.querySelector('#emailAddress') || {}).value || '',
                 phone: (document.querySelector('#phoneNumber') || {}).value || '',
                 shipFirstName: (document.querySelector('#shipFirstName') || {}).value || (document.querySelector('#firstName') || {}).value || '',
@@ -11681,7 +11681,7 @@
                 city: (document.querySelector('#city') || {}).value || (document.querySelector('#shipCity') || {}).value || '',
                 state: (document.querySelector('#state') || {}).value || (document.querySelector('#shipState') || {}).value || '',
                 postalCode: (document.querySelector('#postalCode') || {}).value || (document.querySelector('#shipPostalCode') || {}).value || '',
-                country: (document.querySelector('#country') || {}).value || (document.querySelector('#shipCountry') || {}).value || '',
+                country: (document.querySelector('#country') || {}).value || (function(){ var el = document.querySelector('#country'); return el && el.dataset && el.dataset.value ? el.dataset.value : ''; })() || (document.querySelector('#shipCountry') || {}).value || '',
                 amountPaid: '$' + (selectedPriceCents / 100).toFixed(2),
                 currencySymbol: '$',
                 paymentId: result.paymentIntent.id,

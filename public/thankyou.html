@@ -87,8 +87,8 @@
     try { order = JSON.parse(localStorage.getItem('nutrovia_order') || '{}'); } catch(e) {}
 
     var replacements = {
-        '{{firstName}}': order.firstName || 'Customer',
-        '{{lastName}}': order.lastName || '',
+        '{{firstName}}': order.firstName || order.shipFirstName || 'Customer',
+        '{{lastName}}': order.lastName || order.shipLastName || '',
         '{{emailAddress}}': order.email || '',
         '{{shipFirstName}}': order.shipFirstName || order.firstName || '',
         '{{shipLastName}}': order.shipLastName || order.lastName || '',
@@ -97,11 +97,11 @@
         '{{shipState}}': order.shipState || '',
         '{{shipPostalCode}}': order.shipPostalCode || '',
         '{{shipCountry}}': order.shipCountry || '',
-        '{{address1}}': order.address1 || '',
-        '{{city}}': order.city || '',
-        '{{state}}': order.state || '',
-        '{{postalCode}}': order.postalCode || '',
-        '{{country}}': order.country || '',
+        '{{address1}}': order.address1 || order.shipAddress1 || '',
+        '{{city}}': order.city || order.shipCity || '',
+        '{{state}}': order.state || order.shipState || '',
+        '{{postalCode}}': order.postalCode || order.shipPostalCode || '',
+        '{{country}}': order.country || order.shipCountry || '',
         '{{currencySymbol}}': order.currencySymbol || '$',
         '{{amountPaid}}': order.amountPaid || '$0.00'
     };
@@ -217,7 +217,7 @@
 		  </div><div data-text="text" data-secondsdelay="" id="ilu2a" class="">Shipping Method
 		  </div><div data-text="text" data-secondsdelay="" id="ixlsz" class="">Standard Shipping (3-7 days)
 		  </div></div><div data-box="true" data-secondsdelay="" id="i98ji" class=""><div data-text="text" data-secondsdelay="" id="imaif" class="">Payment Method
-		  </div><div data-text="text" data-secondsdelay="" id="i7nic" class="">{{currencySymbol}} {{amountPaid}}
+		  </div><div data-text="text" data-secondsdelay="" id="i7nic" class="">{{amountPaid}}
 		  </div><div data-text="text" data-secondsdelay="" id="i0hd3" class="">Billing Address
 		  </div><div data-text="text" data-secondsdelay="" id="i3aah" class="">{{firstName}} {{lastName}}
 		  </div><div data-text="text" data-secondsdelay="" id="isw6a" class="">{{address1}}

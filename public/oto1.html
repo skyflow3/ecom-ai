@@ -5198,13 +5198,15 @@ const e="",t="EXPIRED";let n="",a="10",s="",i="";const r=this.querySelector("[da
                 fetch('/api/orders/' + pid + '/upsell', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true });
             }
         }
+        // WHY: Track YES click — the main CTA button (e.g. "YES! ADD 3 BOTTLES TO MY ORDER")
         document.addEventListener('click', function(e) {
-            var el = e.target.closest('a[href="#next-step"]');
-            if (el) { trackUpsell(false); }
+            var btn = e.target.closest('button.btn-primary, button[class*="btn-one-style"]');
+            if (btn) { trackUpsell(true); }
         }, true);
+        // WHY: Track NO click — the "No thanks" link
         document.addEventListener('click', function(e) {
-            var el = e.target.closest('[data-action="payment"], #btnCard, .payment-button');
-            if (el) { trackUpsell(true); }
+            var link = e.target.closest('a[href="oto2.html"], a[href="oto3.html"], a[href="oto4.html"], a[href="oto5.html"], a[href="thankyou.html"]');
+            if (link) { trackUpsell(false); }
         }, true);
     })();
     </script></body></html>
