@@ -1,8 +1,9 @@
 /**
- * Purpose: Request middleware — domain redirect + API key protection
+ * Purpose: Request middleware — domain redirect + agent API key protection
  * WHY: funnel pages are public, but order listing/export/update require authentication.
  *      Single order GET is public (thank you page) — UUIDs are unguessable.
  *      Redirect app.nutrovia.co → nutrovia.co for consistent branding.
+ *      Uses AGENT_API_KEYS (comma-separated) per Architecture Finale.md §19 env config.
  */
 
 import { NextResponse } from "next/server";
@@ -35,18 +36,18 @@ export async function middleware(request: NextRequest) {
   // API key protection for sensitive endpoints
   if (isProtectedRoute(request.method, pathname)) {
     const apiKey = request.headers.get("x-api-key");
-    const validKey = process.env.API_KEY;
+    const validKeys = process.env.AGENT_API_KEYS?.split(",").map(k => k.trim()).filter(Boolean);
 
-    if (!validKey) {
-      // WHY: If API_KEY is not configured, block protected routes entirely
+    if (!validKeys || validKeys.length === 0) {
+      // WHY: If AGENT_API_KEYS is not configured, block protected routes entirely
       //      rather than leaving them open
       return NextResponse.json(
-        { success: false, error: "Server misconfiguration: API_KEY not set" },
+        { success: false, error: "Server misconfiguration: AGENT_API_KEYS not set" },
         { status: 500 },
       );
     }
 
-    if (!apiKey || apiKey !== validKey) {
+    if (!apiKey || !validKeys.includes(apiKey)) {
       return NextResponse.json(
         { success: false, error: "Unauthorized: valid x-api-key header required" },
         { status: 401 },
