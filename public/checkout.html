@@ -14796,15 +14796,32 @@
         try { populateCountryDropdowns(); console.log('[CHECKOUT-INIT] Country dropdowns populated'); } catch(e) { console.log('[CHECKOUT-INIT] ERROR in populateCountryDropdowns: ' + e.message); }
         try { detectLocationByIP(); console.log('[CHECKOUT-INIT] IP detection started'); } catch(e) { console.log('[CHECKOUT-INIT] ERROR in detectLocationByIP: ' + e.message); }
 
-        // WHY: When user changes shipping country (Step 4), billing country (Step 5) must sync
-        var shipCountryEl = document.querySelector('#shipCountry');
-        var billCountryEl = document.querySelector('#country');
-        if (shipCountryEl && billCountryEl) {
-          shipCountryEl.addEventListener('change', function() {
-            billCountryEl.value = this.value;
-            billCountryEl.dispatchEvent(new Event('change', { bubbles: true }));
-          });
-        }
+        // WHY: When user changes any shipping field (Step 4), billing field (Step 5) must sync
+        //      One-directional: Shipping → Billing only. Manual billing changes are preserved.
+        var SHIPPING_BILLING_SYNC = [
+          { ship: '#shipFirstName', bill: '#firstName' },
+          { ship: '#shipLastName',  bill: '#lastName' },
+          { ship: '#shipAddress1',  bill: '#address1' },
+          { ship: '#i4u71z',        bill: '#ifw6e1' },   // Apartment/Suite
+          { ship: '#shipCity',      bill: '#city' },
+          { ship: '#shipState',     bill: '#state' },
+          { ship: '#shipPostalCode', bill: '#postalCode' },
+          { ship: '#shipCountry',   bill: '#country' },
+        ];
+        SHIPPING_BILLING_SYNC.forEach(function(pair) {
+          var shipEl = document.querySelector(pair.ship);
+          var billEl = document.querySelector(pair.bill);
+          if (shipEl && billEl) {
+            shipEl.addEventListener('input', function() {
+              billEl.value = this.value;
+              billEl.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+            shipEl.addEventListener('change', function() {
+              billEl.value = this.value;
+              billEl.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+          }
+        });
         try { initGooglePlacesAutocomplete(); console.log('[CHECKOUT-INIT] Google Places init started'); } catch(e) { console.log('[CHECKOUT-INIT] ERROR in initGooglePlacesAutocomplete: ' + e.message); }
 
         $(document).ready(function () {
