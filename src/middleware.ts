@@ -26,6 +26,15 @@ export async function middleware(request: NextRequest) {
   const { pathname, origin } = request.nextUrl;
   const host = request.headers.get("host") || "";
 
+  // WHY: Next.js rewrites don't work with standalone + Traefik.
+  //      Serve compliant homepage directly via middleware rewrite
+  //      to the funnel API route which reads public/index.html.
+  if (pathname === "/" || pathname === "") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/api/funnel/index.html";
+    return NextResponse.rewrite(url);
+  }
+
   // Redirect app.nutrovia.co → nutrovia.co (consistent branding for ads)
   if (host.startsWith("app.nutrovia.co")) {
     const url = request.nextUrl.clone();
@@ -60,6 +69,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    "/",
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
     "/(api|trpc)(.*)",
   ],

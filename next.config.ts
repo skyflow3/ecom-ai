@@ -12,12 +12,10 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "10mb",
     },
   },
-  // WHY: Clean URLs — Stripe/Google see professional URLs, not /api/funnel/...
+  // WHY: Legal pages served as clean URLs via funnel API route.
+  //      Homepage "/" is handled by middleware.ts (rewrites don't work in standalone+Traefik).
   async rewrites() {
     return [
-      // ── Homepage: compliant product page for Google/Stripe verification ──
-      { source: "/", destination: "/api/funnel/index.html" },
-
       // ── Legal pages (required for Stripe activation) ──
       { source: "/privacy", destination: "/api/funnel/privacy.html" },
       { source: "/terms", destination: "/api/funnel/terms.html" },
