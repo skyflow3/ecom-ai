@@ -671,3 +671,61 @@ GET  /api/orders/export?format=csv&status=paid           — Export for logistic
 ### Commits
 - `9b97c5e` feat: middleware API key protection + domain redirect
 - `14d1a58` fix: align with Architecture Finale.md — AGENT_API_KEYS comma-separated
+
+---
+
+## 2026-05-14 — Clean URLs + Dynamic Funnel Routing + Legal Pages
+
+### What: Professional URLs for Stripe/Google verification + multi-product funnel routing
+
+### URL Structure (final)
+```
+nutrovia.co/                    → Product page (Stripe/Google vitrine)
+nutrovia.co/privacy             → Privacy Policy
+nutrovia.co/terms               → Terms of Service
+nutrovia.co/refund              → Refund Policy (60-day guarantee)
+nutrovia.co/contact             → Contact
+
+nutrovia.co/f/turmeric          → Funnel entry (A/B router)
+nutrovia.co/f/turmeric/checkout → Checkout
+nutrovia.co/f/turmeric/oto1-5   → Upsells
+nutrovia.co/f/turmeric/thankyou → Thank you
+
+nutrovia.co/f/[slug]/[page]     → Any funnel page, any A/B variant
+```
+
+### Architecture Decision: `/f/` prefix
+- `/f/` = 2 chars, zero routing conflicts with system routes
+- Explicit namespace for AI agents: `/f/*` = funnel, else = system
+- Path-based instead of subdomain (simpler, same concept as Architecture Finale §21)
+- Migrable to subdomains later without breaking URLs
+
+### Files Created
+- `src/app/f/[slug]/route.ts` — serves funnel entry page (tries index.html, entry.html, product.html)
+- `src/app/f/[slug]/[page]/route.ts` — serves any funnel page by slug + page name
+- `public/privacy.html` — Privacy Policy
+- `public/terms.html` — Terms of Service
+- `public/refund.html` — Refund Policy (60-day money-back guarantee)
+- `public/contact.html` — Contact page
+- `public/funnels/turmeric/` — 9 funnel pages (copied from public/)
+
+### Files Modified
+- `next.config.ts` — rewrites for clean URLs (homepage, legal pages, backward compat)
+- `src/app/api/funnel/[page]/route.ts` — added legal pages to ALLOWED_PAGES
+- `src/middleware.ts` — app.nutrovia.co → nutrovia.co 301 redirect + AGENT_API_KEYS
+
+### A/B Testing Support
+- Route handler serves ANY .html file in `public/funnels/{slug}/`
+- Variants: `entry-a.html`, `entry-b.html`, `checkout-v2.html`, etc.
+- No whitelist needed — just drop files in the funnel directory
+- Security: slug + page validated (alphanumeric + hyphens, no traversal)
+
+### Alignment with Architecture Finale.md
+- `funnelSlug` + step concept → maps to `/f/{slug}/{page}`
+- `pageVariants` table → filesystem prototype (migrable to DB)
+- `navigate_funnel` BlockAction → compatible URL pattern
+- Subdomain routing (§21) → deferred, path-based for now
+
+### Commits
+- `2898138` fix: sync all shipping→billing fields
+- `f1bda49` feat: clean URLs + dynamic funnel routing + legal pages
