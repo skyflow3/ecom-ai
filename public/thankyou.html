@@ -80,7 +80,7 @@
             box-sizing: border-box !important;
         }
     </style></head><body class="dom-pending">
-<!-- WHY: Fill {{markers}} with order data from checkout (stored in localStorage) -->
+<!-- WHY: Fill {{markers}} with order data from checkout (stored in localStorage) + fetch full order from API (includes upsells) -->
 <script>
 (function() {
     var order = {};
@@ -114,39 +114,70 @@
         }
         document.body.innerHTML = html;
 
-        // WHY: Fill "Items Ordered" table with actual order data
-        var items = [];
-        try { items = JSON.parse(localStorage.getItem('nutrovia_order_items') || '[]'); } catch(e) {}
-
-        if (items.length > 0) {
-            var tbody = document.querySelector('#items-list');
-            if (tbody) {
-                var rowsHtml = '';
-                var total = 0;
-                for (var i = 0; i < items.length; i++) {
-                    var item = items[i];
-                    total += item.priceNum || 0;
-                    rowsHtml += '<tr>'
-                        + '<td title="Item" class="table-cell table-text">' + (item.name || 'Nutrovia') + '</td>'
-                        + '<td class="text-center table-text">' + (item.qty || 1) + '</td>'
-                        + '<td class="fk-text-right table-text">' + (item.price || '$0.00') + '</td>'
-                        + '</tr>';
-                }
-                // Add shipping
-                rowsHtml += '<tr><td colspan="3"><div class="each-price">'
-                    + '<label>Shipping: </label><span>' + (order.shipping || '$4.95') + '</span></div></td></tr>';
-                var grandTotal = document.querySelector('#grandTotal');
-                if (grandTotal) {
-                    var totalStr = '$' + total.toFixed(2);
-                    rowsHtml += '<tr id="fk-dynamic-invoice-price-row"><td colspan="3">'
-                        + '<div class="total-prices"><div class="each-price">'
-                        + '<label>Total: </label><span id="grandTotal">' + totalStr + '</span></div></div></td></tr>';
-                }
-                // Remove old rows and add new ones
-                tbody.innerHTML = rowsHtml;
-            }
+        // WHY: Try to fetch full order from API (includes upsells + recalculated total)
+        //      Falls back to localStorage items if API unavailable
+        var purchaseId = localStorage.getItem('nutrovia_purchase_id');
+        if (purchaseId) {
+            fetch('/api/orders/' + purchaseId)
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (data.success && data.order) {
+                        renderItems(data.order.items || [], data.order);
+                        // WHY: Update amountPaid with server total (includes upsells)
+                        var amountEl = document.querySelector('#grandTotal');
+                        if (amountEl) {
+                            amountEl.textContent = '$' + parseFloat(data.order.total || 0).toFixed(2);
+                        }
+                    } else {
+                        renderFromLocalStorage();
+                    }
+                })
+                .catch(function() { renderFromLocalStorage(); });
+        } else {
+            renderFromLocalStorage();
         }
     });
+
+    function renderFromLocalStorage() {
+        var items = [];
+        try { items = JSON.parse(localStorage.getItem('nutrovia_order_items') || '[]'); } catch(e) {}
+        if (items.length > 0) renderItems(items, order);
+    }
+
+    function renderItems(items, orderData) {
+        var tbody = document.querySelector('#items-list');
+        if (!tbody || !items.length) return;
+
+        var rowsHtml = '';
+        var total = 0;
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            // WHY: Items from API use .price (number), items from localStorage use .priceNum
+            var itemPrice = item.price || item.priceNum || 0;
+            total += itemPrice * (item.qty || 1);
+            var priceDisplay = typeof itemPrice === 'number' ? '$' + itemPrice.toFixed(2) : (item.price || '$0.00');
+            rowsHtml += '<tr>'
+                + '<td title="Item" class="table-cell table-text">' + (item.name || 'Nutrovia') + '</td>'
+                + '<td class="text-center table-text">' + (item.qty || 1) + '</td>'
+                + '<td class="fk-text-right table-text">' + priceDisplay + '</td>'
+                + '</tr>';
+        }
+
+        // WHY: Use server total if available (includes upsells + shipping + tax)
+        var serverTotal = orderData.total ? parseFloat(orderData.total) : 0;
+        var serverShipping = orderData.shipping ? parseFloat(orderData.shipping) : 0;
+        var shippingDisplay = serverShipping > 0 ? '$' + serverShipping.toFixed(2) : (orderData.shipping || 'FREE');
+
+        rowsHtml += '<tr><td colspan="3"><div class="each-price">'
+            + '<label>Shipping: </label><span>' + shippingDisplay + '</span></div></td></tr>';
+
+        var grandTotalStr = serverTotal > 0 ? '$' + serverTotal.toFixed(2) : '$' + total.toFixed(2);
+        rowsHtml += '<tr id="fk-dynamic-invoice-price-row"><td colspan="3">'
+            + '<div class="total-prices"><div class="each-price">'
+            + '<label>Total: </label><span id="grandTotal">' + grandTotalStr + '</span></div></div></td></tr>';
+
+        tbody.innerHTML = rowsHtml;
+    }
 })();
 </script>
 <div data-text="text" data-secondsdelay="" class="">

@@ -1656,10 +1656,18 @@ const e="",t="EXPIRED";let a="",n="10",l="0",i="",s="";const o=this.querySelecto
     <script>
     (function(){
         var OTO_NUM = 2;
+        function getUpsellProduct() {
+            try {
+                var sel = (typeof productListItems !== 'undefined') ? productListItems.find(function(p){ return p.selectByDefault; }) : null;
+                return { price: sel ? sel.price : 0, name: sel ? sel.name : 'OTO2 Upsell' };
+            } catch(e) { return { price: 0, name: 'OTO2 Upsell' }; }
+        }
         function trackUpsell(accepted) {
             var pid = localStorage.getItem('nutrovia_purchase_id');
             if (!pid) return;
-            var payload = JSON.stringify({ oto: OTO_NUM, accepted: accepted, price: 0, name: accepted ? 'OTO2 Upsell' : '' });
+            var prod = getUpsellProduct();
+            var price = accepted ? prod.price : 0;
+            var payload = JSON.stringify({ oto: OTO_NUM, accepted: accepted, price: price, name: prod.name });
             if (navigator.sendBeacon) {
                 navigator.sendBeacon('/api/orders/' + pid + '/upsell', new Blob([payload], {type: 'application/json'}));
             } else {

@@ -5180,13 +5180,18 @@ const e="",t="EXPIRED";let n="",a="10",s="",i="";const r=this.querySelector("[da
     <script>
     (function(){
         var OTO_NUM = 1;
-        var OTO_PRICE = 0;
-        var OTO_NAME = 'OTO1 Upsell';
+        function getUpsellProduct() {
+            try {
+                var sel = (typeof productListItems !== 'undefined') ? productListItems.find(function(p){ return p.selectByDefault; }) : null;
+                return { price: sel ? sel.price : 0, name: sel ? sel.name : 'OTO1 Upsell' };
+            } catch(e) { return { price: 0, name: 'OTO1 Upsell' }; }
+        }
         function trackUpsell(accepted) {
             var pid = localStorage.getItem('nutrovia_purchase_id');
             if (!pid) return;
-            var price = accepted ? OTO_PRICE : 0;
-            var payload = JSON.stringify({ oto: OTO_NUM, accepted: accepted, price: price, name: OTO_NAME });
+            var prod = getUpsellProduct();
+            var price = accepted ? prod.price : 0;
+            var payload = JSON.stringify({ oto: OTO_NUM, accepted: accepted, price: price, name: prod.name });
             if (navigator.sendBeacon) {
                 navigator.sendBeacon('/api/orders/' + pid + '/upsell', new Blob([payload], {type: 'application/json'}));
             } else {
