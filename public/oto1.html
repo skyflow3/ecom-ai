@@ -4036,6 +4036,8 @@ const e="",t="EXPIRED";let n="",a="10",s="",i="";const r=this.querySelector("[da
 
     // Product List data (copier les données de l'éditeur)
     let productListItems = [{"name":"1x Knee Massager","price":179.95,"originalPrice":359.9,"discount":"50% off","isSubscription":false,"displayedPrice":"","imageUrl":"https://picsum.photos/seed/knee1/80/80.jpg","selectByDefault":false,"highlight":false,"badge":"","shipping":"Free Shipping","strikePrice":true,"boldPrice":true,"priceColor":"#333333"},{"name":"2x Knee Massagers","price":169.95,"originalPrice":359.9,"discount":"53% off","isSubscription":false,"displayedPrice":"","imageUrl":"https://picsum.photos/seed/knee2/80/80.jpg","selectByDefault":true,"highlight":false,"badge":"Most Popular","shipping":"Free Shipping","strikePrice":true,"boldPrice":true,"priceColor":"#333333"}];
+    // WHY: Expose upsell config globally for the tracking script (different <script> block)
+    window.UPSELL_CONFIG = productListItems.find(function(p){ return p.selectByDefault; }) || { price: 0, name: 'OTO1 Upsell' };
     let discountCodes = [{"id":1,"code":"SAVE20","value":20,"type":"percentage","active":true},{"id":2,"code":"SAVE10","value":10,"type":"percentage","active":true}];
     let appliedDiscountCode = null;
     let globalCurrency = {"code":"USD","symbol":"$","name":"US Dollar"};
@@ -5181,24 +5183,9 @@ const e="",t="EXPIRED";let n="",a="10",s="",i="";const r=this.querySelector("[da
     (function(){
         var OTO_NUM = 1;
         function getUpsellProduct() {
-            try {
-                // WHY: productListItems is defined with 'let' in another <script> block
-                //      Try multiple ways to access it, then fallback to DOM scraping
-                var items = (typeof productListItems !== 'undefined') ? productListItems
-                          : (typeof window !== 'undefined' && window.productListItems) ? window.productListItems
-                          : null;
-                if (items) {
-                    var sel = items.find(function(p){ return p.selectByDefault; });
-                    if (sel) return { price: sel.price, name: sel.name };
-                }
-                // WHY: Fallback — read price from the YES button text
-                var btn = document.querySelector('button.btn-primary, button[class*="btn-one-style"]');
-                if (btn && btn.textContent) {
-                    var match = btn.textContent.match(/\$(\d+\.?\d*)/);
-                    if (match) return { price: parseFloat(match[1]), name: 'OTO1 Upsell' };
-                }
-                return { price: 0, name: 'OTO1 Upsell' };
-            } catch(e) { return { price: 0, name: 'OTO1 Upsell' }; }
+            // WHY: window.UPSELL_CONFIG is set in the main <script> block from productListItems
+            var cfg = window.UPSELL_CONFIG || { price: 0, name: 'OTO1 Upsell' };
+            return { price: cfg.price || 0, name: cfg.name || 'OTO1 Upsell' };
         }
         function trackUpsell(accepted) {
             var pid = localStorage.getItem('nutrovia_purchase_id');
