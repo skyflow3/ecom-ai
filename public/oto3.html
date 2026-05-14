@@ -339,7 +339,7 @@ const e="",t="EXPIRED";let a="",n="10",l="",i="",s="";const o=this.querySelector
     });
 
     // Product List data (copier les données de l'éditeur)
-    let productListItems = [{"name":"1x Knee Massager","price":179.95,"originalPrice":359.9,"discount":"50% off","isSubscription":false,"displayedPrice":"","imageUrl":"https://picsum.photos/seed/knee1/80/80.jpg","selectByDefault":false,"highlight":false,"badge":"","shipping":"Free Shipping","strikePrice":true,"boldPrice":true,"priceColor":"#333333"},{"name":"2x Knee Massagers","price":169.95,"originalPrice":359.9,"discount":"53% off","isSubscription":false,"displayedPrice":"","imageUrl":"https://picsum.photos/seed/knee2/80/80.jpg","selectByDefault":true,"highlight":false,"badge":"Most Popular","shipping":"Free Shipping","strikePrice":true,"boldPrice":true,"priceColor":"#333333"}];
+    let productListItems = [{"name":"Joint Relief Cream","price":29.00,"originalPrice":59.00,"discount":"51% off","isSubscription":false,"displayedPrice":"","imageUrl":"https://picsum.photos/seed/jointcream/80/80.jpg","selectByDefault":true,"highlight":false,"badge":"","shipping":"Free Shipping","strikePrice":true,"boldPrice":true,"priceColor":"#333333"}];
     // WHY: Expose upsell config globally for the tracking script (different <script> block)
     window.UPSELL_CONFIG = productListItems.find(function(p){ return p.selectByDefault; }) || { price: 0, name: 'OTO3 Upsell' };
     let discountCodes = [{"id":1,"code":"SAVE20","value":20,"type":"percentage","active":true},{"id":2,"code":"SAVE10","value":10,"type":"percentage","active":true}];

@@ -512,7 +512,7 @@ const e="",t="EXPIRED";let a="",n="10",l="0",i="",s="";const o=this.querySelecto
     });
 
     // Product List data (copier les données de l'éditeur)
-    let productListItems = [{"name":"1x Knee Massager","price":179.95,"originalPrice":359.9,"discount":"50% off","isSubscription":false,"displayedPrice":"","imageUrl":"https://picsum.photos/seed/knee1/80/80.jpg","selectByDefault":false,"highlight":false,"badge":"","shipping":"Free Shipping","strikePrice":true,"boldPrice":true,"priceColor":"#333333"},{"name":"2x Knee Massagers","price":169.95,"originalPrice":359.9,"discount":"53% off","isSubscription":false,"displayedPrice":"","imageUrl":"https://picsum.photos/seed/knee2/80/80.jpg","selectByDefault":true,"highlight":false,"badge":"Most Popular","shipping":"Free Shipping","strikePrice":true,"boldPrice":true,"priceColor":"#333333"}];
+    let productListItems = [{"name":"BioPerine Absorption Booster","price":19.00,"originalPrice":49.00,"discount":"61% off","isSubscription":false,"displayedPrice":"","imageUrl":"https://picsum.photos/seed/bioperine/80/80.jpg","selectByDefault":true,"highlight":false,"badge":"","shipping":"Free Shipping","strikePrice":true,"boldPrice":true,"priceColor":"#333333"}];
     // WHY: Expose upsell config globally for the tracking script (different <script> block)
     window.UPSELL_CONFIG = productListItems.find(function(p){ return p.selectByDefault; }) || { price: 0, name: 'OTO2 Upsell' };
     let discountCodes = [{"id":1,"code":"SAVE20","value":20,"type":"percentage","active":true},{"id":2,"code":"SAVE10","value":10,"type":"percentage","active":true}];
