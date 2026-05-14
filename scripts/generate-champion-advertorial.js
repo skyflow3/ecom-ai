@@ -359,7 +359,7 @@ async function main() {
 
     console.log(`Variant created: ${variant.id}`);
     console.log(`\n=== PREVIEW URL ===`);
-    console.log(`https://app.nutrovia.co/api/preview/${variant.id}`);
+    console.log(`https://nutrovia.co/api/preview/${variant.id}`);
     console.log(`==================\n`);
 
     // Also update step to point to this variant
