@@ -576,8 +576,65 @@ GET  /api/orders/export?format=csv&status=paid           — Export for logistic
 ```
 
 ### Migration Needed
-- `drizzle/0001_reflective_squirrel_girl.sql` must be applied on Coolify DB
+- `/api/admin/migrate` endpoint applies migration via Drizzle (no psql in Coolify Alpine container)
 - Sequence `order_number_seq` created automatically on first order (idempotent)
 
+### Fixes Applied (same session)
+- OTO1-5: Dynamic upsell price/name from `productListItems` instead of hardcoded `OTO_PRICE = 0`
+- Thank you page: Fetches full order from `/api/orders/[id]` to include upsell items + server total
+- Architecture Finale.md: Updated `purchases` table schema to match new columns
+
 ### TypeScript: 0 errors
-### Status: Code complete, migration pending
+### Status: Code complete, migration pending (visit /api/admin/migrate after deploy)
+
+### Commits
+- `1fbeff0` feat: e-commerce tracking system — orders API, upsell tracking, processor-agnostic
+- `82b8306` fix: dynamic upsell prices + thank you page fetches full order from API
+- `639fa57` feat: /api/admin/migrate endpoint (removed then re-added)
+- `412aaa3` refactor: removed migrate endpoint (thought manual SQL was better)
+- `e480438` feat: re-added /api/admin/migrate — no psql in Coolify Alpine container
+
+### Bug Fixes (2026-05-14, same session)
+- **Checkout email selector**: `#email` → `#emailAddress` (order creation was silently failing — Zod `.email()` rejected empty string)
+- **Thank you $NaN**: `item.price` from localStorage is `"$90.00"` (string with $), `"$90.00" * 6` = NaN. Fixed with `parseFloat(String(raw).replace(/[^0-9.]/g, ''))`
+- **Upsell tracking selectors**: Buttons use `button.btn-primary` (YES) and `a[href="otoX.html"]` (NO), not `data-action="payment"` or `a[href="#next-step"]`
+- **Upsell price $0.00**: `productListItems` defined with `let` in another `<script>` block — not accessible across scopes. Fixed with `window.UPSELL_CONFIG = productListItems.find(p => p.selectByDefault)`
+- **Billing "Customer"**: `{{firstName}}` fallback added `order.shipFirstName` as fallback
+- **"$ $90.00" duplicate**: Removed `{{currencySymbol}}` before `{{amountPaid}}` (already includes $)
+- **Country "FR"**: Added `data-value` attribute fallback for `#country` select
+- **Billing fields**: All billing markers now fall back to shipping fields
+
+### Commits (bug fixes)
+- `22c7b53` fix: checkout email selector + thank you page $NaN total
+- `139030a` fix: upsell tracking + billing address + payment display
+- `7a9bafd` fix: upsell price tracking — access productListItems across script scopes
+- `7b42b4c` fix: upsell price/name via window.UPSELL_CONFIG global
+
+### Status
+- Orders are being created in DB (order #1001, #1002 confirmed)
+- Upsells are tracked (OTO2, OTO4, OTO5 accepted in last test)
+
+### Validated End-to-End (2026-05-14)
+- Full checkout flow tested and working:
+  - Order created in DB with correct email, name, phone, address
+  - Upsells tracked with correct names and prices per OTO
+  - Thank you page displays all items + correct total (including upsells)
+  - Payment Method section shows full total
+  - Billing address shows customer name (not "Customer")
+  - Country shows correctly in both shipping and billing
+  - Apartment/suite field captured and displayed
+- Test data per OTO:
+  - OTO1: Nutrovia Turmeric 3-Pack (Volume Deal) $39.00
+  - OTO2: BioPerine Absorption Booster $19.00
+  - OTO3: Joint Relief Cream $29.00
+  - OTO4: Curcumin Gold Premium Blend $49.00
+  - OTO5: Package Protection Plan $7.95
+- Last test result: $90 (main) + $39 (OTO1) + $29 (OTO3) + $7.95 (OTO5) = $165.95 ✓
+
+### Additional Commits
+- `4f31691` fix: payment method section shows full total including upsells
+- `9bf21de` feat: apartment/suite field tracked in order + shown on thank you page
+- `2df4788` fix: replace Knee Massager demo data with Nutrovia test products
+- `0ef8e2a` fix: apartment/suite field selector — use actual IDs (#i4u71z, #ifw6e1)
+
+### Status: E-Commerce Tracking System COMPLETE ✓
