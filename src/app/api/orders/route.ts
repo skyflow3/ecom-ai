@@ -27,6 +27,7 @@ const createOrderSchema = z.object({
   customerPhone: z.string().optional(),
   customerAddress: z.object({
     street: z.string(),
+    apt: z.string().optional(),
     city: z.string(),
     state: z.string(),
     zip: z.string(),

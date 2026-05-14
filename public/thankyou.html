@@ -98,6 +98,7 @@
         '{{shipPostalCode}}': order.shipPostalCode || '',
         '{{shipCountry}}': order.shipCountry || '',
         '{{address1}}': order.address1 || order.shipAddress1 || '',
+        '{{address2}}': (order.address2 || order.shipAddress2) ? '\n' + (order.address2 || order.shipAddress2) : '',
         '{{city}}': order.city || order.shipCity || '',
         '{{state}}': order.state || order.shipState || '',
         '{{postalCode}}': order.postalCode || order.shipPostalCode || '',
@@ -211,7 +212,7 @@
 		  </div><div data-text="text" data-secondsdelay="" id="i7zmj" class="">{{emailAddress}}
 		  </div><div data-text="text" data-secondsdelay="" id="itnbz" class="">Shipping Address
 		  </div><div data-text="text" data-secondsdelay="" id="i322l" class="">{{shipFirstName}} {{shipLastName}}
-		  </div><div data-text="text" data-secondsdelay="" id="iztwy" class="">{{shipAddress1}}
+		  </div><div data-text="text" data-secondsdelay="" id="iztwy" class="">{{shipAddress1}}{{address2}}
 		  </div><div data-text="text" data-secondsdelay="" id="ijni2" class="">{{shipCity}} {{shipState}}
 		  </div><div data-text="text" data-secondsdelay="" id="irfjj" class="">{{shipPostalCode}}
 		  </div><div data-text="text" data-secondsdelay="" id="igrc1" class="">{{shipCountry}}
@@ -221,7 +222,7 @@
 		  </div><div data-text="text" data-secondsdelay="" id="i7nic" class="">{{amountPaid}}
 		  </div><div data-text="text" data-secondsdelay="" id="i0hd3" class="">Billing Address
 		  </div><div data-text="text" data-secondsdelay="" id="i3aah" class="">{{firstName}} {{lastName}}
-		  </div><div data-text="text" data-secondsdelay="" id="isw6a" class="">{{address1}}
+		  </div><div data-text="text" data-secondsdelay="" id="isw6a" class="">{{address1}}{{address2}}
 		  </div><div data-text="text" data-secondsdelay="" id="io5af" class="">{{city}} {{state}} {{postalCode}}
 		  </div><div data-text="text" data-secondsdelay="" id="ibtsd" class="">{{country}}
 		  </div></div></div></div><div data-box="true" data-secondsdelay="" id="ixzeol" class=""><a id="fkt-link-103-da1-910" data-id="fkt-link-333-78c-ae6" title="Click to Continue Shopping" target="_self" action="none" align="center" animate="" speed="" delay="none" loop="none" variantvalue="" data-secondsdelay="" data-minutesdelay="" replaceproductid="" billnow="false" href="index.html" offer="" upsell="" quantity="" price="" class="fk-disable-lazy disable-fk-lazy" data-original-href="index.html" onclick="window.location.href='index.html'; return false;">Continue Shopping</a></div><div data-box="true" data-secondsdelay="" id="i72nko" class=""><div data-box="true" data-secondsdelay="" id="if7c4d" class=""><div data-box="true" data-secondsdelay="" id="ipe0j1" class=""><img alt="csr.webp" id="fkt-image-e66-3bd-90e" title="" target="_self" src="" href="" align="middle" width="" height="" onclick="" class="fk-disable-lazy disable-fk-lazy"></div><div data-box="true" data-secondsdelay="" id="i9efof" class=""><div data-text="text" data-secondsdelay="" id="iiguej" class=""><span data-text="text" data-secondsdelay="" id="i7ghoz" class="">We're Here To Help You</span></div><div data-text="text" data-secondsdelay="" id="i0ugjo" class="">Please feel free to contact us at:
