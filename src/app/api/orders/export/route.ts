@@ -79,11 +79,11 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const parsed = exportSchema.safeParse({
-      format: searchParams.get('format'),
-      status: searchParams.get('status'),
-      liveMode: searchParams.get('liveMode'),
-      from: searchParams.get('from'),
-      to: searchParams.get('to'),
+      format: searchParams.get('format') ?? undefined,
+      status: searchParams.get('status') ?? undefined,
+      liveMode: searchParams.get('liveMode') ?? undefined,
+      from: searchParams.get('from') ?? undefined,
+      to: searchParams.get('to') ?? undefined,
     });
 
     if (!parsed.success) {

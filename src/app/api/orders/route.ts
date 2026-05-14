@@ -114,13 +114,14 @@ const listOrdersSchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
+    // WHY: searchParams.get() returns null when missing, but Zod optional() expects undefined
     const parsed = listOrdersSchema.safeParse({
-      status: searchParams.get('status'),
-      liveMode: searchParams.get('liveMode'),
-      from: searchParams.get('from'),
-      to: searchParams.get('to'),
-      limit: searchParams.get('limit'),
-      offset: searchParams.get('offset'),
+      status: searchParams.get('status') ?? undefined,
+      liveMode: searchParams.get('liveMode') ?? undefined,
+      from: searchParams.get('from') ?? undefined,
+      to: searchParams.get('to') ?? undefined,
+      limit: searchParams.get('limit') ?? undefined,
+      offset: searchParams.get('offset') ?? undefined,
     });
 
     if (!parsed.success) {
