@@ -123,11 +123,12 @@
                 .then(function(data) {
                     if (data.success && data.order) {
                         renderItems(data.order.items || [], data.order);
-                        // WHY: Update amountPaid with server total (includes upsells)
+                        // WHY: Update all total displays with server total (includes upsells)
+                        var totalStr = '$' + parseFloat(data.order.total || 0).toFixed(2);
                         var amountEl = document.querySelector('#grandTotal');
-                        if (amountEl) {
-                            amountEl.textContent = '$' + parseFloat(data.order.total || 0).toFixed(2);
-                        }
+                        if (amountEl) { amountEl.textContent = totalStr; }
+                        var payMethod = document.querySelector('#i7nic');
+                        if (payMethod) { payMethod.textContent = totalStr; }
                     } else {
                         renderFromLocalStorage();
                     }
