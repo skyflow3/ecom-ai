@@ -152,10 +152,10 @@
         var total = 0;
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
-            // WHY: Items from API use .price (number), items from localStorage use .priceNum
-            var itemPrice = item.price || item.priceNum || 0;
+            // WHY: API returns .price as number, localStorage has .priceNum as number and .price as "$90.00" string
+            var itemPrice = typeof item.price === 'number' ? item.price : (item.priceNum || parseFloat(String(item.price || '').replace(/[^0-9.]/g, '')) || 0);
             total += itemPrice * (item.qty || 1);
-            var priceDisplay = typeof itemPrice === 'number' ? '$' + itemPrice.toFixed(2) : (item.price || '$0.00');
+            var priceDisplay = '$' + itemPrice.toFixed(2);
             rowsHtml += '<tr>'
                 + '<td title="Item" class="table-cell table-text">' + (item.name || 'Nutrovia') + '</td>'
                 + '<td class="text-center table-text">' + (item.qty || 1) + '</td>'
@@ -164,9 +164,12 @@
         }
 
         // WHY: Use server total if available (includes upsells + shipping + tax)
-        var serverTotal = orderData.total ? parseFloat(orderData.total) : 0;
-        var serverShipping = orderData.shipping ? parseFloat(orderData.shipping) : 0;
-        var shippingDisplay = serverShipping > 0 ? '$' + serverShipping.toFixed(2) : (orderData.shipping || 'FREE');
+        //      Server returns numeric as string "90.00", localStorage has "$90.00"
+        var rawTotal = orderData.total || orderData.amountPaid || '';
+        var serverTotal = parseFloat(String(rawTotal).replace(/[^0-9.]/g, '')) || 0;
+        var rawShipping = orderData.shipping || '';
+        var serverShipping = parseFloat(String(rawShipping).replace(/[^0-9.]/g, '')) || 0;
+        var shippingDisplay = serverShipping > 0 ? '$' + serverShipping.toFixed(2) : 'FREE';
 
         rowsHtml += '<tr><td colspan="3"><div class="each-price">'
             + '<label>Shipping: </label><span>' + shippingDisplay + '</span></div></td></tr>';

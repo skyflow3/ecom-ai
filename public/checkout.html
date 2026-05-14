@@ -11668,7 +11668,7 @@
             var formData = {
                 firstName: (document.querySelector('#firstName') || {}).value || '',
                 lastName: (document.querySelector('#lastName') || {}).value || '',
-                email: (document.querySelector('#email') || {}).value || '',
+                email: (document.querySelector('#emailAddress') || {}).value || '',
                 phone: (document.querySelector('#phoneNumber') || {}).value || '',
                 shipFirstName: (document.querySelector('#shipFirstName') || {}).value || (document.querySelector('#firstName') || {}).value || '',
                 shipLastName: (document.querySelector('#shipLastName') || {}).value || (document.querySelector('#lastName') || {}).value || '',
@@ -11734,9 +11734,11 @@
                     localStorage.setItem('nutrovia_purchase_id', orderData.order.id);
                     localStorage.setItem('nutrovia_order_number', orderData.order.orderNumber);
                     console.log('[ORDER] Created #' + orderData.order.orderNumber);
+                } else {
+                    console.warn('[ORDER] API rejected:', JSON.stringify(orderData));
                 }
             } catch(orderErr) {
-                console.warn('[ORDER] Failed to create purchase (non-blocking):', orderErr);
+                console.warn('[ORDER] Failed to create purchase:', orderErr);
             }
 
             window.location.href = '/api/funnel/oto1.html';
