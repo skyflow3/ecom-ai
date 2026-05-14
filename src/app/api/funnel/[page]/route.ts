@@ -19,6 +19,10 @@ const ALLOWED_PAGES = [
   'oto4.html',
   'oto5.html',
   'thankyou.html',
+  'privacy.html',
+  'terms.html',
+  'refund.html',
+  'contact.html',
 ];
 
 export async function GET(
