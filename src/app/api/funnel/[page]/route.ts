@@ -1,8 +1,12 @@
 /**
  * Purpose: Serve funnel HTML pages from public/ directory.
- * WHY: Next.js standalone does NOT serve static files from public/ automatically.
- *      This route handler reads HTML files and serves them with proper content-type.
- * Usage: /api/funnel/index.html → serves public/index.html
+ * WHY: Next.js standalone serves static files from public/ automatically,
+ *      BUT some funnel pages need dynamic processing (CTA injection, geo-targeting).
+ *      This route is the dynamic entry point for pages that need server-side logic.
+ *      Static pages (legal, etc.) are served directly by Next.js — this route is
+ *      only called when dynamic processing is required.
+ * Usage: /api/funnel/product.html → serves public/product.html (with potential CTA injection)
+ * Related: src/app/route.ts (homepage), public/ (static HTML files)
  */
 
 import { NextResponse } from 'next/server';

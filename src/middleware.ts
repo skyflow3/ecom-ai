@@ -23,7 +23,7 @@ function isProtectedRoute(method: string, pathname: string): boolean {
 }
 
 export async function middleware(request: NextRequest) {
-  const { pathname, origin } = request.nextUrl;
+  const { pathname } = request.nextUrl;
   const host = request.headers.get("host") || "";
 
   // Redirect app.nutrovia.co → nutrovia.co (consistent branding for ads)
