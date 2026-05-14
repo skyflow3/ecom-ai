@@ -43,3 +43,8 @@ content_producer.py
 "Klein-consistency.safetensors"
 "f2k_consist_20260225.safetensors"
 design-data/
+
+# Temp build/test outputs
+test-output/
+test-results/
+tmp_*.json
