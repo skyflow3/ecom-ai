@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "10mb",
     },
   },
-  // WHY: No rewrites — they don't execute in standalone mode behind Traefik proxy.
+  // WHY: No Next.js rewrites — they don't execute in standalone mode behind Traefik proxy.
   //      Routing is handled by:
   //        - src/app/route.ts              → "/" homepage (serves public/index.html)
   //        - public/*.html                  → static legal/funnel pages

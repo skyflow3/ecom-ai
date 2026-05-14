@@ -162,21 +162,8 @@
           </div>
 
           <h2>Payment</h2>
-          <div class="form-row full">
-            <div>
-              <label for="card">Card Number</label>
-              <input type="text" id="card" placeholder="1234 5678 9012 3456" autocomplete="cc-number" inputmode="numeric">
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label for="expiry">Expiry Date</label>
-              <input type="text" id="expiry" placeholder="MM / YY" autocomplete="cc-exp">
-            </div>
-            <div>
-              <label for="cvc">CVC</label>
-              <input type="text" id="cvc" placeholder="123" autocomplete="cc-csc" inputmode="numeric">
-            </div>
+          <div id="payment-element" style="margin-bottom:16px;min-height:120px">
+            <p style="color:var(--muted);font-size:14px">Loading secure payment form...</p>
           </div>
 
           <div class="secure-badge">
@@ -184,7 +171,65 @@
             256-bit SSL Encrypted. Your information is secure.
           </div>
 
-          <button class="btn-checkout" type="button">Place Order — $99.95</button>
+          <button class="btn-checkout" type="button" id="checkoutBtn">Place Order — $99.95</button>
+          <div id="payment-error" style="color:#EF4444;font-size:13px;margin-top:8px;display:none"></div>
+
+          <script src="https://js.stripe.com/v3/"></script>
+          <script>
+            (async function() {
+              var pk = 'pk_test_2TlZaIAmt2i0quwdCk6TlFaF';
+              var stripe = Stripe(pk);
+              var elements = null;
+              var paymentElement = null;
+
+              // Fetch PaymentIntent from server
+              try {
+                var res = await fetch('/api/checkout/payment-intent', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ amount: 9995, currency: 'usd' })
+                });
+                var data = await res.json();
+                if (!data.clientSecret) {
+                  document.getElementById('payment-element').innerHTML = '<p style="color:#EF4444;font-size:14px">Payment system unavailable. Please try again later.</p>';
+                  return;
+                }
+
+                // Create Stripe Elements
+                elements = stripe.elements({ clientSecret: data.clientSecret });
+                paymentElement = elements.create('payment', {
+                  layout: 'tabs',
+                  fields: { billingDetails: { address: 'never' } }
+                });
+                paymentElement.mount('#payment-element');
+              } catch (e) {
+                document.getElementById('payment-element').innerHTML = '<p style="color:#EF4444;font-size:14px">Payment system unavailable.</p>';
+              }
+
+              // Handle form submit
+              document.getElementById('checkoutBtn').addEventListener('click', async function() {
+                var btn = this;
+                if (!elements || !paymentElement) { alert('Payment not loaded.'); return; }
+                btn.textContent = 'Processing...';
+                btn.disabled = true;
+
+                var { error } = await stripe.confirmPayment({
+                  elements: elements,
+                  confirmParams: {
+                    return_url: window.location.origin + '/?order=success',
+                  },
+                });
+
+                if (error) {
+                  var errDiv = document.getElementById('payment-error');
+                  errDiv.textContent = error.message || 'Payment failed. Please try again.';
+                  errDiv.style.display = 'block';
+                  btn.textContent = 'Place Order — $99.95';
+                  btn.disabled = false;
+                }
+              });
+            })();
+          </script>
 
           <div class="trust-row">
             <span><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg> Secure Checkout</span>
