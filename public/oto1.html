@@ -5182,8 +5182,22 @@ const e="",t="EXPIRED";let n="",a="10",s="",i="";const r=this.querySelector("[da
         var OTO_NUM = 1;
         function getUpsellProduct() {
             try {
-                var sel = (typeof productListItems !== 'undefined') ? productListItems.find(function(p){ return p.selectByDefault; }) : null;
-                return { price: sel ? sel.price : 0, name: sel ? sel.name : 'OTO1 Upsell' };
+                // WHY: productListItems is defined with 'let' in another <script> block
+                //      Try multiple ways to access it, then fallback to DOM scraping
+                var items = (typeof productListItems !== 'undefined') ? productListItems
+                          : (typeof window !== 'undefined' && window.productListItems) ? window.productListItems
+                          : null;
+                if (items) {
+                    var sel = items.find(function(p){ return p.selectByDefault; });
+                    if (sel) return { price: sel.price, name: sel.name };
+                }
+                // WHY: Fallback — read price from the YES button text
+                var btn = document.querySelector('button.btn-primary, button[class*="btn-one-style"]');
+                if (btn && btn.textContent) {
+                    var match = btn.textContent.match(/\$(\d+\.?\d*)/);
+                    if (match) return { price: parseFloat(match[1]), name: 'OTO1 Upsell' };
+                }
+                return { price: 0, name: 'OTO1 Upsell' };
             } catch(e) { return { price: 0, name: 'OTO1 Upsell' }; }
         }
         function trackUpsell(accepted) {

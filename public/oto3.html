@@ -1485,8 +1485,19 @@ const e="",t="EXPIRED";let a="",n="10",l="",i="",s="";const o=this.querySelector
         var OTO_NUM = 3;
         function getUpsellProduct() {
             try {
-                var sel = (typeof productListItems !== 'undefined') ? productListItems.find(function(p){ return p.selectByDefault; }) : null;
-                return { price: sel ? sel.price : 0, name: sel ? sel.name : 'OTO3 Upsell' };
+                var items = (typeof productListItems !== 'undefined') ? productListItems
+                          : (typeof window !== 'undefined' && window.productListItems) ? window.productListItems
+                          : null;
+                if (items) {
+                    var sel = items.find(function(p){ return p.selectByDefault; });
+                    if (sel) return { price: sel.price, name: sel.name };
+                }
+                var btn = document.querySelector('button.btn-primary, button[class*="btnStyle"]');
+                if (btn && btn.textContent) {
+                    var match = btn.textContent.match(/\$(\d+\.?\d*)/);
+                    if (match) return { price: parseFloat(match[1]), name: 'OTO3 Upsell' };
+                }
+                return { price: 0, name: 'OTO3 Upsell' };
             } catch(e) { return { price: 0, name: 'OTO3 Upsell' }; }
         }
         function trackUpsell(accepted) {
