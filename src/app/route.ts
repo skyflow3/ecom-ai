@@ -1,24 +1,24 @@
 /**
- * Purpose: Root route handler — serves product page for visitors
- * WHY: nutrovia.co/ must show a real product page (Stripe/Google verification),
- *      not a dashboard login. Dashboard is at /dashboard, auth at /sign-in.
- * Dependencies: fs, path
- * Related: src/app/api/funnel/[page]/route.ts
+ * Purpose: Root route handler — serves Google/Stripe compliant homepage
+ * WHY: nutrovia.co/ must show a clean product page for Merchant Center verification.
+ *      This is the ONLY entry point for "/" — no middleware hack needed.
+ *      Dashboard at /dashboard, auth at /sign-in, funnel at /product.html.
+ * Dependencies: fs
+ * Related: public/index.html (the compliant page), public/product.html (Webflow funnel)
  */
 
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 
-export const dynamic = "force-dynamic";
+// WHY: standalone mode in Docker — CWD varies depending on layer structure
+const CANDIDATES = [
+  join(process.cwd(), "public", "index.html"),
+  join(process.cwd(), ".next", "standalone", "public", "index.html"),
+  join(process.cwd(), "..", "public", "index.html"),
+];
 
 export async function GET() {
-  const candidates = [
-    join(process.cwd(), "public", "product.html"),
-    join(process.cwd(), ".next", "standalone", "public", "product.html"),
-    join(process.cwd(), "..", "public", "product.html"),
-  ];
-
-  for (const filePath of candidates) {
+  for (const filePath of CANDIDATES) {
     if (existsSync(filePath)) {
       const html = readFileSync(filePath, "utf-8");
       return new Response(html, {
@@ -31,5 +31,5 @@ export async function GET() {
     }
   }
 
-  return new Response("Product page not found", { status: 404 });
+  return new Response("Homepage not found", { status: 404 });
 }
