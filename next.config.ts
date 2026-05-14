@@ -15,8 +15,8 @@ const nextConfig: NextConfig = {
   // WHY: Clean URLs — Stripe/Google see professional URLs, not /api/funnel/...
   async rewrites() {
     return [
-      // ── Homepage: product page for Stripe/Google verification ──
-      { source: "/", destination: "/api/funnel/product.html" },
+      // ── Homepage: compliant product page for Google/Stripe verification ──
+      { source: "/", destination: "/api/funnel/index.html" },
 
       // ── Legal pages (required for Stripe activation) ──
       { source: "/privacy", destination: "/api/funnel/privacy.html" },
