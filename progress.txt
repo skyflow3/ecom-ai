@@ -638,3 +638,36 @@ GET  /api/orders/export?format=csv&status=paid           — Export for logistic
 - `0ef8e2a` fix: apartment/suite field selector — use actual IDs (#i4u71z, #ifw6e1)
 
 ### Status: E-Commerce Tracking System COMPLETE ✓
+
+---
+
+## 2026-05-14 — Domain Architecture: nutrovia.co for Everything
+
+### Decision
+- **nutrovia.co** for all traffic (customer pages + API + admin)
+- `app.nutrovia.co` → 301 redirect to `nutrovia.co`
+- Already configured in Coolify: `fqdn: "http://nutrovia.co/,http://app.nutrovia.co/"`
+- Both domains point to Cloudflare → Hetzner server
+- Aligned with Architecture Finale.md: `BASE_DOMAIN=nutrovia.co`
+
+### Why not split (2 services)
+- Coolify multi-domain = 1 container, 2 URLs → no real security isolation
+- Single domain is simpler, no CORS, no cookie issues
+- Security via middleware (API key), not domain separation
+
+### Middleware Protection (src/middleware.ts)
+- `AGENT_API_KEYS` (comma-separated, per Architecture Finale.md §19)
+- Public routes: POST /api/orders (checkout), POST /api/orders/[id]/upsell, GET /api/orders/[id] (thank you)
+- Protected routes (x-api-key header): GET /api/orders (list), GET /api/orders/export, PATCH /api/orders/[id]
+
+### Files Modified
+- `src/middleware.ts` — domain redirect + AGENT_API_KEYS protection
+- `scripts/generate-champion-advertorial.js` — URL updated to nutrovia.co
+- `.env` — Added AGENT_API_KEYS (2 keys: agent + logistics)
+
+### Coolify Env Var Required
+- Add `AGENT_API_KEYS=nutrovia-agent-2026-xK9mP2vL8qR,nutrovia-logistics-2026-mN4oQ7wJ3tS` in Coolify
+
+### Commits
+- `9b97c5e` feat: middleware API key protection + domain redirect
+- `14d1a58` fix: align with Architecture Finale.md — AGENT_API_KEYS comma-separated
