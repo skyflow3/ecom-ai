@@ -30,6 +30,10 @@ COPY src/ ./src/
 COPY tsconfig.json ./
 COPY tsconfig.router.json ./
 
+# WHY: Include existing funnel HTML for immediate serving (dev/fallback)
+#      Production uses shared volume mounted at /data/funnels
+COPY public/funnels/ ./public/funnels/
+
 # WHY: Funnel HTML files are mounted via shared volume at /data/funnels
 VOLUME ["/data/funnels"]
 
