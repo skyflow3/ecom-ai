@@ -29,7 +29,7 @@ export async function GET() {
 
     // ── Step 1: Run migration SQL ────────────────────────────────────────────
     try {
-      const migrationPath = join(process.cwd(), "drizzle", "0000_handy_proteus.sql");
+      const migrationPath = join(process.cwd(), "drizzle", "0000_black_warlock.sql");
       const migrationSQL = await readFile(migrationPath, "utf-8");
 
       // WHY: drizzle-kit generates SQL with --> statement-breakpoint separators
