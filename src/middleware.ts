@@ -33,6 +33,27 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
+  // Funnel directory index: /funnels/turmeric/ → serve index.html
+  const funnelMatch = pathname.match(/^\/funnels\/([a-z0-9][a-z0-9-]*)\/?$/);
+  if (funnelMatch) {
+    const slug = funnelMatch[1];
+    const { existsSync, readFileSync } = await import('fs');
+    const { join } = await import('path');
+    const candidates = [
+      join(process.cwd(), 'public', 'funnels', slug, 'index.html'),
+      join(process.cwd(), '..', 'public', 'funnels', slug, 'index.html'),
+    ];
+    for (const f of candidates) {
+      if (existsSync(f)) {
+        const html = readFileSync(f, 'utf-8');
+        return new NextResponse(html, {
+          status: 200,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        });
+      }
+    }
+  }
+
   // API key protection for sensitive endpoints
   if (isProtectedRoute(request.method, pathname)) {
     const apiKey = request.headers.get("x-api-key");
