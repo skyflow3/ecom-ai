@@ -2,19 +2,27 @@
 
 ## CHECKPOINT
 
-**STOPPED HERE**: Template-based advertorial system FONCTIONNEL. **Template Nutrovia score 9.76/10!** Zone-based content replacement marche parfaitement. Block system pipeline score 8.92/10 avg.
+**STOPPED HERE**: Upsell template system FONCTIONNEL — 5 OTO templates avec 16 techniques Vibriance, score 6.7→9.1/10. Template system complet (4 templates principaux + 4 templates upsell = 8 templates total).
 **Best scores**:
+- Template system: **10.41/10** (HF Stride, hike-reasons-why, DeepSeek)
+- Upsell templates: **9.1/10** (avg 5 OTO, 16 Vibriance techniques)
 - Template system: **9.76/10** (Nutrovia, DeepSeek, zone-based replacement, closing zone + comment cleanup)
 - Block system: **9.38/10** (joint_pain brief, Reddit persona, MiMo, free text, anti-bias fix)
-- Template avg (3 runs): 9.36, 9.66, 9.76 → **9.59 avg**
 
 **PROCHAINE ETAPE**:
-- [ ] Tester le template system avec d'autres produits (pas juste Nutrovia)
-- [ ] Ajouter des templates pour d'autres formats (pas juste SmoothSpire advertorial)
-- [ ] Tester visuellement le HTML généré dans un navigateur
-- [ ] Intégrer le template system dans l'API (route handler)
+- [ ] Tester le systeme upsell avec d'autres produits (pas juste Vibriance)
+- [ ] Ajouter des templates pour d'autres formats (downsell, thank-you, optin)
+- [ ] Tester visuellement le HTML upsell genere dans un navigateur
+- [ ] Integrer le systeme upsell dans l'API (route handler)
+- [ ] Connecter les 5 OTO dans un funnel complet (checkout → OTO1 → OTO2 → OTO3 → OTO4 → OTO5)
 
 **FAIT**:
+- [x] Upsell template system — 5 OTO templates FONCTIONNEL (6.7→9.1/10)
+- [x] upsell-filler.ts — prompt avec 16 techniques Vibriance (position psychology, type rules, category vocab)
+- [x] 4 templates upsell: upsell-vibriance (OTO1), upsell-cross-sell (OTO2), upsell-product (OTO3+OTO4), upsell-protection (OTO5)
+- [x] CSS fix #ibodyextra dans upsell-product.marked.html (Poppins 20px, centered)
+- [x] No country references (OTO5 utilise "Over 40% of packages")
+- [x] 5 test scripts (test-upsell-oto1 a oto5) + generic test script
 - [x] Template-based advertorial system — FONCTIONNEL (zone-based v2)
 - [x] Zone-based content replacement (3 zones: body1, body2, closing)
 - [x] Closing zone replacement (signature + P.S.)
@@ -69,6 +77,8 @@
 | Format | System | Prompt Copywriter | Judge Config | Best Score |
 |--------|--------|-------------------|--------------|------------|
 | **Advertorial (template)** | Template (zone-based) | template-filler (DeepSeek) | advertorial_judge_v2.json | **9.76/10** |
+| **Listicle (template)** | Template (markers) | reasons-why-filler (DeepSeek) | advertorial_listicle_judge_v2.json | **10.41/10** |
+| **Upsell (template)** | Template (markers) | upsell-filler (DeepSeek) | (per OTO position) | **9.1/10 avg** |
 | **Advertorial (blocks)** | Block system | rules_only + free text | advertorial_judge_v2.json | **9.38/10** |
 | Autres formats | Voir CHAMPION-PROMPTS-DEPLOY.md | Variable | Voir CLAUDE.md | Pas encore testé |
 
@@ -188,11 +198,14 @@ Template has 16 fake FB comments referencing "back pain", "nerve pain", "walking
 
 | Source | Score | Conditions |
 |--------|-------|------------|
+| **ECOM-AI Template (HF Stride)** | **10.41/10** | **DeepSeek, listicle, 72 slots, sanitization** |
 | **ECOM-AI Template (Nutrovia)** | **9.76/10** | **DeepSeek, zone-based, closing+comments cleaned** |
 | **ECOM-AI Template (Nutrovia avg 3 runs)** | **9.59/10** | **DeepSeek, zone-based** |
+| **Upsell templates (avg 5 OTO)** | **9.1/10** | **DeepSeek, upsell-filler, 16 Vibriance techniques** |
 | ECOM-AI 3-step (lab briefs avg) | 8.92/10 | MiMo, free text, anti-bias fix |
 | Lab (testing-ai-prompt) | 8.58/10 | MiMo, free text, temp=0.3 |
 | ECOM-AI 3-step (nutrovia) | 7.77/10 | MiMo, free text, anti-bias fix |
+| Upsell before Vibriance techniques | 6.7/10 | DeepSeek, basic upsell prompt |
 | ECOM-AI JSON best (#5) | 6.44/10 | DeepSeek, JSON, triggers |
 | ECOM-AI JSON Dual Persona | 6.0/10 | DeepSeek, JSON, judge pick-best |
 
