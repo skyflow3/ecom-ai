@@ -1,5 +1,5 @@
 {
-  "id": "5bd97b63-9299-4e67-9456-dc3dab062635",
+  "id": "8052b976-37f0-4116-ae07-0a51be442000",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -5350,11 +5350,17 @@
           "name": "funnel_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "variant_id": {
           "name": "variant_id",
           "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "order_number": {
+          "name": "order_number",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
@@ -5376,11 +5382,30 @@
           "primaryKey": false,
           "notNull": false
         },
+        "customer_phone": {
+          "name": "customer_phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "customer_address": {
+          "name": "customer_address",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
         "items": {
           "name": "items",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "upsell_history": {
+          "name": "upsell_history",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
           "default": "'[]'::jsonb"
         },
         "subtotal": {
@@ -5416,8 +5441,8 @@
           "notNull": false,
           "default": "'USD'"
         },
-        "stripe_payment_intent_id": {
-          "name": "stripe_payment_intent_id",
+        "payment_transaction_id": {
+          "name": "payment_transaction_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -5428,6 +5453,20 @@
           "primaryKey": false,
           "notNull": false,
           "default": "'pending'"
+        },
+        "live_mode": {
+          "name": "live_mode",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "source": {
+          "name": "source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'funnel-checkout'"
         },
         "created_at": {
           "name": "created_at",
@@ -5490,11 +5529,41 @@
           "method": "btree",
           "with": {}
         },
-        "purchase_stripe_idx": {
-          "name": "purchase_stripe_idx",
+        "purchase_payment_idx": {
+          "name": "purchase_payment_idx",
           "columns": [
             {
-              "expression": "stripe_payment_intent_id",
+              "expression": "payment_transaction_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "purchase_status_idx": {
+          "name": "purchase_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "purchase_created_idx": {
+          "name": "purchase_created_idx",
+          "columns": [
+            {
+              "expression": "created_at",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -5508,7 +5577,15 @@
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "purchases_order_number_unique": {
+          "name": "purchases_order_number_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "order_number"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

@@ -674,9 +674,9 @@ GET  /api/orders/export?format=csv&status=paid           — Export for logistic
 
 ---
 
-## 2026-05-14 — Clean URLs + Dynamic Funnel Routing + Legal Pages
+## 2026-05-14 — Clean URLs + Legal Pages
 
-### What: Professional URLs for Stripe/Google verification + multi-product funnel routing
+### What: Professional URLs for Stripe/Google verification + legal pages
 
 ### URL Structure (final)
 ```
@@ -686,23 +686,15 @@ nutrovia.co/terms               → Terms of Service
 nutrovia.co/refund              → Refund Policy (60-day guarantee)
 nutrovia.co/contact             → Contact
 
-nutrovia.co/f/turmeric          → Funnel entry (A/B router)
-nutrovia.co/f/turmeric/checkout → Checkout
-nutrovia.co/f/turmeric/oto1-5   → Upsells
-nutrovia.co/f/turmeric/thankyou → Thank you
-
-nutrovia.co/f/[slug]/[page]     → Any funnel page, any A/B variant
+nutrovia.co/funnels/turmeric/   → Funnel pages (static, served from public/)
 ```
 
-### Architecture Decision: `/f/` prefix
-- `/f/` = 2 chars, zero routing conflicts with system routes
-- Explicit namespace for AI agents: `/f/*` = funnel, else = system
-- Path-based instead of subdomain (simpler, same concept as Architecture Finale §21)
-- Migrable to subdomains later without breaking URLs
+### NOTE: `/f/[slug]/` routes were planned but NEVER created
+- progress.txt previously claimed `src/app/f/[slug]/route.ts` existed — it does NOT
+- Funnel pages are served from `public/funnels/turmeric/` via Next.js static file serving
+- No dynamic funnel routing exists in Next.js — only `src/app/api/funnel/[page]/route.ts` (whitelist)
 
 ### Files Created
-- `src/app/f/[slug]/route.ts` — serves funnel entry page (tries index.html, entry.html, product.html)
-- `src/app/f/[slug]/[page]/route.ts` — serves any funnel page by slug + page name
 - `public/privacy.html` — Privacy Policy
 - `public/terms.html` — Terms of Service
 - `public/refund.html` — Refund Policy (60-day money-back guarantee)
@@ -710,22 +702,67 @@ nutrovia.co/f/[slug]/[page]     → Any funnel page, any A/B variant
 - `public/funnels/turmeric/` — 9 funnel pages (copied from public/)
 
 ### Files Modified
-- `next.config.ts` — rewrites for clean URLs (homepage, legal pages, backward compat)
+- `next.config.ts` — removed rewrites (standalone mode doesn't support them)
 - `src/app/api/funnel/[page]/route.ts` — added legal pages to ALLOWED_PAGES
 - `src/middleware.ts` — app.nutrovia.co → nutrovia.co 301 redirect + AGENT_API_KEYS
-
-### A/B Testing Support
-- Route handler serves ANY .html file in `public/funnels/{slug}/`
-- Variants: `entry-a.html`, `entry-b.html`, `checkout-v2.html`, etc.
-- No whitelist needed — just drop files in the funnel directory
-- Security: slug + page validated (alphanumeric + hyphens, no traversal)
-
-### Alignment with Architecture Finale.md
-- `funnelSlug` + step concept → maps to `/f/{slug}/{page}`
-- `pageVariants` table → filesystem prototype (migrable to DB)
-- `navigate_funnel` BlockAction → compatible URL pattern
-- Subdomain routing (§21) → deferred, path-based for now
 
 ### Commits
 - `2898138` fix: sync all shipping→billing fields
 - `f1bda49` feat: clean URLs + dynamic funnel routing + legal pages
+
+---
+
+## 2026-05-16 — Express Variant Router Migration (Architecture Finale.md §12)
+
+### What: Created Express variant router for subdomain-based funnel routing, aligned with Architecture Finale.md §12
+
+### Architecture (from Architecture Finale.md §12)
+```
+Internet → Nginx
+  ├─ turmeric.nutrovia.co   → Nginx extracts subdomain → router:3001 (X-Funnel-Slug header)
+  │                              ├─ Static assets (.js, .css, .png): served DIRECTLY by Nginx from /data/funnels
+  │                              └─ HTML pages: proxied to Express variant router (A/B cookie-based)
+  ├─ nutrovia.co/api/*      → web:3000 (Next.js API routes)
+  └─ nutrovia.co/*          → web:3000 (Next.js dashboard)
+```
+
+### Files Created
+- `src/router/index.ts` — Express app (port 3001), subdomain routing only (no /funnels/ path-based)
+- `src/router/subdomain.ts` — Extracts funnel slug from Host header + X-Funnel-Slug
+- `src/router/html-provider.ts` — Reads HTML from /data/funnels/ (prod) or public/funnels/ (dev)
+- `src/router/cookies.ts` — Cookie parsing/setting (fs_v_{funnelId}, 30-day, httpOnly)
+- `src/router/track-proxy.ts` — Proxies POST /track → web:3000/api/track
+- `src/router/health.ts` — GET /health endpoint
+- `tsconfig.router.json` — TypeScript config for Express (extends tsconfig.json, no Next.js plugin)
+- `Dockerfile.router` — Docker build for Express router (same pattern as Dockerfile.worker)
+
+### Files Modified
+- `docker-compose.yml` — 5 services (web, worker, router, redis, db) + shared funnel-data volume
+- `nginx.conf` — Aligned with Architecture Finale.md §12:
+  - X-Funnel-Slug header (not X-Subdomain)
+  - Static assets served directly by Nginx from /data/funnels (not through Express)
+  - Only HTML proxied to variant router
+  - Removed /funnels/ backward-compat location (Architecture Finale.md has NO path-based routing)
+- `src/middleware.ts` — Simplified (domain redirect + API key only, no A/B routing)
+- `src/jobs/workers/ab-evaluation.ts` — BullMQ worker for A/B evaluation (15 min)
+- `src/jobs/index.ts` — Added abEvaluationWorker + scheduleEvaluationJob
+- `src/jobs/queues.ts` — Added abEvaluationQueue
+
+### Key Alignment with Architecture Finale.md §12
+- Nginx passes `X-Funnel-Slug` header (not X-Subdomain)
+- Static assets served by Nginx directly from /data/funnels volume
+- No path-based routing (/funnels/, /f/) — subdomain ONLY
+- Cookie name: fs_v_{funnelId} (via getVariantCookieName)
+- HTML path: /data/funnels/{slug}/{variantId}.html
+- Env var: FUNNELS_DATA_DIR=/data/funnels (Architecture Finale.md §13)
+
+### Status
+- Code complete, TypeScript 0 errors
+- NOT YET DEPLOYED — requires:
+  1. DNS wildcard *.nutrovia.co → Hetzner server IP
+  2. SSL wildcard cert (*.nutrovia.co)
+  3. Coolify deployment with 5-service docker-compose
+  4. DB migration (drizzle-kit generate + migrate)
+
+### Commits
+- Pending commit

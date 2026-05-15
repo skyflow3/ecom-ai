@@ -283,7 +283,13 @@ async function handlePaymentIntentSucceeded(paymentIntent: Stripe.PaymentIntent)
         purchaseId: existing.id,
         orderNumber: existing.orderNumber,
       });
-    } else {
+
+      // WHY: Fire a purchase tracking event to /api/track so A/B test metrics
+      //      get updated. The variantId comes from the purchase record.
+      //      Fire-and-forget — must not delay the webhook response.
+      if (existing.variantId) {
+        firePurchaseTrackEvent(existing.variantId, paymentIntent.amount, existing.sessionId).catch(() => {});
+      }    } else {
       log.info('Purchase already processed', {
         purchaseId: existing.id,
         status: existing.status,
@@ -309,4 +315,37 @@ function getPriceIdForPlan(_planName: string): string | undefined {
   // WHY: In checkout.session.completed, we already have the plan in metadata.
   //      We don't need to reverse-lookup the priceId — we use the plan directly.
   return undefined;
+}
+
+/**
+ * Fire a purchase tracking event to /api/track for A/B test attribution.
+ * WHY: When Stripe confirms payment, we need to tell the tracking system
+ *      which variant drove this purchase, so the decision engine can
+ *      calculate CVR and promote champions.
+ */
+async function firePurchaseTrackEvent(
+  variantId: string,
+  amountCents: number,
+  sessionId: string,
+): Promise<void> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    await fetch(`${baseUrl}/api/track`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        variantId,
+        event: 'purchase',
+        sessionId,
+        data: {
+          metadata: {
+            revenue: (amountCents / 100).toFixed(2),
+            source: 'stripe_webhook',
+          },
+        },
+      }),
+    });
+  } catch {
+    // WHY: Fire-and-forget. Tracking failure must not break webhook processing.
+  }
 }

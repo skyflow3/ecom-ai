@@ -1,24 +1,29 @@
 /**
- * Purpose: Request middleware — domain redirect + agent API key protection
- * WHY: funnel pages are public, but order listing/export/update require authentication.
- *      Single order GET is public (thank you page) — UUIDs are unguessable.
- *      Redirect app.nutrovia.co → nutrovia.co for consistent branding.
- *      Uses AGENT_API_KEYS (comma-separated) per Architecture Finale.md §19 env config.
+ * Purpose: Next.js middleware — domain redirect + API key protection.
+ * WHY: Funnel A/B routing has been moved to the Express variant router (src/router/).
+ *      This middleware only handles:
+ *      1. Redirects app.nutrovia.co → nutrovia.co for consistent branding
+ *      2. Protects sensitive API endpoints with x-api-key
+ *
+ * Funnel routing is handled by:
+ *   - Express router (src/router/index.ts) on port 3001
+ *   - Nginx routes *.nutrovia.co → router:3001
+ *   - Nginx routes /funnels/* → router:3001 (backward compat)
  */
 
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
-// Routes that require x-api-key header
+// ─── Protected API routes ───────────────────────────────────────────────────────
+
 const PROTECTED_API_PATTERNS = [
-  { method: "GET", pattern: /^\/api\/orders\/?$/ },           // LIST all orders
-  { method: "GET", pattern: /^\/api\/orders\/export/ },       // Export orders
-  { method: "PATCH", pattern: /^\/api\/orders\/[^/]+$/ },     // UPDATE order status
+  { method: "GET", pattern: /^\/api\/orders\/?$/ },
+  { method: "GET", pattern: /^\/api\/orders\/export/ },
+  { method: "PATCH", pattern: /^\/api\/orders\/[^/]+$/ },
 ];
 
 function isProtectedRoute(method: string, pathname: string): boolean {
   return PROTECTED_API_PATTERNS.some(
-    (p) => p.method === method && p.pattern.test(pathname)
+    (p) => p.method === method && p.pattern.test(pathname),
   );
 }
 
@@ -26,21 +31,19 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const host = request.headers.get("host") || "";
 
-  // Redirect app.nutrovia.co → nutrovia.co (consistent branding for ads)
+  // ── Domain redirect: app.nutrovia.co → nutrovia.co ──
   if (host.startsWith("app.nutrovia.co")) {
     const url = request.nextUrl.clone();
     url.host = "nutrovia.co";
     return NextResponse.redirect(url, 301);
   }
 
-  // API key protection for sensitive endpoints
+  // ── API key protection for sensitive endpoints ──
   if (isProtectedRoute(request.method, pathname)) {
     const apiKey = request.headers.get("x-api-key");
     const validKeys = process.env.AGENT_API_KEYS?.split(",").map(k => k.trim()).filter(Boolean);
 
     if (!validKeys || validKeys.length === 0) {
-      // WHY: If AGENT_API_KEYS is not configured, block protected routes entirely
-      //      rather than leaving them open
       return NextResponse.json(
         { success: false, error: "Server misconfiguration: AGENT_API_KEYS not set" },
         { status: 500 },

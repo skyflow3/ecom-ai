@@ -2,10 +2,16 @@
 # Coolify uses this as a template for its own docker-compose generation.
 #
 # Services:
-#   web    — Next.js app (port 3000)
-#   worker — BullMQ job processor (page generation, deploy, pattern codify)
+#   web    — Next.js app (port 3000) — dashboard + API routes
+#   worker — BullMQ job processor (page generation, deploy, A/B evaluation, pattern codify)
+#   router — Express variant router (port 3001) — funnel pages + A/B routing
 #   redis  — BullMQ queue backend + rate limiting
 #   db     — PostgreSQL database
+#
+# Nginx (managed by Coolify):
+#   *.nutrovia.co       → router:3001 (funnel pages)
+#   nutrovia.co/api/*   → web:3000    (API routes)
+#   nutrovia.co/*       → web:3000    (dashboard)
 
 services:
   web:
@@ -20,6 +26,9 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    volumes:
+      # WHY: Shared volume for funnel HTML — both web and router read from here
+      - funnel-data:/app/public/funnels
     restart: unless-stopped
     deploy:
       resources:
@@ -36,11 +45,40 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    volumes:
+      # WHY: Worker writes generated HTML to the shared volume
+      - funnel-data:/data/funnels
     restart: unless-stopped
     deploy:
       resources:
         limits:
           memory: 512M
+
+  router:
+    build:
+      context: .
+      dockerfile: Dockerfile.router
+    ports:
+      - "3001:3001"
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      # WHY: Router reads funnel HTML from shared volume
+      - funnel-data:/data/funnels
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   redis:
     image: redis:7-alpine
@@ -83,3 +121,4 @@ services:
 volumes:
   redis-data:
   pg-data:
+  funnel-data:

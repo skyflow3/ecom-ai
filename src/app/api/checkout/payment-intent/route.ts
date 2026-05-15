@@ -31,6 +31,11 @@ const paymentIntentSchema = z.object({
   currency: z.string().length(3).default('usd'),
   /** Optional metadata for tracking */
   metadata: z.record(z.string()).optional(),
+  /** WHY: Variant ID from A/B test tracking — stored in PaymentIntent metadata
+   *      so the Stripe webhook can attribute purchases to the right variant. */
+  variantId: z.string().optional(),
+  /** Session ID for tracking */
+  sessionId: z.string().optional(),
 });
 
 // ─── CORS Headers ───────────────────────────────────────────────────────────────
@@ -61,11 +66,19 @@ export async function POST(request: Request): Promise<Response> {
       );
     }
 
-    const { amount, currency, metadata } = parsed.data;
+    const { amount, currency, metadata, variantId, sessionId } = parsed.data;
 
-    log.info('Creating payment intent', { amount, currency });
+    // WHY: Merge variantId and sessionId into metadata so the Stripe webhook
+    //      can attribute purchases to the right A/B test variant.
+    const enrichedMetadata = {
+      ...metadata,
+      ...(variantId ? { variantId } : {}),
+      ...(sessionId ? { sessionId } : {}),
+    };
 
-    const result = await createEcomPaymentIntent(amount, currency, metadata);
+    log.info('Creating payment intent', { amount, currency, hasVariant: !!variantId });
+
+    const result = await createEcomPaymentIntent(amount, currency, enrichedMetadata);
 
     return NextResponse.json(
       {

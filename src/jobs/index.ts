@@ -17,18 +17,28 @@ import '../renderers'; // Register all block renderers
 import { createLogger } from '../lib/logger';
 import { pageGenerationWorker } from './workers/page-generation';
 import { pageDeployWorker } from './workers/page-deploy';
+import { abEvaluationWorker, scheduleEvaluationJob } from './workers/ab-evaluation';
+import { patternCodifyWorker } from './workers/pattern-codify';
 
 const log = createLogger('jobs:runner');
 
 log.info('Starting BullMQ workers...');
 
 // Workers auto-start when instantiated
+// Schedule A/B evaluation repeatable job
+scheduleEvaluationJob().catch((err) => {
+  log.error('Failed to schedule A/B evaluation job', {
+    error: err instanceof Error ? err.message : String(err),
+  });
+});
 
 log.info('Workers started', {
-  queues: ['page-generation', 'page-deploy'],
+  queues: ['page-generation', 'page-deploy', 'ab-evaluation', 'pattern-codify'],
   concurrency: {
     'page-generation': 3,
     'page-deploy': 5,
+    'ab-evaluation': 1,
+    'pattern-codify': 1,
   },
 });
 
@@ -38,6 +48,8 @@ process.on('SIGTERM', async () => {
   await Promise.all([
     pageGenerationWorker.close(),
     pageDeployWorker.close(),
+    abEvaluationWorker.close(),
+    patternCodifyWorker.close(),
   ]);
   log.info('Workers closed');
   process.exit(0);
@@ -48,6 +60,8 @@ process.on('SIGINT', async () => {
   await Promise.all([
     pageGenerationWorker.close(),
     pageDeployWorker.close(),
+    abEvaluationWorker.close(),
+    patternCodifyWorker.close(),
   ]);
   log.info('Workers closed');
   process.exit(0);

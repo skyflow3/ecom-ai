@@ -43,6 +43,17 @@ export const pageDeployQueue = new Queue('page-deploy', {
   },
 });
 
+/** A/B evaluation — runs every 15 min to evaluate active A/B tests */
+export const abEvaluationQueue = new Queue('ab-evaluation', {
+  connection,
+  defaultJobOptions: {
+    attempts: 2,
+    backoff: { type: 'exponential', delay: 10000 },
+    removeOnComplete: { count: 20 },
+    removeOnFail: { count: 10 },
+  },
+});
+
 /** Pattern codification — extracts patterns from A/B test champions */
 export const patternCodifyQueue = new Queue('pattern-codify', {
   connection,

@@ -64,6 +64,49 @@ export class LocalStorageProvider implements StorageProvider {
   }
 }
 
+// ─── Docker Volume Storage Provider (Production) ──────────────────────────────
+
+/**
+ * WHY: Architecture Finale.md §12 — in production, HTML is served from the shared
+ *      Docker volume /data/funnels/ by both Nginx (static assets) and the Express
+ *      variant router (HTML pages). This provider writes directly to that volume.
+ *      The variant router reads from the same directory.
+ *
+ * Storage key format: funnels/{slug}/{stepSlug}/{variantId}.html
+ * Written to: {FUNNELS_DATA_DIR}/{slug}/{stepSlug}/{variantId}.html
+ */
+export class DockerVolumeStorageProvider implements StorageProvider {
+  private readonly dataDir: string;
+  private readonly baseUrl: string;
+
+  constructor() {
+    this.dataDir = process.env.FUNNELS_DATA_DIR || '/data/funnels';
+    this.baseUrl = process.env.BASE_DOMAIN
+      ? `https://${process.env.BASE_DOMAIN}`
+      : 'http://localhost:3001';
+  }
+
+  async upload(key: string, html: string): Promise<void> {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+
+    // WHY: Strip "funnels/" prefix from key since dataDir already contains the funnel root
+    //      key = "funnels/turmeric/entry/uuid.html" → relativePath = "turmeric/entry/uuid.html"
+    const relativePath = key.replace(/^funnels\//, '');
+    const fullPath = path.join(this.dataDir, relativePath);
+    const dir = path.dirname(fullPath);
+
+    await fs.mkdir(dir, { recursive: true });
+    await fs.writeFile(fullPath, html, 'utf-8');
+  }
+
+  getUrl(key: string): string {
+    // WHY: In production with subdomain routing, the URL is just the subdomain + path
+    //      For now, return a relative path that the variant router can resolve
+    return `/${key}`;
+  }
+}
+
 // ─── Cloudflare R2 Storage Provider (Production) ──────────────────────────────
 
 /**
@@ -144,10 +187,16 @@ export class R2StorageProvider implements StorageProvider {
 
 /**
  * Returns the appropriate storage provider based on environment.
+ * - Production Docker with FUNNELS_DATA_DIR → DockerVolumeStorageProvider (Architecture Finale.md §12)
  * - Production with R2 env vars → R2StorageProvider
- * - Otherwise → LocalStorageProvider
+ * - Development → LocalStorageProvider
  */
 export function getStorageProvider(): StorageProvider {
+  // WHY: Architecture Finale.md §12 — in Docker production, write to shared volume
+  if (process.env.FUNNELS_DATA_DIR && process.env.NODE_ENV === 'production') {
+    return new DockerVolumeStorageProvider();
+  }
+
   const hasR2Config =
     process.env.R2_ACCOUNT_ID &&
     process.env.R2_ACCESS_KEY_ID &&

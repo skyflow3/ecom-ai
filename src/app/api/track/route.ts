@@ -12,7 +12,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { db } from '@/lib/db';
-import { rawEvents, events, metrics5min } from '@/db/schema';
+import { rawEvents, events, metrics5min, testVariantMetrics } from '@/db/schema';
 import { eq, and, gte, sql } from 'drizzle-orm';
 import { createLogger } from '@/lib/logger';
 
@@ -127,6 +127,55 @@ async function incrementVariantMetrics(
   }
 }
 
+// ─── A/B Test metrics increment ──────────────────────────────────────────────
+
+/**
+ * WHY: When a variantId belongs to an active A/B test, we also increment
+ *      the testVariantMetrics table. This is the data the decision engine reads
+ *      to evaluate stage transitions (sandbox → elimination → ... → champion).
+ *
+ *      This is fire-and-forget — must not slow down the tracking response.
+ *      If no active test exists for this variant, the query does nothing.
+ */
+async function incrementAbTestMetrics(
+  variantId: string,
+  eventType: TrackEvent,
+  metadata?: Record<string, unknown>,
+): Promise<void> {
+  try {
+    // Map event type to column increments
+    const updates: Record<string, unknown> = {};
+
+    if (eventType === 'pageview') {
+      updates.visitors = sql`${testVariantMetrics.visitors} + 1`;
+    } else if (eventType === 'cta_click') {
+      updates.clicks = sql`${testVariantMetrics.clicks} + 1`;
+    } else if (eventType === 'purchase') {
+      updates.purchases = sql`${testVariantMetrics.purchases} + 1`;
+      // WHY: Revenue comes from metadata (set by Stripe webhook)
+      const revenue = Number(metadata?.revenue ?? 0);
+      if (revenue > 0) {
+        updates.revenue = sql`${testVariantMetrics.revenue} + ${revenue.toFixed(2)}`;
+      }
+    }
+
+    if (Object.keys(updates).length === 0) return;
+
+    // WHY: Only update if this variant belongs to an active test.
+    //      The variantId appears in testVariantMetrics for ALL tests it's part of.
+    await db
+      .update(testVariantMetrics)
+      .set(updates)
+      .where(and(
+        eq(testVariantMetrics.variantId, variantId),
+        sql`${testVariantMetrics.eliminatedAt} IS NULL`,
+      ));
+  } catch {
+    // WHY: A/B metrics increment failure must NOT block anything.
+    //      Metrics can be recalculated from raw events later.
+  }
+}
+
 // ─── POST Handler ────────────────────────────────────────────────────────────
 
 export async function POST(request: NextRequest) {
@@ -197,6 +246,13 @@ export async function POST(request: NextRequest) {
     if (event === 'pageview' || event === 'click' || event === 'cta_click' || event === 'purchase') {
       // WHY: Don't await — metrics increment should not slow down the response
       incrementVariantMetrics(variantId, event).catch(() => {});
+    }
+
+    // WHY: Also increment A/B test variant metrics so the decision engine
+    //      has real-time data to evaluate stage transitions.
+    //      Fire-and-forget — must not block the response.
+    if (event === 'pageview' || event === 'cta_click' || event === 'purchase') {
+      incrementAbTestMetrics(variantId, event, data?.metadata).catch(() => {});
     }
 
     const elapsed = Date.now() - startTime;
