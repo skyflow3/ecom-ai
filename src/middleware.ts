@@ -33,23 +33,28 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  // Funnel directory index: /funnels/turmeric/ → serve index.html
+  // Funnel entry: /funnels/turmeric/ → serve advertorial.html
   const funnelMatch = pathname.match(/^\/funnels\/([a-z0-9][a-z0-9-]*)\/?$/);
   if (funnelMatch) {
     const slug = funnelMatch[1];
     const { existsSync, readFileSync } = await import('fs');
     const { join } = await import('path');
+    // Try advertorial.html first (entry page), then index.html (router)
+    const entryFiles = ['advertorial.html', 'index.html'];
     const candidates = [
-      join(process.cwd(), 'public', 'funnels', slug, 'index.html'),
-      join(process.cwd(), '..', 'public', 'funnels', slug, 'index.html'),
+      join(process.cwd(), 'public', 'funnels', slug),
+      join(process.cwd(), '..', 'public', 'funnels', slug),
     ];
-    for (const f of candidates) {
-      if (existsSync(f)) {
-        const html = readFileSync(f, 'utf-8');
-        return new NextResponse(html, {
-          status: 200,
-          headers: { 'Content-Type': 'text/html; charset=utf-8' },
-        });
+    for (const base of candidates) {
+      for (const entry of entryFiles) {
+        const f = join(base, entry);
+        if (existsSync(f)) {
+          const html = readFileSync(f, 'utf-8');
+          return new NextResponse(html, {
+            status: 200,
+            headers: { 'Content-Type': 'text/html; charset=utf-8' },
+          });
+        }
       }
     }
   }
