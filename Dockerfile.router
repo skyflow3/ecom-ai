@@ -35,6 +35,8 @@ COPY tsconfig.router.json ./
 COPY public/funnels/ ./public/funnels/
 
 # WHY: Funnel HTML files are mounted via shared volume at /data/funnels
+#      Create directory with correct ownership before VOLUME declaration
+RUN mkdir -p /data/funnels && chown router:routerjs /data/funnels
 VOLUME ["/data/funnels"]
 
 USER router
