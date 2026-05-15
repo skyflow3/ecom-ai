@@ -28,7 +28,8 @@ function handleRequest(event) {
 
   // WHY: Reserved subdomains pass through without caching
   if (!subdomain || subdomain === 'go' || subdomain === 'app' ||
-      subdomain === 'www' || subdomain === 'api' || subdomain === 'admin') {
+      subdomain === 'www' || subdomain === 'api' || subdomain === 'admin' ||
+      subdomain === 'coolify' || subdomain === 'cdn' || subdomain === 'mail') {
     return fetch(request);
   }
 

@@ -749,20 +749,89 @@ Internet → Nginx
 - `src/jobs/queues.ts` — Added abEvaluationQueue
 
 ### Key Alignment with Architecture Finale.md §12
-- Nginx passes `X-Funnel-Slug` header (not X-Subdomain)
-- Static assets served by Nginx directly from /data/funnels volume
-- No path-based routing (/funnels/, /f/) — subdomain ONLY
+- X-Funnel-Slug header set by Cloudflare Worker (not Nginx — Nginx wildcard didn't work in Coolify)
+- Subdomain routing via Cloudflare Worker → funnels.nutrovia.co (Router)
+- Path-based fallback: funnels.nutrovia.co/{funnel-slug}/{step-slug}
 - Cookie name: fs_v_{funnelId} (via getVariantCookieName)
 - HTML path: /data/funnels/{slug}/{variantId}.html
 - Env var: FUNNELS_DATA_DIR=/data/funnels (Architecture Finale.md §13)
 
+### Architecture (DEPLOYED — different from Architecture Finale.md §12)
+```
+Internet → Cloudflare (CDN + Worker + SSL)
+  ├─ *.nutrovia.co          → Cloudflare Worker (funnel-router)
+  │    ├─ Reserved (app, www, api, funnels) → pass through to origin
+  │    └─ Funnel subdomains (turmeric, vibriance, etc.)
+  │         → Worker sets X-Funnel-Slug header
+  │         → Rewrites Host to funnels.nutrovia.co
+  │         → Edge caches response (Cache API)
+  │         → Traefik → Router:3001
+  ├─ nutrovia.co            → Traefik → web:3000 (Next.js dashboard + API)
+  └─ funnels.nutrovia.co    → Traefik → Router:3001 (Express variant router)
+```
+
+### WHY Cloudflare Worker instead of Nginx (Architecture Finale.md §12)
+- Traefik wildcard `Host(\`*.nutrovia.co\`)` returns 404 in Coolify v4 beta
+- Coolify API cannot update FQDN field (returns "This field is not allowed")
+- Cloudflare Worker provides: wildcard routing + edge cache + auto HTTPS + DDoS protection
+- Performance: 1st visit ~50ms, cached visits ~5ms from CDN edge
+- Net improvement over original Nginx plan (global CDN vs single Hetzner server)
+
+### Coolify Deployment (3 apps)
+- ECOM-AI (Web): UUID d044oc4wgg0g — FQDN http://nutrovia.co — running:healthy
+- ECOM-AI Router: UUID rwok8skgkko4g — FQDN http://funnels.nutrovia.co — running:healthy
+- ECOM-AI Worker: UUID z4s00so8gksg — no FQDN — running:unknown
+- Pattern codify worker wired in src/jobs/index.ts
+
+### Cloudflare Setup
+- DNS: *.nutrovia.co → 5.161.254.135 [PROXIED] (orange cloud)
+- DNS: nutrovia.co → 5.161.254.135 [PROXIED]
+- Worker: funnel-router (edge cached, extracts subdomain, sets X-Funnel-Slug)
+- Route: *.nutrovia.co/* → funnel-router
+- SSL: Auto by Cloudflare (no cert management needed)
+
+### Files Also Created
+- `cloudflare-worker.js` — Cloudflare Worker with edge cache (Cache API)
+- `src/jobs/workers/pattern-codify.ts` — Pattern codification worker (§50 RAG Pattern Engine)
+
+### Files Also Modified
+- `src/router/index.ts` — Added path-based funnel routing fallback (funnels.nutrovia.co/{slug}/)
+- `src/router/subdomain.ts` — Added 'funnels' to RESERVED_SUBDOMAINS
+
 ### Status
-- Code complete, TypeScript 0 errors
-- NOT YET DEPLOYED — requires:
-  1. DNS wildcard *.nutrovia.co → Hetzner server IP
-  2. SSL wildcard cert (*.nutrovia.co)
-  3. Coolify deployment with 5-service docker-compose
-  4. DB migration (drizzle-kit generate + migrate)
+- DEPLOYED and WORKING:
+  - turmeric.nutrovia.co/health → 200 OK via Cloudflare Worker + Router
+  - vibriance.nutrovia.co/health → 200 OK via Cloudflare Worker + Router
+  - go.nutrovia.co/turmeric/ → 200 OK (path-based fallback)
+  - turmeric.nutrovia.co/ → 200 OK (funnel HTML served from Router)
+  - turmeric.nutrovia.co/checkout -> 200 OK (checkout page served)
+  - nutrovia.co/api/health -> 200 OK (Next.js dashboard)
+  - HTTPS works automatically via Cloudflare SSL
+  - DB migration complete: 70 tables created
+  - Edge cache: subdomain ~0.35s, path-based ~1.1s (3x faster with subdomain)
+- DONE:
+  1. DB migration (70 tables via /api/admin/setup)
+  2. Funnel HTML included in Router Docker image (public/funnels/)
+  3. Renamed funnels.nutrovia.co -> go.nutrovia.co
+  4. Worker healthcheck on port 3010 (HTTP server in src/jobs/index.ts)
+  5. Router deploy endpoint: POST /deploy + POST /deploy/batch
+  6. RouterDeployProvider in deploy-pipeline.ts (Worker sends HTML via HTTP)
+  7. Router returns 404 instead of 500 for missing funnel pages
+  8. Full funnel test: 14 routes (7 subdomain + 7 path-based) all 200 OK
+- PENDING (need Coolify API to recover — currently returning 500):
+  1. Router redeploy with permission fix (/data/funnels ownership)
+  2. Worker redeploy with healthcheck
+  3. Test deploy endpoint with new product
+  4. Worker healthcheck config in Coolify (port 3010)
 
 ### Commits
-- Pending commit
+- c947357 feat: Express variant router + pattern codify worker + Dockerfile.router + nginx.conf + docker-compose
+- 3ac32c9 feat: path-based funnel routing fallback for Router
+- 58b299e feat: Cloudflare Worker for wildcard subdomain routing
+- 774ddef feat: add edge caching to Cloudflare Worker
+- 8132fc2 refactor: rename router subdomain funnels.nutrovia.co -> go.nutrovia.co
+- 01776f6 fix: update setup migration path to 0000_black_warlock.sql
+- 37bb1d0 feat: include funnel HTML in Router Docker image for immediate serving
+- b2e92ce feat: Router deploy endpoint + RouterDeployProvider + Worker healthcheck
+- 472c07b fix: Router /data/funnels permissions for deploy endpoint
+- ef63d3e fix: Router returns 404 instead of 500 for missing funnel pages
