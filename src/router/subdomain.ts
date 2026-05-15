@@ -24,7 +24,7 @@ const log = createLogger('router:subdomain');
 const BASE_DOMAIN = process.env.BASE_DOMAIN || 'nutrovia.co';
 
 // WHY: Reserved subdomains that should NOT be treated as funnel slugs
-const RESERVED_SUBDOMAINS = ['app', 'www', 'api', 'admin', 'cdn', 't', 'mail', 'staging', 'funnels'];
+const RESERVED_SUBDOMAINS = ['app', 'www', 'api', 'admin', 'cdn', 't', 'mail', 'staging', 'go', 'funnels'];
 
 /**
  * Extract funnel slug from subdomain.

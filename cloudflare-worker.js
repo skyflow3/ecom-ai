@@ -8,10 +8,10 @@
  * FLOW:
  *   Request -> Worker -> cache hit? -> return cached (~1ms)
  *                            |
- *                            miss -> X-Funnel-Slug -> funnels.nutrovia.co -> Router -> cache + return (~50ms)
+ *                            miss -> X-Funnel-Slug -> go.nutrovia.co -> Router -> cache + return (~50ms)
  */
 
-var ROUTER_HOST = 'funnels.nutrovia.co';
+var ROUTER_HOST = 'go.nutrovia.co';
 var BASE_DOMAIN = 'nutrovia.co';
 var BASE_SUFFIX = '.' + BASE_DOMAIN;
 
@@ -27,7 +27,7 @@ function handleRequest(event) {
   var subdomain = host.slice(0, -BASE_SUFFIX.length);
 
   // WHY: Reserved subdomains pass through without caching
-  if (!subdomain || subdomain === 'funnels' || subdomain === 'app' ||
+  if (!subdomain || subdomain === 'go' || subdomain === 'app' ||
       subdomain === 'www' || subdomain === 'api' || subdomain === 'admin') {
     return fetch(request);
   }
@@ -43,7 +43,7 @@ function handleRequest(event) {
       return cachedResponse;
     }
 
-    // WHY: Cache miss — fetch from Router via funnels.nutrovia.co
+    // WHY: Cache miss — fetch from Router via go.nutrovia.co
     var newHeaders = new Headers(request.headers);
     newHeaders.set('X-Funnel-Slug', subdomain);
     newHeaders.set('X-Original-Host', host);
