@@ -73,16 +73,27 @@ funnelRouter.all('/{*splat}', async (req, res) => {
   const host = req.headers.host;
   // WHY: Architecture Finale.md §12 — Nginx passes funnel slug via X-Funnel-Slug header
   const xFunnelSlug = req.headers['x-funnel-slug'] as string | undefined;
-  const funnelSlug = extractFunnelSlug(host, xFunnelSlug);
+  let funnelSlug = extractFunnelSlug(host, xFunnelSlug);
+
+  // WHY: Path becomes the step slug (or contains funnel slug for path-based routing)
+  const pathname = req.path.replace(/^\/|\/$/g, '');
 
   if (!funnelSlug) {
+    // WHY: Path-based routing fallback — funnels.nutrovia.co/{funnelSlug}/{stepSlug}
+    //      This avoids needing wildcard DNS or per-funnel Traefik configuration.
+    //      When subdomain extraction fails (e.g. host = funnels.nutrovia.co),
+    //      the first path segment is treated as the funnel slug.
+    const pathParts = pathname.split('/').filter(Boolean);
+    if (pathParts.length > 0 && /^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(pathParts[0])) {
+      funnelSlug = pathParts[0];
+      const stepSlug = pathParts.slice(1).join('/');
+      await handleFunnelRequest(req, res, funnelSlug, stepSlug || '');
+      return;
+    }
     return res.status(400).send('Missing funnel slug');
   }
 
-  // WHY: Path becomes the step slug
-  const pathname = req.path.replace(/^\/|\/$/g, '');
   const stepSlug = pathname || '';
-
   await handleFunnelRequest(req, res, funnelSlug, stepSlug);
 });
 
