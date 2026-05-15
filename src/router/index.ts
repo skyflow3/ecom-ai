@@ -146,12 +146,21 @@ async function handleFunnelRequest(
     // Step 3: Read HTML file from disk
     const html = await readHtmlFile(resolution.htmlPath);
     if (!html) {
-      log.error('HTML file missing for resolved variant', {
-        funnelSlug,
-        stepSlug,
-        htmlPath: resolution.htmlPath,
-      });
-      res.status(500).send('Variant HTML not found');
+      // WHY: Fallback to convention-based static file path
+      //      resolveVariant may return a guessed path that doesn't exist
+      const fallbackPath = stepSlug
+        ? `/${funnelSlug}/${stepSlug}.html`
+        : `/${funnelSlug}/advertorial.html`;
+      const fallbackHtml = await readHtmlFile(fallbackPath);
+      if (fallbackHtml) {
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.setHeader('Cache-Control', 'public, max-age=300');
+        res.send(fallbackHtml);
+        return;
+      }
+
+      log.warn('HTML file not found', { funnelSlug, stepSlug, htmlPath: resolution.htmlPath });
+      res.status(404).send('Funnel page not found');
       return;
     }
 
