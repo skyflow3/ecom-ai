@@ -26,6 +26,10 @@ COPY tsconfig.json ./
 
 USER worker
 
+# WHY: Health server on port 3010 for Coolify healthcheck
+ENV WORKER_HEALTH_PORT=3010
+EXPOSE 3010
+
 # WHY: tsx runs TypeScript directly without a build step.
 #      Workers don't need Next.js — they just need the job handlers + DB access.
 CMD ["npx", "tsx", "src/jobs/index.ts"]

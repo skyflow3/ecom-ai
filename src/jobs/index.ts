@@ -14,6 +14,7 @@
 
 import '../renderers'; // Register all block renderers
 
+import http from 'http';
 import { createLogger } from '../lib/logger';
 import { pageGenerationWorker } from './workers/page-generation';
 import { pageDeployWorker } from './workers/page-deploy';
@@ -21,6 +22,21 @@ import { abEvaluationWorker, scheduleEvaluationJob } from './workers/ab-evaluati
 import { patternCodifyWorker } from './workers/pattern-codify';
 
 const log = createLogger('jobs:runner');
+
+// WHY: Coolify healthcheck needs HTTP 200. Minimal server on port 3010.
+const HEALTH_PORT = parseInt(process.env.WORKER_HEALTH_PORT || '3010', 10);
+const healthServer = http.createServer((req, res) => {
+  if (req.url === '/health') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'ok', service: 'bullmq-worker' }));
+  } else {
+    res.writeHead(404);
+    res.end('Not found');
+  }
+});
+healthServer.listen(HEALTH_PORT, () => {
+  log.info('Health server started', { port: HEALTH_PORT });
+});
 
 log.info('Starting BullMQ workers...');
 

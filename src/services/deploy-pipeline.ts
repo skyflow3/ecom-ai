@@ -107,6 +107,62 @@ export class DockerVolumeStorageProvider implements StorageProvider {
   }
 }
 
+// ─── Router Deploy Provider (Production — Coolify) ────────────────────────────
+
+/**
+ * WHY: In Coolify, Worker and Router are separate containers without a shared volume.
+ *      This provider sends HTML to the Router's /deploy endpoint via HTTP.
+ *      The Router writes to its own filesystem and serves the pages.
+ *
+ * Requires env vars: ROUTER_DEPLOY_URL (e.g. http://rwok8skgkko4g44ocs0s08o0:3001)
+ * Optional: DEPLOY_API_KEY (shared secret for auth)
+ */
+export class RouterDeployProvider implements StorageProvider {
+  private readonly routerUrl: string;
+  private readonly deployKey: string;
+
+  constructor() {
+    this.routerUrl = process.env.ROUTER_DEPLOY_URL || 'http://localhost:3001';
+    this.deployKey = process.env.DEPLOY_API_KEY || '';
+  }
+
+  async upload(key: string, html: string): Promise<void> {
+    // WHY: Parse storage key to extract slug and filename
+    //      key = "funnels/turmeric/entry/uuid.html" or "turmeric/entry.html"
+    const normalizedKey = key.replace(/^funnels\//, '');
+    const parts = normalizedKey.split('/');
+    const slug = parts[0];
+    const filename = parts.length > 2 ? parts.slice(1).join('_') : parts[parts.length - 1];
+
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (this.deployKey) {
+      headers['X-Deploy-Key'] = this.deployKey;
+    }
+
+    const response = await fetch(`${this.routerUrl}/deploy`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ slug, filename, html }),
+    });
+
+    if (!response.ok) {
+      const body = await response.text();
+      throw new Error(`Router deploy failed (${response.status}): ${body}`);
+    }
+  }
+
+  getUrl(key: string): string {
+    const normalizedKey = key.replace(/^funnels\//, '');
+    const parts = normalizedKey.split('/');
+    const slug = parts[0];
+    // WHY: In production with subdomain routing, each funnel gets its own subdomain
+    const baseDomain = process.env.BASE_DOMAIN || 'nutrovia.co';
+    return `https://${slug}.${baseDomain}/`;
+  }
+}
+
 // ─── Cloudflare R2 Storage Provider (Production) ──────────────────────────────
 
 /**
@@ -187,11 +243,17 @@ export class R2StorageProvider implements StorageProvider {
 
 /**
  * Returns the appropriate storage provider based on environment.
+ * - Production with ROUTER_DEPLOY_URL → RouterDeployProvider (sends HTML to Router via HTTP)
  * - Production Docker with FUNNELS_DATA_DIR → DockerVolumeStorageProvider (Architecture Finale.md §12)
  * - Production with R2 env vars → R2StorageProvider
  * - Development → LocalStorageProvider
  */
 export function getStorageProvider(): StorageProvider {
+  // WHY: Best option for Coolify — Worker sends HTML to Router via HTTP, no shared volume needed
+  if (process.env.ROUTER_DEPLOY_URL) {
+    return new RouterDeployProvider();
+  }
+
   // WHY: Architecture Finale.md §12 — in Docker production, write to shared volume
   if (process.env.FUNNELS_DATA_DIR && process.env.NODE_ENV === 'production') {
     return new DockerVolumeStorageProvider();

@@ -37,6 +37,7 @@ import { readVariantCookie, buildSetCookieHeader } from './cookies';
 import { readHtmlFile } from './html-provider';
 import { healthHandler } from './health';
 import { trackProxyHandler, trackOptionsHandler } from './track-proxy';
+import { deployHandler, batchDeployHandler } from './deploy';
 import { createLogger } from '@/lib/logger';
 
 const log = createLogger('router:main');
@@ -56,6 +57,10 @@ app.get('/health', healthHandler);
 // WHY: Funnel pages on subdomains POST tracking data here
 app.options('/track', trackOptionsHandler);
 app.post('/track', trackProxyHandler);
+
+// WHY: Worker deploys funnel HTML via these endpoints
+app.post('/deploy', deployHandler);
+app.post('/deploy/batch', batchDeployHandler);
 
 // ─── Catch-All: Funnel Page Routing ───────────────────────────────────────────
 // WHY: Architecture Finale.md §12 — ALL other requests are funnel pages.
