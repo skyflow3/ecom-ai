@@ -25,6 +25,7 @@ if (fs.existsSync(envPath)) {
 
 import { generateFunnel, type FunnelConfig } from '../src/services/funnel-generator';
 import type { ProductBrief } from '../src/agents/prompts/template-filler';
+import { getConfig } from './api-config';
 import { join } from 'path';
 
 // ─── Base Product Brief (Vibriance Super C Serum) ──────────────────────────────────
@@ -295,23 +296,7 @@ const FUNNEL: FunnelConfig = {
 };
 
 // ─── API Config ────────────────────────────────────────────────────────────────
-
-function getConfig() {
-  const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) {
-    console.error('ERROR: DEEPSEEK_API_KEY not found in .env');
-    process.exit(1);
-  }
-
-  return {
-    apiUrl: process.env.DEEPSEEK_API_URL ?? 'https://api.deepseek.com/v1/chat/completions',
-    apiKey,
-    model: process.env.DEEPSEEK_MODEL ?? 'deepseek-chat',
-    temperature: 0.5,
-    maxTokens: 16384,
-    maxRetries: 2,
-  };
-}
+// WHY: Shared config uses MiMo (FREE, CHAMPION). See scripts/api-config.ts.
 
 // ─── Main ──────────────────────────────────────────────────────────────────────
 
