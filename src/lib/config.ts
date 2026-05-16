@@ -115,7 +115,7 @@ export function getProducerConfig(): GeneratorConfig {
     apiKey: getNextMimoKey(),
     model: process.env.MIMO_MODEL ?? "mimo-v2-flash",
     temperature: 0.3,
-    maxTokens: 4000,
+    maxTokens: 16384,
     maxRetries: 3,
     minScore: 70,
     allKeys: MIMO_KEYS.length > 1 ? MIMO_KEYS : undefined,

@@ -181,11 +181,7 @@ async function callLlm(
       : [{ role: 'user', content: userPrompt }],
     temperature: config.temperature ?? 0.3,
   };
-  if (isXiaomimimo) {
-    payload.max_completion_tokens = config.maxTokens ?? 4000;
-  } else {
-    payload.max_tokens = config.maxTokens ?? 16384;
-  }
+  // WHY: No max_tokens limit — let the model finish naturally. Truncation = broken output.
 
   const response = await fetch(config.apiUrl, {
     method: 'POST',

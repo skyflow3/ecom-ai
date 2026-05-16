@@ -640,12 +640,7 @@ async function callLlm(
     ],
     temperature,
   };
-  // WHY: MiMo uses max_completion_tokens, others use max_tokens
-  if (isXiaomimimo) {
-    payload.max_completion_tokens = maxTokens;
-  } else {
-    payload.max_tokens = maxTokens;
-  }
+  // WHY: No max_tokens limit — let the model finish naturally. Truncation = broken output.
 
   const response = await fetch(apiUrl, {
     method: 'POST',

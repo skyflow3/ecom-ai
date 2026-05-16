@@ -318,11 +318,7 @@ async function callJudgeLlm(
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.5,
     };
-    if (isXiaomimimo) {
-      judgePayload.max_completion_tokens = 800;
-    } else {
-      judgePayload.max_tokens = 800;
-    }
+    // WHY: No max_tokens limit — let the model finish naturally. Truncation = corrupted evaluation.
 
     const response = await fetch(config.apiUrl, {
       method: 'POST',
