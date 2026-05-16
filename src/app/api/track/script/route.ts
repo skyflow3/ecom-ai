@@ -16,7 +16,8 @@ import { z } from 'zod';
 // ─── Query Params Schema ─────────────────────────────────────────────────────
 
 const scriptParamsSchema = z.object({
-  v: z.string().uuid({ message: 'Missing ?v=VARIANT_ID query parameter' }),
+  // WHY: Accept any string — funnel variant IDs are 'a', 'b', 'c', not UUIDs.
+  v: z.string().min(1, { message: 'Missing ?v=VARIANT_ID query parameter' }),
   debug: z
     .string()
     .optional()

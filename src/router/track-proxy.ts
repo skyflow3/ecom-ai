@@ -1,11 +1,16 @@
 /**
  * Purpose: Tracking handler — records A/B metrics locally + forwards to Next.js /api/track.
- * Dependencies: express, funnel-metrics
- * Related: src/router/index.ts (mounts this handler)
+ * Dependencies: express
+ * Related: src/router/index.ts (mounts this handler), src/app/api/track/route.ts (consumer)
  *
  * WHY: Funnel pages send tracking events to /track. We:
  *      1. Write metrics locally (metrics.json per funnel) for A/B evaluation
- *      2. Forward to Next.js /api/track for dashboard + advanced analytics
+ *      2. Transform payload to /api/track format + forward for PostgreSQL analytics
+ *
+ * FORMAT BRIDGE:
+ *   Old snippet sends: { step, variant, type, url, ts }
+ *   /api/track expects: { variantId, event, sessionId, data }
+ *   This handler translates between the two formats.
  */
 
 import { type Request, type Response } from 'express';
@@ -18,7 +23,8 @@ const log = createLogger('router:track');
 const FUNNELS_DATA_DIR = process.env.FUNNELS_DATA_DIR || process.env.FUNNEL_DATA_DIR || '/data/funnels';
 const TRACK_TARGET = process.env.TRACK_TARGET || 'http://localhost:3000';
 
-interface TrackPayload {
+/** Old format from generateTrackingSnippet() in funnel-metrics.ts */
+interface LegacyTrackPayload {
   step: string;
   variant: string;
   type: 'pageView' | 'ctaClick';
@@ -27,13 +33,30 @@ interface TrackPayload {
   funnelSlug?: string;
 }
 
+/** New format expected by /api/track (Zod schema in route.ts) */
+interface ModernTrackPayload {
+  variantId: string;
+  event: 'pageview' | 'cta_click' | 'scroll' | 'click' | 'form_submit' | 'purchase';
+  sessionId: string;
+  data?: {
+    blockId?: string;
+    scrollDepth?: number;
+    timeOnPage?: number;
+    elementId?: string;
+    metadata?: Record<string, unknown>;
+  };
+  url?: string;
+  referrer?: string;
+  userAgent?: string;
+}
+
 /**
- * Handle tracking events — write locally + forward to Next.js.
+ * Handle tracking events — write locally + transform + forward to Next.js.
  */
 export async function trackProxyHandler(req: Request, res: Response): Promise<void> {
-  const payload = req.body as TrackPayload;
+  const payload = req.body as LegacyTrackPayload;
 
-  // WHY: Write metrics locally for A/B evaluation (no DB needed)
+  // WHY: Write metrics locally for A/B evaluation (file-based, no DB needed)
   if (payload.step && payload.variant && payload.type) {
     try {
       const referer = (req.headers.referer || req.headers.origin || '') as string;
@@ -43,32 +66,83 @@ export async function trackProxyHandler(req: Request, res: Response): Promise<vo
     }
   }
 
-  // WHY: Forward to Next.js for dashboard analytics
+  // WHY: Transform old format → new format and forward to /api/track
+  //      The Next.js endpoint has a strict Zod schema — raw old format would 400.
+  const modernPayload = transformToModernFormat(payload, req);
+  if (!modernPayload) {
+    // WHY: If payload can't be transformed, local metrics were still recorded
+    res.status(200).json({ success: true, local: true, forwarded: false });
+    return;
+  }
+
   try {
     const targetUrl = `${TRACK_TARGET}/api/track`;
     const response = await fetch(targetUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': req.headers['content-type'] || 'application/json',
+        'Content-Type': 'application/json',
         'X-Real-IP': (req.headers['x-real-ip'] as string) || req.ip || '',
         'X-Forwarded-For': (req.headers['x-forwarded-for'] as string) || '',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(modernPayload),
     });
 
     const data = await response.json();
     res.status(response.status).json(data);
   } catch (error) {
     // WHY: Local metrics still recorded even if Next.js is down
-    res.status(200).json({ success: true, local: true });
+    res.status(200).json({ success: true, local: true, forwarded: false });
   }
+}
+
+/**
+ * Transform old tracking format to new /api/track format.
+ *
+ * WHY: The inline snippet (generateTrackingSnippet) sends legacy format:
+ *      { step, variant, type: 'pageView'|'ctaClick', url, ts }
+ *      But /api/track expects:
+ *      { variantId, event: 'pageview'|'cta_click', sessionId, data }
+ *
+ *      sessionId is generated from IP + variant for dedup.
+ *      variantId uses the variant field directly.
+ */
+function transformToModernFormat(
+  legacy: LegacyTrackPayload,
+  req: Request,
+): ModernTrackPayload | null {
+  const eventMap: Record<string, ModernTrackPayload['event']> = {
+    pageView: 'pageview',
+    ctaClick: 'cta_click',
+  };
+
+  const event = eventMap[legacy.type];
+  if (!event) return null;
+
+  // WHY: Generate stable sessionId from IP + variant for dedup
+  const ip = (req.headers['x-real-ip'] as string) || req.ip || 'unknown';
+  const sessionId = `sid-${legacy.variant}-${ip.replace(/\./g, '').slice(0, 12)}`;
+
+  return {
+    variantId: legacy.variant,
+    event,
+    sessionId,
+    data: {
+      metadata: {
+        step: legacy.step,
+        ...(legacy.url ? { legacyUrl: legacy.url } : {}),
+      },
+    },
+    url: legacy.url,
+    referrer: (req.headers.referer || req.headers.origin || '') as string,
+    userAgent: req.headers['user-agent'] || '',
+  };
 }
 
 /**
  * Write a single metric event to the funnel's metrics.json.
  * WHY: Simple file-based metrics — no DB required for A/B evaluation.
  */
-function writeLocalMetric(payload: TrackPayload, referer: string): void {
+function writeLocalMetric(payload: LegacyTrackPayload, referer: string): void {
   const funnelSlug = payload.funnelSlug || extractSlugFromReferer(referer);
   if (!funnelSlug) return;
 

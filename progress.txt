@@ -957,3 +957,66 @@ Internet → Cloudflare (CDN + Worker + SSL)
 4. SaaS Dashboard A/B testing UI (display metrics, promote champions)
 5. A/B evaluation worker (automated champion promotion based on statistical significance)
 6. Multi-IA consensus for niche/product research (§21)
+
+---
+
+## 2026-05-17 — Autonomous Agent Pipeline (Scanner → Research → Angle)
+
+### What: Created 3 autonomous agent prompts for the marketing intelligence pipeline
+
+### Agents Created
+
+#### 1. SCANNER (`src/agents/prompts/agent-scanner.ts`)
+- **Purpose**: Discover WHAT the market DESIRES (not features, but outcomes)
+- **Input**: Product category + description + search depth
+- **Output**: Surface desires, emotional desires, natural segments, niche score (§20 formula)
+- **Methodology**: 6-step (Desire Discovery → Keyword Frequency → Emotional Desire → Mapping → Segments → Quality)
+- **Key Innovation**: Desire vs Product Requirement distinction + §20 Niche Scoring formula (Volume×0.25 + Pain×0.35 + Gap×0.25 + Trend×0.15)
+- **SOP Sources**: Mass Desire Research, Foundational Research, Deep Psychographic, Market Questions, Reddit Research
+
+#### 2. RESEARCH (`src/agents/prompts/agent-research.ts`)
+- **Purpose**: Deep avatar profiling + UMP/UMS discovery
+- **Input**: Scanner output + target segment
+- **Output**: Avatar profile, pain points, UMP/UMS pairs, belief chains, language vault
+- **Methodology**: 11 sections (Avatar → Pain → Failed Solutions → Hardest Moment → Shame Layer → UMP/UMS → Belief Chains → Hypotheses → Necessary Beliefs → Language Vault → Limiting Beliefs)
+- **Key Innovation**: UMP/UMS framework (hidden cause + unique solution mechanism), Shame Detection Protocol (4 patterns)
+- **SOP Sources**: Deep Psychographic, Pain Diving, Unique Mechanism, Reddit Research, Native Ad
+
+#### 3. ANGLE (`src/agents/prompts/agent-angle.ts`)
+- **Purpose**: Determine the optimal marketing angle (awareness, hooks, beliefs, lead type)
+- **Input**: Scanner + Research outputs + product info
+- **Output**: Awareness analysis, 3-5 marketing angles, hooks (7 levers), lead types (6 types), belief shift architecture, One Belief formula
+- **Methodology**: 8-step (Awareness → Market Sophistication → Angle Discovery → One Belief → Hooks → Lead Type → Belief Shift → Spell Check)
+- **Key Innovation**: One Belief Formula ("[New Opportunity] is the key to [Desire] through [New Mechanism]") + 7 Psychological Levers + Combinatorial Matrix (§22)
+- **SOP Sources**: Ecom Copywriting, Winning Hooks, Lead Writing, 16-Word Sales Letter, Native Ad, Gradualization
+
+### Architecture Alignment (Architecture Finale.md)
+- **§20 Niche Scoring**: ✅ Added nicheScore to ScannerOutput (volumeScore, painIntensityScore, marketGapScore, trendScore, overallScore with §20 formula)
+- **§21 Multi-IA Consensus**: ✅ Runtime orchestration (not prompt concern) — agents produce structured JSON that 3 models can vote on
+- **§22 Angle Generation**: ✅ Added combinatorialMatrix (Avatar × Pain × Emotion) + status ('generated' | 'testing' | 'winner' | 'loser')
+- **DB Schema**: ✅ ScannerOutput maps to `discoveredNiches`, AngleOutput maps to `marketingAnglesResearch` + `marketingAngles`
+
+### Pipeline Documentation
+- Created `docs/AGENT-PIPELINE-SOP.md` — full pipeline overview with:
+  - Architecture diagram (Scanner → Research → Angle → Copywriter → Auto-Config → Executor)
+  - Input/output contracts for each agent
+  - Testing plan (testing-ai-prompt recommended)
+  - Integration guide for God-anwser-ai-agent
+  - SOP source mapping
+
+### Files Created
+- `src/agents/prompts/agent-scanner.ts` — Scanner prompt builder
+- `src/agents/prompts/agent-research.ts` — Research prompt builder
+- `src/agents/prompts/agent-angle.ts` — Angle prompt builder
+- `docs/AGENT-PIPELINE-SOP.md` — Pipeline documentation
+
+### Testing Strategy
+- **Test in**: testing-ai-prompt (has V5 Council Judge + A/B framework)
+- **NOT in**: ECOM-AI (production hub) or God-anwser-ai-agent (deployment layer)
+- **Needed first**: Judge configs specific to agent output evaluation (UMP quality, One Belief novelty, etc.)
+
+### Status
+- 3 agent prompts CREATED (not yet lab-tested)
+- Aligned with Architecture Finale.md §20-§22
+- DB schema fields covered via output mapping
+- Ready for testing in testing-ai-prompt

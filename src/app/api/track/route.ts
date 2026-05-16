@@ -48,7 +48,9 @@ const CLIENT_TO_DB_EVENT: Record<TrackEvent, string> = {
 };
 
 const trackRequestSchema = z.object({
-  variantId: z.string().uuid(),
+  // WHY: Accept any string — funnel variant IDs are 'a', 'b', 'c', not UUIDs.
+  //      The script endpoint (/api/track/script) uses UUIDs, but inline snippet uses short IDs.
+  variantId: z.string().min(1),
   event: z.enum(TRACK_EVENTS),
   data: z
     .object({
