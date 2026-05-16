@@ -45,7 +45,11 @@ const AVAILABLE_PAGE_TYPES = [
 ];
 
 const AVAILABLE_PALETTES = [
-  'emerald', 'ocean', 'sunset', 'royal', 'forest', 'crimson', 'slate', 'amber',
+  { id: 'health-warm', bestFor: ['supplement', 'health', 'fitness'] },
+  { id: 'beauty-clean', bestFor: ['skincare', 'beauty', 'cosmetics'] },
+  { id: 'supplement-bold', bestFor: ['supplement', 'nutrition', 'wellness'] },
+  { id: 'pet-friendly', bestFor: ['pet', 'animal', 'dog', 'cat'] },
+  { id: 'beauty-bold', bestFor: ['skincare', 'anti-aging', 'beauty'] },
 ];
 
 // ─── Prompt Builder ─────────────────────────────────────────────────────────────

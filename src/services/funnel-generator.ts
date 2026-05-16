@@ -35,6 +35,7 @@ import { generateFromTemplate, type TemplateGeneratorConfig } from './template-g
 import { generatePage, type GeneratePageRequest, type GeneratePageResult, type GeneratorConfig } from './page-generator';
 import { injectCtaUrls, type CtaMapping } from './cta-injector';
 import { generateVariantRouter } from './variant-router';
+import { initMetrics, generateTrackingSnippet } from './funnel-metrics';
 import type { ProductBrief } from '../agents/prompts/template-filler';
 import type { PageType, PaletteKey } from '../design-system/tokens';
 import * as fs from 'fs';
@@ -402,8 +403,13 @@ export async function generateFunnel(
 
         const { html: injectedHtml, ctasInjected } = injectCtaUrls(html, ctaMap, injectId);
 
+        // WHY: Inject tracking snippet for A/B metrics (pageView + ctaClick events)
+        //      Snippet goes before </body> so it loads after all DOM elements exist.
+        const trackingSnippet = generateTrackingSnippet(step.id, variant.id);
+        const trackedHtml = injectedHtml.replace('</body>', trackingSnippet + '\n</body>');
+
         // Save to final filename
-        fs.writeFileSync(fileInfo.outputPath, injectedHtml, 'utf-8');
+        fs.writeFileSync(fileInfo.outputPath, trackedHtml, 'utf-8');
 
         // Remove temp file if different
         if (fileInfo.tempPath !== fileInfo.outputPath) {
@@ -519,6 +525,21 @@ export async function generateFunnel(
       console.error(`[funnel] ✗ ${msg}`);
       errors.push(msg);
     }
+  }
+
+  // ─── Step 5: Initialize A/B metrics ────────────────────────────────────────────
+  // WHY: Each funnel needs a metrics.json for tracking page views and CTA clicks.
+  //      The tracking snippet was already injected in each HTML page above.
+  try {
+    const metricsSteps = stepResults.map(sr => ({
+      stepId: sr.stepId,
+      variantIds: sr.variants.map(v => v.variantId),
+    }));
+    const metricsPath = initMetrics(config.outputDir, metricsSteps);
+    console.log(`[funnel] Metrics initialized: ${metricsPath}`);
+  } catch (metricsErr) {
+    // WHY: Non-fatal — metrics are useful but not required for funnel to work
+    console.warn(`[funnel] Metrics init failed: ${metricsErr instanceof Error ? metricsErr.message : String(metricsErr)}`);
   }
 
   return {
