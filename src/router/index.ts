@@ -48,7 +48,8 @@ const app = express();
 const PORT = parseInt(process.env.ROUTER_PORT || '3001', 10);
 
 // WHY: Parse JSON bodies for tracking proxy
-app.use(express.json({ limit: '1mb' }));
+// WHY: Funnel HTML pages can be ~500KB each, batch deploy sends 7+ pages at once
+app.use(express.json({ limit: '10mb' }));
 
 // ─── Dedicated Routes (handled BEFORE catch-all) ──────────────────────────────
 
