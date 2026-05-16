@@ -39,6 +39,7 @@ import type { ProductBrief } from '../agents/prompts/template-filler';
 import type { PageType, PaletteKey } from '../design-system/tokens';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as http from 'http';
 
 // ─── Types ──────────────────────────────────────────────────────────────────────
 
@@ -530,6 +531,31 @@ export async function generateFunnel(
 // ─── Helpers ────────────────────────────────────────────────────────────────────
 
 /**
+ * HTTP request helper using Node.js http module.
+ * WHY: Node.js fetch() (undici) ignores custom Host headers, causing Traefik 404.
+ *      The http module properly sends the Host header for virtual host routing.
+ */
+function httpRequest(options: {
+  hostname: string;
+  port: string | number;
+  path: string;
+  method: string;
+  headers: Record<string, string>;
+  body: string;
+}): Promise<{ status: number; body: string }> {
+  return new Promise((resolve, reject) => {
+    const req = http.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk: string) => data += chunk);
+      res.on('end', () => resolve({ status: res.statusCode ?? 0, body: data }));
+    });
+    req.on('error', reject);
+    req.write(options.body);
+    req.end();
+  });
+}
+
+/**
  * Deploy generated funnel HTML to production Router via /deploy/batch.
  * WHY: After generating pages locally, we send them to the Router's deploy endpoint.
  *      Bypasses Cloudflare by hitting Traefik directly with Host header.
@@ -560,45 +586,53 @@ async function deployFunnelToRouter(
   const payload = JSON.stringify({ slug: deploy.slug, files });
   console.log(`[funnel] Deploying ${files.length} pages (${(payload.length / 1024 / 1024).toFixed(2)} MB) to ${deploy.slug}.${deploy.routerHost}...`);
 
-  const response = await fetch(`${deploy.routerUrl}/deploy/batch`, {
+  // WHY: Node.js fetch() (undici) ignores custom Host headers, causing Traefik 404.
+  //      We use http.request() which properly sends the Host header for Traefik routing.
+  const url = new URL(deploy.routerUrl);
+  const result = await httpRequest({
+    hostname: url.hostname,
+    port: url.port || 80,
+    path: '/deploy/batch',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Deploy-Key': deploy.deployKey,
+      'Content-Length': String(Buffer.byteLength(payload)),
       'Host': deploy.routerHost,
-      'User-Agent': 'ECOM-AI-FunnelGen/1.0',
+      'X-Deploy-Key': deploy.deployKey,
     },
     body: payload,
   });
 
-  if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`Router deploy ${response.status}: ${body.substring(0, 200)}`);
+  if (result.status !== 200) {
+    throw new Error(`Router deploy ${result.status}: ${result.body.substring(0, 200)}`);
   }
 
-  const result = await response.json() as { deployed: number; total: number; success: boolean };
-  console.log(`[funnel] ✓ Deployed ${result.deployed}/${result.total} pages to production`);
+  const deployResult = JSON.parse(result.body) as { deployed: number; total: number; success: boolean };
+  console.log(`[funnel] ✓ Deployed ${deployResult.deployed}/${deployResult.total} pages to production`);
 
   // Deploy router pages too (for A/B steps)
   for (const step of stepResults) {
     if (!step.routerPath) continue;
     const filename = path.basename(step.routerPath);
     const html = fs.readFileSync(step.routerPath, 'utf-8');
+    const routerPayload = JSON.stringify({ slug: deploy.slug, filename, html });
 
-    const routerResp = await fetch(`${deploy.routerUrl}/deploy`, {
+    const routerResult = await httpRequest({
+      hostname: url.hostname,
+      port: url.port || 80,
+      path: '/deploy',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Deploy-Key': deploy.deployKey,
+        'Content-Length': String(Buffer.byteLength(routerPayload)),
         'Host': deploy.routerHost,
-        'User-Agent': 'ECOM-AI-FunnelGen/1.0',
+        'X-Deploy-Key': deploy.deployKey,
       },
-      body: JSON.stringify({ slug: deploy.slug, filename, html }),
+      body: routerPayload,
     });
 
-    if (!routerResp.ok) {
-      const body = await routerResp.text();
-      console.error(`[funnel] ✗ Router page deploy failed: ${body.substring(0, 100)}`);
+    if (routerResult.status !== 200) {
+      console.error(`[funnel] ✗ Router page deploy failed: ${routerResult.body.substring(0, 100)}`);
     } else {
       console.log(`[funnel] ✓ Router deployed: ${filename}`);
     }

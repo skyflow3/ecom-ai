@@ -62,7 +62,7 @@ const FUNNEL: FunnelConfig = {
     // STEP 1: Entry page (advertorial)
     {
       id: 'entry',
-      templateId: 'smoothspire-advertorial',
+      templateId: 'hike-reasons-why',
       outputFilename: 'index.html',
       nextOnAccept: 'oto1',
     },
