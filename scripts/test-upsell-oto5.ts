@@ -56,21 +56,7 @@ const TEST_BRIEF: ProductBrief & Record<string, any> = {
   previousProduct: 'Vibriance Moisturizing Cream',
 };
 
-function getConfig() {
-  const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) {
-    console.error('ERROR: DEEPSEEK_API_KEY not found in .env');
-    process.exit(1);
-  }
-  return {
-    apiUrl: process.env.DEEPSEEK_API_URL ?? 'https://api.deepseek.com/v1/chat/completions',
-    apiKey,
-    model: process.env.DEEPSEEK_MODEL ?? 'deepseek-chat',
-    temperature: 0.5,
-    maxTokens: 4096,
-    maxRetries: 2,
-  };
-}
+import { getConfig } from './api-config';
 
 async function main() {
   console.log('=== OTO5 Protection Test (Porch Pirates) ===\n');

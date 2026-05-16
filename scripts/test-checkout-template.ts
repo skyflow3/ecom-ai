@@ -165,23 +165,7 @@ const TEST_BRIEF: CheckoutBrief = {
 };
 
 // ─── API Config ───────────────────────────────────────────────────────────────
-
-function getConfig() {
-  const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) {
-    console.error('ERROR: DEEPSEEK_API_KEY not found in .env');
-    process.exit(1);
-  }
-
-  return {
-    apiUrl: process.env.DEEPSEEK_API_URL ?? 'https://api.deepseek.com/v1/chat/completions',
-    apiKey,
-    model: process.env.DEEPSEEK_MODEL ?? 'deepseek-chat',
-    temperature: 0.5,
-    maxTokens: 8192, // Checkout needs less tokens than advertorials (fewer text slots)
-    maxRetries: 2,
-  };
-}
+import { getConfig } from './api-config';
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 

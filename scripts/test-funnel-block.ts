@@ -136,22 +136,7 @@ const FUNNEL: FunnelConfig = {
 };
 
 // ─── API Config ────────────────────────────────────────────────────────────────
-
-function getConfig() {
-  const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) {
-    console.error('ERROR: DEEPSEEK_API_KEY not found in .env');
-    process.exit(1);
-  }
-
-  // Use DeepSeek for all modes (MiMo balance may be depleted)
-  return {
-    apiUrl: process.env.DEEPSEEK_API_URL ?? 'https://api.deepseek.com/v1/chat/completions',
-    apiKey,
-    model: process.env.DEEPSEEK_MODEL ?? 'deepseek-chat',
-    temperature: 0.3,
-    maxTokens: 16384,
-    maxRetries: 3,
+import { getConfig } from './api-config';
   };
 }
 

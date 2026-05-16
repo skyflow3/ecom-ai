@@ -57,22 +57,7 @@ const PRODUCT: ProductBrief = {
 };
 
 // ─── API Config ────────────────────────────────────────────────────────────────
-
-function getApiConfig() {
-  const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) {
-    console.error('ERROR: DEEPSEEK_API_KEY not found in .env');
-    process.exit(1);
-  }
-
-  return {
-    apiUrl: process.env.DEEPSEEK_API_URL ?? 'https://api.deepseek.com/v1/chat/completions',
-    apiKey,
-    model: process.env.DEEPSEEK_MODEL ?? 'deepseek-chat',
-    temperature: 0.3,
-    maxTokens: 16384,
-    maxRetries: 3,
-  };
+import { getConfig as getApiConfig } from './api-config';
 }
 
 // ─── LLM Call Helper ───────────────────────────────────────────────────────────

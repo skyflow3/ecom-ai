@@ -93,53 +93,9 @@ const BRIEFS: Array<{ name: string; brief: ProductBrief }> = [
 ];
 
 // ─── API Config ───────────────────────────────────────────────────────────────
-
-async function getConfig() {
-  // Try MiMo first (free, champion-validated), fallback to DeepSeek
-  const mimoKey = process.env.MIMO_API_KEY;
-  const deepseekKey = process.env.DEEPSEEK_API_KEY;
-
-  if (mimoKey) {
-    // Ping test — MiMo credits may be exhausted
-    try {
-      const mimoUrl = process.env.MIMO_API_URL ?? 'https://api.xiaomimimo.com/v1/chat/completions';
-      const resp = await fetch(mimoUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${mimoKey}` },
-        body: JSON.stringify({ model: 'mimo-v2-flash', messages: [{ role: 'user', content: 'Say OK' }], max_tokens: 5 }),
-      });
-      if (resp.ok) {
-        console.log('Using MiMo (free, champion-validated)');
-        return {
-          apiUrl: mimoUrl,
-          apiKey: mimoKey,
-          model: 'mimo-v2-flash',
-          temperature: 0.3,
-          maxTokens: 4096,
-          maxRetries: 2,
-        };
-      }
-      console.log(`MiMo ping failed (${resp.status}), falling back to DeepSeek`);
-    } catch {
-      console.log('MiMo ping failed (network error), falling back to DeepSeek');
-    }
-  }
-
-  if (!deepseekKey) {
-    console.error('ERROR: Neither MIMO_API_KEY nor DEEPSEEK_API_KEY found in .env');
-    process.exit(1);
-  }
-
-  console.log('Using DeepSeek');
-  return {
-    apiUrl: process.env.DEEPSEEK_API_URL ?? 'https://api.deepseek.com/v1/chat/completions',
-    apiKey: deepseekKey,
-    model: process.env.DEEPSEEK_MODEL ?? 'deepseek-chat',
-    temperature: 0.3,
-    maxTokens: 8192,
-    maxRetries: 2,
-  };
-}
+// WHY: Shared config uses MiMo (FREE, CHAMPION) with automatic key rotation.
+//      See scripts/api-config.ts.
+import { getConfig } from './api-config';
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 

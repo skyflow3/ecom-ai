@@ -30,6 +30,8 @@ export interface TemplateGeneratorConfig {
   temperature?: number;
   maxTokens?: number;
   maxRetries?: number;
+  /** Additional API keys for round-robin rotation (MiMo). On 402, dead keys are skipped. */
+  allKeys?: string[];
 }
 
 export interface TemplateGenerateResult {
@@ -49,9 +51,38 @@ export interface TemplateGenerateResult {
 
 const DEFAULT_GEN_CONFIG: Partial<TemplateGeneratorConfig> = {
   temperature: 0.5,
-  maxTokens: 16384,
   maxRetries: 2,
 };
+
+// ─── Key Rotation (MiMo multi-key support) ────────────────────────────────────
+// WHY: MiMo keys can run out of balance individually. Round-robin rotation with
+//      dead key tracking ensures we skip exhausted keys automatically.
+//      Source: pipeline_v2.py _get_next_key() + _dead_keys pattern.
+
+let _keyRotationIndex = 0;
+const _deadKeys = new Set<string>();
+
+function getNextKey(config: TemplateGeneratorConfig): string {
+  const allKeys = config.allKeys;
+  if (!allKeys || allKeys.length <= 1) return config.apiKey;
+
+  // Try to find a non-dead key via round-robin
+  for (let i = 0; i < allKeys.length; i++) {
+    const key = allKeys[_keyRotationIndex % allKeys.length];
+    _keyRotationIndex++;
+    if (!_deadKeys.has(key)) return key;
+  }
+
+  // All keys dead — clear and try again (balance may have been refilled)
+  _deadKeys.clear();
+  const key = allKeys[_keyRotationIndex % allKeys.length];
+  _keyRotationIndex++;
+  return key;
+}
+
+function markKeyDead(key: string): void {
+  _deadKeys.add(key);
+}
 
 // ─── Main Generator ───────────────────────────────────────────────────────────
 
@@ -78,7 +109,11 @@ export async function generateFromTemplate(
   let totalTokens = 0;
   let retryCount = 0;
 
-  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+  // WHY: Max attempts includes key rotation slots — enough to try all keys + retries
+  const allKeys = config.allKeys ?? [config.apiKey];
+  const maxAttempts = Math.max(maxRetries + 1, allKeys.length + 2);
+
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
     try {
       if (attempt > 0) {
         retryCount = attempt;
@@ -88,9 +123,12 @@ export async function generateFromTemplate(
       // Step 1: Build prompt (route by template type)
       const prompt = buildPromptForTemplate(templateId, brief);
 
-      // Step 2: Call AI
+      // Step 2: Call AI — use rotated key
+      // WHY: Round-robin key rotation skips dead (402) keys automatically.
+      //      Source: pipeline_v2.py _get_next_key() pattern.
+      const activeKey = getNextKey(config);
       console.log(`[template-gen] Calling ${config.model} for content generation...`);
-      const aiResponse = await callLlm(config.apiUrl, config.apiKey, config.model, prompt, temperature, maxTokens);
+      const aiResponse = await callLlm(config.apiUrl, activeKey, config.model, prompt, temperature, maxTokens);
       totalTokens += aiResponse.tokens;
 
       // Step 3: Parse JSON response
@@ -280,6 +318,18 @@ export async function generateFromTemplate(
     } catch (err) {
       lastError = err instanceof Error ? err.message : String(err);
       console.warn(`[template-gen] Attempt ${attempt} failed: ${lastError}`);
+
+      // WHY: On 402 (insufficient balance), mark this key as dead and retry
+      //      with next key WITHOUT counting as a failed attempt.
+      //      Source: pipeline_v2.py line 140-141
+      if (lastError.includes('402') || lastError.includes('Insufficient')) {
+        const deadKey = getNextKey(config);
+        markKeyDead(deadKey);
+        console.warn(`[template-gen] Key ${deadKey.substring(0, 15)}... marked dead (402), rotating to next key`);
+        // Don't increment attempt counter — retry with next key immediately
+        attempt--;
+        continue;
+      }
     }
   }
 
