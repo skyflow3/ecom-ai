@@ -101,6 +101,14 @@ export function fillTemplate(
   let slotsFilled = 0;
   let slotsEmpty = 0;
 
+  // WHY: marker mode does simple {{SLOT}} replacement — no zone surgery.
+  //      smart mode does zone-based content replacement (smoothspire only).
+  //      template-generator.ts calls with 'marker' mode for ALL templates.
+  //      Only smoothspire-advertorial supports smart mode (has byline + section zones).
+  if (mode === 'marker') {
+    return fillSimpleMarkers(html, templateId, content, config, warnings);
+  }
+
   // ─── Build AI content for each zone ────────────────────────────────────────
 
   // Extract product image URL for content section images

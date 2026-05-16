@@ -904,7 +904,54 @@ Internet → Cloudflare (CDN + Worker + SSL)
 ### Commit
 - `0657dc5` fix: Router double .html extension + auto-deploy + Nutrovia funnel script
 
-### NEXT STEPS (updated)
-1. Persistent volume for funnels OR post-deploy hook to auto-redeploy
+---
+
+## 2026-05-16 — Bug Fixes Session (Key Rotation, Templates, Test Scripts)
+
+### What: Fixed 5 critical/medium bugs found by 10-agent parallel audit
+
+### Bugs Fixed
+
+#### 1. Key Rotation Bug (CRITICAL) — `src/services/template-generator.ts`
+- **Bug**: On 402 (insufficient balance), `getNextKey()` returned NEXT key but code marked THAT key dead instead of the FAILED key. Result: working keys get killed, dead keys stay alive.
+- **Fix**: Declared `activeKey` in loop scope (not try scope), catch block now marks `activeKey` dead (the key that actually failed).
+- **Impact**: Production reliability — key rotation now correctly cycles through keys.
+
+#### 2. Variant Success Not Reset (HIGH) — `src/services/funnel-generator.ts`
+- **Bug**: CTA injection failure in catch block set `error` but never reset `success = false`. Stale `success = true` from template generation persisted.
+- **Fix**: Added `existingVr.success = false` in catch block.
+- **Impact**: Funnel reporting accuracy — failed variants now correctly reported.
+
+#### 3. Smoothspire Template Restored — `templates/smoothspire-advertorial.html` + `.marked.html`
+- **Bug**: Commit `981edc2` deleted 530 lines of visual HTML content. Only checkout JS remained in body.
+- **Fix**: Restored from commit `5e1532e`, then surgically removed Stripe payment code (113 lines → 10 lines redirect-only). 72 {{SLOT}} markers confirmed intact.
+- **Security**: Removed `localStorage.getItem('stripe_secret_key')`, `localhost:3001` hardcoded URLs, and `stripe.confirmCardPayment()` from advertorial template. Payment is handled by checkout-clarifion template, not advertorial.
+
+#### 4. Broken Test Scripts (MEDIUM) — 3 scripts
+- **Bug**: Stray `}` after `import { getConfig }` in all 3 files (test-funnel-ab.ts, test-funnel-autoconfig.ts, test-funnel-block.ts).
+- **Fix**: Removed stray `}`, added proper Deploy Config section.
+- **Additional**: Fixed `palette: 'emerald'` → `'beauty-clean'` in test-funnel-block.ts (emerald not a valid PaletteKey).
+
+#### 5. Vibriance Funnel Redeployed
+- Switched back to `smoothspire-advertorial` template (was `hike-reasons-why` workaround).
+- Deployed: 7/7 pages, 19 CTAs, 3.57 MB, 39.6s generation time.
+- Entry page now has full visual content (smoothspire restored).
+
+### Production Status
+- **Nutrovia funnel**: `go.nutrovia.co/nutrovia/` — 7 pages, hike-reasons-why entry
+- **Vibriance funnel**: `go.nutrovia.co/vibriance/` — 7 pages, smoothspire-advertorial entry
+- **MiMo keys**: 4 dead (402), 2 working (5th and 6th in rotation)
+- **Key rotation fix verified**: Dead keys correctly marked, rotation works
+
+### Known Remaining Issues
+1. **Docker volume**: Files wiped on Router container redeploy (operational workaround: redeploy after each container update)
+2. **CTA injection no-op for smoothspire**: `cta-injector.ts` targets `linkMethod(event)` but smoothspire uses `href="#next-step"` — CTAs still work via template defaults, but injection is a no-op
+3. **Dead code**: `replaceAllVideosWithImage()` in template-generator.ts (unused), empty image mappings for 5 templates
+4. **38 API routes**: Zero test coverage
+5. **Architecture Finale.md**: ~65% implemented (core pipeline ~95%, ads/research ~15-30%)
+
+### NEXT STEPS
+1. Persistent Docker volume for funnels (stop file loss on redeploy)
 2. SaaS Dashboard A/B testing UI (high effort, high value)
+3. CTA injection alignment for smoothspire template
 3. Multi-IA consensus for niche/product research (§21)

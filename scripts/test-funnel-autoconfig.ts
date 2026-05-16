@@ -58,7 +58,6 @@ const PRODUCT: ProductBrief = {
 
 // ─── API Config ────────────────────────────────────────────────────────────────
 import { getConfig as getApiConfig } from './api-config';
-}
 
 // ─── LLM Call Helper ───────────────────────────────────────────────────────────
 

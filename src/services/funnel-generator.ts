@@ -435,8 +435,10 @@ export async function generateFunnel(
         console.error(`[funnel]   ✗ ${msg}`);
         errors.push(msg);
 
+        // WHY: Must reset success=false when CTA injection fails, otherwise stale success=true from earlier
         const existingVr = stepResult.variants.find(v => v.variantId === variant.id);
         if (existingVr) {
+          existingVr.success = false;
           existingVr.error = msg;
         }
       }

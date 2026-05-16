@@ -265,7 +265,10 @@ const FUNNEL: FunnelConfig = {
 
 // ─── API Config ────────────────────────────────────────────────────────────────
 import { getConfig } from './api-config';
-}
+
+// ─── Deploy Config ─────────────────────────────────────────────────────────────
+const DEPLOY = process.argv.includes('--deploy');
+const DEPLOY_SLUG = (process.argv.find(a => a.startsWith('--slug='))?.split('=')[1]) ?? 'vibriance-ab';
 
 // ─── Main ──────────────────────────────────────────────────────────────────────
 

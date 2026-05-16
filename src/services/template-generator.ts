@@ -113,6 +113,7 @@ export async function generateFromTemplate(
   const allKeys = config.allKeys ?? [config.apiKey];
   const maxAttempts = Math.max(maxRetries + 1, allKeys.length + 2);
 
+  let activeKey = '';
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     try {
       if (attempt > 0) {
@@ -126,7 +127,7 @@ export async function generateFromTemplate(
       // Step 2: Call AI — use rotated key
       // WHY: Round-robin key rotation skips dead (402) keys automatically.
       //      Source: pipeline_v2.py _get_next_key() pattern.
-      const activeKey = getNextKey(config);
+      activeKey = getNextKey(config);
       console.log(`[template-gen] Calling ${config.model} for content generation...`);
       const aiResponse = await callLlm(config.apiUrl, activeKey, config.model, prompt, temperature, maxTokens);
       totalTokens += aiResponse.tokens;
@@ -323,9 +324,9 @@ export async function generateFromTemplate(
       //      with next key WITHOUT counting as a failed attempt.
       //      Source: pipeline_v2.py line 140-141
       if (lastError.includes('402') || lastError.includes('Insufficient')) {
-        const deadKey = getNextKey(config);
-        markKeyDead(deadKey);
-        console.warn(`[template-gen] Key ${deadKey.substring(0, 15)}... marked dead (402), rotating to next key`);
+        // WHY: Mark the ACTUAL failed key, not the next one (bug fix)
+        markKeyDead(activeKey);
+        console.warn(`[template-gen] Key ${activeKey.substring(0, 15)}... marked dead (402), rotating to next key`);
         // Don't increment attempt counter — retry with next key immediately
         attempt--;
         continue;
