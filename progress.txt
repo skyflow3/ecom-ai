@@ -818,20 +818,93 @@ Internet → Cloudflare (CDN + Worker + SSL)
   6. RouterDeployProvider in deploy-pipeline.ts (Worker sends HTML via HTTP)
   7. Router returns 404 instead of 500 for missing funnel pages
   8. Full funnel test: 14 routes (7 subdomain + 7 path-based) all 200 OK
-- PENDING (need Coolify API to recover — currently returning 500):
-  1. Router redeploy with permission fix (/data/funnels ownership)
-  2. Worker redeploy with healthcheck
-  3. Test deploy endpoint with new product
-  4. Worker healthcheck config in Coolify (port 3010)
+- RESOLVED:
+  1. Coolify API recovered, all 3 services redeployed via API
+  2. Deploy endpoint tested and working (single + batch)
+  3. MiMo API compatibility fixed (api-key header + max_completion_tokens)
+  4. MiMo key rotation with dead key tracking (keys 1-4 exhausted, 5-6 working)
+  5. Router fallback fixed (index.html before advertorial.html)
+  6. Router body limit increased to 10mb for batch deploy
+  7. Full Vibriance funnel deployed to production (7 pages, 11 CTAs)
+  8. Cloudflare 1010 bypass: deploy via direct Traefik (Host header)
+  9. Batch deploy confirmed working (3.5MB, 7 pages, all success)
+
+### Production URLs
+- Dashboard: https://nutrovia.co (Next.js web)
+- Router: https://go.nutrovia.co (Express variant router)
+- Funnel (live): https://vibriance.nutrovia.co (entry + OTO1-5 + thankyou)
 
 ### Commits
-- c947357 feat: Express variant router + pattern codify worker + Dockerfile.router + nginx.conf + docker-compose
-- 3ac32c9 feat: path-based funnel routing fallback for Router
-- 58b299e feat: Cloudflare Worker for wildcard subdomain routing
-- 774ddef feat: add edge caching to Cloudflare Worker
-- 8132fc2 refactor: rename router subdomain funnels.nutrovia.co -> go.nutrovia.co
-- 01776f6 fix: update setup migration path to 0000_black_warlock.sql
-- 37bb1d0 feat: include funnel HTML in Router Docker image for immediate serving
-- b2e92ce feat: Router deploy endpoint + RouterDeployProvider + Worker healthcheck
-- 472c07b fix: Router /data/funnels permissions for deploy endpoint
-- ef63d3e fix: Router returns 404 instead of 500 for missing funnel pages
+- 2c667d6 feat: switch funnel generation to MiMo (FREE champion) + shared api-config
+- 90bb20a fix: MiMo API compatibility — api-key header + max_completion_tokens
+- 4274670 feat: MiMo key rotation + migrate 14 test scripts to shared api-config
+- bcbf6a7 fix: Router fallback tries index.html before advertorial.html
+- bbcd09f fix: increase Router body limit to 10mb for batch funnel deploy
+
+## 2026-05-16 — Context Check + Healthcheck Fix + Auto-Deploy
+
+### Done
+- All 3 Coolify services running:healthy (Router:3001, Worker:3010, Web:3000)
+- Healthcheck was wrongly configured on Router (port 3010 instead of 3001) → Fixed via Coolify API
+- Auto-deploy added to funnel-generator.ts (DeployConfig + deployFunnelToRouter)
+- `--deploy` flag in test-funnel.ts: `npx tsx scripts/test-funnel.ts --deploy --slug=vibriance`
+- Vibriance funnel redeployed after container restart (7/7 pages)
+
+### Architecture Alignment Check
+- §12 Variant Router: ✅ Complete and aligned
+- §21 Multi-IA: ❌ Not started (3-model consensus for research only)
+- §52 Background Jobs: ✅ Partial (workers exist, decision engine stubs)
+- Deploy Pipeline: ✅ ~80% (R2 storage not configured, Router deploy works)
+- SaaS Dashboard: ❌ Basic only (no A/B testing UI, no judge system)
+
+### Known Issues
+- Funnel files wiped on every Coolify redeploy (no persistent Docker volume)
+- Need to redeploy funnel HTML after each Router redeploy
+- Batch deploy via Cloudflare fails (1010 bot protection) — use direct Traefik instead
+
+### NEXT STEPS (prioritized by business impact)
+1. ~~Generate a DIFFERENT product funnel to validate pipeline generality~~ ✅ DONE (Nutrovia)
+2. Persistent volume for funnels OR post-deploy hook to auto-redeploy
+3. SaaS Dashboard A/B testing UI (high effort, high value)
+4. Multi-IA consensus for niche/product research (§21)
+
+---
+
+## 2026-05-16 — Nutrovia Funnel Validation + Router .html Fix
+
+### What: Validated pipeline generality with Nutrovia (gut health) product + fixed Router bug
+
+### Done
+- Created `scripts/test-funnel-nutrovia.ts` — 7-step Nutrovia funnel (gut health supplement)
+- Generated Nutrovia funnel: 7/7 pages, 11 CTAs, 51.7s generation time
+- Deployed Nutrovia funnel to production Router (7/7 pages, 3.50 MB)
+- Fixed Router double `.html` extension bug (`oto1.html` → `oto1.html.html` → 404)
+- Both funnels live on production:
+  - `go.nutrovia.co/nutrovia/` → Nutrovia entry (200 OK)
+  - `go.nutrovia.co/nutrovia/oto1.html` through `oto5.html` + `thankyou.html` → all 200 OK
+  - `go.nutrovia.co/vibriance/` → Vibriance entry (200 OK)
+  - `go.nutrovia.co/vibriance/oto1.html` through `oto5.html` + `thankyou.html` → all 200 OK
+
+### Router Bug Fix (src/router/index.ts)
+- **Bug**: `stepSlug = 'oto1.html'` → fallback path = `/nutrovia/oto1.html.html` → 404
+- **Fix**: `stepSlug.replace(/\.html$/, '')` before appending `.html` in fallback paths
+- Applied to both fallback blocks (resolveVariant failed + html-provider failed)
+
+### Pipeline Generality Validated
+- **Product 1**: Vibriance Super C Serum (skincare, $49) → ✅ 7/7 pages
+- **Product 2**: Nutrovia Gut Health (supplement, $49) → ✅ 7/7 pages
+- Both products use same template IDs, same pipeline, different ProductBrief
+- Content correctly reflects product (no Vibriance contamination in Nutrovia output)
+
+### Auto-Deploy Status
+- Auto-deploy (`--deploy` flag) works for page generation
+- Deploy to Router requires direct Traefik access (Cloudflare 1010 bypass)
+- Manual curl deploy confirmed working (3.5 MB batch payload)
+
+### Commit
+- `0657dc5` fix: Router double .html extension + auto-deploy + Nutrovia funnel script
+
+### NEXT STEPS (updated)
+1. Persistent volume for funnels OR post-deploy hook to auto-redeploy
+2. SaaS Dashboard A/B testing UI (high effort, high value)
+3. Multi-IA consensus for niche/product research (§21)
