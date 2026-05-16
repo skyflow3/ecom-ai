@@ -910,37 +910,6 @@ function replaceVideoSrc(html: string, needle: string, newUrl: string): string {
 }
 
 /**
- * Replace ALL video container blocks in the HTML with a static product image.
- * WHY: Product page templates have 5+ video containers showing the original product.
- *      When generating for a different product, we can't use those videos.
- *      We replace each ENTIRE video container (wrapper divs + video + inner divs)
- *      with a single <img> tag. Replacing only the <video> tag breaks the layout
- *      because the Webflow CSS expects the full container structure.
- */
-function replaceAllVideosWithImage(html: string, imageUrl: string): string {
-  let result = html;
-
-  // Pattern 1: Webflow background video containers
-  // <div ... class="int-embeded-video-container ..."><video ...>...</video><div class="int-embeded-video w-embed"><video ...>...</video></div></div>
-  // Replace the ENTIRE outer container with just an <img>
-  result = result.replace(
-    /<div[^>]*class="[^"]*int-embeded-video-container[^"]*"[^>]*>[\s\S]*?<\/div>\s*<\/div>/gi,
-    `<img src="${imageUrl}" alt="" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">`
-  );
-
-  // Pattern 2: Any remaining standalone <video> tags
-  result = result.replace(
-    /<video[^>]*>[\s\S]*?<\/video>/gi,
-    ''
-  );
-
-  // Clean up leftover text
-  result = result.replace(/Your browser does not support the video tag\.?/gi, '');
-
-  return result;
-}
-
-/**
  * Build an image div to insert below a section heading.
  * WHY: Zone replacement strips all original media from between headings.
  *      We re-insert a product image below each section heading.
