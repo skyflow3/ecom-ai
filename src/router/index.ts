@@ -125,17 +125,21 @@ async function handleFunnelRequest(
     const resolution = await resolveVariant(funnelSlug, stepSlug, cookieValue ?? undefined);
 
     if (!resolution.success || !resolution.htmlPath) {
-      // WHY: Resolution failed — try serving static file as fallback
-      const fallbackPath = stepSlug
-        ? `/${funnelSlug}/${stepSlug}.html`
-        : `/${funnelSlug}/advertorial.html`;
+      // WHY: Resolution failed — try serving static file as fallback.
+      //      For entry page (no stepSlug), try index.html first (deploy endpoint convention),
+      //      then advertorial.html (legacy convention).
+      const fallbackPaths = stepSlug
+        ? [`/${funnelSlug}/${stepSlug}.html`]
+        : [`/${funnelSlug}/index.html`, `/${funnelSlug}/advertorial.html`];
 
-      const html = await readHtmlFile(fallbackPath);
-      if (html) {
-        res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        res.setHeader('Cache-Control', 'public, max-age=300');
-        res.send(html);
-        return;
+      for (const fallbackPath of fallbackPaths) {
+        const html = await readHtmlFile(fallbackPath);
+        if (html) {
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          res.setHeader('Cache-Control', 'public, max-age=300');
+          res.send(html);
+          return;
+        }
       }
 
       log.warn('Funnel not found', { funnelSlug, stepSlug });
@@ -148,10 +152,16 @@ async function handleFunnelRequest(
     if (!html) {
       // WHY: Fallback to convention-based static file path
       //      resolveVariant may return a guessed path that doesn't exist
-      const fallbackPath = stepSlug
-        ? `/${funnelSlug}/${stepSlug}.html`
-        : `/${funnelSlug}/advertorial.html`;
-      const fallbackHtml = await readHtmlFile(fallbackPath);
+      const fallbackPaths = stepSlug
+        ? [`/${funnelSlug}/${stepSlug}.html`]
+        : [`/${funnelSlug}/index.html`, `/${funnelSlug}/advertorial.html`];
+
+      let fallbackHtml: string | null = null;
+      for (const fallbackPath of fallbackPaths) {
+        fallbackHtml = await readHtmlFile(fallbackPath);
+        if (fallbackHtml) break;
+      }
+
       if (fallbackHtml) {
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
         res.setHeader('Cache-Control', 'public, max-age=300');
