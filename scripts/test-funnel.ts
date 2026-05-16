@@ -297,6 +297,14 @@ const FUNNEL: FunnelConfig = {
 
 // ─── API Config ────────────────────────────────────────────────────────────────
 // WHY: Shared config uses MiMo (FREE, CHAMPION). See scripts/api-config.ts.
+import { getConfig } from './api-config';
+
+// ─── Deploy Config ─────────────────────────────────────────────────────────────
+// WHY: --deploy flag auto-deploys generated funnel to production Router.
+//      Bypasses Cloudflare by hitting Traefik directly with Host header.
+
+const DEPLOY_ARGS = process.argv.includes('--deploy');
+const DEPLOY_SLUG = (process.argv.find(a => a.startsWith('--slug='))?.split('=')[1]) ?? 'vibriance';
 
 // ─── Main ──────────────────────────────────────────────────────────────────────
 
@@ -304,7 +312,9 @@ async function main() {
   console.log('=== COMPLETE FUNNEL GENERATION TEST ===\n');
   console.log(`Product: ${BASE_PRODUCT.name}`);
   console.log(`Steps: ${FUNNEL.steps.length}`);
-  console.log(`Output: ${FUNNEL.outputDir}\n`);
+  console.log(`Output: ${FUNNEL.outputDir}`);
+  if (DEPLOY_ARGS) console.log(`Deploy: YES → ${DEPLOY_SLUG}.nutrovia.co`);
+  console.log();
 
   const steps = FUNNEL.steps.map(s => {
     const tmpl = s.templateId ?? (s.variants?.map(v => v.templateId).join('/') ?? 'variants');
@@ -316,6 +326,16 @@ async function main() {
   const config = getConfig();
   console.log(`Model: ${config.model}`);
   console.log(`API: ${config.apiUrl}\n`);
+
+  // Add deploy config if --deploy flag is present
+  if (DEPLOY_ARGS) {
+    FUNNEL.deploy = {
+      routerUrl: 'http://5.161.254.135',
+      routerHost: 'go.nutrovia.co',
+      deployKey: process.env.DEPLOY_API_KEY ?? 'nutrovia-deploy-2026-xK9mP2vL8qR',
+      slug: DEPLOY_SLUG,
+    };
+  }
 
   // Generate the entire funnel
   const result = await generateFunnel(FUNNEL, config);

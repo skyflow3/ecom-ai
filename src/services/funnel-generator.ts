@@ -96,6 +96,18 @@ export interface FunnelStep {
   variants?: FunnelVariant[];
 }
 
+/** Deploy target configuration — sends generated HTML to production Router. */
+export interface DeployConfig {
+  /** Router URL (e.g., 'http://5.161.254.135' — must bypass Cloudflare for POST) */
+  routerUrl: string;
+  /** Host header for Traefik routing (e.g., 'go.nutrovia.co') */
+  routerHost: string;
+  /** Deploy API key (matches DEPLOY_API_KEY on the Router) */
+  deployKey: string;
+  /** Funnel slug for the deployed pages (e.g., 'vibriance') */
+  slug: string;
+}
+
 /** Complete funnel configuration — everything needed to generate all pages. */
 export interface FunnelConfig {
   /** Base product brief (shared across all steps) */
@@ -106,6 +118,8 @@ export interface FunnelConfig {
   baseUrl: string;
   /** Output directory for generated HTML files */
   outputDir: string;
+  /** Optional: auto-deploy to production Router after generation */
+  deploy?: DeployConfig;
 }
 
 /** Result of generating a single variant. */
@@ -491,6 +505,19 @@ export async function generateFunnel(
   console.log(`\n[funnel] Complete: ${stepResults.filter(r => r.success).length}/${config.steps.length} steps, ${totalCtas} CTAs in ${duration}s`);
   console.log(`[funnel] Manifest: ${manifestPath}`);
 
+  // ─── Step 5: Auto-deploy to production Router (optional) ────────────────────
+
+  if (config.deploy) {
+    console.log(`\n[funnel] Deploying to production...`);
+    try {
+      await deployFunnelToRouter(config, stepResults);
+    } catch (deployErr) {
+      const msg = `Deploy failed: ${deployErr instanceof Error ? deployErr.message : String(deployErr)}`;
+      console.error(`[funnel] ✗ ${msg}`);
+      errors.push(msg);
+    }
+  }
+
   return {
     success: errors.length === 0,
     steps: stepResults,
@@ -501,6 +528,82 @@ export async function generateFunnel(
 }
 
 // ─── Helpers ────────────────────────────────────────────────────────────────────
+
+/**
+ * Deploy generated funnel HTML to production Router via /deploy/batch.
+ * WHY: After generating pages locally, we send them to the Router's deploy endpoint.
+ *      Bypasses Cloudflare by hitting Traefik directly with Host header.
+ *      This eliminates the manual deploy step.
+ */
+async function deployFunnelToRouter(
+  config: FunnelConfig,
+  stepResults: StepResult[],
+): Promise<void> {
+  const deploy = config.deploy!;
+  const files: Array<{ filename: string; html: string }> = [];
+
+  // Collect all successfully generated HTML files
+  for (const step of stepResults) {
+    for (const variant of step.variants) {
+      if (!variant.success || !variant.outputPath) continue;
+      const filename = path.basename(variant.outputPath);
+      const html = fs.readFileSync(variant.outputPath, 'utf-8');
+      files.push({ filename, html });
+    }
+  }
+
+  if (files.length === 0) {
+    console.log('[funnel] No files to deploy');
+    return;
+  }
+
+  const payload = JSON.stringify({ slug: deploy.slug, files });
+  console.log(`[funnel] Deploying ${files.length} pages (${(payload.length / 1024 / 1024).toFixed(2)} MB) to ${deploy.slug}.${deploy.routerHost}...`);
+
+  const response = await fetch(`${deploy.routerUrl}/deploy/batch`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Deploy-Key': deploy.deployKey,
+      'Host': deploy.routerHost,
+      'User-Agent': 'ECOM-AI-FunnelGen/1.0',
+    },
+    body: payload,
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Router deploy ${response.status}: ${body.substring(0, 200)}`);
+  }
+
+  const result = await response.json() as { deployed: number; total: number; success: boolean };
+  console.log(`[funnel] ✓ Deployed ${result.deployed}/${result.total} pages to production`);
+
+  // Deploy router pages too (for A/B steps)
+  for (const step of stepResults) {
+    if (!step.routerPath) continue;
+    const filename = path.basename(step.routerPath);
+    const html = fs.readFileSync(step.routerPath, 'utf-8');
+
+    const routerResp = await fetch(`${deploy.routerUrl}/deploy`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Deploy-Key': deploy.deployKey,
+        'Host': deploy.routerHost,
+        'User-Agent': 'ECOM-AI-FunnelGen/1.0',
+      },
+      body: JSON.stringify({ slug: deploy.slug, filename, html }),
+    });
+
+    if (!routerResp.ok) {
+      const body = await routerResp.text();
+      console.error(`[funnel] ✗ Router page deploy failed: ${body.substring(0, 100)}`);
+    } else {
+      console.log(`[funnel] ✓ Router deployed: ${filename}`);
+    }
+  }
+}
 
 /**
  * Merge base product brief with step-specific overrides.

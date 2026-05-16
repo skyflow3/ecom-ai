@@ -129,8 +129,10 @@ async function handleFunnelRequest(
       // WHY: Resolution failed — try serving static file as fallback.
       //      For entry page (no stepSlug), try index.html first (deploy endpoint convention),
       //      then advertorial.html (legacy convention).
-      const fallbackPaths = stepSlug
-        ? [`/${funnelSlug}/${stepSlug}.html`]
+      // WHY: Strip .html from stepSlug to avoid double extension (e.g., oto1.html.html)
+      const cleanStep = stepSlug.replace(/\.html$/, '');
+      const fallbackPaths = cleanStep
+        ? [`/${funnelSlug}/${cleanStep}.html`]
         : [`/${funnelSlug}/index.html`, `/${funnelSlug}/advertorial.html`];
 
       for (const fallbackPath of fallbackPaths) {
@@ -153,8 +155,9 @@ async function handleFunnelRequest(
     if (!html) {
       // WHY: Fallback to convention-based static file path
       //      resolveVariant may return a guessed path that doesn't exist
-      const fallbackPaths = stepSlug
-        ? [`/${funnelSlug}/${stepSlug}.html`]
+      const cleanStep = stepSlug.replace(/\.html$/, '');
+      const fallbackPaths = cleanStep
+        ? [`/${funnelSlug}/${cleanStep}.html`]
         : [`/${funnelSlug}/index.html`, `/${funnelSlug}/advertorial.html`];
 
       let fallbackHtml: string | null = null;
