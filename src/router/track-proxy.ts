@@ -21,7 +21,9 @@ import { createLogger } from '@/lib/logger';
 const log = createLogger('router:track');
 
 const FUNNELS_DATA_DIR = process.env.FUNNELS_DATA_DIR || process.env.FUNNEL_DATA_DIR || '/data/funnels';
-const TRACK_TARGET = process.env.TRACK_TARGET || 'http://localhost:3000';
+// WHY: In Coolify, each app has its own Docker network. Router can't reach 'web:3000' directly.
+//      Use Traefik/proxy URL instead. Env var allows override for docker-compose setups.
+const TRACK_TARGET = process.env.TRACK_TARGET || 'http://nutrovia.co';
 
 /** Old format from generateTrackingSnippet() in funnel-metrics.ts */
 interface LegacyTrackPayload {
