@@ -951,7 +951,9 @@ Internet → Cloudflare (CDN + Worker + SSL)
 5. **Architecture Finale.md**: ~65% implemented (core pipeline ~95%, ads/research ~15-30%)
 
 ### NEXT STEPS
-1. Persistent Docker volume for funnels (stop file loss on redeploy)
-2. SaaS Dashboard A/B testing UI (high effort, high value)
-3. CTA injection alignment for smoothspire template
-3. Multi-IA consensus for niche/product research (§21)
+1. ~~Persistent Docker volume~~ (already configured in docker-compose.yml — Coolify issue, not code)
+2. ~~Auto-config infrastructure~~ (funnel-filler.ts + test-funnel-autoconfig.ts already exist, palettes fixed)
+3. ~~A/B tracking infrastructure~~ (snippet injection + local metrics + track proxy)
+4. SaaS Dashboard A/B testing UI (display metrics, promote champions)
+5. A/B evaluation worker (automated champion promotion based on statistical significance)
+6. Multi-IA consensus for niche/product research (§21)
