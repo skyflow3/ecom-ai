@@ -301,18 +301,33 @@ async function callJudgeLlm(
       ? config.allKeys[Math.floor(Math.random() * config.allKeys.length)]
       : config.apiKey;
 
+    // WHY: MiMo (xiaomimimo) API uses different header and token param names
+    const isXiaomimimo = config.apiUrl.includes('xiaomimimo');
+
+    const judgeHeaders: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (isXiaomimimo) {
+      judgeHeaders['api-key'] = apiKey;
+    } else {
+      judgeHeaders['Authorization'] = `Bearer ${apiKey}`;
+    }
+
+    const judgePayload: Record<string, unknown> = {
+      model: config.model,
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.5,
+    };
+    if (isXiaomimimo) {
+      judgePayload.max_completion_tokens = 800;
+    } else {
+      judgePayload.max_tokens = 800;
+    }
+
     const response = await fetch(config.apiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: config.model,
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.5,
-        max_tokens: 800,
-      }),
+      headers: judgeHeaders,
+      body: JSON.stringify(judgePayload),
     });
 
     if (!response.ok) return null;

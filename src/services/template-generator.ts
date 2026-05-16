@@ -568,21 +568,38 @@ async function callLlm(
   temperature: number,
   maxTokens: number
 ): Promise<LlmResponse> {
+  // WHY: MiMo (xiaomimimo) API uses different header and token param names.
+  //      Source: pipeline_v2.py line 114-117
+  const isXiaomimimo = apiUrl.includes('xiaomimimo');
+
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (isXiaomimimo) {
+    headers['api-key'] = apiKey;
+  } else {
+    headers['Authorization'] = `Bearer ${apiKey}`;
+  }
+
+  const payload: Record<string, unknown> = {
+    model,
+    messages: [
+      { role: 'system', content: 'You are an elite direct-response copywriter. Output ONLY valid JSON.' },
+      { role: 'user', content: prompt },
+    ],
+    temperature,
+  };
+  // WHY: MiMo uses max_completion_tokens, others use max_tokens
+  if (isXiaomimimo) {
+    payload.max_completion_tokens = maxTokens;
+  } else {
+    payload.max_tokens = maxTokens;
+  }
+
   const response = await fetch(apiUrl, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model,
-      messages: [
-        { role: 'system', content: 'You are an elite direct-response copywriter. Output ONLY valid JSON.' },
-        { role: 'user', content: prompt },
-      ],
-      temperature,
-      max_tokens: maxTokens,
-    }),
+    headers,
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
