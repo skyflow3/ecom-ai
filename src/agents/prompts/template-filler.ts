@@ -53,6 +53,12 @@ export interface ProductBrief {
   useVideos?: boolean;
   /** Content section image URLs (inserted between sections). Keyed by section number */
   contentImageUrls?: Record<number, string>;
+  /** Reviewer avatar image URLs — overrides default avatars on product page reviews.
+   *  Should match product target audience gender.
+   *  If empty, defaults are used (mixed gender). */
+  reviewerAvatars?: string[];
+  /** Target audience gender hint for avatar selection. 'male' | 'female' | 'mixed' (default) */
+  audienceGender?: 'male' | 'female' | 'mixed';
 }
 
 /**

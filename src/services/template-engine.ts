@@ -547,6 +547,37 @@ interface ImageReplacementMapping {
   replaceAllVideos?: boolean;
 }
 
+// ─── Avatar Sets by Gender ──────────────────────────────────────────────────
+// WHY: Product page reviews must show avatars matching the target audience.
+//      Skincare for women → all female avatars. Power tools → all male. Generic → mixed.
+const AVATAR_SETS: Record<string, string[]> = {
+  female: [
+    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop&crop=face',
+    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=128&h=128&fit=crop&crop=face',
+    'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=96&h=96&fit=crop&crop=face',
+  ],
+  male: [
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=face',
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=128&h=128&fit=crop&crop=face',
+    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=128&h=128&fit=crop&crop=face',
+  ],
+  mixed: [
+    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop&crop=face',
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=face',
+    'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=96&h=96&fit=crop&crop=face',
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=128&h=128&fit=crop&crop=face',
+    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=128&h=128&fit=crop&crop=face',
+    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=128&h=128&fit=crop&crop=face',
+  ],
+};
+
+/** Get avatar URLs based on gender. Returns mixed if gender is unknown. */
+export function getAvatarSet(gender?: string): string[] {
+  if (gender === 'male') return AVATAR_SETS.male;
+  if (gender === 'female') return AVATAR_SETS.female;
+  return AVATAR_SETS.mixed;
+}
+
 const TEMPLATE_IMAGE_MAP: Record<string, ImageReplacementMapping> = {
   'smoothspire-advertorial': {
     productHero: '1768413682017_Hero_Image_4_.png',
@@ -807,15 +838,22 @@ function replaceImages(html: string, content: ContentMap, templateId: string): s
     }
   }
 
-  // WHY: Replace reviewer avatars with doctorImageUrl (person photo, not product)
-  const avatarUrl = doctorImageUrl || productImageUrl;
-  if (mapping.reviewAvatar && avatarUrl) {
-    html = replaceExactUrl(html, mapping.reviewAvatar, avatarUrl);
-  }
-  if (mapping.reviewAvatarExtra && mapping.reviewAvatarExtra.length > 0 && avatarUrl) {
-    for (const needle of mapping.reviewAvatarExtra) {
-      html = replaceExactUrl(html, needle, avatarUrl);
-    }
+  // WHY: Replace reviewer avatars with gender-appropriate photos.
+  //      Each reviewer gets a DIFFERENT avatar (not all same doctor photo).
+  //      Gender is determined by ProductBrief.audienceGender or auto-detected from product category.
+  const audienceGender = extractString(content['_audienceGender']) || 'mixed';
+  const customAvatars = (content['_reviewerAvatars'] as string[]) ?? [];
+  const avatarUrls = customAvatars.length > 0 ? customAvatars : getAvatarSet(audienceGender);
+
+  const allAvatarNeedles = [
+    mapping.reviewAvatar,
+    ...(mapping.reviewAvatarExtra ?? []),
+  ].filter((n): n is string => Boolean(n));
+
+  // WHY: Assign a unique avatar to each reviewer needle (rotating if more needles than avatars)
+  for (let i = 0; i < allAvatarNeedles.length; i++) {
+    const avatarUrl = avatarUrls[i % avatarUrls.length];
+    html = replaceExactUrl(html, allAvatarNeedles[i], avatarUrl);
   }
 
   // ─── Product-page-specific: w-embed video containers → image ──────────────

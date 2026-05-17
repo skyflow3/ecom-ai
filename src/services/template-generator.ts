@@ -194,6 +194,8 @@ export async function generateFromTemplate(
         _commentScreenshotUrls: brief.commentScreenshotUrls ?? [],
         _contentImageUrls: (brief.contentImageUrls ?? {}) as any,
         _useVideos: (brief.useVideos ?? false) as any,
+        _audienceGender: (brief as any).audienceGender ?? 'mixed',
+        _reviewerAvatars: ((brief as any).reviewerAvatars ?? []) as any,
       };
 
       // Step 5: Fill template
