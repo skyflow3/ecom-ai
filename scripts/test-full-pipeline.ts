@@ -81,6 +81,15 @@ interface ProductInput {
   guarantee: string;
   /** Template to use for final HTML generation */
   templateId: string;
+  /** Image URLs for template image replacement */
+  images?: {
+    doctor: string;
+    product: string;
+    productSquare: string;
+    logo: string;
+    comments?: string[];
+    contentImages?: Record<number, string>;
+  };
 }
 
 const DEFAULT_PRODUCT: ProductInput = {
@@ -92,6 +101,18 @@ const DEFAULT_PRODUCT: ProductInput = {
   originalPrice: '$119',
   guarantee: '90-Day Money-Back Guarantee',
   templateId: 'smoothspire-advertorial',
+  images: {
+    // WHY: Unsplash URLs for turmeric/joint pain product images.
+    //      Section content: 1264x711 (16:9), Sidebar: 1080x1080 (square), Doctor: 200x200
+    doctor: 'https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?w=200&h=200&fit=crop&crop=face',
+    product: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1264&h=711&fit=crop',
+    productSquare: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1080&h=1080&fit=crop',
+    logo: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=200&h=60&fit=crop',
+    comments: [
+      'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1264&h=711&fit=crop',
+      'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1264&h=711&fit=crop',
+    ],
+  },
 };
 
 // ─── Output Directory ─────────────────────────────────────────────────────────
@@ -282,6 +303,14 @@ function angleToBrief(product: ProductInput, scanner: ScannerOutput, research: R
     authorPersona: 'Dr. James Miller, PT, MD',
     categoryBadge: 'Health',
     ratingCount: `${3000 + Math.floor(Math.random() * 5000)}`,
+    // WHY: Image URLs replace the original template images with product-specific ones.
+    //      Without these, the template keeps the original winner's images.
+    doctorImageUrl: product.images?.doctor,
+    productImageUrl: product.images?.product,
+    productImageSquareUrl: product.images?.productSquare,
+    logoUrl: product.images?.logo,
+    commentScreenshotUrls: product.images?.comments,
+    contentImageUrls: product.images?.contentImages,
   };
 }
 
