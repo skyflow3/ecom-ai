@@ -539,6 +539,12 @@ interface ImageReplacementMapping {
   reviewAvatarExtra?: string[];
   /** Video URL needle substrings — all matching src get replaced */
   videoNeedles?: string[];
+  /** Broad domain replacement: replace ALL images matching these domain substrings */
+  broadDomains?: string[];
+  /** URL substrings to EXCLUDE from broad domain replacement (fonts, icons, stars, etc) */
+  broadExclusions?: string[];
+  /** When true, replace ALL <video> tags with product images (not just needle-matched ones) */
+  replaceAllVideos?: boolean;
 }
 
 const TEMPLATE_IMAGE_MAP: Record<string, ImageReplacementMapping> = {
@@ -551,6 +557,19 @@ const TEMPLATE_IMAGE_MAP: Record<string, ImageReplacementMapping> = {
     ],
     authorPhoto: 'dr_blane_1__2_.webp',
     reasonImages: [],
+    // WHY: SmoothSpire has 65+ checkoutchamp images and 44+ shopify images from the original product.
+    //      Needle-based replacement only catches 5. Broad domain replacement catches ALL remaining.
+    broadDomains: [
+      'checkoutchamp.com/',   // All CheckoutChamp CDN product/content images
+      'cdn.shopify.com/s/files/',  // All Shopify product images
+    ],
+    // WHY: /Funnel/assets/ contains structural UI elements (star ratings, fonts, icons) — keep these.
+    broadExclusions: [
+      '/Funnel/assets/',   // Star ratings (cr_1-5.svg), fonts (fa-*.ttf/woff2), icons
+    ],
+    // WHY: Replace ALL 11 <video> tags (shopify CDN videos) with product images.
+    //      Original product videos are irrelevant to the new product.
+    replaceAllVideos: true,
   },
   'hike-reasons-why': {
     productCta: 'HF%20Stride%20Transparant',
@@ -744,6 +763,25 @@ function replaceImages(html: string, content: ContentMap, templateId: string): s
     html = replaceVideoWithImage(html, VIDEO_URL_NEEDLE, productImageUrl);
   }
 
+  // ─── Broad domain image replacement (catches ALL remaining product images) ──
+  // WHY: Needle-based replacement only catches specific known images.
+  //      Templates like SmoothSpire have 60+ product images from the original product.
+  //      Broad domain replacement catches EVERYTHING from checkoutchamp.com and shopify.com,
+  //      while preserving structural assets (fonts, star ratings, icons).
+  if (mapping.broadDomains && mapping.broadDomains.length > 0 && productImageUrl) {
+    const exclusions = mapping.broadExclusions ?? [];
+    for (const domain of mapping.broadDomains) {
+      html = replaceDomainImages(html, domain, productImageUrl, exclusions);
+    }
+  }
+
+  // ─── Replace ALL videos with images (templates with replaceAllVideos flag) ──
+  // WHY: Some templates have 10+ <video> tags from the original product.
+  //      When we don't have replacement videos, ALL must become product images.
+  if (mapping.replaceAllVideos && !useVideos && productImageUrl) {
+    html = replaceAllVideosWithImage(html, productImageUrl);
+  }
+
   // ─── Hike-reasons-why-specific: Video slots → images ──────────────────────
   // WHY: Hike template has 5 <video> tags (reasons 1, 2, 4, 6, 8) with VIDEO_SLOT needles.
   //      In image mode, replace each video with <img> using productImageUrl.
@@ -907,6 +945,45 @@ function replaceVideoSrc(html: string, needle: string, newUrl: string): string {
   // Match src="...needle..." in <video> and <source> tags
   const regex = new RegExp(`((?:src)=["'])[^"']*${escaped}[^"']*(["'])`, 'gi');
   return html.replace(regex, `$1${newUrl}$2`);
+}
+
+/**
+ * Replace ALL image URLs from a specific domain with a new image URL.
+ * WHY: Templates like SmoothSpire have 60+ product images from checkoutchamp.com and
+ *      cdn.shopify.com. Needle-based replacement only catches 5. This catches EVERYTHING.
+ *      Exclusions preserve structural assets (fonts, star ratings, icons).
+ */
+function replaceDomainImages(html: string, domainNeedle: string, newUrl: string, exclusions: string[]): string {
+  const escaped = domainNeedle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Match src="...domain..." or data-src="...domain..." attributes
+  const regex = new RegExp(`((?:src|data-src)=["'])[^"']*${escaped}[^"']*(["'])`, 'gi');
+  return html.replace(regex, (fullMatch, prefix: string, quote: string) => {
+    // Check exclusions — keep structural assets (fonts, icons, stars)
+    for (const excl of exclusions) {
+      if (fullMatch.includes(excl)) return fullMatch;
+    }
+    return `${prefix}${newUrl}${quote}`;
+  });
+}
+
+/**
+ * Replace ALL <video> elements with <img> elements.
+ * WHY: SmoothSpire has 11 video tags from the original product. When we don't have
+ *      replacement videos, ALL must become product images.
+ *      Handles both self-closing-style and proper <video>...</video> tags.
+ */
+function replaceAllVideosWithImage(html: string, imageUrl: string): string {
+  // Replace <video ...>...</video> blocks (with content between open/close)
+  let result = html.replace(
+    /<video[^>]*>[\s\S]*?<\/video>/gi,
+    `<img src="${imageUrl}" alt="" style="width:100%;max-width:1264px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;" loading="lazy">`
+  );
+  // Also handle self-closing-style <video ... /> (some templates use this)
+  result = result.replace(
+    /<video[^>]*\/>/gi,
+    `<img src="${imageUrl}" alt="" style="width:100%;max-width:1264px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;" loading="lazy">`
+  );
+  return result;
 }
 
 /**

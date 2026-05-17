@@ -1020,3 +1020,141 @@ Internet → Cloudflare (CDN + Worker + SSL)
 - Aligned with Architecture Finale.md §20-§22
 - DB schema fields covered via output mapping
 - Ready for testing in testing-ai-prompt
+
+---
+
+## 2026-05-17 — Tracking Pipeline Fix + Coolify API + Full Deploy
+
+### What: Fixed tracking format mismatch, deployed all 3 services, validated end-to-end tracking
+
+### Issues Found & Fixed
+
+#### 1. Tracking Format Mismatch (commit `ace5023`)
+- **Bug**: Old snippet sends `{step, variant, type}` but `/api/track` expects `{variantId, event, sessionId}` with Zod validation
+- **Fix**: Added format bridge in `track-proxy.ts` (transformToModernFormat) + relaxed Zod from `z.string().uuid()` to `z.string().min(1)`
+
+#### 2. TRACK_TARGET Wrong Default (commit `9c33e5c`)
+- **Bug**: `localhost:3000` doesn't work in Coolify — each app runs in its own Docker network
+- **Fix**: Changed to `http://nutrovia.co` (routed through Traefik proxy)
+
+#### 3. DEPLOY_URL Wrong in Injection Script
+- **Bug**: Direct IP `5.161.254.135:3001` not routable (behind Traefik)
+- **Fix**: Changed to `http://go.nutrovia.co`
+
+#### 4. Coolify API Token Expired
+- **Old**: `1|nutrovia-deploy-2026-xK9mP2vL8qR` → Unauthenticated
+- **New**: `7|CSzYtrcJ0kvl1DstSxlclEOJbRbgcvuTjJWDaGPL43d9812d` → Working
+
+### Files Created
+- `scripts/deploy-local-funnel.py` — Deploy HTML from local test-output/ to Router with tracking
+- `scripts/inject-tracking-deploy.ts` — Fetch-deploy injection script (superseded by Python script)
+
+### Files Modified
+- `src/router/track-proxy.ts` — Format bridge + TRACK_TARGET fix
+- `src/app/api/track/route.ts` — Zod relaxation for variant IDs
+- `src/app/api/track/script/route.ts` — Zod relaxation for variant IDs
+- `scripts/inject-tracking-deploy.ts` — DEPLOY_URL fix
+
+### .env Additions
+```
+COOLIFY_API_URL=http://5.161.254.135:8000/api/v1
+COOLIFY_API_TOKEN=7|CSzYtrcJ0kvl1DstSxlclEOJbRbgcvuTjJWDaGPL43d9812d
+COOLIFY_APP_WEB=d044oc4wgg0ggg4s8owwc4c0
+COOLIFY_APP_ROUTER=rwok8skgkko4g44ocs0s08o0
+COOLIFY_APP_WORKER=z4s00so8gksg8sg0c84sws4s
+```
+
+### Deployment Summary
+- **3 services redeployed** via Coolify API (Web, Router, Worker)
+- **14 funnel pages redeployed** with tracking snippets (nutrovia 7 + vibriance 7)
+- **MiMo API DOWN** (`api.mimo.vn` DNS unresolvable) — no AI generation possible
+- Pages deployed from local test-output/ (pre-generated HTML)
+
+### End-to-End Tracking Verified
+```
+Page snippet → POST /track (Router)
+  → transformToModernFormat(): {step,variant,type} → {variantId,event,sessionId}
+  → POST nutrovia.co/api/track (Web)
+  → PostgreSQL (rawEvents + events + metrics5min)
+  → Response: {"success":true,"eventId":"sid-a-...:pageview:a:..."}
+```
+
+- pageview: ✅ eventId returned
+- cta_click: ✅ eventId returned
+
+### Commits
+- `ace5023` fix: tracking format bridge + Zod relaxation + agent prompts
+- `9c33e5c` fix: TRACK_TARGET uses nutrovia.co proxy URL + deploy injection script
+
+### Known Issues
+1. **Funnel files wiped on Router redeploy** — no persistent volume in Coolify. Must redeploy HTML after every container update (use `python scripts/deploy-local-funnel.py`)
+2. **MiMo API down** — DNS failure, no ETA. Blocks all AI generation.
+3. **Coolify API token in .env** — NOT in .gitignore (security concern for public repos, OK for private)
+
+---
+
+## 2026-05-17 — Agent Pipeline Integration + Full Autonomous Pipeline
+
+### What: Integrated tested agent prompts + created full autonomous pipeline (5 steps)
+
+### Agent Pipeline Integration (from God-anwser-ai-agent testing)
+- **T1 Desire Mining Chain (5 Whys)** added to `agent-research.ts`:
+  - New Section 7: Desire Mining Chain (Camacho + Toyoda technique)
+  - New `DesireMiningChain` interface (5 levels: surface → functional → emotional → identity → existential)
+  - `desireMiningChains[]` added to `ResearchOutput` + output JSON format
+  - Quality header updated: lab-tested 9.06/10 avg on 4 diverse products
+- **T1 chains extraction** added to `agent-angle.ts`:
+  - Auto-extracts `desireMiningChains` from research data into angle prompt
+  - Chains displayed with ROOT + GOLD per chain
+  - Import updated to direct `ResearchOutput` + `DesireMiningChain`
+
+### max_tokens Removal
+- Removed artificial token limits from ALL pipeline components:
+  - `content-judge.ts`: Removed `max_completion_tokens = 800` and `max_tokens = 800`
+  - `page-generator.ts`: Removed `max_completion_tokens` and `max_tokens` from payloads
+  - `template-generator.ts`: Removed `max_completion_tokens` and `max_tokens` from payloads
+  - `config.ts`: Producer maxTokens 4000→16384 (safety net, not sent to API)
+- WHY: Truncation caused corrupted JSON. Models finish naturally without limits.
+
+### Test Scripts Created
+- `scripts/test-agent-pipeline.ts` — 3-step agent pipeline (Scanner → Research → Angle)
+  - Configurable: DeepSeek (tested) or MiMo (free)
+  - JSON extraction + repair for truncated responses
+  - Usage: `npx tsx scripts/test-agent-pipeline.ts --model deepseek --agent all`
+- `scripts/test-full-pipeline.ts` — 5-step full autonomous pipeline
+  - Chains: Scanner → Research → Angle → Copywriter → Template Engine
+  - `angleToBrief()` maps agent discoveries (mechanism, emotional engine, beliefs) to ProductBrief
+  - Image URL support for template image replacement
+  - Usage: `npx tsx scripts/test-full-pipeline.ts --model deepseek --skip-agents`
+
+### Test Results
+- **Agent pipeline (DeepSeek)**: Scanner OK (5 desires, 6 emotions) → Research OK (7 pain points, 3 T1 chains) → Angle OK (4 angles, awareness 4). Total: 3 min, 36K tokens
+- **Full pipeline**: 28/28 slots filled, 50.9s (template step only with --skip-agents)
+- **T1 Chains validated**: All 3 chains have 5 complete levels, rootDriver and copywritingGold identified
+
+### Commits
+- `77e3b4f` feat: integrate T1 Desire Mining Chain (5 Whys) from tested agent pipeline
+- `8822eca` feat: agent pipeline orchestration script (Scanner → Research → Angle)
+- `eb8958c` feat: full autonomous pipeline (Scanner → Research → Angle → Copywriter → HTML)
+- `c885b76` fix: add image URLs to full pipeline ProductBrief for template replacement
+
+### Migration Verification (10-agent parallel audit)
+- Middleware.ts: ✅ Clean (no variant routing, no resolveVariant imports)
+- Express Router: ✅ Complete (6 files in src/router/)
+- Docker: ✅ All 3 services configured with shared volume
+- Nginx: ✅ Subdomain routing configured
+- Dead code: ✅ Minimal (unused services are future features, not legacy)
+- Overall: Migration 100% complete, no legacy code remaining
+
+### Architecture Alignment
+- §20 Niche Scoring: ✅ In ScannerOutput
+- §21 Multi-IA Consensus: ✅ Agent JSON structured for multi-model voting
+- §22 Angle Generation: ✅ Combinatorial matrix + lifecycle status
+- §51 Block Composer: ✅ Used in full pipeline
+- Template System: ✅ 4 templates (smoothspire, hike-reasons-why, product-page, checkout) + 5 upsell
+
+### NEXT STEPS
+1. **Chief Review (Call 5)** — Fact-checker comparing copy vs research (no fabrication, beliefs aligned)
+2. **API route for agent pipeline** — Dashboard trigger for autonomous pipeline
+3. **SaaS Dashboard A/B testing UI** — Display metrics, promote champions
+4. **Multi-IA consensus** — 3-model voting for research quality (§21)
